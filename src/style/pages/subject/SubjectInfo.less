@@ -1,0 +1,194 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.subject-info-container {
+  padding-bottom: @padding-lg * 1.5;
+
+  .subject-info-top {
+    .subject-characters {
+      font-size: 72px;
+      margin: @margin-lg;
+
+      &.character-image {
+        width: 72px;
+        height: 72px;
+        margin: 0 @margin-lg;
+      }
+    }
+
+    .subject-info-level {
+      font-size: @font-size-sm;
+      color: @text-color-secondary;
+    }
+
+    .subject-info-meanings, .subject-info-readings {
+      font-size: @font-size-lg * 1.2;
+
+      .meaning, .reading {
+        &.primary { font-weight: bold; }
+      }
+
+      .reading {
+        font-family: @ja-font;
+        font-size: @font-size-lg * 1.5;
+      }
+    }
+
+    .subject-info-top-lower {
+      margin-top: @margin-md;
+
+      .readings-sub {
+        display: block;
+
+        .readings-label {
+          display: inline-block;
+          margin-right: @padding-xss;
+          font-weight: bold;
+        }
+
+        .subject-info-reading-subs {
+          display: inline-block;
+
+          .reading-sub {
+            font-family: @ja-font;
+          }
+        }
+      }
+    }
+  }
+
+  &.subject-info-multiple-characters {
+    .subject-info-top {
+      .subject-characters, .subject-info-level {
+        display: block;
+      }
+
+      .subject-characters {
+        // Hack for text fitting
+        width: 100%;
+        max-width: 768px;
+        font-size: 96px;
+
+        margin: @margin-md 0;
+      }
+    }
+  }
+
+  .subject-info-hint {
+    margin: @margin-lg 0 0 0;
+    padding: @padding-md;
+    background: @component-background;
+    border-radius: @border-radius-base;
+
+    .hint-title {
+      display: block;
+      margin-bottom: @margin-xs;
+
+      color: @text-color-secondary;
+
+      font-size: @font-size-sm;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
+  .study-material-note-add, .study-material-synonyms-add {
+    margin-top: @margin-sm;
+    font-size: @font-size-sm;
+
+    a {
+      color: @text-color-secondary;
+      &:hover { color: fade(@white, 70%); }
+    }
+  }
+
+  .subject-info-hint + .study-material-note-add,
+  .subject-info-study-material-note + .study-material-synonyms-add {
+    margin-top: @margin-lg;
+  }
+
+  .study-material-note-add + .study-material-synonyms-add {
+    margin-top: 4px;
+  }
+
+  .subject-info-study-material-note {
+    div.ant-typography-edit-content {
+      left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    div.ant-typography, .ant-typography p {
+      margin-bottom: 0;
+    }
+  }
+
+  .study-material-note-add, .subject-info-study-material-note,
+  .study-material-synonyms-add, .subject-info-study-material-synonyms {
+    .anticon.anticon-loading {
+      margin-left: @padding-xs;
+    }
+  }
+
+  // OCD moment, the dividers use percentage for their text alignment, so they
+  // did not have the same amount of spacing on the left
+  .ant-divider-horizontal.ant-divider-with-text-left {
+    &::before {
+      width: 32px;
+      flex-shrink: 0;
+    }
+
+    &::after {
+      width: 100%;
+    }
+
+    // Space it out a little more to be slightly more readable
+    margin-top: @margin-lg + @margin-xs;
+  }
+
+  .subject-info-context-sentences {
+    .context-sentence {
+      margin-bottom: @margin-md;
+
+      .ja {
+        margin-bottom: 0;
+        font-size: @font-size-lg;
+
+        .ja-highlight {
+          color: @color-vocabulary;
+          background: none;
+          padding: 0;
+        }
+      }
+
+      .en {
+        margin-bottom: 0;
+        color: @text-color-secondary;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .subject-info-jisho-row {
+    text-align: center;
+
+    margin-top: @margin-lg + @margin-sm;
+
+    .jisho-header {
+      display: block;
+
+      font-size: @font-size-sm;
+      text-decoration: bold;
+      color: @text-color-secondary;
+    }
+
+    .jisho-value {
+      display: block;
+      font-size: @font-size-lg;
+    }
+  }
+}

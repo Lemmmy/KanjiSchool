@@ -1,0 +1,164 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.handwriting-input-popover {
+  width: 100%;
+  max-width: 400px;
+
+  position: fixed;
+  top: @layout-header-height !important;
+  left: initial !important;
+  right: 0 !important;
+
+  z-index: 1051; // Render above the results // TODO: Broken since fake popover
+
+  padding-top: 0;
+  .ant-popover-arrow { display: none; }
+
+  .ant-popover-inner-content {
+    padding: 0;
+  }
+
+  .hw-popover-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hw-header {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    border-bottom: 1px solid @border-color-split;
+
+    padding: @padding-xs @padding-sm;
+
+    .hw-title {
+      display: block;
+      flex: 1;
+
+      line-height: 1;
+      font-weight: bolder;
+    }
+
+    .ant-checkbox + span {
+      padding-right: 0;
+    }
+  }
+
+  .hw-canvas-container {
+    position: relative;
+
+    .hw-canvas {
+      width: 100%;
+      aspect-ratio: 2 / 1;
+
+      cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA5SURBVChTYyAE/gMBlIkfwBQS1ICuAKcGmAQ6jQHQJYa0QhAASYIAjA0WxAEYkRUwAgGUiQUwMAAAr3dXrhd5j3gAAAAASUVORK5CYII=") 0 10, auto;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .hw-canvas-bg {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      color: fade(@white, 10%) !important;
+
+      pointer-events: none;
+
+      svg {
+        width: 50%;
+        height: 50%;
+      }
+    }
+  }
+
+  .hw-suggestions {
+    border-top: 1px solid @border-color-split;
+    white-space: nowrap;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    min-height: 49px; // include the border
+
+    .hw-suggestion {
+      display: inline-block;
+      cursor: pointer;
+
+      padding: 0 @padding-md;
+      height: 48px;
+      line-height: 48px;
+      text-align: center;
+      vertical-align: middle;
+
+      font-family: @ja-font;
+      font-size: @font-size-lg;
+      user-select: none;
+
+      border-right: 1px solid @border-color-split;
+
+      &:hover {
+        background: fade(@white, 5%);
+      }
+    }
+  }
+
+  .hw-controls {
+    display: flex;
+
+    background: fade(@white, 5%);
+    border-top: 1px solid @border-color-split;
+
+    padding: @padding-xs @padding-sm;
+
+    .ant-btn {
+      height: 48px;
+      margin-right: @padding-sm;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .hw-space {
+      flex: 1;
+    }
+  }
+
+  .hw-offline-warning {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: @padding-lg;
+
+    .anticon {
+      color: fade(@red-base, 50%) !important;
+      font-size: 4rem;
+
+      margin-right: @padding-lg;
+    }
+
+    .hw-offline-subtitle {
+      color: @text-color-secondary;
+    }
+  }
+}

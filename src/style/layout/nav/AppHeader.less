@@ -1,0 +1,247 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.site-header + .ant-layout {
+  z-index: 1;
+  margin-top: @layout-header-height;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: row;
+
+  padding: 0;
+  z-index: 2;
+
+  .site-header-brand {
+    margin: 0 @padding-lg;
+
+    user-select: none;
+
+    .title {
+      font-size: @font-size-lg * 1.25;
+      &, a { color: @white !important; }
+    }
+
+    .version {
+      display: block;
+      height: auto;
+      line-height: 1;
+
+      position: relative;
+      left: 0;
+      bottom: 2em;
+
+      font-size: @font-size-sm * 0.85;
+      color: @text-color-secondary;
+
+      white-space: nowrap;
+      user-select: none;
+    }
+  }
+
+  .site-header-spacer {
+    flex: 1;
+  }
+
+  .site-header-user {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+    justify-content: center;
+    text-align: right;
+
+    padding: 0 @padding-lg;
+
+    .user-username, .user-lower, .user-level, .user-free {
+      line-height: @line-height-base;
+    }
+
+    .user-username {
+      display: block;
+      font-weight: bold;
+    }
+
+    .user-lower {
+      display: block;
+
+      .user-level {
+        font-size: @font-size-sm;
+      }
+
+      .user-free {
+        display: inline-block;
+        margin-left: @padding-xs;
+        color: @text-color-secondary;
+        font-size: @font-size-sm;
+      }
+    }
+  }
+
+  > .ant-menu {
+    background: transparent;
+    flex-shrink: 0;
+
+    .conditional-link-disabled {
+      color: @text-color;
+    }
+
+    .ant-menu-item {
+      height: @layout-header-height;
+
+      &:hover {
+        background: @item-hover-bg;
+      }
+    }
+  }
+
+  .site-header-element-end-spacer {
+    height: @layout-header-height;
+    margin-right: @margin-md;
+    border-right: 1px solid @border-color-split;
+  }
+
+  .site-header-element {
+    flex: 0;
+    height: @layout-header-height;
+
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border-left: 1px solid @border-color-split;
+    transition: background @animation-duration-base ease;
+
+    cursor: pointer;
+
+    .anticon {
+      margin-right: 0;
+    }
+
+    &.ant-dropdown-link .anticon {
+      margin-left: @margin-md;
+    }
+
+    &:hover {
+      background: @item-hover-bg;
+    }
+
+    &.site-online-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      min-width: 160px;
+      padding: 0 20px;
+
+      color: @red-base;
+      line-height: 1;
+      vertical-align: middle;
+
+      cursor: default;
+
+      .online-status-row {
+        display: block;
+
+        .anticon {
+          position: relative;
+          top: 1px;
+          padding: 0;
+        }
+
+        .online-text {
+          display: inline-block;
+          margin-left: @margin-xs;
+          font-size: @font-size-sm;
+          text-transform: uppercase;
+          line-height: @line-height-base + 0.2;
+
+          @media (max-width: @screen-md) {
+            display: none;
+          }
+        }
+      }
+
+      .online-status-queue-size {
+        display: inline-block;
+        font-size: @font-size-sm;
+        color: @text-color-secondary;
+      }
+    }
+  }
+}
+
+.ant-dropdown.site-header-dropdown-overlay {
+  position: fixed;
+
+  top: @layout-header-height !important;
+
+  .menu-user-info {
+    // Negate the dropdown menu padding
+    margin-top: -4px;
+    padding: 8px 16px;
+    font-size: @font-size-base;
+
+    background: darken(@menu-dark-bg, 5%);
+
+    display: flex;
+
+    .user-username {
+      font-weight: bold;
+      flex: 1;
+    }
+  }
+
+  .ant-dropdown-menu-item {
+    padding: 8px 16px;
+
+    &.ant-dropdown-menu-item-only-child {
+      padding: 0;
+
+      a, .conditional-link-disabled {
+        display: inline-block;
+        width: 100%;
+        padding: 8px 16px;
+
+        color: @text-color !important;
+      }
+    }
+
+    .anticon:first-child {
+      margin-right: 16px;
+      font-size: @font-size-base;
+      vertical-align: -0.175em;
+    }
+  }
+
+  // Make the top menu dropdown full-width and slightly larger on mobile
+  @media (max-width: @screen-sm) {
+    position: fixed;
+
+    top: @layout-header-height !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    border-radius: 0;
+
+    .ant-dropdown-menu-item {
+      padding: 8px 16px;
+      font-size: @font-size-base;
+
+      >div {
+        margin: -8px -16px;
+        padding: 8px 16px;
+      }
+    }
+  }
+}

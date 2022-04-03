@@ -1,0 +1,275 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.subject-info-your-progression {
+  @wk-progression-srs-bar-height: 40px;
+  @wk-progression-bar-height: 20px;
+
+  .srs-stage-bar {
+    // Force the smaller system text to vertically align to the bottom
+    line-height: @font-size-base * @line-height-base;
+
+    // Tooltip size + margin
+    margin-bottom: 40px + @margin-lg;
+
+    .title { font-weight: bold; }
+    .system {
+      float: right;
+      font-size: @font-size-sm;
+      color: @text-color-secondary;
+    }
+
+    .bar-main {
+      display: flex;
+      width: 100%;
+      height: @wk-progression-srs-bar-height;
+
+      .bar-segment {
+        flex: 1;
+        height: @wk-progression-srs-bar-height;
+
+        margin: 0 1px;
+
+        cursor: pointer;
+
+        position: relative;
+
+        .bar-segment-inner {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: @wk-progression-srs-bar-height;
+
+          transition: all @animation-duration-base ease-in-out;
+          transition-property: opacity, background;
+
+          &.bar-segment-bg {
+            opacity: 0.5;
+          }
+
+          &.stage-apprentice { background: @color-srs-apprentice; }
+          &.stage-guru { background: @color-srs-guru; }
+          &.stage-master { background: @color-srs-master; }
+          &.stage-enlightened { background: @color-srs-enlightened; }
+          &.stage-burned { background: @color-srs-burned; }
+        }
+
+        &:hover .bar-segment-bg {
+          opacity: 0.6;
+        }
+
+        &.unlocked:hover .bar-segment-inner {
+          &.stage-apprentice { background: @color-srs-apprentice-lighter; }
+          &.stage-guru { background: @color-srs-guru-lighter; }
+          &.stage-master { background: @color-srs-master-lighter; }
+          &.stage-enlightened { background: @color-srs-enlightened-lighter; }
+          &.stage-burned { background: @color-srs-burned-lighter; }
+        }
+
+        &:first-child {
+          margin-left: 0;
+
+          .bar-segment-inner {
+            border-top-left-radius: @border-radius-base;
+            border-bottom-left-radius: @border-radius-base;
+          }
+        }
+
+        &:last-child {
+          margin-right: 0;
+
+          .bar-segment-inner {
+            border-top-right-radius: @border-radius-base;
+            border-bottom-right-radius: @border-radius-base;
+          }
+        }
+
+        .current-stage-tooltip {
+          // Allow the component to decide the tooltip position
+          position: absolute;
+          top: @wk-progression-srs-bar-height;
+
+          .ant-tooltip {
+            // Re-center the tooltip arrow
+            transform: translateX(-50%);
+            min-width: 175px;
+
+            .ant-tooltip-content .ant-tooltip-inner {
+              font-size: @font-size-sm;
+              text-align: center;
+            }
+
+            // Color the tooltip background/arrow by the srs stage
+            .ant-tooltip-content .ant-tooltip-inner,
+            .ant-tooltip-content .ant-tooltip-arrow .ant-tooltip-arrow-content {
+              &.stage-apprentice { background: @color-srs-apprentice-dark; }
+              &.stage-guru { background: @color-srs-guru-dark; }
+              &.stage-master { background: @color-srs-master-dark; }
+              &.stage-enlightened { background: @color-srs-enlightened-dark; }
+              &.stage-burned { background: @color-srs-burned-dark; }
+            }
+
+            .time-remaining {
+              display: inline-block;
+              color: fade(@white, 70%);
+
+              &.now {
+                color: @text-color;
+                font-weight: bold;
+              }
+            }
+          }
+
+          &.stage-burned {
+            left: 50% !important;
+
+            .ant-tooltip {
+              min-width: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .date-row {
+    padding: @margin-md 0;
+
+    .date-col {
+      text-align: center;
+
+      .name {
+        display: block;
+
+        border-bottom: 1px solid @border-color-split;
+        padding-bottom: @padding-xss;
+        margin-bottom: @padding-xss;
+
+        font-weight: bold;
+      }
+
+      .date, .short {
+        font-size: @font-size-sm;
+      }
+
+      .short {
+        color: @text-color-secondary;
+      }
+
+      &.now .short {
+        font-weight: bold;
+        color: @green-base;
+      }
+    }
+  }
+
+  .correct-bar {
+    margin-top: @margin-lg;
+
+    .title { font-weight: bold; }
+
+    .streak-row {
+      margin-bottom: 3px;
+      font-size: @font-size-sm;
+
+      .streak {
+        margin-left: @margin-sm;
+
+        .ant-tag.streak-tag {
+          margin-top: 1px;
+          margin-left: 4px;
+          font-size: @font-size-sm;
+          font-weight: normal;
+        }
+
+        &:first-child { margin-left: 0; }
+      }
+    }
+
+    .bar-main {
+      display: flex;
+      width: 100%;
+      height: @wk-progression-bar-height;
+
+      background: @component-background;
+      border-radius: @border-radius-base;
+
+      position: relative;
+
+      .bar-inner {
+        height: @wk-progression-bar-height;
+
+        background: @primary-color;
+        border-radius: @border-radius-base;
+
+        cursor: pointer;
+
+        transition: background @animation-duration-base ease-in-out;
+
+        &:hover {
+          background: @primary-5;
+        }
+      }
+
+      .correct-bar-tooltip {
+        // Allow the component to decide the tooltip position
+        position: absolute;
+        top: -30px;
+
+        user-select: none;
+
+        .ant-tooltip {
+          // Re-center the tooltip arrow
+          transform: translateX(-50%);
+
+          // Allow seeing behind the tooltip (exceptional circumstances)
+          opacity: 1;
+          transition: opacity 250ms ease-in-out;
+
+          .ant-tooltip-content .ant-tooltip-inner {
+            font-size: @font-size-sm;
+            text-align: center;
+          }
+
+          // Color the tooltip green
+          .ant-tooltip-content .ant-tooltip-inner,
+          .ant-tooltip-content .ant-tooltip-arrow .ant-tooltip-arrow-content {
+            &.green { background: @green-5; }
+            &.yellow { background: @yellow-5; }
+            &.orange { background: @orange-5; }
+            &.red { background: @red-5; }
+          }
+
+          // Allow seeing behind the tooltip (exceptional circumstances)
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+
+    .bar-scale {
+      width: 100%;
+
+      .min, .max {
+        color: @text-color-secondary;
+        font-size: @font-size-sm;
+      }
+
+      .max {
+        float: right;
+      }
+    }
+  }
+}
+
+.srs-stage-bar-segment-tooltip {
+  text-align: center;
+
+  .stage-duration {
+    display: inline-block;
+    color: @text-color-secondary;
+  }
+}

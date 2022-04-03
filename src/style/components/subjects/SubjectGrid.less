@@ -1,0 +1,228 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+@subject-grid-item-width-tiny: 36px;
+@subject-grid-item-height-tiny: 25px;
+
+@subject-grid-item-width-small: 68px;
+@subject-grid-item-width-normal: 80px;
+
+.subject-grid {
+  align-items: flex-start;
+  justify-content: center;
+
+  &.align-left {
+    justify-content: flex-start;
+  }
+
+  .virtual-list-row {
+    padding-top: @padding-sm;
+  }
+
+  &.size-tiny .virtual-list-row {
+    padding-top: 0;
+
+    // opacity: 0;
+
+    // animation: subject-grid-row-fade-in @animation-duration-base ease-in-out;
+    // animation-fill-mode: both;
+  }
+
+  .subject-grid-item {
+    display: inline-block;
+    width: @subject-grid-item-width-normal;
+    margin-right: @margin-sm;
+    margin-bottom: @margin-sm;
+
+    box-sizing: content-box;
+
+    padding: @padding-xs @padding-sm;
+
+    border-radius: @border-radius-base;
+
+    line-height: 1;
+    text-align: center;
+
+    transition: background @animation-duration-base ease;
+
+    .subject-characters {
+      font-size: 56px;
+      line-height: 56px;
+      vertical-align: middle;
+      text-align: center;
+
+      &.character-image {
+        width: 56px;
+        height: 56px;
+        margin: 0;
+      }
+    }
+
+    .extra {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      margin-top: @margin-xs;
+      color: fade(@white, 70%);
+      transition: color @animation-duration-base ease;
+
+      .txt {
+        // Limit to showing up to 2 lines
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        font-size: @font-size-sm;
+        line-height: 1.35;
+      }
+
+      .ja {
+        font-size: @font-size-base;
+      }
+
+      .srs {
+        color: @text-color-secondary;
+
+        .sep {
+          display: inline-block;
+          margin: 0 0.3em;
+        }
+
+        &.now {
+          color: @green-base;
+        }
+      }
+    }
+
+    &.locked {
+      opacity: 0.65;
+      transition: opacity @animation-duration-base ease;
+
+      &:hover { opacity: 1; }
+    }
+
+    box-shadow: 0;
+    transition: box-shadow @animation-duration-base ease;
+
+    &.in-queue {
+      box-shadow: inset 0 0 0 2px fade(@white, 75%);
+    }
+
+    &:hover {
+      background: fade(@white, 10%);
+
+      .extra {
+        color: @text-color;
+      }
+    }
+
+    /* ------------------------------------------------------------------------ */
+    /* SMALL SIZE                                                               */
+    /* ------------------------------------------------------------------------ */
+    &.size-small {
+      width: @subject-grid-item-width-small;
+      padding: @padding-xss;
+      margin-right: 3px;
+      margin-bottom: 3px;
+
+      .subject-characters {
+        font-size: 32px;
+        line-height: 32px;
+
+        &.character-image {
+          width: 32px;
+          height: 32px;
+        }
+      }
+
+      .extra {
+        .txt {
+          font-size: 12px;
+          line-height: 1.3;
+        }
+
+        .ja {
+          font-size: @font-size-sm;
+        }
+
+        .srs {
+          font-size: 11px;
+        }
+      }
+    }
+
+    /* ------------------------------------------------------------------------ */
+    /* TINY SIZE                                                                */
+    /* ----------------------------------------------------------w-------------- */
+    &.size-tiny {
+      width: @subject-grid-item-width-tiny;
+      height: @subject-grid-item-height-tiny;
+
+      padding: 0;
+      margin: 1px;
+
+      background: @color-srs-locked;
+      line-height: 20px;
+
+      .subject-characters {
+        font-size: 20px;
+        line-height: 1;
+
+        color: @black !important;
+
+        &.character-image {
+          width: 20px;
+          height: 20px;
+
+          * { stroke: @black !important; }
+        }
+      }
+
+      &.type-vocabulary {
+        width: auto;
+        padding: 0 8px;
+      }
+    }
+  }
+
+  &.size-tiny {
+    line-height: 1;
+
+    // Apply the colors to tiny list elements
+
+    &.color-by-type {
+      .subject-grid-item {
+        &.type-radical { background: @color-radical; }
+        &.type-kanji { background: @color-kanji; }
+        &.type-vocabulary { background: @color-vocabulary; }
+      }
+    }
+
+    &.color-by-srs {
+      .subject-grid-item {
+        &.srs-initiate { background: @color-srs-initiate; }
+        &.srs-apprentice { background: @color-srs-apprentice; }
+        &.srs-guru { background: @color-srs-guru; }
+        &.srs-master { background: @color-srs-master; }
+        &.srs-enlightened { background: @color-srs-enlightened; }
+        &.srs-burned { background: @color-srs-burned; }
+        &.srs-locked { background: @color-srs-locked; }
+      }
+    }
+  }
+
+  // Remove the padding from tiny subjects (it's handled by the width
+  // calculation in virtual lists)
+  &.is-virtual.size-tiny .subject-grid-item.type-vocabulary {
+    padding: 0;
+  }
+}
+
+// @keyframes subject-grid-row-fade-in {
+//   0% { opacity: 0; }
+//   100% { opacity: 1; }
+// }

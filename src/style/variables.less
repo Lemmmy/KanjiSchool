@@ -1,0 +1,137 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+@wk-page-header-height: 56px;
+
+@ja-font: "Noto Sans JP", sans-serif;
+
+// Custom scrollbar
+// TODO: light theme
+@wk-scrollbar-width: 8px;
+@wk-scrollbar-thumb-color: fade(@white, 15%);
+@wk-scrollbar-thumb-color-hover: fade(@white, 30%);
+@wk-scrollbar-track-color: rgba(0, 0, 0, 0.1);
+
+// WebKit
+::-webkit-scrollbar {
+  width: @wk-scrollbar-width;
+  height: @wk-scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  background: @wk-scrollbar-track-color;
+  border-radius: @border-radius-base;
+}
+
+::-webkit-scrollbar-thumb {
+  background: @wk-scrollbar-thumb-color;
+  border-radius: @border-radius-base;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: @wk-scrollbar-thumb-color-hover;
+}
+
+::-webkit-scrollbar-corner {
+  background: @wk-scrollbar-track-color;
+}
+
+// Mozilla
+:root {
+  scrollbar-color: @wk-scrollbar-thumb-color @wk-scrollbar-track-color !important;
+  scrollbar-width: thin !important;
+}
+
+/* ========================================================================== */
+/* User-theme */
+/* ========================================================================== */
+:root {
+  --wktc-text-color-light: @text-color;
+  --wktc-text-color-dark: @black;
+}
+
+@color-radical            : var(--wktc-radical);
+@color-kanji              : var(--wktc-kanji);
+@color-vocabulary         : var(--wktc-vocabulary);
+@color-reading            : var(--wktc-reading);
+@color-radical-dark       : var(--wktc-radical-dark);
+@color-kanji-dark         : var(--wktc-kanji-dark);
+@color-vocabulary-dark    : var(--wktc-vocabulary-dark);
+@color-vocabulary-hiragana: var(--wktc-vocabulary-hiragana);
+@color-vocabulary-katakana: var(--wktc-vocabulary-katakana);
+@color-srs-initiate       : var(--wktc-srs-initiate);
+@color-srs-apprentice     : var(--wktc-srs-apprentice);
+@color-srs-apprentice-1   : var(--wktc-srs-apprentice-1);
+@color-srs-apprentice-2   : var(--wktc-srs-apprentice-2);
+@color-srs-apprentice-3   : var(--wktc-srs-apprentice-3);
+@color-srs-apprentice-4   : var(--wktc-srs-apprentice-4);
+@color-srs-passed         : var(--wktc-srs-passed);
+@color-srs-guru           : var(--wktc-srs-guru);
+@color-srs-master         : var(--wktc-srs-master);
+@color-srs-enlightened    : var(--wktc-srs-enlightened);
+@color-srs-burned         : var(--wktc-srs-burned);
+@color-srs-locked         : var(--wktc-srs-locked);
+@color-srs-not-on-wk      : @purple-7;
+
+@color-radical-lighter         : var(--wktc-radical-lighter);
+@color-kanji-lighter           : var(--wktc-kanji-lighter);
+@color-vocabulary-lighter      : var(--wktc-vocabulary-lighter);
+@color-reading-lighter         : var(--wktc-reading-lighter);
+@color-radical-dark-lighter    : var(--wktc-radical-dark-lighter);
+@color-kanji-dark-lighter      : var(--wktc-kanji-dark-lighter);
+@color-vocabulary-dark-lighter : var(--wktc-vocabulary-dark-lighter);
+@color-srs-initiate-lighter    : var(--wktc-srs-initiate-lighter);
+@color-srs-apprentice-lighter  : var(--wktc-srs-apprentice-lighter);
+@color-srs-apprentice-1-lighter: var(--wktc-srs-apprentice-1-lighter);
+@color-srs-apprentice-2-lighter: var(--wktc-srs-apprentice-2-lighter);
+@color-srs-apprentice-3-lighter: var(--wktc-srs-apprentice-3-lighter);
+@color-srs-apprentice-4-lighter: var(--wktc-srs-apprentice-4-lighter);
+@color-srs-passed-lighter      : var(--wktc-srs-passed-lighter);
+@color-srs-guru-lighter        : var(--wktc-srs-guru-lighter);
+@color-srs-master-lighter      : var(--wktc-srs-master-lighter);
+@color-srs-enlightened-lighter : var(--wktc-srs-enlightened-lighter);
+@color-srs-burned-lighter      : var(--wktc-srs-burned-lighter);
+@color-srs-locked-lighter      : var(--wktc-srs-locked-lighter);
+
+@color-radical-darker         : var(--wktc-radical-darker);
+@color-kanji-darker           : var(--wktc-kanji-darker);
+@color-vocabulary-darker      : var(--wktc-vocabulary-darker);
+@color-reading-darker         : var(--wktc-reading-darker);
+@color-radical-dark-darker    : var(--wktc-radical-dark-darker);
+@color-kanji-dark-darker      : var(--wktc-kanji-dark-darker);
+@color-vocabulary-dark-darker : var(--wktc-vocabulary-dark-darker);
+@color-srs-initiate-darker    : var(--wktc-srs-initiate-darker);
+@color-srs-apprentice-darker  : var(--wktc-srs-apprentice-darker);
+@color-srs-apprentice-1-darker: var(--wktc-srs-apprentice-1-darker);
+@color-srs-apprentice-2-darker: var(--wktc-srs-apprentice-2-darker);
+@color-srs-apprentice-3-darker: var(--wktc-srs-apprentice-3-darker);
+@color-srs-apprentice-4-darker: var(--wktc-srs-apprentice-4-darker);
+@color-srs-passed-darker      : var(--wktc-srs-passed-darker);
+@color-srs-guru-darker        : var(--wktc-srs-guru-darker);
+@color-srs-master-darker      : var(--wktc-srs-master-darker);
+@color-srs-enlightened-darker : var(--wktc-srs-enlightened-darker);
+@color-srs-burned-darker      : var(--wktc-srs-burned-darker);
+@color-srs-locked-darker      : var(--wktc-srs-locked-darker);
+
+@color-radical-dark         : var(--wktc-radical-dark);
+@color-kanji-dark           : var(--wktc-kanji-dark);
+@color-vocabulary-dark      : var(--wktc-vocabulary-dark);
+@color-reading-dark         : var(--wktc-reading-dark);
+@color-radical-dark-dark    : var(--wktc-radical-dark-dark);
+@color-kanji-dark-dark      : var(--wktc-kanji-dark-dark);
+@color-vocabulary-dark-dark : var(--wktc-vocabulary-dark-dark);
+@color-srs-initiate-dark    : var(--wktc-srs-initiate-dark);
+@color-srs-apprentice-dark  : var(--wktc-srs-apprentice-dark);
+@color-srs-apprentice-1-dark: var(--wktc-srs-apprentice-1-dark);
+@color-srs-apprentice-2-dark: var(--wktc-srs-apprentice-2-dark);
+@color-srs-apprentice-3-dark: var(--wktc-srs-apprentice-3-dark);
+@color-srs-apprentice-4-dark: var(--wktc-srs-apprentice-4-dark);
+@color-srs-passed-dark      : var(--wktc-srs-passed-dark);
+@color-srs-guru-dark        : var(--wktc-srs-guru-dark);
+@color-srs-master-dark      : var(--wktc-srs-master-dark);
+@color-srs-enlightened-dark : var(--wktc-srs-enlightened-dark);
+@color-srs-burned-dark      : var(--wktc-srs-burned-dark);
+@color-srs-locked-dark      : var(--wktc-srs-locked-dark);
+
+@color-srs-stage-cards-text: var(--wktc-srs-stage-cards-text);

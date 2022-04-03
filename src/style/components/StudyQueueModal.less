@@ -1,0 +1,84 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.ant-modal.study-queue-modal {
+  margin: auto @margin-lg @margin-lg auto;
+  padding-bottom: 0;
+
+  position: absolute;
+  top: unset;
+  right: 0;
+  bottom: 0;
+  left: unset;
+
+  // Re-enable pointer events, they're disabled on the wrapper
+  pointer-events: auto;
+
+  .ant-modal-header {
+    transition: border-bottom-color @animation-duration-base @ease-in-out;
+
+    .ant-modal-close {
+      &.study-modal-collapse {
+        right: 56px;
+      }
+    }
+
+    .study-title .study-count {
+      margin-left: 0.3em;
+      font-size: @font-size-base;
+      font-weight: normal;
+    }
+  }
+
+  .ant-modal-body, .ant-modal-footer, .study-queue-inner-container {
+    height: 100%;
+    max-height: 150px + (@padding-md * 2);
+
+    transition: all @animation-duration-base @ease-in-out;
+    transition-property: max-height, padding-top, padding-bottom,
+      border-top-color;
+  }
+
+  .ant-modal-body {
+    padding: 0; // handled by inner container instead
+    overflow-y: hidden;
+
+    .study-queue-inner-container {
+      padding: @padding-md @padding-lg;
+      overflow-y: auto;
+    }
+  }
+
+  .ant-modal-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow-y: hidden;
+
+    display: flex;
+    align-items: center;
+    text-align: left;
+
+    .spacer { flex: 1; }
+  }
+
+  &.collapsed {
+    .ant-modal-header {
+      border-bottom-color: transparent;
+    }
+
+    .ant-modal-body, .ant-modal-footer {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .ant-modal-footer {
+      border-top-color: transparent;
+    }
+  }
+}
+
+.ant-modal-wrap.study-queue-modal-wrap {
+  pointer-events: none;
+}

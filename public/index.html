@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="KanjiSchool"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese" rel="stylesheet">
+    
+    <title>KanjiSchool</title>
+    
+    <style>
+      /* Provided to prevent flash-bang on page load */
+      html, body { 
+        background: #000000; 
+        margin: 0;
+      }
+
+      .wk-preloader {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        box-sizing: border-box;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        color: rgba(255, 255, 255, 0.85);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+        font-size: 16px;
+        line-height: 1.5715;
+      }
+
+      .wk-preloader .wk-preloader-spinner {
+        border: 3px solid transparent;
+        border-bottom-color: rgba(255, 255, 255, 0.45);
+        border-radius: 50%;
+
+        width: 96px;
+        height: 96px;
+        box-sizing: border-box;
+
+        animation: wk-preloader-spin 1s linear infinite;
+      }
+
+      .wk-preloader span, .wk-preloader-extra {
+        margin-top: 16px;
+        max-width: 350px;
+        box-sizing: border-box;
+      }
+
+      .wk-preloader-extra {
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      @keyframes wk-preloader-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <div id="root">
+      <div class="wk-preloader" id="wk-preloader">
+        <div class="wk-preloader-spinner"></div>
+        <span>Loading KanjiSchool...</span>
+      </div>
+    </div>
+
+    <script>
+      var msg = "Your web browser is not supported by this application. " +
+        "Please install a recent version of Google Chrome or Mozilla Firefox."
+
+      var isIE = navigator.userAgent.indexOf("MSIE ") !== -1 
+        || navigator.appVersion.indexOf("Trident/") > 0;
+      var isLocalhost = window.location.hostname === "localhost"
+        || window.location.hostname === "[::1]";
+
+      if (isIE && !isLocalhost) {
+        document.getElementById("wk-preloader").innerText = msg;
+        alert(msg);
+      }
+    </script>
+  </body>
+</html>

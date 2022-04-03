@@ -1,0 +1,144 @@
+{
+  "object": "collection",
+  "pages": {
+    "per_page": 500,
+    "next_url": null,
+    "previous_url": null
+  },
+  "total_count": 2,
+  "data_updated_at": "2020-06-09T03:38:01Z",
+  "data": [
+    {
+      "id": 1,
+      "object": "spaced_repetition_system",
+      "data_updated_at": "2020-06-09T03:36:51Z",
+      "data": {
+        "created_at": "2020-05-21T20:46:06Z",
+        "name": "Default system for dictionary subjects",
+        "description": "The original spaced repetition system",
+        "unlocking_stage_position": 0,
+        "starting_stage_position": 1,
+        "passing_stage_position": 5,
+        "burning_stage_position": 9,
+        "stages": [
+          {
+            "interval": null,
+            "position": 0,
+            "interval_unit": null
+          },
+          {
+            "interval": 14400,
+            "position": 1,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 28800,
+            "position": 2,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 82800,
+            "position": 3,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 169200,
+            "position": 4,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 601200,
+            "position": 5,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 1206000,
+            "position": 6,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 2588400,
+            "position": 7,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 10364400,
+            "position": 8,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": null,
+            "position": 9,
+            "interval_unit": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "object": "spaced_repetition_system",
+      "data_updated_at": "2020-06-09T03:38:01Z",
+      "data": {
+        "created_at": "2020-05-21T20:48:06Z",
+        "name": "Default accelerated system for dictionary subjects",
+        "description": "The original spaced repetition system, but accelerated",
+        "unlocking_stage_position": 0,
+        "starting_stage_position": 1,
+        "passing_stage_position": 5,
+        "burning_stage_position": 9,
+        "stages": [
+          {
+            "interval": null,
+            "position": 0,
+            "interval_unit": null
+          },
+          {
+            "interval": 7200,
+            "position": 1,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 14400,
+            "position": 2,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 28800,
+            "position": 3,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 82800,
+            "position": 4,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 601200,
+            "position": 5,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 1206000,
+            "position": 6,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 2588400,
+            "position": 7,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": 10364400,
+            "position": 8,
+            "interval_unit": "seconds"
+          },
+          {
+            "interval": null,
+            "position": 9,
+            "interval_unit": null
+          }
+        ]
+      }
+    }
+  ]
+}

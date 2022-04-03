@@ -1,0 +1,55 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.level-progress-legend {
+  display: flex;
+  align-items: center;
+
+  .legend-square {
+    display: inline-block;
+
+    width: 16px;
+    height: 16px;
+
+    white-space: nowrap;
+
+    &.legend-passed { background: @color-srs-passed; }
+    &.legend-appr4 { background: @color-srs-apprentice-4; }
+    &.legend-appr3 { background: @color-srs-apprentice-3; }
+    &.legend-appr2 { background: @color-srs-apprentice-2; }
+    &.legend-appr1 { background: @color-srs-apprentice-1; }
+    &.legend-init { background: @color-srs-initiate; }
+    &.legend-locked { background: @color-srs-locked; }
+
+    &.legend-passed, &.legend-init, &.legend-locked {
+      border-radius: @border-radius-base;
+    }
+    &.legend-appr4 {
+      border-top-left-radius: @border-radius-base;
+      border-bottom-left-radius: @border-radius-base;
+    }
+    &.legend-appr1 {
+      border-top-right-radius: @border-radius-base;
+      border-bottom-right-radius: @border-radius-base;
+    }
+  }
+
+  .legend-label {
+    display: inline-block;
+
+    margin-left: @margin-xs;
+    margin-right: @margin-sm;
+
+    font-size: @font-size-sm;
+    color: @text-color-secondary;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: @screen-xl) {
+    display: none;
+  }
+}

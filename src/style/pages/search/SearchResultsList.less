@@ -1,0 +1,75 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.search-results-list {
+  max-width: 920px;
+  margin: @margin-lg auto @margin-lg auto;
+
+  &.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    align-items: center;
+  }
+
+  .ant-collapse-header {
+    display: flex;
+
+    .search-results-header-main {
+      display: inline-flex;
+      align-items: center;
+
+      h1 {
+        display: inline-block;
+        margin-bottom: 0;
+      }
+
+      .ant-tag.total-count-tag {
+        margin-top: 1px;
+        margin-left: 8px;
+        font-size: @font-size-sm;
+        font-weight: normal;
+      }
+    }
+
+    .ant-collapse-extra {
+      flex: 1;
+
+      .search-results-extra {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+
+        .result-stage-counts {
+          display: inline-block;
+          margin-bottom: @padding-xss;
+          font-size: @font-size-sm;
+
+          &:last-child { margin-bottom: 0; }
+        }
+      }
+    }
+  }
+
+  .ant-collapse-content {
+    &.ant-collapse-content-active {
+      border-top: 1px solid @border-color-split;
+    }
+
+    .ant-collapse-content-box {
+      padding: 0;
+    }
+
+    .subject-grid {
+      margin-left: @margin-sm;
+    }
+  }
+
+  &.nested .ant-collapse-content .ant-collapse-content-box {
+    padding: @padding-sm;
+  }
+
+  // Nested list
+  .search-results-list {
+    margin: 0;
+  }
+}

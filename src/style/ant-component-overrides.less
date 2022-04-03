@@ -1,0 +1,120 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.big-menu.ant-menu.ant-menu-inline {
+  width: 100%;
+
+  border: 1px solid @border-color-split;
+
+  .ant-menu-item {
+    border-bottom: 1px solid @border-color-split;
+    margin-bottom: 0;
+
+    user-select: none;
+
+    padding: @padding-xs 0;
+    min-height: 40px;
+    height: auto;
+
+    line-height: @line-height-base;
+    white-space: normal;
+
+    &:last-child { border-bottom: none; }
+  }
+
+  .ant-menu-submenu {
+    border-bottom: 1px solid @border-color-split;
+    &:last-child { border-bottom: none; }
+  }
+
+  .menu-item-description {
+    color: @text-color-secondary;
+    font-size: @font-size-sm;
+  }
+
+  @media (max-width: @screen-md) {
+    // Make the menu full-width on mobile
+    width: 100vw;
+    margin: 0 -@padding-md;
+
+    .ant-menu-sub > .ant-menu-item {
+      padding-left: @padding-sm !important;
+    }
+  }
+
+  @media (max-width: @screen-sm) {
+    margin: 0 -@padding-sm;
+  }
+}
+
+.ant-dropdown-menu-item {
+  // Make all icons in menu consistent (sometimes the icon may not be a direct
+  // descendent of the menu item)
+  .anticon:first-child {
+    min-width: 12px;
+    margin-right: 8px;
+    font-size: @font-size-sm;
+    vertical-align: -0.1em;
+  }
+
+  >div {
+    margin: -5px -12px;
+    padding: 5px 12px;
+  }
+}
+
+.ja {
+  font-family: @ja-font;
+}
+
+.ant-tag.part-of-speech {
+  color: @white;
+  border-width: 0;
+  background: fade(@white, 20%);
+
+  &.noun { background: @blue-base; }
+  &.proper-noun { background: @blue-5; }
+  &.pronoun { background: @blue-5; }
+
+  &.suru-verb,
+  &.godan-verb,
+  &.transitive-verb,
+  &.intransitive-verb,
+  &.ichidan-verb {
+    background: @green-6;
+  }
+
+  &.adverb { background: @green-7; }
+
+  &.no-adjective, &.na-adjective, &.i-adjective, &.adjective {
+    background: @purple-base;
+  }
+}
+
+@wk-toc-width: 180px;
+
+.toc-affix {
+  position: absolute;
+  top: @margin-lg;
+  right: -@wk-toc-width - @margin-lg;
+
+  width: @wk-toc-width;
+
+  .toc {
+    .ant-anchor { font-size: @font-size-sm; }
+
+    .ant-anchor-link {
+      padding: 5px 0 5px 16px;
+      line-height: @line-height-base;
+    }
+
+    .ant-anchor-link.toc-debug .ant-anchor-link-title {
+      color: @purple-base;
+    }
+  }
+
+  @media (max-width: @screen-md) {
+    display: none;
+  }
+}

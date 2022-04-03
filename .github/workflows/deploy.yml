@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Install git
+      run: |
+        sudo apt-get install -y software-properties-common \
+        && sudo apt-get update \
+        && sudo add-apt-repository -y ppa:git-core/ppa \
+        && sudo apt-get update \
+        && sudo apt-get install -y git
+
+    - name: Check out repository code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build
+      run: yarn run full-build
+      env:
+        SENTRY_ENABLED: true
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        SENTRY_URL: ${{ secrets.SENTRY_URL }}
+        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        SENTRY_NO_PROGRESS_BAR: 1
+        
+    - name: Deploy
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_KEY }}
+        port: ${{ secrets.DEPLOY_PORT }}
+        source: "build"
+        target: ${{ secrets.DEPLOY_ROOT }}
+        rm: true

@@ -1,0 +1,225 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.dashboard-page {
+  .ant-card {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    .ant-card-body {
+      flex: 1;
+    }
+
+    &.card-empty .ant-card-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .dashboard-row {
+    align-items: stretch;
+
+    >.ant-col { margin-bottom: @margin-md; }
+  }
+
+  .summary-chart-card {
+    .ant-card-body {
+      padding: @padding-md @padding-lg @padding-xs @padding-lg;
+    }
+
+    .ant-card-extra .upcoming-reviews {
+      color: @text-color-secondary;
+    }
+  }
+
+  .dashboard-tips-card {
+    height: 100%;
+    flex: 1;
+    margin-top: @margin-md;
+
+    .ant-card-head {
+      padding-right: @padding-sm;
+    }
+
+    .ant-card-extra {
+      padding: 0;
+      align-self: stretch;
+
+      .ant-btn {
+        border: 0;
+        height: calc(100% - 2px);
+        margin: 1px 0;
+
+        span:not(.ant-btn-loading-icon):not(.anticon) {
+          line-height: 32px;
+        }
+      }
+    }
+  }
+
+  .dashboard-subject-list-card {
+    .ant-card-body {
+      padding: 0;
+    }
+
+    .dashboard-tiny-subject-list-inner-container {
+      height: 100%;
+      max-height: 227px + (@padding-md * 2);
+      overflow-y: auto;
+      padding: @padding-md;
+    }
+
+    .show-all {
+      display: flex;
+      justify-content: center;
+      margin-top: @padding-md;
+
+      .ant-btn {
+        width: 100%;
+      }
+
+      .ant-btn-link, .ant-btn-link span {
+        font-size: @font-size-sm;
+        color: @text-color-secondary;
+      }
+    }
+  }
+
+  .dashboard-epic-table-card {
+    .ant-card-body {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    table {
+      width: calc(100% + 2px);
+      margin: 0 -1px -1px -1px;
+
+      overflow: auto;
+
+      th, td {
+        padding: @padding-xs @padding-md;
+        border: 1px solid @border-color-split;
+
+        &:first-child {
+          width: 20%;
+          text-align: left;
+        }
+
+        @media (max-width: @screen-xxl) {
+          font-size: @font-size-sm;
+          padding: @padding-xss @padding-sm;
+        }
+      }
+
+      th {
+        font-weight: normal;
+      }
+
+      td {
+        text-align: right;
+
+        &.zero {
+          color: @text-color-secondary;
+        }
+      }
+
+      thead { background: lighten(@component-background, 5%); }
+      tr td:first-child {
+        background: lighten(@component-background, 2.5%);
+        transition: background @animation-duration-base ease;
+      }
+      tr.em { background: darken(@component-background, 1%); }
+
+      tr.clickable {
+        transition: background @animation-duration-base ease;
+        cursor: pointer;
+
+        &:hover {
+          background: lighten(@component-background, 2.5%);
+
+          td:first-child {
+            background: lighten(@component-background, 5%);
+          }
+        }
+      }
+
+      tr.highlight {
+        color: @lime-base;
+        background: @lime-1;
+
+        td:first-child {
+          background: lighten(@lime-1, 2.5%);
+        }
+
+        &:hover {
+          background: lighten(@lime-1, 2.5%);
+
+          td:first-child {
+            background: lighten(@lime-1, 5%);
+          }
+        }
+
+        .zero {
+          color: fade(@lime-base, 50%);
+        }
+      }
+
+      tr.burned {
+        color: @green-base;
+        background: @green-1;
+
+        td:first-child {
+          background: lighten(@green-1, 2.5%);
+        }
+
+        &:hover {
+          background: lighten(@green-1, 2.5%);
+
+          td:first-child {
+            background: lighten(@green-1, 5%);
+          }
+        }
+
+        .zero {
+          color: fade(@green-base, 50%);
+        }
+      }
+
+      tr.total {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .dashboard-accuracy-card {
+    height: auto;
+  }
+
+  .dashboard-current-status-card, .dashboard-accuracy-card {
+    .type {
+      margin-right: @padding-xs;
+      &:last-child { margin-right: 0; }
+
+      &.radical { color: @color-radical; }
+      &.kanji { color: @color-kanji; }
+      &.vocab { color: @color-vocabulary; }
+    }
+  }
+
+  .dashboard-current-status-card {
+    td:not(:first-child) {
+      text-align: left !important;
+    }
+  }
+
+  .unlocks-area {
+    .ant-col {
+      margin-bottom: @margin-md;
+    }
+  }
+}

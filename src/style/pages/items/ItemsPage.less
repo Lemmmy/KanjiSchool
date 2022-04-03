@@ -1,0 +1,53 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.items-page {
+  .items-page-results { padding-bottom: @padding-lg; }
+
+  .items-results-group {
+    max-width: 1080px;
+    margin: 0 auto;
+
+    .items-results-group-header {
+      .header-title {
+        margin-right: 1em;
+      }
+
+      .header-count {
+        color: @text-color-secondary;
+        font-size: @font-size-sm;
+        font-weight: normal;
+      }
+
+      &.ant-divider-horizontal.ant-divider-with-text-left::before {
+        width: 32px;
+      }
+    }
+
+    // Has nested subgroups
+    &.with-subgroups {
+      > .items-results-group-header {
+        margin-bottom: @margin-xs;
+      }
+
+      // Nested groups
+      > .items-results-group {
+        margin-left: @margin-lg;
+
+        .items-results-group-header {
+          font-weight: normal;
+          font-size: @font-size-sm;
+
+          &.ant-divider-horizontal::before, &.ant-divider-horizontal::after {
+            border-top-color: fade(@border-color-split, 35%);
+          }
+        }
+      }
+
+      > .items-results-group-header + .items-results-group > .items-results-group-header {
+        margin-top: @margin-xs;
+      }
+    }
+  }
+}

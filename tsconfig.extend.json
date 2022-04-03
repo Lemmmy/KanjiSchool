@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@app": ["./App.tsx"],
+
+      "@actions": ["./store/actions"],
+      "@actions/*": ["./store/actions/*"],
+      "@reducers/*": ["./store/reducers/*"],
+      "@store": ["./store"],
+      "@store/*": ["./store/*"],
+
+      "@comp/*": ["./components/*"],
+      "@layout/*": ["./layout/*"],
+      "@pages/*": ["./pages/*"],
+      "@session": ["./session"],
+      "@session/*": ["./session/*"],
+
+      "@api": ["./api"],
+      "@api/*": ["./api/*"],
+      "@data": ["./data"],
+      "@data/*": ["./data/*"],
+      "@db": ["./db"],
+      "@db/*": ["./db/*"],
+      "@global/*": ["./global/*"],
+
+      "@style/*": ["./style/*"],
+
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"]
+    }
+  }
+}

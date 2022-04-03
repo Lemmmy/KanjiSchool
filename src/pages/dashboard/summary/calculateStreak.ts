@@ -1,0 +1,93 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+import { store } from "@app";
+import { setStreak } from "@actions/SyncActions";
+
+import { db } from "@db";
+
+import * as d3 from "d3";
+
+import { criticalError, lsSetNumber } from "@utils";
+import { debounce } from "lodash-es";
+
+import Debug from "debug";
+const debug = Debug("kanjischool:calculate-streak");
+
+export interface StreakData {
+  currentStreak: number;
+  maxStreak: number;
+  todayInStreak: boolean;
+}
+
+const STREAK_DEBOUNCE = 300;
+export const calculateStreak = debounce(() => {
+  _calculateStreak()
+    .then(() => debug("streak updated"))
+    .catch(e => {
+      debug("error updating streak", e);
+      criticalError(e);
+    });
+}, STREAK_DEBOUNCE);
+
+async function _calculateStreak(): Promise<void> {
+  const now = new Date();
+  const today = d3.timeDay.floor(now), nToday = +today;
+  const yesterday = d3.timeDay.offset(today, -1), nYesterday = +yesterday;
+
+  // Get all reviews we have, ignore 1970 lol
+  const invalid = new Date(0).toISOString();
+  const reviews = await db.reviews
+    .where("data_updated_at")
+    .aboveOrEqual(invalid)
+    .toArray();
+  const lessons = await db.assignments
+    .where("data.started_at")
+    .aboveOrEqual(invalid)
+    .toArray();
+
+  // Get a set of dates that reviews and lessons occurred on
+  const reviewDays = d3.map(reviews,
+    d => d3.timeDay.floor(new Date(d.data_updated_at)));
+  const lessonDays = d3.map(lessons,
+    d => d3.timeDay.floor(new Date(d.data.started_at!)));
+  // Combine reviews and lessons and sort by date ascending
+  const days = d3.sort(d3.union(reviewDays, lessonDays));
+
+  debug("got %d review and lesson days", days.length);
+
+  let isToday = false, isYesterday = false;
+  let currentStreak = 0, maxStreak = 0, todayInStreak = false;
+  const streaks: number[] = [1];
+
+  // Go through the review dates
+  for (let i = 0; i < days.length; i++) {
+    // Difference between this date and the next date (e.g. yesterday then today)
+    const first = days[i], nFirst = +first;
+    const second = days[i + 1] ?? first;
+    const diff = d3.timeDay.count(first, second);
+
+    isToday = isToday || nFirst >= nToday; // today or future
+    isYesterday = isYesterday || nFirst >= nYesterday;
+
+    if (diff === 0) {
+      if (isToday) {
+        todayInStreak = true;
+      }
+    } else if (diff === 1) {
+      ++streaks[streaks.length - 1];
+    } else {
+      streaks.push(1);
+    }
+
+    currentStreak = isToday || isYesterday
+      ? streaks[streaks.length - 1]
+      : 0;
+    maxStreak = Math.max(...streaks);
+  }
+
+  lsSetNumber("currentStreak", currentStreak ?? 0);
+  lsSetNumber("maxStreak", maxStreak ?? 0);
+  store.dispatch(setStreak({ currentStreak, maxStreak, todayInStreak }));
+}

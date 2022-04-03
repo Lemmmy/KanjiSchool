@@ -1,0 +1,40 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.kanji-progress-legend {
+  display: flex;
+  align-items: center;
+
+  .legend-square {
+    display: inline-block;
+
+    width: 16px;
+    height: 16px;
+
+    white-space: nowrap;
+
+    border-radius: @border-radius-base;
+
+    &.legend-burned { background: @green-base; }
+    &.legend-passed { background: @lime-base; }
+  }
+
+  .legend-label {
+    display: inline-block;
+
+    margin-left: @margin-xs;
+    margin-right: @margin-sm;
+
+    font-size: @font-size-sm;
+    color: @text-color-secondary;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: @screen-xl) {
+    display: none;
+  }
+}

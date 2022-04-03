@@ -1,0 +1,120 @@
+// Copyright (c) 2021-2022 Drew Edwards
+// This file is part of KanjiSchool under AGPL-3.0.
+// Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
+
+.review-forecast-card {
+  .numbers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-right: -@margin-md + @margin-xs;
+
+    .review-count {
+      display: inline-block;
+      width: 3em;
+      text-align: right;
+
+      .plus {
+        color: @text-color-secondary;
+      }
+    }
+
+    .review-count-cum {
+      display: inline-block;
+      width: 2em;
+    }
+  }
+
+  .sep {
+    display: inline-block;
+    margin: 0 @margin-sm;
+
+    width: 1px;
+    height: @font-size-base * 1.5;
+    background: fade(@white, 20%);
+  }
+
+  .hour {
+    display: flex;
+    align-items: center;
+
+    .hour-name {
+      display: inline-block;
+      width: 5em;
+      padding: @padding-xs @padding-md;
+
+      border-right: 1px solid fade(@white, 20%);
+    }
+
+    .bar-container {
+      flex: 1;
+      padding-right: @padding-md;
+
+      .bar-inner {
+        display: inline-block;
+
+        height: @font-size-base * 0.8;
+        background: @primary-color;
+
+        &.level-up { background-color: @success-color; }
+        &.radical { background-color: @color-radical; }
+        &.kanji { background-color: @color-kanji; }
+        &.vocabulary { background-color: @color-vocabulary; }
+
+        &:last-child {
+          border-top-right-radius: @font-size-base * 0.4;
+          border-bottom-right-radius: @font-size-base * 0.4;
+        }
+      }
+    }
+
+    .numbers {
+      margin-right: @margin-xs;
+      .sep { height: 41px; }
+    }
+
+    &.now {
+      background: @green-1;
+      color: @green-base;
+
+      .hour-name {
+        font-weight: bold;
+      }
+
+      .plus {
+        color: fade(@green-base, 50%);
+      }
+    }
+  }
+
+  &.hours-12h .hour .hour-name {
+    width: 6.5em;
+  }
+
+  .ant-card-body {
+    padding: 0;
+    max-height: 420px;
+    overflow-y: auto;
+  }
+
+  .ant-collapse-ghost > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
+    padding: 0;
+  }
+
+  // Repair the ghost styles
+  .ant-collapse-item {
+    .ant-collapse-header {
+      border-bottom: 1px solid @border-color-base;
+      user-select: none;
+    }
+
+    &:last-child:not(.ant-collapse-item-active) .ant-collapse-header {
+      border-bottom: none;
+    }
+
+    &:not(:last-child) .ant-collapse-content-box {
+      border-bottom: 1px solid @border-color-base;
+    }
+  }
+}
