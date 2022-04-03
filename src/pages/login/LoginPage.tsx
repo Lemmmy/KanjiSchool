@@ -3,14 +3,17 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState } from "react";
-import { Form, Input, Button, Card, Row, Col } from "antd";
+import { Form, Input, Button, Card, Row, Col, Divider } from "antd";
 
 import { AppLoading } from "@global/AppLoading";
 import { PageLayout } from "@layout/PageLayout";
 
 import * as api from "@api";
 
-import { criticalError, useTimeout } from "@utils";
+import { ExtLink } from "@comp/ExtLink";
+import { criticalError } from "@utils";
+import { LoginFooter } from "./LoginFooter";
+import { DemoCarousel } from "./DemoCarousel";
 
 const UUID_RE = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 
@@ -22,8 +25,6 @@ export function LoginPage(): JSX.Element {
   const [loggingIn, setLoggingIn] = useState(false);
   const [loginFailed, setLoginFailed] = useState(false);
 
-  const [takingLong, setTakingLong] = useState(false);
-
   const [form] = Form.useForm<FormValues>();
 
   async function onSubmit() {
@@ -33,6 +34,7 @@ export function LoginPage(): JSX.Element {
       // Attempt to log in. If it's successful, save the API key.
       setLoggingIn(true);
       setLoginFailed(false);
+
       await api.attemptLogIn(values.apiKey);
     } catch (err) {
       criticalError(err);
@@ -42,20 +44,11 @@ export function LoginPage(): JSX.Element {
     }
   }
 
-  // If we're logging in and it's taking a while, show an extra message
-  useTimeout(() => setTakingLong(true), 3000);
-
   // Show a pre-loader or an error if we're already logged in
   if (loggingIn) {
     // Logging in screen
     return <AppLoading
       title="Logging in..."
-
-      // If it takes more than 3 seconds to log in, show an extra message
-      extra={takingLong && <>
-        If you are having trouble logging in, please create an issue on
-        <a href="https://github.com/Lemmmy/KanjiSchool" target="_blank" rel="noopener noreferrer">GitHub</a>.
-      </>}
 
       // 64px margin because this is wrapped in AppLayout, so we need to push
       // the preloader down a bit to accommodate for the missing nav bar
@@ -64,20 +57,64 @@ export function LoginPage(): JSX.Element {
   }
 
   // Actually show the login page
-  return <PageLayout siteTitle="Log in" noHeader>
-    <Row justify="center" align="middle" style={{ height: "100%" }}>
+  return <PageLayout siteTitle="Log in" noHeader className="login-page-layout">
+    <Row justify="center" align="middle">
       <Col>
-        <Card title="Log in" style={{ minWidth: 512 }}>
+        <Card title="KanjiSchool" style={{ minWidth: 320, width: "100%", maxWidth: 720 }}>
+          {/* Top section - lead text and carousel */}
+          <Row>
+            {/* Lead text */}
+            <Col flex="1">
+              <p>
+                Welcome to KanjiSchool, a client for <ExtLink href="https://www.wanikani.com">WaniKani</ExtLink>, an SRS
+                kanji learning app created by <ExtLink href="https://www.tofugu.com">Tofugu</ExtLink>.
+              </p>
+
+              <p>
+                The client is fully-featured and supports additional
+                functionality such as self-study reviews, mobile support, and
+                offline mode.
+              </p>
+            </Col>
+
+            {/* Carousel */}
+            <Col flex="200px">
+              <DemoCarousel />
+            </Col>
+          </Row>
+
+          <Divider />
+
+          {/* Onboarding */}
+          <p>
+            To get started, enter your <ExtLink href="https://www.wanikani.com/settings/personal_access_tokens">WaniKani API v2 key</ExtLink>.
+            Permissions required:
+          </p>
+
+          <ul className="perms">
+            <li><code>assignments:start</code></li>
+            <li><code>reviews:create</code></li>
+            <li><code>study_materials:create</code></li>
+            <li><code>study_materials:update</code></li>
+          </ul>
+
+          <p>
+            If you don&apos;t yet have a WaniKani account, create
+            one <ExtLink href="https://www.wanikani.com">here</ExtLink>.
+          </p>
+
           <Form
             form={form}
+            layout="inline"
             initialValues={{ apiKey: "" }}
             onFinish={onSubmit}
+            style={{ width: "100%" }}
           >
             {/* Fake username for autofill */}
             <Input
               type="username"
               id="username" name="username"
-              value="API Key"
+              value="WaniKani API Key"
               style={{ position: "absolute", pointerEvents: "none", opacity: 0 }}
             />
 
@@ -96,17 +133,20 @@ export function LoginPage(): JSX.Element {
               help={loginFailed
                 ? "Login failed, incorrect API key?"
                 : undefined}
+
+              style={{ flex: 1 }}
             >
               <Input
                 type="password"
+                name="apiKey"
                 placeholder="API Key"
+                autoComplete="current-password"
               />
             </Form.Item>
 
             {/* Submit button */}
             <Button
               type="primary"
-              style={{ marginTop: 8 }}
               onClick={onSubmit}
             >
               Log in
@@ -114,6 +154,9 @@ export function LoginPage(): JSX.Element {
           </Form>
         </Card>
       </Col>
+    </Row>
+    <Row justify="center" align="middle">
+      <Col><LoginFooter /></Col>
     </Row>
   </PageLayout>;
 }

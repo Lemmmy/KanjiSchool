@@ -6,6 +6,8 @@ import { Alert } from "antd";
 
 import { useUser } from "@api";
 
+import { ExtLink } from "@comp/ExtLink";
+
 export function SubscriptionStatus(): JSX.Element | null {
   const user = useUser();
   if (!user
@@ -17,7 +19,7 @@ export function SubscriptionStatus(): JSX.Element | null {
   return <Alert
     type="warning"
     message={<>
-      You have reached the last free level! Please visit <a href="https://www.wanikani.com" target="_blank" rel="noopener noreferrer">wanikani.com</a> for more information.
+      You have reached the last free level! Please visit <ExtLink href="https://www.wanikani.com">wanikani.com</ExtLink> for more information.
     </>}
     style={{ marginBottom: 24 }}
   />;
