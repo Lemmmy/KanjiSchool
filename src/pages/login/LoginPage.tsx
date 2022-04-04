@@ -15,6 +15,8 @@ import { criticalError } from "@utils";
 import { LoginFooter } from "./LoginFooter";
 import { DemoCarousel } from "./DemoCarousel";
 
+import { useBreakpoint } from "@utils";
+
 const UUID_RE = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 
 interface FormValues {
@@ -26,6 +28,8 @@ export function LoginPage(): JSX.Element {
   const [loginFailed, setLoginFailed] = useState(false);
 
   const [form] = Form.useForm<FormValues>();
+
+  const { md } = useBreakpoint();
 
   async function onSubmit() {
     const values = await form.validateFields();
@@ -77,10 +81,10 @@ export function LoginPage(): JSX.Element {
               </p>
             </Col>
 
-            {/* Carousel */}
-            <Col flex="200px">
+            {/* Carousel on widescreen */}
+            {md && <Col flex="200px">
               <DemoCarousel />
-            </Col>
+            </Col>}
           </Row>
 
           <Divider />
@@ -98,7 +102,7 @@ export function LoginPage(): JSX.Element {
             <li><code>study_materials:update</code></li>
           </ul>
 
-          <p>
+          <p className="login-account-hint">
             If you don&apos;t yet have a WaniKani account, create
             one <ExtLink href="https://www.wanikani.com">here</ExtLink>.
           </p>
@@ -108,7 +112,8 @@ export function LoginPage(): JSX.Element {
             layout="inline"
             initialValues={{ apiKey: "" }}
             onFinish={onSubmit}
-            style={{ width: "100%" }}
+            className="login-form"
+            style={{ width:"100%" }}
           >
             {/* Fake username for autofill */}
             <Input
@@ -134,6 +139,7 @@ export function LoginPage(): JSX.Element {
                 ? "Login failed, incorrect API key?"
                 : undefined}
 
+              className="login-api-key"
               style={{ flex: 1 }}
             >
               <Input
@@ -148,13 +154,24 @@ export function LoginPage(): JSX.Element {
             <Button
               type="primary"
               onClick={onSubmit}
+              className="login-submit"
             >
               Log in
             </Button>
           </Form>
+
+          {/* Carousel on mobile */}
+          {!md && <>
+            <Divider />
+            <Row className="demo-carousel-row-mobile">
+              <Col><DemoCarousel /></Col>
+            </Row>
+          </>}
         </Card>
       </Col>
     </Row>
+
+    {/* Footer */}
     <Row justify="center" align="middle">
       <Col><LoginFooter /></Col>
     </Row>
