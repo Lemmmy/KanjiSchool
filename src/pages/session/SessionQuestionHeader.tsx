@@ -12,8 +12,14 @@ import { OnSkipFn } from "./SessionQuestionsPage";
 import { QuestionSrsStage } from "./QuestionSrsStage";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 
-import { startCase } from "lodash-es";
-import { nts, useBooleanSetting, useBreakpoint } from "@utils";
+import { startCase, kebabCase } from "lodash-es";
+import { nts, useBooleanSetting, useBreakpoint, useStringSetting } from "@utils";
+
+/** High contrast/inverted color mode for the 'Reading/Meaning' type header */
+export type QuestionHeaderTypeColor = "DEFAULT"
+  | "DEFAULT_HIGH_CONTRAST"
+  | "INVERTED"
+  | "INVERTED_HIGH_CONTRAST";
 
 interface Props {
   questionCount?: number;
@@ -57,7 +63,13 @@ export function SessionQuestionHeader({
     ja: questionType === "reading",
     incorrect: incorrectAnswer !== undefined
   });
-  const questionTypeClasses = classNames("session-question-type", "type-" + questionType);
+
+  const questionTypeHeaderColor = useStringSetting<QuestionHeaderTypeColor>("questionHeaderTypeColor");
+  const questionTypeClasses = classNames(
+    "session-question-type",
+    "type-" + questionType,
+    "color-" + kebabCase(questionTypeHeaderColor)
+  );
 
   return <div className={classes}>
     {/* Subject top */}

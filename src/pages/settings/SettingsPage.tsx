@@ -34,6 +34,13 @@ const SKIP_TYPES = [
   { value: "REMOVE", label: "Remove the subject from the session entirely" }
 ];
 
+const QUESTION_HEADER_TYPE_COLORS = [
+  { value: "DEFAULT", label: "White meaning, black reading (default)" },
+  { value: "DEFAULT_HIGH_CONTRAST", label: "High contrast white meaning, black reading" },
+  { value: "INVERTED", label: "Black meaning, white reading" },
+  { value: "INVERTED_HIGH_CONTRAST", label: "High contrast black meaning, white reading" },
+];
+
 const NEAR_MATCH_ACTIONS = [
   { value: "ACCEPT", label: "Silently accept the answer" },
   { value: "ACCEPT_NOTIFY", label: "Accept the answer and show a message" },
@@ -85,6 +92,7 @@ export function SettingsPage(): JSX.Element {
           "General session settings",
           <SettingOutlined />,
           [
+            dropdownSetting("questionHeaderTypeColor", "Colors of the 'Meaning/Reading' header on questions", undefined, QUESTION_HEADER_TYPE_COLORS),
             booleanSetting("shakeCharactersIncorrect", "Shake the subject characters on an incorrect answer"),
             booleanSetting("skipEnabled", "Allow skipping questions"),
             dropdownSetting("skipType", "Question skip behavior", undefined, SKIP_TYPES),

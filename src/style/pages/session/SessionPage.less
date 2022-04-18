@@ -149,6 +149,25 @@
       }
     }
 
+    .session-question-type {
+      &.color-default {
+        &.type-meaning { background: #1f1f1f; color: @white; }
+        &.type-reading { background: @body-background; color: @text-color-secondary; }
+      }
+      &.color-default-high-contrast {
+        &.type-meaning { background: #bfbfbf; color: @black; }
+        &.type-reading { background: @black; color: @white; }
+      }
+      &.color-inverted {
+        &.type-meaning { background: @body-background; color: @text-color-secondary; }
+        &.type-reading { background: #1f1f1f; color: @white; }
+      }
+      &.color-inverted-high-contrast {
+        &.type-meaning { background: @black; color: @white; }
+        &.type-reading { background: #bfbfbf; color: @black; }
+      }
+    }
+
     .session-question-incorrect-answer {
       margin-top: -@margin-sm;
       margin-bottom: @margin-md;

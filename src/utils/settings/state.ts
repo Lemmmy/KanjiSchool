@@ -4,6 +4,7 @@
 
 import { ThemeName, PaletteName } from "@global/theme";
 import { ReviewForecastGrouping } from "@pages/dashboard/review-forecast/ReviewForecastCard";
+import { QuestionHeaderTypeColor } from "@pages/session/SessionQuestionHeader";
 import { SkipType } from "@session";
 import { LessonOrder } from "@session/order/LessonOrder";
 import { ReviewOrder } from "@session/order/ReviewOrder";
@@ -69,6 +70,8 @@ export interface SettingsStateBase {
   // ===========================================================================
   // GENERAL SESSION SETTINGS
   // ===========================================================================
+  /** Colors of the 'Meaning/Reading' header on questions. */
+  questionHeaderTypeColor: QuestionHeaderTypeColor;
   /** Shake the subject characters on an incorrect answer. */
   shakeCharactersIncorrect: boolean;
   /** Allow skipping questions. */
@@ -182,6 +185,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   subjectOnyomiReadingsKatakana: true,
   subjectCharactersUseCharBlocks: false,
 
+  questionHeaderTypeColor: "DEFAULT",
   shakeCharactersIncorrect: true,
   skipEnabled: true,
   skipType: "PUT_END",
