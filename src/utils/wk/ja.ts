@@ -4,6 +4,11 @@
 
 import { AnyReading, ApiSubjectKanjiReading } from "@api";
 
+const HKC_RE = /[^ぁ-んァ-ンー]/;
+export function hasNonHiraganaKatakanaChoonpu(character: string): boolean {
+  return HKC_RE.test(character);
+}
+
 /** Convert Hiragana characters in a string to Katakana. */
 export function toKatakana(inp?: string): string {
   if (!inp) return "";

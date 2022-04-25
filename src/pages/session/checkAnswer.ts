@@ -6,7 +6,8 @@ import { ApiSubject, ApiSubjectKanjiInner, ApiSubjectVocabularyInner } from "@ap
 
 import {
   fuzzyMeaningMatches, readingMatches, DigraphMatch, readingMatchesDigraph,
-  NearMatchAction
+  NearMatchAction,
+  hasNonHiraganaKatakanaChoonpu
 } from "@utils";
 
 import Debug from "debug";
@@ -104,6 +105,23 @@ export function checkAnswer(
       }
     }
 
+    // If the user typed any non-hiragana/katakana characters (including ー),
+    // shake and give them a chance to try again. I checked all existing
+    // subjects and this won't cause any problems with them, but to be on the
+    // safe side, we should bypass this check if any of the readings for this
+    // subject also contain any non-hiragana/katakana characters.
+    let shouldLatinCheck = true;
+    for (const r of readingSubject.readings) {
+      if (hasNonHiraganaKatakanaChoonpu(r.reading)) {
+        shouldLatinCheck = false;
+        break;
+      }
+    }
+
+    if (shouldLatinCheck && hasNonHiraganaKatakanaChoonpu(givenAnswer))
+      return { ok: false, retry: true, givenAnswer };
+
+    // All else failed, reject the answer.
     return { ok: false, retry: false, givenAnswer };
   } else {
     throw new Error("Invalid question type passed to checkAnswer");
