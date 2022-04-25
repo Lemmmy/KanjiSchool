@@ -140,7 +140,7 @@ export function useVocabAudio(
           "can_play": canPlay
         }}});
 
-        notification.error({ message: "Failed to decode audio, see console for details." });
+        // notification.error({ message: "Failed to decode audio, see console for details." });
         setDisabled(true);
         return;
       }
