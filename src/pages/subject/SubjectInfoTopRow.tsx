@@ -8,6 +8,7 @@ import { Row, Col } from "antd";
 import { ApiSubject, ApiSubjectKanjiInner, ApiSubjectKanjiReading, ApiSubjectVocabulary } from "@api";
 
 import { CommaList } from "./CommaList";
+import { SubjectHintStage } from "./hintStages";
 import { HintStageButtons } from "./HintStageButtons";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { AudioButtons } from "@comp/subjects/AudioButtons";
@@ -20,7 +21,7 @@ interface Props {
   hasSingleCharacter?: boolean;
   charactersMax?: number;
 
-  hintStage?: 0 | 1 | 2 | undefined;
+  hintStage?: SubjectHintStage | undefined;
   onNextHintStage?: () => void;
 
   hideMeanings?: boolean;

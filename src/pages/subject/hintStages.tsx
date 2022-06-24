@@ -63,7 +63,7 @@ import { SubjectType } from "@api";
  * HS1: Add reading mnemonic
  * HS2: All
  */
-export type SubjectHintStage = 0 | 1 | 2;
+export type SubjectHintStage = -1 | 0 | 1 | 2;
 
 export type HintStageObject = "meanings" | "meaning_mnemonic"
   | "reading_mnemonic" | "used_in_kanji" | "used_in_vocabulary"
@@ -84,6 +84,7 @@ export const HINT_STAGE_OBJECTS: HintStageObject[] = [
 export const HINT_STAGES: Record<SubjectType, Record<"meaning" | "reading", Record<SubjectHintStage, Partial<Record<HintStageObject, true>>>>> = {
   radical: {
     meaning: {
+      "-1": {},
       0: {
         "meanings": true
       },
@@ -99,10 +100,11 @@ export const HINT_STAGES: Record<SubjectType, Record<"meaning" | "reading", Reco
         "progression": true
       }
     },
-    reading: { 0: {}, 1: {}, 2: {} }
+    reading: { "-1": {}, 0: {}, 1: {}, 2: {} }
   },
   kanji: {
     meaning: {
+      "-1": {},
       0: {
         "meanings": true
       },
@@ -128,6 +130,7 @@ export const HINT_STAGES: Record<SubjectType, Record<"meaning" | "reading", Reco
       }
     },
     reading: {
+      "-1": {},
       0: {
         "readings": true
       },
@@ -152,6 +155,7 @@ export const HINT_STAGES: Record<SubjectType, Record<"meaning" | "reading", Reco
   },
   vocabulary: {
     meaning: {
+      "-1": {},
       0: {
         "meanings": true
       },
@@ -176,6 +180,7 @@ export const HINT_STAGES: Record<SubjectType, Record<"meaning" | "reading", Reco
       }
     },
     reading: {
+      "-1": {},
       0: {
         "readings": true
       },
@@ -207,5 +212,5 @@ export function shouldShowObject(
   object: HintStageObject
 ): boolean {
   if (!useHintStage || !questionType) return true;
-  return !!HINT_STAGES[subjectType][questionType][hintStage.toString() as "0" | "1" | "2"][object];
+  return !!HINT_STAGES[subjectType][questionType][hintStage.toString() as "-1" | "0" | "1" | "2"][object];
 }

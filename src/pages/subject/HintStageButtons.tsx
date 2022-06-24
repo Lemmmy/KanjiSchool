@@ -5,8 +5,10 @@
 import { Button, Col, Tooltip } from "antd";
 import { GlobalHotKeys } from "react-hotkeys";
 
+import { SubjectHintStage } from "./hintStages";
+
 interface Props {
-  hintStage?: 0 | 1 | 2 | undefined;
+  hintStage?: SubjectHintStage | undefined;
   onNextHintStage?: () => void;
 }
 
@@ -14,21 +16,24 @@ const KEY_MAP = {
   NEXT_STAGE: "h"
 };
 
+const STAGE_TEXTS: Record<SubjectHintStage, [JSX.Element | null, JSX.Element | null]> = {
+  "-1": [<>Show hints</>, <>Show answer hints <b>(H)</b></>],
+  "0":  [<>Show more</> , <>Show more answer hints <b>(H)</b></>],
+  "1":  [<>Show all</>  , <>Show full answer hints <b>(H)</b></>],
+  "2":  [null, null],
+};
+
 export function HintStageButtons({
   hintStage,
   onNextHintStage = () => { /* noop */},
 }: Props): JSX.Element | null {
-  if (hintStage === 0 || hintStage === 1) {
+  if (hintStage !== undefined && hintStage < 2) {
     return <>
       {/* Tooltip with hotkey info */}
-      <Tooltip
-        title={hintStage === 0
-          ? <>Show more answer hints <b>(H)</b></>
-          : <>Show full subject hints <b>(H)</b></>}
-      >
+      <Tooltip title={STAGE_TEXTS[hintStage][1]}>
         <Col>
           <Button type="primary" onClick={onNextHintStage}>
-            {hintStage === 0 ? "Show more" : "Show all"}
+            {STAGE_TEXTS[hintStage][0]}
           </Button>
         </Col>
       </Tooltip>

@@ -94,6 +94,7 @@ export function SettingsPage(): JSX.Element {
           [
             dropdownSetting("questionHeaderTypeColor", "Colors of the 'Meaning/Reading' header on questions", undefined, QUESTION_HEADER_TYPE_COLORS),
             booleanSetting("shakeCharactersIncorrect", "Shake the subject characters on an incorrect answer"),
+            booleanSetting("hideHintsOnIncorrect", "Hide all hints when getting an answer incorrect or clicking 'Don't know'"),
             booleanSetting("skipEnabled", "Allow skipping questions"),
             dropdownSetting("skipType", "Question skip behavior", undefined, SKIP_TYPES),
             booleanSetting("skipShortcut", "Allow skipping questions via the keyboard"),

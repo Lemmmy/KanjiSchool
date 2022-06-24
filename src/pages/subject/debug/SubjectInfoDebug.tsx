@@ -5,7 +5,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Space, Divider, Descriptions, Tabs, Typography, Radio, Checkbox, Row, Col } from "antd";
 
-import { HintStageObject, HINT_STAGE_OBJECTS } from "../hintStages";
+import { HintStageObject, HINT_STAGE_OBJECTS, SubjectHintStage } from "../hintStages";
 import { SubjectInfoProps } from "../SubjectInfo";
 
 import * as api from "@api";
@@ -17,7 +17,7 @@ interface Props extends SubjectInfoProps {
   setUseHintStage: Dispatch<SetStateAction<boolean | undefined>>;
   setQuestionType: Dispatch<SetStateAction<"meaning" | "reading" | undefined>>;
   hintStage: number;
-  setHintStage: Dispatch<SetStateAction<0 | 1 | 2>>;
+  setHintStage: Dispatch<SetStateAction<SubjectHintStage>>;
   show: (object: HintStageObject) => boolean;
 }
 

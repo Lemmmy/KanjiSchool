@@ -30,6 +30,7 @@ import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { VocabList } from "@comp/subjects/lists/vocab";
 
 import { useBooleanSetting } from "@utils";
+import { clamp } from "lodash-es";
 
 export interface SubjectInfoProps {
   subject: StoredSubject;
@@ -60,8 +61,10 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   const [questionTypeOverride, setQuestionTypeOverride] = useState<"meaning" | "reading">();
   const questionType = questionTypeOverride ?? props.questionType;
 
-  const [hintStage, setHintStage] = useState<SubjectHintStage>(0);
-  const nextHintStage = useCallback(() => setHintStage(s => s === 0 ? 1 : 2), []);
+  const defaultHintStage = useBooleanSetting("hideHintsOnIncorrect") ? -1 : 0;
+  const [hintStage, setHintStage] = useState<SubjectHintStage>(defaultHintStage);
+  const nextHintStage = useCallback(() =>
+    setHintStage(s => clamp(s + 1, -1, 2) as SubjectHintStage), []);
 
   const objectType = subject.object;
   const { characters, meaning_mnemonic } = subject.data;
