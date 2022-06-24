@@ -6,7 +6,7 @@ import { useState, useCallback, useMemo, useContext, createContext, FC, ReactNod
 import { Menu, Dropdown } from "antd";
 import {
   MoreOutlined, SettingOutlined, BugOutlined, SearchOutlined, ReadOutlined,
-  MacCommandOutlined, ReloadOutlined
+  MacCommandOutlined, ReloadOutlined, GithubOutlined, UnorderedListOutlined
 } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
@@ -22,6 +22,7 @@ import { isLocalhost } from "@utils";
 
 import Debug from "debug";
 import { MenuUserInfo } from "./UserInfo";
+import { ExtLink } from "@comp/ExtLink";
 const debug = Debug("kanjischool:top-menu");
 
 export type Opts = React.ReactNode | undefined;
@@ -112,6 +113,25 @@ export function TopMenu(): JSX.Element {
             <BugOutlined />Debug
           </ConditionalLink>
         </Menu.Item>}
+
+        <Menu.Divider key="menu-divider-4" />
+
+        {/* GitHub link */}
+        <Menu.Item key="menu-github">
+          <ExtLink href="https://github.com/Lemmmy/KanjiSchool">
+            <GithubOutlined />GitHub
+          </ExtLink>
+        </Menu.Item>
+        <Menu.Item key="menu-github-changelog">
+          <ExtLink href="https://github.com/Lemmmy/KanjiSchool/commits">
+            <UnorderedListOutlined />Changelog
+          </ExtLink>
+        </Menu.Item>
+        <Menu.Item key="menu-github-issues">
+          <ExtLink href="https://github.com/Lemmmy/KanjiSchool/issues">
+            <BugOutlined />Report issues
+          </ExtLink>
+        </Menu.Item>
       </Menu>}
     >
       <div className="site-header-element"><MoreOutlined /></div>

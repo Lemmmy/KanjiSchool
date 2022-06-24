@@ -46,4 +46,9 @@ export const TIPS: ReactNode[] = [
   <>
     Quickly start a search with <Text keyboard>{ctrl}+K</Text>.
   </>,
+  <>
+    If you have trouble spoiling yourself with answer hints, you can fully hide
+    them by default by enabling &ldquo;Hide all hints&rdquo; in
+    &ldquo;General session settings&rdquo;.
+  </>,
 ];
