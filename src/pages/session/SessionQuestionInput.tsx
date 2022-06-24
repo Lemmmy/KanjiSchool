@@ -132,6 +132,9 @@ type HookRes = [
 
 const FORCE_FOCUS_NODES = ["input", "button", "textarea"];
 
+const INPUT_DEBOUNCE = 250; // TODO: Tweak this or make it configurable
+let lastInput = -1;
+
 export function useSessionQuestionInput(
   isCurrent: boolean,
   questionType: "meaning" | "reading",
@@ -158,6 +161,13 @@ export function useSessionQuestionInput(
       nearMatchAction, meaningSynonyms
     );
     debug("verdict - ok: %o  retry: %o", verdict.ok, verdict.retry);
+
+    const inputTime = new Date().getTime();
+    if (!verdict.ok && inputTime < lastInput + INPUT_DEBOUNCE) {
+      debug("input debounce - ignoring non-ok verdict submission");
+      return;
+    }
+    lastInput = inputTime;
 
     if (!verdict.ok && verdict.retry) {
       setInputShake(true);
