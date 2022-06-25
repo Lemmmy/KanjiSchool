@@ -167,9 +167,12 @@ export function SessionQuestionsPage(): JSX.Element {
   const onIncorrectNext = useCallback(() => submitAnswer(false), [submitAnswer]);
 
   // Keyboard shortcuts
-  const onUndoShortcut = useCallback(() => {
+  const onUndoShortcut = useCallback((e?: KeyboardEvent) => {
     debug("undo shortcut pressed");
-    if (incorrectAnswer !== undefined) onIncorrectUndo();
+    if (incorrectAnswer !== undefined) {
+      e?.preventDefault();
+      onIncorrectUndo();
+    }
   }, [incorrectAnswer, onIncorrectUndo]);
   const onSpace = useCallback((e?: KeyboardEvent) => {
     debug("space pressed");
