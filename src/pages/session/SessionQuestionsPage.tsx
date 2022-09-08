@@ -12,8 +12,7 @@ import * as actions from "@actions/SessionActions";
 
 import {
   submitQuestionAnswer, chooseQuestion, SessionItem, skipQuestion, SkipType,
-  showSkipNotification,
-  showNearMatchNotification
+  showSkipNotification, showNearMatchNotification, UndoType
 } from "@session";
 
 import { useVocabAudio } from "@comp/subjects/AudioButton";
@@ -159,10 +158,12 @@ export function SessionQuestionsPage(): JSX.Element {
     }
   }, [history, question, skipEnabled, skipNotification, skipType]);
 
+  const undoEnabled = useStringSetting<UndoType>("undoEnabled");
   const onIncorrectUndo = useCallback(() => {
+    if (undoEnabled !== "ENABLED") return;
     // Remove the incorrect answer and try the question again
     dispatch(actions.setIncorrectAnswer(undefined));
-  }, [dispatch]);
+  }, [dispatch, undoEnabled]);
 
   const onIncorrectNext = useCallback(() => submitAnswer(false), [submitAnswer]);
 

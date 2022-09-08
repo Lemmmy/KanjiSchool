@@ -5,7 +5,7 @@
 import { ThemeName, PaletteName } from "@global/theme";
 import { ReviewForecastGrouping } from "@pages/dashboard/review-forecast/ReviewForecastCard";
 import { QuestionHeaderTypeColor } from "@pages/session/SessionQuestionHeader";
-import { SkipType } from "@session";
+import { SkipType, UndoType } from "@session";
 import { LessonOrder } from "@session/order/LessonOrder";
 import { ReviewOrder } from "@session/order/ReviewOrder";
 import { SessionPriority } from "@session/order/SessionPriority";
@@ -85,6 +85,8 @@ export interface SettingsStateBase {
   skipShortcut: boolean;
   /** Show a notification when skipping via the keyboard. */
   skipNotification: boolean;
+  /** Allow undoing incorrect answers. */
+  undoEnabled: UndoType;
   /** What to do when an answer is close but not quite correct. */
   nearMatchAction: NearMatchAction;
   /** Show the session progress bar. */
@@ -195,6 +197,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   skipType: "PUT_END",
   skipShortcut: true,
   skipNotification: true,
+  undoEnabled: "ENABLED",
   nearMatchAction: "ACCEPT_NOTIFY",
   sessionProgressBar: true,
   sessionProgressStarted: true,

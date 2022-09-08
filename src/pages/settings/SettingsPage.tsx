@@ -34,6 +34,12 @@ const SKIP_TYPES = [
   { value: "REMOVE", label: "Remove the subject from the session entirely" }
 ];
 
+const UNDO_TYPES = [
+  { value: "ENABLED", label: "Undo button and shortcut are enabled" },
+  { value: "DISABLED", label: "Undo button and shortcut are disabled" },
+  { value: "HIDDEN", label: "Undo button is hidden and shortcut is disabled" }
+];
+
 const QUESTION_HEADER_TYPE_COLORS = [
   { value: "DEFAULT", label: "White meaning, black reading (default)" },
   { value: "DEFAULT_HIGH_CONTRAST", label: "High contrast white meaning, black reading" },
@@ -99,6 +105,7 @@ export function SettingsPage(): JSX.Element {
             dropdownSetting("skipType", "Question skip behavior", undefined, SKIP_TYPES),
             booleanSetting("skipShortcut", "Allow skipping questions via the keyboard"),
             booleanSetting("skipNotification", "Show a notification when skipping via the keyboard"),
+            dropdownSetting("undoEnabled", "Undo button", undefined, UNDO_TYPES),
             dropdownSetting("nearMatchAction", "What to do when an answer is close but not quite correct", undefined, NEAR_MATCH_ACTIONS),
             booleanSetting("sessionProgressBar", "Show the session progress bar"),
             booleanSetting("sessionProgressStarted", "Show in-progress questions in the session progress bar"),

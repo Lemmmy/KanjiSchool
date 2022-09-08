@@ -58,3 +58,12 @@ export interface SessionResults {
   correctSubjectIds: number[];
   incorrectSubjectIds: number[];
 }
+
+/**
+ * Whether undoing a question is allowed.
+ *
+ * - ENABLED - The undo button and shortcut are enabled.
+ * - DISABLED - The undo button and shortcut are disabled.
+ * - HIDDEN - The undo button is hidden and the shortcut is disabled.
+ */
+export type UndoType = "ENABLED" | "DISABLED" | "HIDDEN";

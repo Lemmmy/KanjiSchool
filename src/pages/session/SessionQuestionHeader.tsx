@@ -11,9 +11,11 @@ import { ApiSubject } from "@api";
 import { OnSkipFn } from "./SessionQuestionsPage";
 import { QuestionSrsStage } from "./QuestionSrsStage";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
+import { UndoType } from "@session";
 
 import { startCase, kebabCase } from "lodash-es";
 import { nts, useBooleanSetting, useBreakpoint, useStringSetting } from "@utils";
+import { UndoButton } from "./UndoButton";
 
 /** High contrast/inverted color mode for the 'Reading/Meaning' type header */
 export type QuestionHeaderTypeColor = "DEFAULT"
@@ -104,15 +106,8 @@ export function SessionQuestionHeader({
       <Col span={12} className="session-button-left-col">
         {incorrectAnswer !== undefined
           ? (
-            // Undo
-            <Button
-              className="session-button-left session-button-undo"
-              danger
-              onClick={onUndo}
-              {...buttonProps}
-            >
-              Undo
-            </Button>
+            // Undo. Only shown if enabled/disabled (i.e. not hidden)
+            <UndoButton onUndo={onUndo} {...buttonProps} />
           )
           : (
             // Don't know
