@@ -23,6 +23,12 @@ export interface SettingsStateBase {
   sitePalette: PaletteName;
 
   // ===========================================================================
+  // ACCESSIBILITY SETTINGS
+  // ===========================================================================
+  /** Remove some animations. The browser setting may override this  */
+  preferReducedMotion: boolean;
+
+  // ===========================================================================
   // DASHBOARD SETTINGS
   // ===========================================================================
   /** Show the current streak on the dashboard. */
@@ -169,6 +175,8 @@ export type SettingsState = Readonly<SettingsStateBase>;
 export const DEFAULT_SETTINGS: SettingsState = {
   siteTheme: "dark",
   sitePalette: "kanjiSchool",
+
+  preferReducedMotion: false,
 
   dashboardCurrentStreak: true,
   dashboardLevelProgressPassed: true,

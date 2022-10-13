@@ -4,6 +4,7 @@
 
 import { Menu } from "antd";
 import { HomeOutlined, BugOutlined, SettingOutlined, BgColorsOutlined, SearchOutlined } from "@ant-design/icons";
+import { AccessibilityFilled } from "@comp/icons/AccessibilityFilled";
 
 import { PageLayout } from "@layout/PageLayout";
 import { getSettingsGroup, booleanSetting, integerSetting, dropdownSetting } from "./SettingsGroup";
@@ -68,10 +69,19 @@ export function SettingsPage(): JSX.Element {
           <BgColorsOutlined />,
           [
             dropdownSetting("siteTheme", "Site color theme", undefined, THEME_NAMES),
-            dropdownSetting("sitePalette", "Color palette for SRS stages and subject types", undefined, PALETTE_NAMES),
+            dropdownSetting("sitePalette", "Color palette for SRS stages and subject types", undefined, PALETTE_NAMES)
           ]
           // TODO: Color palette previews
         )}
+
+        {getSettingsGroup(
+          "Accessibility",
+          <AccessibilityFilled />,
+          [
+            booleanSetting("preferReducedMotion", "Prefer reduced motion", "Disable some animations, such as transitions during sessions. The browser or operating system settings may override this."),
+          ]
+          // TODO: Color palette previews
+          )}
 
         {getSettingsGroup(
           "Dashboard settings",

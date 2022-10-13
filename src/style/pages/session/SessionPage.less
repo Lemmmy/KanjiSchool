@@ -32,7 +32,6 @@
       transition: opacity 250ms ease, transform 250ms ease;
       opacity: 0;
 
-
       @media (max-width: @screen-md) {
         transform: scale(0.95);
       }
@@ -240,7 +239,19 @@
 
   .session-question-incorrect-container {
     // Attempt to work around keyboard screen shifting on mobile
-    margin-top: -8px;
+    @media (max-width: @screen-md) {
+      margin-top: -8px;
+    }
+  }
+}
+
+body.reduced-motion {
+  .session-page .session-page-inner-container {
+    transition: none !important;
+
+    &-exit, &-exit-active {
+      opacity: 0;
+    }
   }
 }
 

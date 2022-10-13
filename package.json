@@ -2,10 +2,11 @@
   "name": "kanjischool",
   "license": "AGPL-3.0-or-later",
   "author": "Lemmmy",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "private": true,
   "repository": "github:Lemmmy/KanjiSchool",
   "dependencies": {
+    "@anatoliygatt/use-prefers-reduced-motion": "^1.0.5",
     "@ant-design/icons": "^4.6.2",
     "@ctrl/tinycolor": "^3.4.0",
     "@sentry/react": "^6.4.0",

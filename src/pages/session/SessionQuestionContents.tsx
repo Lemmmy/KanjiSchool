@@ -16,7 +16,7 @@ import { SubjectInfo } from "@pages/subject/SubjectInfo";
 import { DigraphAlert } from "./DigraphAlert";
 
 import { StoredSubject } from "@api";
-import { useBooleanSetting } from "@utils";
+import { useBooleanSetting, useReducedMotion } from "@utils";
 
 import { CSSTransition } from "react-transition-group";
 
@@ -33,25 +33,43 @@ interface Props {
   onSkip: OnSkipFn;
 }
 
-export function SessionQuestionContents(props: Props): JSX.Element {
-  const { type, itemId, current } = props;
 
-  const incorrectAnswer = useSelector((s: RootState) => s.session.incorrectAnswer);
-
-  return <CSSTransition
-    key={`${itemId}-${type}`}
+const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
+  shouldWrap: boolean,
+  transitionKey: string,
+  current: boolean,
+  children: JSX.Element
+}) => shouldWrap
+  ? <CSSTransition
+    key={transitionKey}
     in={current}
     appear
     timeout={300}
     classNames="session-page-inner-container"
     unmountOnExit
   >
+    {children}
+  </CSSTransition>
+  : (current ? children : null);
+
+export function SessionQuestionContents(props: Props): JSX.Element {
+  const { type, itemId, current } = props;
+
+  const incorrectAnswer = useSelector((s: RootState) => s.session.incorrectAnswer);
+
+  const reducedMotion = useReducedMotion();
+
+  return <Wrapper
+    shouldWrap={!reducedMotion}
+    transitionKey={`${itemId}-${type}`}
+    current={current}
+  >
     <div className="session-page-inner-container">
       {incorrectAnswer !== undefined
         ? <IncorrectAnswerPart incorrectAnswer={incorrectAnswer} {...props} />
         : <SessionQuestionPart {...props} />}
     </div>
-  </CSSTransition>;
+  </Wrapper>;
 }
 
 function IncorrectAnswerPart({

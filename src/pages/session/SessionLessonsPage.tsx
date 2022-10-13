@@ -9,10 +9,11 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import * as actions from "@actions/SessionActions";
 
 import { SubjectInfo } from "@pages/subject/SubjectInfo";
+import { StoredSubject, useSubjects } from "@api";
 
 import { CSSTransition } from "react-transition-group";
 import { GlobalHotKeys } from "react-hotkeys";
-import { useSubjects } from "@api";
+import { useReducedMotion } from "@utils";
 
 const KEY_MAP = {
   PREV: ["backspace", "left"],
@@ -29,31 +30,15 @@ export function SessionLessonsPage(): JSX.Element {
   const onNextLesson = useCallback(() => dispatch(actions.nextLesson()), [dispatch]);
 
   const contents = <>{subjects && items && Object.entries(items).map(([id, item]) => (
-    <CSSTransition
-      key={id}
-      in={lessonCounter.toString() === id}
-      appear
-      timeout={250}
-      classNames="session-page-inner-container"
-      unmountOnExit
-    >
-      <div className="session-lesson-container session-page-inner-container">
-        <SubjectInfo
-          subject={subjects[item.subjectId]}
-          questionType="meaning"
-          charactersMax={96}
-
-          lessonCounter={lessonCounter}
-          lessonsTotal={items.length}
-          onPrevLesson={onPrevLesson}
-          onNextLesson={onNextLesson}
-
-          autoPlayAudio={true}
-
-          showToc
-        />
-      </div>
-    </CSSTransition>
+    <SessionLessonContents
+      id={id}
+      current={lessonCounter.toString() === id}
+      subject={subjects[item.subjectId]}
+      lessonCounter={lessonCounter}
+      lessonsTotal={items.length}
+      onPrevLesson={onPrevLesson}
+      onNextLesson={onNextLesson}
+    />
   ))}</>;
 
   return <GlobalHotKeys
@@ -66,4 +51,62 @@ export function SessionLessonsPage(): JSX.Element {
   >
     {contents}
   </GlobalHotKeys>;
+}
+
+const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
+  shouldWrap: boolean,
+  transitionKey: string,
+  current: boolean,
+  children: JSX.Element
+}) => shouldWrap
+  ? <CSSTransition
+    key={transitionKey}
+    in={current}
+    appear
+    timeout={250}
+    classNames="session-page-inner-container"
+    unmountOnExit
+  >
+    {children}
+  </CSSTransition>
+  : (current ? children : null);
+
+function SessionLessonContents({
+  id, current,
+  subject,
+  lessonCounter, lessonsTotal,
+  onPrevLesson, onNextLesson
+}: {
+  id: string,
+  current: boolean,
+  subject: StoredSubject,
+  lessonCounter?: number,
+  lessonsTotal?: number,
+  onPrevLesson?: () => void,
+  onNextLesson?: () => void
+}): JSX.Element {
+  const reducedMotion = useReducedMotion();
+
+  return <Wrapper
+    shouldWrap={!reducedMotion}
+    transitionKey={id}
+    current={current}
+  >
+    <div className="session-lesson-container session-page-inner-container">
+      <SubjectInfo
+        subject={subject}
+        questionType="meaning"
+        charactersMax={96}
+
+        lessonCounter={lessonCounter}
+        lessonsTotal={lessonsTotal}
+        onPrevLesson={onPrevLesson}
+        onNextLesson={onNextLesson}
+
+        autoPlayAudio={true}
+
+        showToc
+      />
+    </div>
+  </Wrapper>;
 }

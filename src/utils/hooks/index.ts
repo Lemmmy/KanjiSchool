@@ -6,4 +6,5 @@ export * from "./useBreakpoint";
 export * from "./useInterval";
 export * from "./useOnlineStatus";
 export * from "./usePalette";
+export * from "./useReducedMotion";
 export * from "./useTimeout";

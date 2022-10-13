@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@anatoliygatt/use-prefers-reduced-motion@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@anatoliygatt/use-prefers-reduced-motion/-/use-prefers-reduced-motion-1.0.5.tgz#705b0d87ae956b79287a9a2486f416ea5312bed5"
+  integrity sha512-3LZQcPPz4duBjM2xBFJZBrNCMmhjPIxvNaI7rEV5AEatnhcRvi8Fad1SWD7I3QXOhtdudJeAup5c7MxavZml7Q==
+
 "@ant-design/colors@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-6.0.0.tgz#9b9366257cffcc47db42b9d0203bb592c13c0298"
