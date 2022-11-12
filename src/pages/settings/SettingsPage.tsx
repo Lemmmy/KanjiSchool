@@ -81,7 +81,7 @@ export function SettingsPage(): JSX.Element {
             booleanSetting("preferReducedMotion", "Prefer reduced motion", "Disable some animations, such as transitions during sessions. The browser or operating system settings may override this."),
           ]
           // TODO: Color palette previews
-          )}
+        )}
 
         {getSettingsGroup(
           "Dashboard settings",
