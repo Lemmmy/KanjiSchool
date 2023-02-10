@@ -38,5 +38,13 @@ export interface SetPresetsPayload {
   presets: Preset[];
 }
 export const setPresets = createAction(constants.SET_PRESETS)<SetPresetsPayload>();
+export const setCustomFonts = createAction(constants.SET_CUSTOM_FONTS)<string[]>();
+
+export interface SetSupportedFontPayload {
+  font: string;
+  supported: boolean;
+}
+export const setSupportedFont = createAction(constants.SET_SUPPORTED_FONT)<SetSupportedFontPayload>();
+export const setSupportedFonts = createAction(constants.SET_SUPPORTED_FONTS)<Record<string, boolean>>();
 
 export const setTip = createAction(constants.SET_TIP)<number>();

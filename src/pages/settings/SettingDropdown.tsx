@@ -2,6 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import { ReactNode } from "react";
 import { Select } from "antd";
 
 import { SettingName, setStringSetting, useStringSetting } from "@utils/settings";
@@ -10,7 +11,7 @@ import { SettingDescription } from "./SettingDescription";
 interface Props<T extends string> {
   setting: SettingName<T>;
   title?: string;
-  description?: string;
+  description?: ReactNode;
   options: { label: string; value: T }[];
 }
 

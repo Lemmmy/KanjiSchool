@@ -14,8 +14,10 @@ import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { UndoType } from "@session";
 
 import { startCase, kebabCase } from "lodash-es";
-import { nts, useBooleanSetting, useBreakpoint, useStringSetting } from "@utils";
+import { nts, useBooleanSetting, useBreakpoint, useRandomFont, useStringSetting } from "@utils";
 import { UndoButton } from "./UndoButton";
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
 
 /** High contrast/inverted color mode for the 'Reading/Meaning' type header */
 export type QuestionHeaderTypeColor = "DEFAULT"
@@ -61,17 +63,29 @@ export function SessionQuestionHeader({
   // Whether or not to show the skip button
   const skipEnabled = useBooleanSetting("skipEnabled");
 
-  const classes = classNames("session-question-header", "type-" + objectType, {
-    ja: questionType === "reading",
-    incorrect: incorrectAnswer !== undefined
-  });
-
   const questionTypeHeaderColor = useStringSetting<QuestionHeaderTypeColor>("questionHeaderTypeColor");
   const questionTypeClasses = classNames(
     "session-question-type",
     "type-" + questionType,
     "color-" + kebabCase(questionTypeHeaderColor)
   );
+
+  const { characters } = subject.data;
+  const hasCharacter = characters !== null;
+
+  const sessionUuid = useSelector((state: RootState) => state.session?.sessionState?.uuid);
+  const randomFontEnabled = useBooleanSetting("randomFontEnabled");
+  const randomFontHover = useBooleanSetting("randomFontHover");
+  const randomFontShowName = useBooleanSetting("randomFontShowName");
+  const randomFont = useRandomFont(hasCharacter ? characters : undefined, sessionUuid, questionType);
+  const style = useMemo(() => ({ fontFamily: randomFont }), [randomFont]);
+
+  const classes = classNames("session-question-header", "type-" + objectType, {
+    ja: questionType === "reading",
+    incorrect: incorrectAnswer !== undefined,
+    "random-font-enabled": randomFontEnabled && randomFont && hasCharacter,
+    "random-font-hover": randomFontHover
+  });
 
   return <div className={classes}>
     {/* Subject top */}
@@ -88,6 +102,13 @@ export function SessionQuestionHeader({
 
       {/* SRS stage */}
       <QuestionSrsStage subject={subject} />
+
+      {/* Random font name */}
+      {randomFontEnabled && randomFontShowName && randomFont && hasCharacter && (
+        <span className="session-random-font-name">
+          {randomFont}
+        </span>
+      )}
     </Row>
 
     {/* Subject question */}
@@ -97,6 +118,7 @@ export function SessionQuestionHeader({
         textfit
         min={32} max={sm ? 150 : 100}
         useCharBlocks
+        style={style}
       />
     </Row>
 

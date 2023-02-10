@@ -66,6 +66,18 @@ export interface SettingsStateBase {
   reviewHeatmapIncludeFuture: boolean;
 
   // ===========================================================================
+  // FONT SETTINGS
+  // ===========================================================================
+  /** Use a random font in reviews. */
+  randomFontEnabled: boolean;
+  /** Show the default font when hovering over a random font. */
+  randomFontHover: boolean;
+  /** Show a different random font for reading/meaning questions. */
+  randomFontSeparateReadingMeaning: boolean;
+  /** Show the random font name. */
+  randomFontShowName: boolean;
+
+  // ===========================================================================
   // SUBJECT INFO SETTINGS
   // ===========================================================================
   /** Show on'yomi readings in katakana. */
@@ -194,6 +206,11 @@ export const DEFAULT_SETTINGS: SettingsState = {
   reviewHeatmapJa: true,
   reviewHeatmapMonthSep: true,
   reviewHeatmapIncludeFuture: true,
+
+  randomFontEnabled: false,
+  randomFontHover: true,
+  randomFontSeparateReadingMeaning: true,
+  randomFontShowName: false,
 
   subjectOnyomiReadingsKatakana: true,
   subjectCharactersUseCharBlocks: false,

@@ -14,12 +14,12 @@ export interface SettingDesc<T, P = any> {
   component: ComponentType<P & {
     setting: SettingName<T>;
     title?: string;
-    description?: string;
+    description?: ReactNode;
   }>;
 
   setting: SettingName<T>;
   title?: string;
-  description?: string;
+  description?: ReactNode;
   additionalProps?: P;
 }
 
@@ -28,21 +28,21 @@ export type GroupItem<T> = SettingDesc<T> | ReactNode;
 export const booleanSetting = (
   setting: SettingName<boolean>,
   title?: string,
-  description?: string
+  description?: ReactNode
 ): SettingDesc<boolean> =>
   ({ component: SettingBoolean, setting, title, description });
 
 export const integerSetting = (
   setting: SettingName<number>,
   title?: string,
-  description?: string
+  description?: ReactNode
 ): SettingDesc<number> =>
   ({ component: SettingInteger, setting, title, description });
 
 export const dropdownSetting = <T extends string>(
   setting: SettingName<T>,
   title?: string,
-  description?: string,
+  description?: ReactNode,
   options: { label: string; value: T }[] = []
 ): SettingDesc<T> =>
     ({ component: SettingDropdown, setting, title, description, additionalProps: { options } });

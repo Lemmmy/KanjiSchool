@@ -25,13 +25,14 @@ interface Props {
   useCharBlocks?: boolean;
 
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export const SubjectCharacters = React.memo(({
   subject,
   textfit, min, max,
   useCharBlocks,
-  className
+  className, style
 }: Props): JSX.Element | null => {
   const objectType = subject.object;
   const { characters } = subject.data;
@@ -73,7 +74,7 @@ export const SubjectCharacters = React.memo(({
     />;
   } else if (textfit) {
     // Text fit for large subject views
-    return <div className={classes}>
+    return <div className={classes} style={style}>
       <Textfit
         mode="single"
         forceSingleModeWidth
@@ -84,7 +85,7 @@ export const SubjectCharacters = React.memo(({
     </div>;
   } else {
     // Regular text for everything else
-    return <span className={classes}>
+    return <span className={classes} style={style}>
       {charBlocks ?? characters}
     </span>;
   }

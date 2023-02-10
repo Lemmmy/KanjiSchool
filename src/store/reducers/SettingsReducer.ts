@@ -6,12 +6,12 @@ import { createReducer } from "typesafe-actions";
 import { loadSettings, SettingsState } from "@utils/settings";
 import {
   setBooleanSetting, setIntegerSetting, setStringSetting, setHotkeyHelpVisible,
-  setPresets, setTip
+  setPresets, setTip, setCustomFonts, setSupportedFont, setSupportedFonts
 } from "@actions/SettingsActions";
 
 import { Preset, PresetType } from "@comp/preset-editor";
 
-import { lsGetNumber, lsGetObject } from "@utils";
+import { defaultFonts, lsGetNumber, lsGetObject } from "@utils";
 
 export type State = SettingsState & {
   /** Whether or not the keyboard shortcuts modal is currently shown. */
@@ -19,6 +19,10 @@ export type State = SettingsState & {
 
   /** Study options presets. */
   readonly presets: Record<PresetType, Preset[]>;
+
+  /** Custom fonts for font randomizer. */
+  readonly customFonts: string[];
+  readonly supportedFonts: Record<string, boolean>;
 
   readonly tip: number;
 };
@@ -31,6 +35,8 @@ export function getInitialSettingsState(): State {
       lesson: lsGetObject<Preset[]>("lessonPresets") ?? [],
       review: lsGetObject<Preset[]>("reviewPresets") ?? []
     },
+    customFonts: lsGetObject<string[]>("customFonts") ?? defaultFonts,
+    supportedFonts: lsGetObject<Record<string, boolean>>("supportedFonts") ?? {},
     tip: lsGetNumber("tip") ?? -1
   };
 }
@@ -56,5 +62,15 @@ export const SettingsReducer = createReducer({} as State)
       [payload.presetType]: payload.presets
     }
   }))
+  .handleAction(setCustomFonts, (state, { payload }): State =>
+    ({ ...state, customFonts: payload }))
+  .handleAction(setSupportedFont, (state, { payload }): State => {
+    const supportedFonts = { ...state.supportedFonts };
+    const { font, supported } = payload;
+    supportedFonts[font] = supported;
+    return { ...state, supportedFonts };
+  })
+  .handleAction(setSupportedFonts, (state, { payload }): State =>
+    ({ ...state, supportedFonts: payload }))
   .handleAction(setTip, (state, { payload }): State =>
     ({ ...state, tip: payload }));

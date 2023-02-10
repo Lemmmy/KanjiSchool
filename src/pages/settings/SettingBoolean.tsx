@@ -2,6 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import { ReactNode } from "react";
 import { Switch } from "antd";
 
 import { SettingName, setBooleanSetting, useBooleanSetting } from "@utils/settings";
@@ -10,7 +11,7 @@ import { SettingDescription } from "./SettingDescription";
 interface Props {
   setting: SettingName<boolean>;
   title?: string;
-  description?: string;
+  description?: ReactNode;
 }
 
 export function SettingBoolean({

@@ -86,6 +86,17 @@
       .session-srs {
         text-align: center;
       }
+
+      .session-random-font-name {
+        position: absolute;
+        right: 0;
+        width: 30%;
+        font-size: @font-size-sm;
+        text-align: right;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     .session-question-main {
@@ -184,6 +195,10 @@
     &.incorrect .session-question-type {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+    }
+
+    &.random-font-enabled.random-font-hover .subject-characters:hover {
+      font-family: @ja-font !important;
     }
   }
 

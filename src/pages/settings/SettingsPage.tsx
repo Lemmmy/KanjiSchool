@@ -9,6 +9,7 @@ import { AccessibilityFilled } from "@comp/icons/AccessibilityFilled";
 import { PageLayout } from "@layout/PageLayout";
 import { getSettingsGroup, booleanSetting, integerSetting, dropdownSetting } from "./SettingsGroup";
 import { getLessonSettingsGroup, getReviewSettingsGroup, getSelfStudySettingsGroup } from "./SettingsSessions";
+import { getFontSettingsGroup } from "./SettingsFonts";
 
 import { SettingsButtonRow } from "./ButtonRow";
 import { StorageUsageCard } from "./StorageUsageCard";
@@ -101,6 +102,8 @@ export function SettingsPage(): JSX.Element {
             booleanSetting("reviewHeatmapIncludeFuture", "Show upcoming reviews in the review heatmap")
           ]
         )}
+
+        {getFontSettingsGroup()}
       </Menu.ItemGroup>
 
       <Menu.ItemGroup key="group-session" title="Session settings">

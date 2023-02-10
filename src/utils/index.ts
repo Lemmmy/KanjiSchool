@@ -4,6 +4,7 @@
 
 export * from "./setup/errors";
 
+export * from "./fonts";
 export * from "./groupBy";
 export * from "./hooks";
 export * from "./isLocalhost";

@@ -8,6 +8,99 @@
     margin: @margin-lg auto 0 auto;
   }
 
+  .random-font-list {
+    line-height: @line-height-base;
+    padding: @padding-md @padding-lg * 2;
+
+    .check { color: @green-base; }
+    .warn { color: @yellow-base; }
+
+    .font-intro {
+      margin-top: @margin-sm;
+    }
+
+    .random-font-form .ant-row.ant-form-item {
+      margin-bottom: 0;
+
+      .font-buttons {
+        display: inline-flex;
+        align-items: center;
+        margin: 0 @margin-xs;
+        gap: @margin-xs;
+      }
+
+      .dynamic-add-button {
+        width: 55%;
+        margin: @margin-xs 0;
+        font-size: @font-size-sm;
+      }
+
+      .ant-form-item-control-input {
+        min-height: 28px;
+        margin-top: -1px;
+
+        .ant-input { height: 28px; }
+
+        .ant-form-item-control-input-content {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .ant-form-item-control-input .ant-input {
+        width: 55%;
+        font-size: @font-size-sm;
+
+        &:hover { z-index: 90; }
+        &:focus { z-index: 100; }
+      }
+
+      &:not(:first-child) .ant-form-item-control-input .ant-input {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      &:not(:last-child) .ant-form-item-control-input .ant-input {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &.font-supported {
+        .ant-form-item-control-input {
+          min-height: 40px;
+
+          .ant-input {
+            height: 40px;
+            font-size: @font-size-base;
+          }
+        }
+
+        .font-sample {
+          font-size: 24px;
+          line-height: 1;
+        }
+      }
+    }
+
+    .font-sample-input {
+      display: inline-flex;
+      align-items: center;
+      gap: @margin-xs;
+
+      width: 55%;
+      margin-bottom: @margin-sm;
+
+      .ant-input {
+        flex: 1;
+      }
+    }
+
+    .font-install-hint {
+      color: @text-color-secondary;
+      font-size: @font-size-sm;
+    }
+  }
+
   .big-menu.ant-menu.ant-menu-inline {
     .ant-menu-item {
       display: flex;

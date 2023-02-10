@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Input, InputNumber, Button } from "antd";
 
 import { SettingName, setIntegerSetting, useIntegerSetting, validateIntegerSetting } from "@utils/settings";
@@ -11,7 +11,7 @@ import { SettingDescription } from "./SettingDescription";
 interface Props {
   setting: SettingName<number>;
   title?: string;
-  description?: string;
+  description?: ReactNode;
 }
 
 export function SettingInteger({
