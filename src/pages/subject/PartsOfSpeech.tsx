@@ -4,11 +4,11 @@
 
 import { Tag } from "antd";
 
-import { ApiSubjectVocabularyInner } from "@api";
+import { ApiSubjectKanaVocabularyInner, ApiSubjectVocabularyInner } from "@api";
 import { slugifyPartOfSpeech } from "@utils";
 
 interface Props {
-  subject: ApiSubjectVocabularyInner;
+  subject: ApiSubjectVocabularyInner | ApiSubjectKanaVocabularyInner;
 }
 
 export function PartsOfSpeech({ subject }: Props): JSX.Element {

@@ -5,7 +5,7 @@
 import { SubjectType } from "@api";
 import { SearchOrder, SearchParams, SearchResultItem, SearchResults } from ".";
 
-import { stringifySrsStage, subjectTypeToNumber } from "@utils";
+import { normalizedSubjectTypeToNumber, normalizeVocabType, stringifySrsStage } from "@utils";
 import dayjs, { Dayjs } from "dayjs";
 import { groupBy, startCase } from "lodash-es";
 
@@ -123,10 +123,10 @@ export function groupSearchResults(
 }
 
 function groupByType(items: SearchResults): SearchResultGroup[] {
-  const groupedItems = groupBy(items, ([s]) => s.object);
+  const groupedItems = groupBy(items, ([s]) => normalizeVocabType(s.object));
   const groups = Object.entries(groupedItems).map(([k, v]) => ({
     name: startCase(k),
-    orderBy: subjectTypeToNumber(k as SubjectType),
+    orderBy: normalizedSubjectTypeToNumber(k as SubjectType),
 
     count: v.length,
     srsCounts: countItemsSrs(v),

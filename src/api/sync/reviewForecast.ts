@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { StoredAssignmentMap, StoredSubjectMap } from "@api";
-import { getSrsReviewBucketName } from "@utils";
+import { getSrsReviewBucketName, normalizeVocabType } from "@utils";
 
 import dayjs from "dayjs";
 
@@ -115,14 +115,16 @@ export function generateReviewForecast(
     // this technically differs to the session comparator's definition of a
     // "level-up track subject", which accounts for component subjects too.
     const isLevelUp = subject.data.level === userLevel
-      && subject.object !== "vocabulary" && !assignment.data.passed_at;
+      && subject.object !== "vocabulary"
+      && subject.object !== "kana_vocabulary"
+    && !assignment.data.passed_at;
 
     // Insert into the SRS stage bucket
     add(buckets[getSrsReviewBucketName(stage)]);
     // Insert into the level-up/non-level-up bucket
     add(isLevelUp ? buckets.levelUp : buckets.nonLevelUp);
     // Insert into the subject type bucket
-    add(buckets[subject.object]);
+    add(buckets[normalizeVocabType(subject.object)]);
 
     // Add to the cum bucket
     add(cumBucket);

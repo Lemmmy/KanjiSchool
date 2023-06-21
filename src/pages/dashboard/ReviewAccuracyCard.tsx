@@ -10,7 +10,7 @@ import {
   StoredSubjectMap, ApiReviewStatisticMap
 } from "@api";
 
-import { nts, useBooleanSetting } from "@utils";
+import { normalizeVocabType, nts, useBooleanSetting } from "@utils";
 
 interface Column {
   total: number;
@@ -67,7 +67,8 @@ function getData(
     if (!subject || subject.data.hidden_at) continue;
 
     // Get the first char of the subject type
-    const type = data.subject_type.charAt(0) as "r" | "k" | "v";
+    const normObjectType = normalizeVocabType(data.subject_type);
+    const type = normObjectType.charAt(0) as "r" | "k" | "v";
 
     // Get the correct/incorrect meanings/readings
     const cm = data.meaning_correct;

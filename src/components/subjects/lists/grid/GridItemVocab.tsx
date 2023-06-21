@@ -3,6 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { SubjectGridItem, SubjectGridItemProps } from "./SubjectGridItem";
+import { isVocabularyLike } from "@utils";
 
 // Only 'tiny' is supported right now, so no meaning or reading is necessary
 // here at the moment.
@@ -10,8 +11,9 @@ export function GridItemVocab({
   subject,
   ...rest
 }: SubjectGridItemProps): JSX.Element {
-  if (subject.object !== "vocabulary")
+  if (!isVocabularyLike(subject)) {
     throw new Error("Using GridItemVocab for subject type " + subject.object);
+  }
 
   return <SubjectGridItem
     className="type-vocab"

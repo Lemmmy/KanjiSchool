@@ -6,10 +6,10 @@ import React, { useMemo } from "react";
 import { Row, Col } from "antd";
 import classNames from "classnames";
 
-import { StoredSubjectMap, SubjectType, useSubjects } from "@api";
+import { NormalizedSubjectType, StoredSubjectMap, SubjectType, useSubjects } from "@api";
 import { SessionResults } from "@session";
 
-import { nts } from "@utils";
+import { normalizeVocabType, nts } from "@utils";
 
 interface Props {
   results: SessionResults;
@@ -45,14 +45,14 @@ function analyzeData(
 
   // Increment the correct + totals for correct subjects
   for (const correctId of correct) {
-    const type = subjects[correctId].object;
+    const type = normalizeVocabType(subjects[correctId].object);
     data.correct[type]++;
     data.total[type]++;
   }
 
   // Increment just the totals for incorrect subjects
   for (const incorrectId of incorrect) {
-    const type = subjects[incorrectId].object;
+    const type = normalizeVocabType(subjects[incorrectId].object);
     data.total[type]++;
   }
 
@@ -97,7 +97,7 @@ const SUBJECT_TYPE_LABELS = {
 function CorrectEl({
   type, data
 }: {
-  type: SubjectType;
+  type: NormalizedSubjectType;
   data: Data;
 }): JSX.Element | null {
   const correct = data.correct[type];

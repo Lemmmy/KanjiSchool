@@ -2,7 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { SubjectType } from "@api";
+import { NormalizedSubjectType, SubjectType } from "@api";
+import { normalizeVocabType } from "@utils";
 
 /**
  * Radical
@@ -81,7 +82,7 @@ export const HINT_STAGE_OBJECTS: HintStageObject[] = [
   "visually_similar_kanji_readings", "kanji_jisho", "progression"
 ];
 
-export const HINT_STAGES: Record<SubjectType, Record<"meaning" | "reading", Record<SubjectHintStage, Partial<Record<HintStageObject, true>>>>> = {
+export const HINT_STAGES: Record<NormalizedSubjectType, Record<"meaning" | "reading", Record<SubjectHintStage, Partial<Record<HintStageObject, true>>>>> = {
   radical: {
     meaning: {
       "-1": {},
@@ -206,7 +207,7 @@ export const HINT_STAGES: Record<SubjectType, Record<"meaning" | "reading", Reco
 
 export function shouldShowObject(
   useHintStage: boolean | undefined,
-  subjectType: SubjectType,
+  subjectType: NormalizedSubjectType,
   questionType: "meaning" | "reading" | undefined,
   hintStage: number,
   object: HintStageObject

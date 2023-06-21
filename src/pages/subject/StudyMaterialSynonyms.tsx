@@ -12,7 +12,6 @@ import {
 } from "@api";
 
 import { shallowEqual } from "fast-equals";
-import { type } from "os";
 
 interface Props {
   subject: ApiSubject;

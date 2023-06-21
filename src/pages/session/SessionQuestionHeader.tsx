@@ -11,10 +11,9 @@ import { ApiSubject } from "@api";
 import { OnSkipFn } from "./SessionQuestionsPage";
 import { QuestionSrsStage } from "./QuestionSrsStage";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
-import { UndoType } from "@session";
 
 import { startCase, kebabCase } from "lodash-es";
-import { nts, useBooleanSetting, useBreakpoint, useRandomFont, useStringSetting } from "@utils";
+import { normalizeVocabType, nts, useBooleanSetting, useBreakpoint, useRandomFont, useStringSetting } from "@utils";
 import { UndoButton } from "./UndoButton";
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
@@ -53,7 +52,7 @@ export function SessionQuestionHeader({
   // Make the buttons larger on mobile
   const { sm } = useBreakpoint();
 
-  const objectType = subject.object;
+  const objectType = normalizeVocabType(subject.object);
 
   // Props for all header buttons. Make the buttons larger on mobile.
   const buttonProps: ButtonProps = useMemo(() => ({

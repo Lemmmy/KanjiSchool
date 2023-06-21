@@ -2,9 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { SubjectType } from "@api";
 import { SearchOrder } from "./SearchOrder";
 import { JlptLevels, JoyoGrades } from "@data";
+import { NormalizedSubjectType } from "@api/types";
 
 export interface SearchParams {
   // Min/max level from subject
@@ -37,7 +37,7 @@ export interface SearchParams {
   // SRS stages allow-list
   srsStages?: number[];
   // Subject types allow-list
-  subjectTypes?: SubjectType[];
+  subjectTypes?: NormalizedSubjectType[];
   // JLPT levels allow-list
   jlptLevels?: (JlptLevels | -1)[];
   // Jōyō grades allow-list

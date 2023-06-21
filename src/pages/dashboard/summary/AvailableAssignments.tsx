@@ -13,7 +13,7 @@ import { StoredSubjectMap, StoredAssignmentMap } from "@api";
 import { useBreakpoint } from "@utils/hooks";
 
 import dayjs from "dayjs";
-import { nts } from "@utils";
+import { normalizeVocabType, nts } from "@utils";
 
 const allZero = ([r, k, v]: Rkv): boolean => r === 0 && k === 0 && v === 0;
 
@@ -67,7 +67,7 @@ function getData(
     const lessonRow = subject.data.level >= level ? "current" : "earlier";
     const row = data[type]![lessonRow];
 
-    const objType = assignment.data.subject_type;
+    const objType = normalizeVocabType(assignment.data.subject_type);
     if (objType === "radical") row![0]++;
     else if (objType === "kanji") row![1]++;
     else if (objType === "vocabulary") row![2]++;

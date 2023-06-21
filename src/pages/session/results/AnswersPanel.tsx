@@ -15,7 +15,7 @@ import {
 import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton";
 
-import { getSrsStageBaseName, SrsStageBaseName, nts } from "@utils";
+import { getSrsStageBaseName, SrsStageBaseName, nts, isVocabularyLike } from "@utils";
 
 type GroupedData = Record<SrsStageBaseName, [number[], boolean]>;
 const GROUPS: SrsStageBaseName[] = ["Initiate", "Apprentice", "Guru", "Master",
@@ -50,8 +50,9 @@ function groupByStage(
     // If this subject is a vocabulary, make sure the data is marked as
     // 'hasVocabulary' - this ensures the list will render vocabulary items
     // correctly.
-    if (subject.object === "vocabulary")
+    if (isVocabularyLike(subject)) {
       data[stageName][1] = true;
+    }
   }
 
   return data;

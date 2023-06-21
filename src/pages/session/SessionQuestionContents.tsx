@@ -35,10 +35,10 @@ interface Props {
 
 
 const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
-  shouldWrap: boolean,
-  transitionKey: string,
-  current: boolean,
-  children: JSX.Element
+  shouldWrap: boolean;
+  transitionKey: string;
+  current: boolean;
+  children: JSX.Element;
 }) => shouldWrap
   ? <CSSTransition
     key={transitionKey}

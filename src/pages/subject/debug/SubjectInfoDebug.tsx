@@ -9,6 +9,7 @@ import { HintStageObject, HINT_STAGE_OBJECTS, SubjectHintStage } from "../hintSt
 import { SubjectInfoProps } from "../SubjectInfo";
 
 import * as api from "@api";
+import { normalizeVocabType } from "@utils";
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -44,6 +45,7 @@ export function SubjectInfoDebug({
         style={{ marginBottom: 24 }}
       >
         <Descriptions.Item label="Object type">{objectType}</Descriptions.Item>
+        <Descriptions.Item label="Normalized object type">{normalizeVocabType(objectType)}</Descriptions.Item>
         <Descriptions.Item label="Question type">{questionType || "none"}</Descriptions.Item>
         <Descriptions.Item label="Hint stage"><b>{hintStage}</b></Descriptions.Item>
 

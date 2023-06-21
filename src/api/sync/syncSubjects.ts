@@ -7,11 +7,11 @@ import { store } from "@app";
 import * as actions from "@actions/SyncActions";
 
 import * as api from "@api";
-import { ApiSubject, SubjectType } from "@api";
+import { ApiSubject, NormalizedSubjectType, SubjectType } from "@api";
 import { db } from "@db";
 import { jishoData, KanjiJishoData } from "@data";
 
-import { lsGetNumber, lsSetNumber, lsSetString } from "@utils";
+import { isVocabularyLike, lsGetNumber, lsSetNumber, lsSetString, normalizeVocabType } from "@utils";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:api-sync-subjects");
@@ -26,7 +26,14 @@ export type StoredSubjectMap = Record<number, StoredSubject>;
 // Map containing each part of speech for vocabulary (used for search lookups)
 export type PartsOfSpeechCache = Record<string, true>;
 // Map containing the slugs -> subject IDs for each subject type
-export type SlugCache = Record<SubjectType, Record<string, number>>;
+export type SlugCache = Record<NormalizedSubjectType, Record<string, number>>;
+
+const validSubjectTypes: Record<SubjectType, true> = {
+  radical:         true,
+  kanji:           true,
+  vocabulary:      true,
+  kana_vocabulary: true
+};
 
 export async function syncSubjects(fullSync?: boolean): Promise<void> {
   // Don't sync if we're already syncing.
@@ -91,22 +98,33 @@ export async function loadSubjects(): Promise<void> {
 
   const subjectMap: StoredSubjectMap = {};
   const partsOfSpeechCache: PartsOfSpeechCache = {};
-  const slugCache: SlugCache = { radical: {}, kanji: {}, vocabulary: {} };
+  const slugCache: SlugCache = {
+    radical:         {},
+    kanji:           {},
+    vocabulary:      {}
+  };
 
   debug("populating StoredSubjectMap");
   /*     TIMING                                                               */ performance.mark("loadSubjects-map-start");
   for (const subject of subjects) {
+    const objectType = subject.object;
+    if (!validSubjectTypes[objectType]) {
+      debug("encountered invalid subject type %s for subject id %d", objectType, subject.id, subject);
+      continue;
+    }
+
     subjectMap[subject.id] = subject;
 
     // Populate the 'parts of speech' cache.
-    if (subject.object === "vocabulary" && subject.data.parts_of_speech) {
+    if (isVocabularyLike(subject) && subject.data.parts_of_speech) {
       for (const part of subject.data.parts_of_speech) {
         partsOfSpeechCache[part] = true;
       }
     }
 
     // Populate the slug cache.
-    slugCache[subject.object][subject.data.slug] = subject.id;
+    const normObjectType = normalizeVocabType(objectType);
+    slugCache[normObjectType][subject.data.slug] = subject.id;
   }
   /*     TIMING                                                               */ performance.mark("loadSubjects-map-end");
   /*     TIMING                                                               */ performance.measure("loadSubjects-map", "loadSubjects-map-start", "loadSubjects-map-end");

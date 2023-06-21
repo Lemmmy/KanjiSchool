@@ -32,6 +32,7 @@ export function SessionLessonsPage(): JSX.Element {
   const contents = <>{subjects && items && Object.entries(items).map(([id, item]) => (
     <SessionLessonContents
       id={id}
+      key={id}
       current={lessonCounter.toString() === id}
       subject={subjects[item.subjectId]}
       lessonCounter={lessonCounter}
@@ -54,10 +55,10 @@ export function SessionLessonsPage(): JSX.Element {
 }
 
 const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
-  shouldWrap: boolean,
-  transitionKey: string,
-  current: boolean,
-  children: JSX.Element
+  shouldWrap: boolean;
+  transitionKey: string;
+  current: boolean;
+  children: JSX.Element;
 }) => shouldWrap
   ? <CSSTransition
     key={transitionKey}
@@ -77,13 +78,13 @@ function SessionLessonContents({
   lessonCounter, lessonsTotal,
   onPrevLesson, onNextLesson
 }: {
-  id: string,
-  current: boolean,
-  subject: StoredSubject,
-  lessonCounter?: number,
-  lessonsTotal?: number,
-  onPrevLesson?: () => void,
-  onNextLesson?: () => void
+  id: string;
+  current: boolean;
+  subject: StoredSubject;
+  lessonCounter?: number;
+  lessonsTotal?: number;
+  onPrevLesson?: () => void;
+  onNextLesson?: () => void;
 }): JSX.Element {
   const reducedMotion = useReducedMotion();
 

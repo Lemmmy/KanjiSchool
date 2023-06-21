@@ -49,7 +49,10 @@ function countStages(
       switch (assignment.data.subject_type) {
       case "radical": knownSubjects.radical++; break;
       case "kanji": knownSubjects.kanji++; break;
-      case "vocabulary": knownSubjects.vocabulary++; break;
+      case "vocabulary":
+      case "kana_vocabulary":
+        knownSubjects.vocabulary++;
+        break;
       }
 
       if (stage >= 5) knownSubjects.passed++;

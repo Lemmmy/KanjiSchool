@@ -7,7 +7,7 @@ import { Divider } from "antd";
 import { RootState } from "@store";
 import { useSelector, shallowEqual } from "react-redux";
 
-import { countSessionItems, sessionHasAssignment } from "@session";
+import { countSessionItems } from "@session";
 
 export function SessionDebugInfo(): JSX.Element {
   const currentQuestion = useSelector((s: RootState) => s.session.currentQuestion);

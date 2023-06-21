@@ -14,7 +14,7 @@ import {
 
 import { KanjiJishoData } from "@data";
 import { partialRight } from "lodash-es";
-import { groupBy, lut, ulut } from "@utils";
+import { groupBy, lut, normalizeVocabType, ulut } from "@utils";
 import { asc, desc, map, reverse } from "@utils/comparator";
 
 export type LookupResults = ResultGroupSet | ResultSet;
@@ -66,7 +66,7 @@ export function lookupItems(
     const subject = subjects[subjectId];
     if (subject.data.hidden_at) continue;
 
-    const subjectType = subject.object;
+    const subjectType = normalizeVocabType(subject.object);
 
     if (typeWk) {
       // If this subject is not of a desired type, filter it out.

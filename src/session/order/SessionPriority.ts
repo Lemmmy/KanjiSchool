@@ -2,6 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import { normalizeVocabType } from "@utils";
 import { booleanCompare, queue, typeFirst, SubjectComparator } from "@utils/comparator";
 
 /** The items in a session that should be given priority over the rest. */
@@ -48,8 +49,8 @@ export const SESSION_PRIORITIES = {
     name: "Current-level radicals and kanji first",
     getComparator: (base, _, userLevel) => queue([
       ([aSubj], [bSubj]) => booleanCompare(
-        bSubj.data.level === userLevel && bSubj.object !== "vocabulary",
-        aSubj.data.level === userLevel && aSubj.object !== "vocabulary"
+        bSubj.data.level === userLevel && normalizeVocabType(bSubj.object) === "radical",
+        aSubj.data.level === userLevel && normalizeVocabType(aSubj.object) !== "vocabulary"
       ),
       base
     ])

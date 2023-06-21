@@ -11,7 +11,7 @@ import { SessionQuestionHeader } from "./SessionQuestionHeader";
 import { useSessionQuestionInput } from "./SessionQuestionInput";
 import { OnAnsweredFn, OnSkipFn } from "./SessionQuestionsPage";
 
-import { useStringSetting, NearMatchAction } from "@utils";
+import { useStringSetting, NearMatchAction, normalizeVocabType } from "@utils";
 
 interface Props {
   isCurrent: boolean;
@@ -36,8 +36,6 @@ export function SessionQuestionView({
   onDontKnow,
   onSkip
 }: Props): JSX.Element {
-  const objectType = subject.object;
-
   const nearMatchAction = useStringSetting<NearMatchAction>("nearMatchAction");
 
   // To get the meaning synonyms, if available
@@ -53,9 +51,13 @@ export function SessionQuestionView({
     onSkip
   );
 
-  const classes = classNames("session-question-container", "type-" + objectType, {
-    ja: questionType === "reading"
-  });
+  const classes = classNames(
+    "session-question-container",
+    "type-" + normalizeVocabType(subject.object),
+    {
+      ja: questionType === "reading"
+    }
+  );
 
   return <div className={classes}>
     <SessionQuestionHeader

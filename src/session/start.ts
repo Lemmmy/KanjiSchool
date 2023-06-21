@@ -8,6 +8,7 @@ import { store } from "@app";
 import * as actions from "@actions/SessionActions";
 
 import { SubjectWithAssignment, fetchSubjectsAudios } from "@api";
+import { hasReadings, isVocabularyLike } from "@utils";
 
 import { SessionItem, SessionQuestion, SessionState, SessionType } from "./types";
 import { saveSession } from "./storage";
@@ -48,7 +49,7 @@ export function startSession(
   // Queue vocabulary audio download tasks
   debug("session start queueing vocabulary audio download tasks");
   const fetchAudioSubjects = subjects.map(p => p[0]) // Get just the subject
-    .filter(s => s.object === "vocabulary"); // Get vocabulary only
+    .filter(isVocabularyLike); // Get vocabulary only
   // Honor the max audio fetch tasks setting:
   fetchSubjectsAudios(fetchAudioSubjects, true);
 
@@ -93,9 +94,7 @@ function populateItems(
   let prev: SubjectWithAssignment | undefined = undefined;
   for (const sa of subjects) {
     const [subject, assignment] = sa;
-    const { object } = subject;
-
-    const hasReading = object === "kanji" || object === "vocabulary";
+    const hasReading = hasReadings(subject);
 
     // If this subject is affected by the ordering, put it in a new bucket.
     if (prev !== undefined && comparator(prev, sa) !== 0)

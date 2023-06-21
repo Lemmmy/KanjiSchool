@@ -9,7 +9,7 @@ import { ApiSubjectKanjiInner, StoredSubject } from "@api";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { CommaList } from "@pages/subject/CommaList";
 
-import { onyomiToKatakana, useBooleanSetting } from "@utils";
+import { isVocabularyLike, normalizeVocabType, onyomiToKatakana, useBooleanSetting } from "@utils";
 import { startCase } from "lodash-es";
 
 interface Props {
@@ -21,7 +21,7 @@ export function SubjectTooltipSubjectData({ subject }: Props): JSX.Element {
   const objectType = subject.object;
   const { level, meanings } = subject.data;
 
-  const isVocab = objectType === "vocabulary";
+  const isVocab = isVocabularyLike(subject);
   const isKanji = objectType === "kanji";
 
   const kanjiSubjectData = subject.data as ApiSubjectKanjiInner;
@@ -44,7 +44,7 @@ export function SubjectTooltipSubjectData({ subject }: Props): JSX.Element {
       <SubjectCharacters subject={subject} />
 
       <div className="subject-tooltip-level">
-        Level {level} {startCase(objectType)}
+        Level {level} {startCase(normalizeVocabType(objectType))}
       </div>
     </div>
 

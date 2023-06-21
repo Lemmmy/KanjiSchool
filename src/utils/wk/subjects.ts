@@ -4,7 +4,7 @@
 
 import {
   StoredSubjectMap, ApiSubject, ApiSubjectHasReadings, ApiSubjectKanjiReading,
-  AnyReading, StoredSubject, SubjectType
+  AnyReading, StoredSubject, SubjectType, ApiSubjectVocabulary, ApiSubjectVocabularyLike, NormalizedSubjectType
 } from "@api";
 import { toKatakana } from "@utils";
 
@@ -44,7 +44,7 @@ export function getPrimaryMeaning(subject?: ApiSubject): string | undefined {
 
 /** Returns the primary reading of a subject, or the first available reading. */
 export function getPrimaryReading(subject?: ApiSubject): string | undefined {
-  if (!subject || subject.object === "radical") return undefined;
+  if (!subject || !hasReadings(subject)) return undefined;
 
   const { readings } = subject.data;
   if (readings.length === 1) return readings[0].reading;
@@ -59,25 +59,50 @@ export function getSubjectTitle(subject?: ApiSubject): string {
   return subject?.data.characters || getPrimaryMeaning(subject) || "Loading...";
 }
 
-/** Returns 0 for radical, 1 for kanji, and 2 for vocabulary. Mainly used for
- * sorting functions. */
-export function subjectTypeToNumber(
-  subjectType: SubjectType
-): number {
+/** Returns 0 for radical, 1 for kanji, 2 for vocabulary, and 3 for
+ * kana_vocabulary. Mainly used for sorting functions. */
+export function subjectTypeToNumber(subjectType: SubjectType): number {
   switch (subjectType) {
   case "radical": return 0;
   case "kanji": return 1;
   case "vocabulary": return 2;
+  case "kana_vocabulary": return 3;
   default: return -1;
   }
 }
 
-/** Returns "radical" for 0, "kanji" for 1, and "vocabulary" for 2. */
+/** Returns "radical" for 0, "kanji" for 1, "vocabulary" for 2, and
+ * "kana_vocabulary" for 3. */
 export function numberToSubjectType(number: number): SubjectType {
   switch (number) {
   case 0: return "radical";
   case 1: return "kanji";
   case 2: return "vocabulary";
+  case 3: return "kana_vocabulary";
+  default: return "radical";
+  }
+}
+
+/** Returns 0 for radical, 1 for kanji, 2 for vocabulary and kana_vocabulary.
+ * Mainly used for sorting functions. */
+export function normalizedSubjectTypeToNumber(subjectType: SubjectType): number {
+  switch (subjectType) {
+  case "radical": return 0;
+  case "kanji": return 1;
+  case "vocabulary":
+  case "kana_vocabulary": return 2;
+  default: return -1;
+  }
+}
+
+/** Returns "radical" for 0, "kanji" for 1, "vocabulary" for 2, and
+ * also "vocabulary" for 3. */
+export function numberToNormalizedSubjectType(number: number): NormalizedSubjectType {
+  switch (number) {
+  case 0: return "radical";
+  case 1: return "kanji";
+  case 2: return "vocabulary";
+  case 3: return "vocabulary";
   default: return "radical";
   }
 }
@@ -122,5 +147,21 @@ export function getOneReading(
 /** Get a URL to a subject */
 export function getSubjectUrl(subject?: StoredSubject): string {
   if (!subject) return "#";
-  return `/${encodeURIComponent(subject.object)}/${encodeURIComponent(subject.data.slug)}`;
+  const type = normalizeVocabType(subject.object);
+  return `/${encodeURIComponent(type)}/${encodeURIComponent(subject.data.slug)}`;
+}
+
+/** Returns if the subject has readings (`kanji` or `vocabulary`). */
+export function hasReadings(subject: ApiSubject): subject is ApiSubjectHasReadings {
+  return subject.object === "kanji" || subject.object === "vocabulary";
+}
+
+/** Returns if the subject type is `vocabulary` or `kana_vocabulary`. */
+export function isVocabularyLike(subject: ApiSubject): subject is ApiSubjectVocabularyLike {
+  return subject.object === "vocabulary" || subject.object === "kana_vocabulary";
+}
+
+/** Returns the subject type, converting `kana_vocabulary` to `vocabulary`. */
+export function normalizeVocabType(type: SubjectType): NormalizedSubjectType {
+  return type === "kana_vocabulary" ? "vocabulary" : type;
 }

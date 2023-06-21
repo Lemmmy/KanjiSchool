@@ -7,14 +7,14 @@ import { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 import { SubjectType } from "@api";
 
-import { usePalette } from "@utils";
+import { normalizeVocabType, usePalette } from "@utils";
 import { getReadableTextColor } from "@global/theme";
 
 export function SubjectTypePicker({ ...props }: any): JSX.Element {
   const palette = usePalette();
 
   function tagRender({ label, value, closable, onClose }: CustomTagProps) {
-    const colorKey = value as SubjectType;
+    const colorKey = normalizeVocabType(value as SubjectType);
     const color = palette[colorKey];
     const textColor = getReadableTextColor(palette, colorKey);
 

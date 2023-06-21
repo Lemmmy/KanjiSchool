@@ -74,7 +74,10 @@ export function analyze(
       switch (subject.object) {
       case "radical": arr = radicals; break;
       case "kanji": arr = kanji; break;
-      case "vocabulary": arr = vocabulary; break;
+      case "vocabulary":
+      case "kana_vocabulary":
+        arr = vocabulary;
+        break;
       }
 
       // Increment the total

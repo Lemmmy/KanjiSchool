@@ -6,13 +6,13 @@ import classNames from "classnames";
 
 import { useHistory } from "react-router-dom";
 
-import { gotoSearch, SubjectType } from "@api";
+import { gotoSearch, NormalizedSubjectType } from "@api";
 
 import { startCase } from "lodash-es";
 import { nts } from "@utils";
 
 interface KnownSubjectsProps {
-  type: SubjectType;
+  type: NormalizedSubjectType;
   count: number;
 }
 

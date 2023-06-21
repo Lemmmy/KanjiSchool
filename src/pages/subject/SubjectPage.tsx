@@ -8,7 +8,7 @@ import { PageLayout } from "@layout/PageLayout";
 
 import { useParams } from "react-router-dom";
 
-import { SubjectType } from "@api";
+import { NormalizedSubjectType } from "@api";
 import { SubjectInfo } from "./SubjectInfo";
 
 import { useSubjectBySlug } from "@api";
@@ -19,7 +19,7 @@ interface Params {
 }
 
 interface Props {
-  type: SubjectType;
+  type: NormalizedSubjectType;
 }
 
 export function SubjectPage({ type }: Props): JSX.Element | null {

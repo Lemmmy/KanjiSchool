@@ -4,12 +4,12 @@
 
 import { Form, Row, Col } from "antd";
 
-import { SubjectType } from "@api";
+import { NormalizedSubjectType } from "@api";
 import { ToggleButtonGroup, ToggleButtonGroupItem } from "./base/ToggleButtonGroup";
 
-const ITEMS: ToggleButtonGroupItem<SubjectType>[] = [
-  { value: "radical", label: "Radical", className: "radical" },
-  { value: "kanji", label: "Kanji", className: "kanji" },
+const ITEMS: ToggleButtonGroupItem<NormalizedSubjectType>[] = [
+  { value: "radical",    label: "Radical",    className: "radical" },
+  { value: "kanji",      label: "Kanji",      className: "kanji" },
   { value: "vocabulary", label: "Vocabulary", className: "vocabulary" },
 ];
 

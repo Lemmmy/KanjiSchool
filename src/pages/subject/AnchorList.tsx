@@ -9,6 +9,7 @@ import { StoredSubject, StoredAssignment } from "@api";
 
 import { SiteLayoutContext } from "@layout/AppLayout";
 import { HintStageObject } from "./hintStages";
+import { normalizeVocabType } from "@utils";
 
 const { Link } = Anchor;
 
@@ -26,7 +27,7 @@ export function AnchorList({
   show,
   showDebug
 }: Props): JSX.Element {
-  const type = subject.object;
+  const type = normalizeVocabType(subject.object);
 
   const siteLayoutRef = useContext(SiteLayoutContext);
 
@@ -47,7 +48,7 @@ export function AnchorList({
         <Link href="#subject-info" title="Subject info" />
         {type === "kanji" && show("used_radicals") &&
           <Link href="#used-radicals" title="Used radicals" />}
-        {type === "vocabulary" && show("used_kanji") &&
+        {subject.object === "vocabulary" && show("used_kanji") &&
           <Link href="#used-kanji" title="Used kanji" />}
         {show("meaning_mnemonic") &&
           <Link href="#meaning-mnemonic" title="Meaning mnemonic" />}

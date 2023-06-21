@@ -13,7 +13,7 @@ import { HintStageButtons } from "./HintStageButtons";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { AudioButtons } from "@comp/subjects/AudioButtons";
 
-import { onyomiToKatakana, useBooleanSetting } from "@utils";
+import { hasReadings, isVocabularyLike, normalizeVocabType, onyomiToKatakana, useBooleanSetting } from "@utils";
 
 interface Props {
   subject: ApiSubject;
@@ -59,16 +59,17 @@ export function SubjectInfoTopRow({
   autoPlayAudio
 }: Props): JSX.Element {
   const objectType = subject.object;
+  const normObjectType = normalizeVocabType(subject.object);
   const { level, meanings } = subject.data;
 
   // Used for the audio buttons
-  const isVocab = objectType === "vocabulary";
+  const isVocab = isVocabularyLike(subject);
   const vocabSubject = subject as ApiSubjectVocabulary;
 
   // Get the readings if this is a kanji/vocabulary subject
   const isKanji = objectType === "kanji";
   const kanjiSubjectData = subject.data as ApiSubjectKanjiInner;
-  const readings = objectType !== "radical" ? kanjiSubjectData.readings : undefined;
+  const readings = hasReadings(subject) ? kanjiSubjectData.readings : undefined;
 
   // For kanji subjects, separate the readings into on'yomi and kun'yomi.
   const onyomiInKatakana = useBooleanSetting("subjectOnyomiReadingsKatakana");
@@ -113,7 +114,7 @@ export function SubjectInfoTopRow({
           {/* Level, name, reading */}
           <Col flex="auto">
             {/* Level & object type */}
-            <div className="subject-info-level">Level {level} {objectType}</div>
+            <div className="subject-info-level">Level {level} {normObjectType}</div>
             {/* Meanings */}
             {!hideMeanings && meaningsComp}
             {/* Readings. For kanji, only show the on'yomi readings. */}
@@ -159,7 +160,7 @@ export function SubjectInfoTopRow({
       // Multiple characters
       <div className="subject-info-top">
         {/* Level & object type */}
-        <div className="subject-info-level">Level {level} {objectType}</div>
+        <div className="subject-info-level">Level {level} {normObjectType}</div>
 
         {/* Characters */}
         <SubjectCharacters

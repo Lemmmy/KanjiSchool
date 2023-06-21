@@ -29,7 +29,7 @@ import { SubjectMarkup } from "@comp/subjects/SubjectMarkup";
 import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { VocabList } from "@comp/subjects/lists/vocab";
 
-import { useBooleanSetting } from "@utils";
+import { hasReadings, isVocabularyLike, normalizeVocabType, useBooleanSetting } from "@utils";
 import { clamp } from "lodash-es";
 
 export interface SubjectInfoProps {
@@ -66,7 +66,10 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   const nextHintStage = useCallback(() =>
     setHintStage(s => clamp(s + 1, -1, 2) as SubjectHintStage), []);
 
-  const objectType = subject.object;
+  const objectType = normalizeVocabType(subject.object);
+  const hasReading = hasReadings(subject);
+  const vocabularyLike = isVocabularyLike(subject);
+
   const { characters, meaning_mnemonic } = subject.data;
   const radicalSubjectData = subject.data as ApiSubjectRadicalInner;
   const kanjiSubjectData = subject.data as ApiSubjectKanjiInner;
@@ -89,10 +92,14 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   // Layout the top row differently if there is more than one character in this
   // vocabulary
   const hasSingleCharacter = !hasCharacter || characters?.length === 1;
-  const classes = classNames("subject-info-container", "type-" + objectType, {
-    "subject-info-single-character": hasSingleCharacter,
-    "subject-info-multiple-characters": !hasSingleCharacter,
-  });
+  const classes = classNames(
+    "subject-info-container",
+    "type-" + objectType,
+    {
+      "subject-info-single-character": hasSingleCharacter,
+      "subject-info-multiple-characters": !hasSingleCharacter,
+    }
+  );
 
   const contents = <div className={classes}>
     {/* Lesson-specific row (lesson count, next button) */}
@@ -133,7 +140,8 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     </>}
 
     {/* Vocabulary used kanji */}
-    {objectType === "vocabulary" && show("used_kanji") && <>
+    {/* Check subject.object (raw objectType) here */}
+    {subject.object === "vocabulary" && show("used_kanji") && <>
       <a id="used-kanji" />
       <Divider orientation="left">Used kanji</Divider>
       <SubjectGrid
@@ -172,7 +180,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     </>}
 
     {/* Reading mnemonic */}
-    {objectType !== "radical" && show("reading_mnemonic") && <>
+    {hasReading && show("reading_mnemonic") && <>
       <a id="reading-mnemonic" />
       <Divider orientation="left">Reading mnemonic</Divider>
       <SubjectMarkup className="subject-info-reading-mnemonic">
@@ -233,7 +241,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     </>}
 
     {/* Vocabulary part of speech */}
-    {objectType === "vocabulary" && show("part_of_speech") && <>
+    {vocabularyLike && show("part_of_speech") && <>
       <a id="parts-of-speech" />
       <Divider orientation="left">
         {vocabSubjectData.parts_of_speech.length > 1
@@ -244,7 +252,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     </>}
 
     {/* Vocabulary context sentences */}
-    {objectType === "vocabulary" && show("context_sentences") && <>
+    {vocabularyLike && show("context_sentences") && <>
       <a id="context-sentences" />
       <Divider orientation="left">Context sentences</Divider>
       <ContextSentences subject={vocabSubjectData} />

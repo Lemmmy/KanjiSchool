@@ -15,7 +15,7 @@ import { SubjectCharacters } from "../../SubjectCharacters";
 import { Size } from "./";
 import { SrsStageShort } from "../../SrsStageShort";
 import { SubjectRenderTooltipFn } from "../tooltip/SubjectTooltip";
-import { getSrsStageBaseName, getSubjectUrl } from "@utils";
+import { getSrsStageBaseName, getSubjectUrl, normalizeVocabType } from "@utils";
 import { useIsInStudyQueue } from "@session";
 
 interface Props {
@@ -61,7 +61,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
   const classes = classNames(
     "subject-grid-item",
     "size-" + size,
-    "type-" + subject.object,
+    "type-" + normalizeVocabType(subject.object),
     "srs-" + getSrsStageBaseName(srsStage ?? 10).toLowerCase(),
     className,
     {

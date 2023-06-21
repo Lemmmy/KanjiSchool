@@ -17,6 +17,8 @@ const NoParagraph: FC = ({ children, ...props }) => (
 );
 
 export const SubjectMarkup: FC<Props> = ({ children, className }) => {
+  if (!children) return null;
+
   const classes = classNames("subject-markup", className);
 
   // Newlines to <br />, since paragraphs get removed

@@ -13,7 +13,7 @@ import { ConditionalLink } from "@comp/ConditionalLink";
 import { SrsStageShort } from "../../SrsStageShort";
 import { SubjectRenderTooltipFn } from "../tooltip/SubjectTooltip";
 
-import { getOneMeaning, getOneReading, getSubjectUrl } from "@utils";
+import { getOneMeaning, getOneReading, getSubjectUrl, hasReadings } from "@utils";
 import { useIsInStudyQueue } from "@session";
 
 // "tiny" is unsupported
@@ -47,7 +47,7 @@ export const VocabListItem = React.memo(function VocabListItem({
 
   // Get the first available primary meaning and reading
   const meaning = getOneMeaning(subject);
-  const reading = getOneReading(subject);
+  const reading = hasReadings(subject) ? getOneReading(subject) : null;
 
   // Get the SRS stage if it is available
   const srsStage = assignment?.data.srs_stage;
@@ -83,7 +83,7 @@ export const VocabListItem = React.memo(function VocabListItem({
           <div className="txt meaning vocab-meaning">{meaning}</div>
 
           {/* Primary reading */}
-          {!hideReading && <div className="txt reading vocab-reading ja">
+          {!hideReading && reading && <div className="txt reading vocab-reading ja">
             {reading}
           </div>}
 

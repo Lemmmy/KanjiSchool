@@ -9,7 +9,7 @@ import { SubjectWithAssignment } from "@api";
 import { startCase } from "lodash-es";
 import {
   nts, JLPT_LEVEL_NAMES, JOYO_GRADE_NAMES, stringifySrsStage,
-  subjectTypeToNumber, numberToSubjectType
+  numberToSubjectType, normalizedSubjectTypeToNumber, numberToNormalizedSubjectType
 } from "@utils";
 import { JlptLevels, JoyoGrades } from "@data";
 
@@ -25,7 +25,7 @@ export const GROUP_BY_FNS: Record<ItemsGroupBy, GroupByFn> = {
   "jlpt" : ([s]) => 5 - (s.data.jisho?.jlpt ?? 0), // Reverse order (N5 first)
   "joyo" : ([s]) => s.data.jisho?.joyo ?? 0,
   "freq" : ([s], groupSize) => Math.floor((s.data.jisho?.nfr ?? 1) / groupSize),
-  "type" : ([s]) => subjectTypeToNumber(s.object),
+  "type" : ([s]) => normalizedSubjectTypeToNumber(s.object),
   "srs"  : ([,a]) => a?.data.srs_stage ?? 10,
   "none" : () => 0,
 };
@@ -41,7 +41,7 @@ export const GROUP_BY_TO_NODE_FNS: Record<ItemsGroupBy, GroupToNodeFn> = {
   "jlpt" : n => JLPT_LEVEL_NAMES[(5 - n) as JlptLevels],
   "joyo" : n => JOYO_GRADE_NAMES[n as JoyoGrades],
   "freq" : (n, g) => `${nts((n * g) + 1)}-${nts((n * g) + g)}`,
-  "type" : n => startCase(numberToSubjectType(n)),
+  "type" : n => startCase(numberToNormalizedSubjectType(n)),
   "srs"  : n => startCase(stringifySrsStage(n)),
   "none" : () => "All items",
 };

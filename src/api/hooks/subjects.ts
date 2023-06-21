@@ -5,7 +5,7 @@
 import { RootState } from "@store";
 import { useSelector, shallowEqual } from "react-redux";
 
-import { StoredSubjectMap, StoredSubject, SubjectType } from "@api";
+import { StoredSubjectMap, StoredSubject, NormalizedSubjectType } from "@api";
 
 export const useSubjects = (): StoredSubjectMap | undefined =>
   useSelector((s: RootState) => s.sync.subjects);
@@ -15,7 +15,7 @@ export function useSubject(id?: number): StoredSubject | undefined {
   return id !== undefined ? subject : undefined;
 }
 
-export function useSubjectBySlug(type: SubjectType, slug: string): StoredSubject | undefined {
+export function useSubjectBySlug(type: NormalizedSubjectType, slug: string): StoredSubject | undefined {
   const id = useSelector((s: RootState) => s.sync.slugCache?.[type][slug]);
   return useSelector((s: RootState) => s.sync.subjects?.[id || -1], shallowEqual);
 }

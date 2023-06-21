@@ -25,22 +25,23 @@ import useResizeObserver from "use-resize-observer";
 
 import { sortBy } from "lodash-es";
 import memoizee from "memoizee";
+import { isVocabularyLike } from "@utils";
 
 const SIZE_SPACING: Record<Size, number> = {
-  "tiny": 2,
-  "small": 4,
+  "tiny":   2,
+  "small":  4,
   "normal": 16
 };
 
 const SIZE_WIDTHS: Record<Size, number> = {
-  "tiny": 36,
-  "small": 76,
+  "tiny":   36,
+  "small":  76,
   "normal": 104
 };
 
 const SIZE_ROW_HEIGHTS: Record<Size, [number, number]> = {
-  "tiny": [27, 27],
-  "small": [88, 100],
+  "tiny":   [27, 27],
+  "small":  [88, 100],
   "normal": [128, 140]
 };
 
@@ -48,9 +49,10 @@ const TINY_VOCAB_PADDING = 16;
 const TINY_KANA_WIDTH = 20;
 
 const COMPONENT_TYPES: Record<SubjectType, GridItemComponentType> = {
-  "radical": GridItemRadical,
-  "kanji": GridItemKanji,
-  "vocabulary": GridItemVocab
+  "radical":         GridItemRadical,
+  "kanji":           GridItemKanji,
+  "vocabulary":      GridItemVocab,
+  "kana_vocabulary": GridItemVocab,
 };
 
 // Props required to be implemented by a grid item component.
@@ -280,7 +282,7 @@ const calculateDynamicRowData = memoizee((
     const [s] = items[i];
 
     // How much space this item takes up in a row (includes the spacing)
-    const thisItemWidth = s.object === "vocabulary"
+    const thisItemWidth = isVocabularyLike(s)
       ? (s.data.characters!.length * TINY_KANA_WIDTH) + TINY_VOCAB_PADDING + itemSpacing
       : itemWidth + itemSpacing;
 

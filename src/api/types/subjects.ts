@@ -7,7 +7,12 @@ import { ApiObject, ApiCollection } from "./";
 // =============================================================================
 // Subjects
 // =============================================================================
-export type SubjectType = "radical" | "kanji" | "vocabulary";
+export type SubjectType = "radical"
+  | "kanji"
+  | "vocabulary"
+  | "kana_vocabulary";
+
+export type NormalizedSubjectType = Exclude<SubjectType, "kana_vocabulary">;
 
 export interface ApiSubjectMeaning {
   meaning: string;
@@ -34,7 +39,8 @@ export interface ApiSubjectBase {
 }
 
 export type ApiSubject =
-  ApiSubjectRadical | ApiSubjectKanji | ApiSubjectVocabulary;
+  ApiSubjectRadical | ApiSubjectKanji |
+  ApiSubjectVocabulary | ApiSubjectKanaVocabulary;
 export type ApiSubjectCollection = ApiCollection<ApiSubject>;
 export type ApiSubjectMap = Record<number, ApiSubject>;
 
@@ -106,12 +112,12 @@ export interface ApiSubjectKanji extends ApiObject<ApiSubjectKanjiInner> {
 // -----------------------------------------------------------------------------
 // Vocabulary
 // -----------------------------------------------------------------------------
-export interface ApiSubjectVocabularyContextSentence {
+export interface ApiSubjectContextSentence {
   en: string;
   ja: string;
 }
 
-export interface ApiSubjectVocabularyPronunciationAudio {
+export interface ApiSubjectPronunciationAudio {
   url: string;
   content_type: string;
   metadata: {
@@ -126,10 +132,10 @@ export interface ApiSubjectVocabularyPronunciationAudio {
 
 export interface ApiSubjectVocabularyInner extends ApiSubjectBase {
   component_subject_ids: number[];
-  context_sentences: ApiSubjectVocabularyContextSentence[];
+  context_sentences: ApiSubjectContextSentence[];
   meaning_mnemonic: string;
   parts_of_speech: string[];
-  pronunciation_audios: ApiSubjectVocabularyPronunciationAudio[];
+  pronunciation_audios: ApiSubjectPronunciationAudio[];
   readings: ApiSubjectReadingBase[];
   reading_mnemonic: string;
 }
@@ -139,3 +145,19 @@ export interface ApiSubjectVocabulary extends ApiObject<ApiSubjectVocabularyInne
 }
 
 export type AnyReading = ApiSubjectKanjiReading | ApiSubjectReadingBase;
+
+// -----------------------------------------------------------------------------
+// Kana Vocabulary
+// -----------------------------------------------------------------------------
+export interface ApiSubjectKanaVocabularyInner extends ApiSubjectBase {
+  context_sentences: ApiSubjectContextSentence[];
+  meaning_mnemonic: string;
+  parts_of_speech: string[];
+  pronunciation_audios: ApiSubjectPronunciationAudio[];
+}
+export interface ApiSubjectKanaVocabulary extends ApiObject<ApiSubjectKanaVocabularyInner> {
+  id: number;
+  object: "kana_vocabulary";
+}
+
+export type ApiSubjectVocabularyLike = ApiSubjectVocabulary | ApiSubjectKanaVocabulary;

@@ -7,13 +7,14 @@ import { Card, Tooltip, Typography } from "antd";
 
 import {
   useSubjects, useLevelProgressions, useAssignments, useUser,
-  StoredSubjectMap, ApiLevelProgressionMap, StoredAssignmentMap, ApiUser, SubjectType
+  StoredSubjectMap, ApiLevelProgressionMap, StoredAssignmentMap, ApiUser,
+  NormalizedSubjectType
 } from "@api";
 
 import { DhmDuration } from "@comp/DhmDuration";
 
 import dayjs from "dayjs";
-import { nts, useBooleanSetting } from "@utils";
+import { normalizeVocabType, nts, useBooleanSetting } from "@utils";
 
 const { Text } = Typography;
 
@@ -59,9 +60,10 @@ function getData(
     const subject = subjects[assignment.data.subject_id];
     if (!subject || subject.data.hidden_at) continue;
 
-    if (subject.object === "radical") itemsLearnedRadical++;
-    else if (subject.object === "kanji") itemsLearnedKanji++;
-    else if (subject.object === "vocabulary") itemsLearnedVocab++;
+    const type = normalizeVocabType(subject.object);
+    if (type === "radical") itemsLearnedRadical++;
+    else if (type === "kanji") itemsLearnedKanji++;
+    else if (type === "vocabulary") itemsLearnedVocab++;
   }
 
   return {
@@ -71,7 +73,7 @@ function getData(
   };
 }
 
-const TYPE_LABELS: Record<SubjectType, [string, string]> = {
+const TYPE_LABELS: Record<NormalizedSubjectType, [string, string]> = {
   radical: ["radicals", "部首"],
   kanji: ["kanji", "漢字"],
   vocabulary: ["vocabulary", "単語"],
@@ -140,7 +142,6 @@ export function CurrentStatusCard(): JSX.Element {
           </td>
         </tr>}
       </tbody>
-
     </table>
   </Card>;
 }

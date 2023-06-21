@@ -10,7 +10,7 @@ import { ApiSubject, ApiSubjectRadicalInner } from "@api";
 import { Textfit } from "react-textfit";
 import { CharacterImage } from "./CharacterImage";
 
-import { getJpCharBlocks, renderCharBlocks, useBooleanSetting } from "@utils";
+import { getJpCharBlocks, normalizeVocabType, renderCharBlocks, useBooleanSetting } from "@utils";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:subject-characters");
@@ -35,6 +35,7 @@ export const SubjectCharacters = React.memo(({
   className, style
 }: Props): JSX.Element | null => {
   const objectType = subject.object;
+  const normObjectType = normalizeVocabType(objectType);
   const { characters } = subject.data;
 
   // Some radicals have images instead of UTF-8 characters. Use the SVGs.
@@ -44,10 +45,10 @@ export const SubjectCharacters = React.memo(({
 
   const charBlocksEnabled = useBooleanSetting("subjectCharactersUseCharBlocks");
   const charBlocks = useMemo(() => charBlocksEnabled && useCharBlocks
-    && characters && objectType === "vocabulary"
+    && characters && normObjectType === "vocabulary"
     ? renderCharBlocks(getJpCharBlocks(characters))
     : undefined,
-  [charBlocksEnabled, useCharBlocks, characters, objectType]);
+  [charBlocksEnabled, useCharBlocks, characters, normObjectType]);
 
   // If the subject is hidden, don't render anything
   if (subject.data.hidden_at) {
@@ -57,7 +58,7 @@ export const SubjectCharacters = React.memo(({
 
   const classes = classNames(
     "subject-characters ja",
-    "type-" + objectType,
+    "type-" + normObjectType,
     className,
     {
       "subject-characters-textfit": textfit,

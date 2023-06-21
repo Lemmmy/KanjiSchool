@@ -12,6 +12,7 @@ import { SubjectTooltipAssignmentData } from "./AssignmentData";
 import { SubjectTooltipExtraData } from "./ExtraData";
 
 import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton";
+import { normalizeVocabType } from "@utils";
 
 export type SubjectRenderTooltipFn =
   (subject: StoredSubject, assignment?: StoredAssignment) => ReactNode;
@@ -35,13 +36,11 @@ function SubjectTooltipInner({
   showFreq,
   hideStudyQueueButton
 }: Props): JSX.Element {
-  const objectType = subject.object;
-
   const locked = !assignment?.data.unlocked_at;
 
   const classes = classNames(
     "subject-tooltip-inner",
-    "type-" + objectType,
+    "type-" + normalizeVocabType(subject.object),
     { locked }
   );
 

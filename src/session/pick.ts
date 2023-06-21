@@ -117,6 +117,7 @@ function pickLessonItems(
 
   // Pre-sort by lesson position before passing to the user-defined ordering
   const lessonSubjectIds = pendingLessons.map(l => l[1]);
+  debug("picking lesson items from %d pending lessons", lessonSubjectIds.length, pendingLessons);
   const sortedLessons = sortBy(lessonSubjectIds, [
     l => subjects[l].data.level,
     l => subjects[l].data.lesson_position,

@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { SubjectGridItem, SubjectGridItemProps } from "./SubjectGridItem";
-import { getOneMeaning, getOneReading, useBooleanSetting } from "@utils";
+import { getOneMeaning, getOneReading, hasReadings, useBooleanSetting } from "@utils";
 
 export function GridItemKanji({
   subject,
@@ -20,7 +20,7 @@ export function GridItemKanji({
   // Get the first available primary reading, and convert it to katakana if it
   // is on'yomi and the user desires it
   const onyomiInKatakana = useBooleanSetting("subjectOnyomiReadingsKatakana");
-  const reading = getOneReading(subject, onyomiInKatakana);
+  const reading = hasReadings(subject) ? getOneReading(subject, onyomiInKatakana) : null;
 
   return <SubjectGridItem
     className="type-kanji"
@@ -33,7 +33,7 @@ export function GridItemKanji({
     </span>}
 
     {/* Primary reading */}
-    {!hideReading && <span className="txt reading kanji-reading ja">
+    {!hideReading && reading && <span className="txt reading kanji-reading ja">
       {reading}
     </span>}
   </SubjectGridItem>;

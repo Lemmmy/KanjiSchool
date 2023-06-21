@@ -4,10 +4,10 @@
 
 import Highlighter from "react-highlight-words";
 
-import { ApiSubjectVocabularyInner } from "@api";
+import { ApiSubjectKanaVocabularyInner, ApiSubjectVocabularyInner } from "@api";
 
 interface Props {
-  subject: ApiSubjectVocabularyInner;
+  subject: ApiSubjectVocabularyInner | ApiSubjectKanaVocabularyInner;
 }
 
 export function ContextSentences({ subject }: Props): JSX.Element {

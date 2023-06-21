@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { SubjectType } from "@api";
+import { NormalizedSubjectType } from "@api";
 
 export type ItemsBaseType = "wk" | "jlpt" | "joyo" | "freq";
 export type ItemsGroupBy = "level" | "jlpt" | "joyo" | "freq" | "type" | "srs" | "none";
@@ -23,7 +23,7 @@ export interface FormValues {
 
   colorBy: ItemsColorBy;
 
-  types: SubjectType[];
+  types: NormalizedSubjectType[];
   // 10 is locked
   srsStages: string[]; // TODO: SRS stage numbers, convert back to number later
 }

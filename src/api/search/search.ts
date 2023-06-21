@@ -8,11 +8,12 @@ import { ApiReviewStatistic, StoredAssignment, StoredSubject, SubjectType, Subje
 import { PerformSearchFn } from "./KeywordSearch";
 import { SearchParams } from ".";
 
-import { ulut } from "@utils";
+import { normalizeVocabType, ulut } from "@utils";
 import dayjs, { Dayjs } from "dayjs";
 import { intersection, noop } from "lodash-es";
 
 import Debug from "debug";
+import { NormalizedSubjectType } from "@api/types";
 const debug = Debug("kanjischool:search");
 
 /** Subject, assignment, next review hours */
@@ -98,7 +99,7 @@ function applySearchFilter(
     partsOfSpeech
   }: SearchParams,
   srsStagesLut: Record<number, true> | undefined,
-  subjectTypesLut: Record<SubjectType, true> | undefined,
+  subjectTypesLut: Record<NormalizedSubjectType, true> | undefined,
   jlptLevelsLut: Record<number, true> | undefined,
   joyoGradesLut: Record<number, true> | undefined
 ): true | undefined {
@@ -151,7 +152,7 @@ function applySearchFilter(
   // SRS stage filter (10 is 'Locked')
   if (srsStagesLut && !srsStagesLut[assignment?.data.srs_stage ?? 10]) return;
   // Subject type filter
-  if (subjectTypesLut && !subjectTypesLut[subject.object]) return;
+  if (subjectTypesLut && !subjectTypesLut[normalizeVocabType(subject.object)]) return;
   // JLPT level filter (-1 is 'None')
   if (jlptLevelsLut && !jlptLevelsLut[subject.data.jisho?.jlpt ?? -1]) return;
   // Jōyō grade filter (-1 is 'None')

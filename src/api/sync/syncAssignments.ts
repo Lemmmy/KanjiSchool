@@ -56,7 +56,7 @@ async function _syncAssignments(
   // the date if fullSync is set to true.
   if (fullSync) debug("FULL ASSIGNMENTS SYNC");
   if (since) debug("ASSIGNMENTS SYNC SINCE %s", since);
-  const syncCurrentVersion = 3;
+  const syncCurrentVersion = 4;
   const syncLastVersion = lsGetNumber("syncAssignmentsLastVersion", 0);
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? (since ?? store.getState().sync.assignmentsLastSynced)

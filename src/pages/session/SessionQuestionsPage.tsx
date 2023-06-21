@@ -20,7 +20,7 @@ import { SessionQuestionContents } from "./SessionQuestionContents";
 
 import * as api from "@api";
 import { StoredSubject } from "@api";
-import { NearMatchAction, useBooleanSetting, useStringSetting } from "@utils";
+import { isVocabularyLike, NearMatchAction, useBooleanSetting, useStringSetting } from "@utils";
 import { AnswerVerdict } from "./checkAnswer";
 
 import { GlobalHotKeys, KeyMap } from "react-hotkeys";
@@ -67,7 +67,7 @@ export function SessionQuestionsPage(): JSX.Element {
   // Grab a playAudio function if this is a vocabulary subject and reading
   // question
   const [playAudio] = useVocabAudio(
-    question?.type === "reading" && subject?.object === "vocabulary"
+    question?.type === "reading" && subject && isVocabularyLike(subject)
       ? subject : undefined
   );
 
@@ -113,7 +113,7 @@ export function SessionQuestionsPage(): JSX.Element {
     } else {
       // Otherwise, if it was correct, submit the answer immediately, and play
       // the audio if possible (vocabulary readings)
-      if (question.type === "reading" && subject.object === "vocabulary") {
+      if (question.type === "reading" && isVocabularyLike) {
         playAudio(givenAnswer);
       }
 

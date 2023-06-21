@@ -10,7 +10,7 @@ import classNames from "classnames";
 import { RootState } from "@store";
 import { useSelector } from "react-redux";
 
-import { ApiSubjectVocabulary, getStoredAudio, useUserLevel } from "@api";
+import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio, useUserLevel } from "@api";
 
 import { sample } from "lodash-es";
 import { GlobalHotKeys } from "react-hotkeys";
@@ -65,7 +65,7 @@ function playSound(
 }
 
 export function useVocabAudio(
-  subject?: ApiSubjectVocabulary
+  subject?: ApiSubjectVocabularyLike
 ): VocabAudioHookRes {
   const userLevel = useUserLevel();
   const levelLocked = userLevel + 1 < (subject?.data.level || 1);
