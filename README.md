@@ -76,6 +76,6 @@ It was also heavily influenced by:
 
 ## License
 
-**Copyright (c) 2021-2022 Drew Edwards**
+**Copyright (c) 2021-2023 Drew Edwards**
 
 This project is licensed under the AGPL v3 license. See LICENSE for more.
