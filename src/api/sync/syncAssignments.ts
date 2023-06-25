@@ -191,7 +191,7 @@ export function initAssignment(
   const newAss = assignment as StoredAssignment;
 
   const shouldShow = shouldShowSubject(userLevel, subjects, subject_id);
-  newAss.data.internalShouldShow = shouldShow === true;
+  newAss.data.internalShouldShow = shouldShow !== "hidden";
   newAss.data.internalOverLevel = shouldShow === "over-level";
 
   if (shouldShow !== true) {
@@ -222,8 +222,9 @@ function checkOverleveledAssignments() {
     const subject = subjects[assignment.data.subject_id];
     if (!subject) continue;
 
+    // Only count lessons and reviews that are not burned
     if (assignment.data.srs_stage === 0) overleveledLessons++;
-    else overleveledReviews++;
+    else if (assignment.data.srs_stage < 9) overleveledReviews++;
   }
 
   const previousLessons = lsGetNumber("overleveledLessons", 0);

@@ -30,7 +30,7 @@ export interface State {
   readonly assignmentsProgress?: SyncProgress;
   readonly assignments?: StoredAssignmentMap;
   readonly subjectAssignmentIdMap: SubjectAssignmentIdMap;
-  readonly overleveledAssignments?: OverleveledAssignments;
+  readonly overleveledAssignments: OverleveledAssignments | null;
 
   readonly reviewStatisticsLastSynced?: string;
   readonly syncingReviewStatistics: boolean;
@@ -84,7 +84,7 @@ export function getInitialSyncState(): State {
     syncingAssignments: false,
     assignments: undefined,
     subjectAssignmentIdMap: {},
-    overleveledAssignments: undefined,
+    overleveledAssignments: null,
 
     reviewStatisticsLastSynced: lsGetString("reviewStatisticsLastSynced"),
     syncingReviewStatistics: false,

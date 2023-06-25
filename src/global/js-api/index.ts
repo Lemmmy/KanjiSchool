@@ -6,6 +6,7 @@ import { store } from "@app";
 import { getAssignmentWithSubject, StoredAssignmentMap, StoredSubjectMap } from "@api";
 import { isOverdue, getCharSymbol, getJpCharBlocks } from "@utils";
 import { startSession } from "@session";
+import { db } from "@db";
 
 function getAssignments(): StoredAssignmentMap | undefined {
   return store.getState().sync.assignments;
@@ -13,6 +14,19 @@ function getAssignments(): StoredAssignmentMap | undefined {
 
 function getSubjects(): StoredSubjectMap | undefined {
   return store.getState().sync.subjects;
+}
+
+async function resetOverlevelAssignment(assignmentId: number) {
+  const assignment = store.getState().sync.assignments?.[assignmentId];
+  if (!assignment) throw new Error("Assignment not found");
+
+  await db.assignments.update(assignmentId, {
+    ...assignment,
+    data: {
+      ...assignment.data,
+      internalOverLevel: false
+    }
+  });
 }
 
 (window as any).wk = {
@@ -23,5 +37,7 @@ function getSubjects(): StoredSubjectMap | undefined {
   isOverdue,
   getCharSymbol,
   getJpCharBlocks,
-  startSession
+  startSession,
+  resetOverlevelAssignment
 };
+

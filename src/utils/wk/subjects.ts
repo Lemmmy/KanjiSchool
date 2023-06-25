@@ -13,13 +13,18 @@ import { toKatakana } from "@utils";
 export type ShouldShowSubject = true | "over-level" | "hidden";
 
 /**
- * Determines whether or not a subject should be shown to the user. This will
- * hide subjects that were hidden, as well as subjects that are higher than the
- * user's current level. From the WK API docs:
+ * Determines whether a subject should be shown to the user. As of May 2022 this should only hide subjects that were
+ * hidden (`hidden_at` is set), it no longer hides subjects that are above the user's level.
  *
- *   It is possible for a user to have started an assignment for a subject that
- *   was later moved to a level above their current level. To exclude those
- *   assignments, filter by levels from 1 to the users current level.
+ * Previously, per the API docs:
+ *   It is possible for a user to have started an assignment for a subject that was later moved to a level above their
+ *   current level. To exclude those assignments, filter by levels from 1 to the users current level.
+ *
+ * But as of May 2022, WaniKani now keeps higher level items in the user's review queue if they were already assigned:
+ *   https://community.wanikani.com/t/higher-level-items-in-review-queue/57004
+ *
+ * KanjiSchool now also does this to stay consistent with subject counts on wanikani.com. Note that it will not affect
+ * level-up since the subjects will now be in future levels. This change incurred an assignments version bump (4 to 5).
  */
 export function shouldShowSubject(
   userLevel: number,

@@ -4,7 +4,8 @@
 
 import { nts } from "@utils";
 
-export function pluralN(n: number, singular: string, plural?: string): string {
-  const word = n === 1 ? singular : (plural || singular + "s");
-  return `${nts(n)} ${word}`;
-}
+export const plural = (n: number, singularStr: string, pluralStr?: string): string =>
+  n === 1 ? singularStr : (pluralStr || singularStr + "s");
+
+export const pluralN = (n: number, singularStr: string, pluralStr?: string): string =>
+  nts(n) + " " + plural(n, singularStr, pluralStr);
