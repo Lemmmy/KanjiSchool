@@ -68,11 +68,11 @@
     "workbox-strategies": "^6.1.5"
   },
   "scripts": {
-    "start": "PORT=4600 craco start",
+    "start": "cross-env PORT=4600 craco start",
     "clean": "rimraf build",
     "build": "craco build",
     "optimise": "gzip -kr build/static",
-    "full-build": "yarn run clean; NODE_ENV=production yarn run build; yarn run optimise",
+    "full-build": "yarn run clean; cross-env NODE_ENV=production yarn run build; yarn run optimise",
     "test": "craco test"
   },
   "eslintConfig": {
@@ -121,6 +121,7 @@
     "antd-dayjs-webpack-plugin": "^1.0.6",
     "babel-plugin-lodash": "^3.3.4",
     "craco-alias": "^3.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
