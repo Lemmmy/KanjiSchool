@@ -14,7 +14,7 @@ import memoize from "memoizee";
 
 export function stringifySrsStage(stage: number): string {
   switch (stage) {
-  case 0:  return "Initiate";
+  case 0:  return "Lesson";
   case 1:  return "Apprentice I";
   case 2:  return "Apprentice II";
   case 3:  return "Apprentice III";
@@ -30,7 +30,7 @@ export function stringifySrsStage(stage: number): string {
 
 export function stringifySrsStageShort(stage: number): string {
   switch (stage) {
-  case 0:  return "Initiate";
+  case 0:  return "Lesson";
   case 1:  return "Appr I";
   case 2:  return "Appr II";
   case 3:  return "Appr III";
@@ -44,11 +44,11 @@ export function stringifySrsStageShort(stage: number): string {
   }
 }
 
-export type SrsStageBaseName = "Initiate" | "Apprentice" | "Guru" | "Master" |
+export type SrsStageBaseName = "Lesson" | "Apprentice" | "Guru" | "Master" |
   "Enlightened" | "Burned" | "Locked";
 export function getSrsStageBaseName(stage: number): SrsStageBaseName {
   switch (stage) {
-  case 0:  return "Initiate";
+  case 0:  return "Lesson";
   case 1: case 2: case 3: case 4: return "Apprentice";
   case 5: case 6: return "Guru";
   case 7:  return "Master";

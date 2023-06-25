@@ -4,7 +4,7 @@
 
 import { StoredAssignmentMap, StoredAssignment, StoredSubjectMap, ApiSubject } from "@api";
 
-// Locked, Initiate, Appr I, Appr II, Appr III, Appr IV, Passed, Total,
+// Locked, Lesson, Appr I, Appr II, Appr III, Appr IV, Passed, Total,
 // All have PassedAt
 export type SegmentData = [number, number, number, number, number, number, number, number, boolean];
 export const SEG_PASSED = 6;
@@ -62,7 +62,7 @@ export function analyze(
     const lvlSubjects = lvlSubjAss[lvl];
     if (!lvlSubjects) continue; // WTF?
 
-    // Locked, Initiate, Appr I, Appr II, Appr III, Appr IV, Passed, Total
+    // Locked, Lesson, Appr I, Appr II, Appr III, Appr IV, Passed, Total
     const radicals: SegmentData = [0, 0, 0, 0, 0, 0, 0, 0, true];
     const kanji: SegmentData = [0, 0, 0, 0, 0, 0, 0, 0, true];
     const vocabulary: SegmentData = [0, 0, 0, 0, 0, 0, 0, 0, true];
@@ -98,7 +98,7 @@ export function analyze(
         const stage = assignment.data.srs_stage;
 
         if (stage >= 0 && stage <= 4) {
-          // Otherwise, if the SRS stage is between Initiate and Appr IV
+          // Otherwise, if the SRS stage is between Lesson and Appr IV
           // (inclusive), increment the appropriate stage's counter
           (arr[stage + 1] as number)++;
         } else {

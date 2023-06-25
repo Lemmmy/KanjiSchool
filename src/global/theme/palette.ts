@@ -22,7 +22,7 @@ export interface ColorPalette {
   vocabularyHiragana: string;
   vocabularyKatakana: string;
 
-  srsInitiate   : string;
+  srsLesson     : string;
   srsApprentice : string;
   srsApprentice1: string;
   srsApprentice2: string;
@@ -51,7 +51,7 @@ export const PALETTE_KANJI_SCHOOL: ColorPalette = {
   vocabularyHiragana: "#B2E58B", // @green-9
   vocabularyKatakana: "#3C8618", // @green-5
 
-  srsInitiate   : "#959595", // fade(@white, 55%) (converted to hex)
+  srsLesson     : "#959595", // fade(@white, 55%) (converted to hex)
   srsApprentice : "#3C9AE8", // @blue-7
   srsApprentice1: "#8DCFF8", // @blue-9
   srsApprentice2: "#65B7F3", // @blue-8
@@ -94,7 +94,7 @@ export const PALETTE_KANJI_SCHOOL: ColorPalette = {
  *   5 - Apprentice II
  *   6 -
  *   7 - Apprentice I
- *   8 - Initiate
+ *   8 - Lesson
  *   9 - Locked
  */
 export const PALETTE_FD_LIGHT: ColorPalette = {
@@ -110,7 +110,7 @@ export const PALETTE_FD_LIGHT: ColorPalette = {
   vocabularyHiragana: "#C167FA",
   vocabularyKatakana: "#6A06A9",
 
-  srsInitiate   : "#959595", // fade(@white, 55%) (converted to hex)
+  srsLesson     : "#959595", // fade(@white, 55%) (converted to hex)
   srsApprentice : "#D80088", // stageBucketColors[2]
   srsApprentice1: "#D6AFCA", // levelProgressionBucketColors[7]
   srsApprentice2: "#CB8FB3", // levelProgressionBucketColors[5]
@@ -140,7 +140,7 @@ export const PALETTE_FD_DARK: ColorPalette = {
   vocabularyHiragana: "#7EE2A8",
   vocabularyKatakana: "#208E4E",
 
-  srsInitiate   : "#959595", // fade(@white, 55%) (converted to hex)
+  srsLesson     : "#959595", // fade(@white, 55%) (converted to hex)
   srsApprentice : "#1D99F3", // stageBucketColors[2]
   srsApprentice1: "#7DC9FC", // levelProgressionBucketColors[7]
   srsApprentice2: "#5DB9F9", // levelProgressionBucketColors[5]
@@ -157,7 +157,7 @@ export const PALETTE_FD_DARK: ColorPalette = {
 };
 
 export const SRS_STAGE_TO_PALETTE: Record<number, keyof ColorPalette> = {
-  0: "srsInitiate",
+  0: "srsLesson",
   1: "srsApprentice1",
   2: "srsApprentice2",
   3: "srsApprentice3",

@@ -95,11 +95,11 @@ function LevelProgressBar({
 
     <div className="bar-container">
       <BarPart {...barPartProps} stage={"passed"} n={passed} />
-      <BarPart {...barPartProps} stage={"appr4"} n={appr4} />
-      <BarPart {...barPartProps} stage={"appr3"} n={appr3} />
-      <BarPart {...barPartProps} stage={"appr2"} n={appr2} />
-      <BarPart {...barPartProps} stage={"appr1"} n={appr1} />
-      <BarPart {...barPartProps} stage={"init"} n={init} />
+      <BarPart {...barPartProps} stage={"appr4"}  n={appr4} />
+      <BarPart {...barPartProps} stage={"appr3"}  n={appr3} />
+      <BarPart {...barPartProps} stage={"appr2"}  n={appr2} />
+      <BarPart {...barPartProps} stage={"appr1"}  n={appr1} />
+      <BarPart {...barPartProps} stage={"lesson"} n={init} />
       <BarPart {...barPartProps} stage={"locked"} n={locked} />
 
       {/* Show a black line at 90% kanji to show where level-up would be */}
@@ -112,7 +112,7 @@ function LevelProgressBar({
 
 type PercFn = (n: number) => string;
 type PercParenFn = PercFn;
-type BarPartStage = "locked" | "init" | "appr1" | "appr2" | "appr3" | "appr4"
+type BarPartStage = "locked" | "lesson" | "appr1" | "appr2" | "appr3" | "appr4"
   | "passed";
 interface BarPartProps {
   history: History;
@@ -151,11 +151,11 @@ const BarPart = React.memo(function BarPart({
 function barSegTitleAndStages(stage: BarPartStage): [string, number[]] {
   switch (stage) {
   case "locked": return ["Locked", [10]];
-  case "init": return ["Initiate", [0]];
-  case "appr1": return ["Apprentice I", [1]];
-  case "appr2": return ["Apprentice II", [2]];
-  case "appr3": return ["Apprentice III", [3]];
-  case "appr4": return ["Apprentice IV", [4]];
+  case "lesson": return ["Lesson", [0]];
+  case "appr1":  return ["Apprentice I", [1]];
+  case "appr2":  return ["Apprentice II", [2]];
+  case "appr3":  return ["Apprentice III", [3]];
+  case "appr4":  return ["Apprentice IV", [4]];
   case "passed": return ["Passed", [5, 6, 7, 8, 9]];
   }
 }

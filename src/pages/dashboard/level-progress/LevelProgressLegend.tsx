@@ -17,9 +17,9 @@ export function LevelProgressLegend(): JSX.Element {
       <span className="legend-label">Appr.</span>
     </Tooltip>
 
-    <div className="legend-square legend-init"></div>
-    <Tooltip title="Initiate">
-      <span className="legend-label">Init.</span>
+    <div className="legend-square legend-lesson"></div>
+    <Tooltip title="Lesson">
+      <span className="legend-label">Less.</span>
     </Tooltip>
 
     <div className="legend-square legend-locked"></div>

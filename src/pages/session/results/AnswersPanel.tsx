@@ -18,7 +18,7 @@ import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton";
 import { getSrsStageBaseName, SrsStageBaseName, nts, isVocabularyLike } from "@utils";
 
 type GroupedData = Record<SrsStageBaseName, [number[], boolean]>;
-const GROUPS: SrsStageBaseName[] = ["Initiate", "Apprentice", "Guru", "Master",
+const GROUPS: SrsStageBaseName[] = ["Lesson", "Apprentice", "Guru", "Master",
   "Enlightened", "Burned", "Locked"];
 
 function groupByStage(
@@ -30,7 +30,7 @@ function groupByStage(
   if (!subjects || !assignments || !subjectAssignmentIds) return;
 
   const data: GroupedData = {
-    "Initiate": [[], false], "Apprentice": [[], false], "Guru": [[], false],
+    "Lesson": [[], false], "Apprentice": [[], false], "Guru": [[], false],
     "Master": [[], false], "Enlightened": [[], false], "Burned": [[], false],
     "Locked": [[], false],
   };

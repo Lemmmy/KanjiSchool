@@ -12,7 +12,7 @@ export function SrsStagesPicker({ ...props }: any): JSX.Element {
   const palette = usePalette();
 
   function tagRender({ label, value, closable, onClose }: CustomTagProps) {
-    const colorKey = (typeof value === "number" ? SRS_STAGE_TO_PALETTE[value] : null) || "srsInitiate";
+    const colorKey = (typeof value === "number" ? SRS_STAGE_TO_PALETTE[value] : null) || "srsLesson";
     const color = palette[colorKey];
     const textColor = getReadableTextColor(palette, colorKey);
 
@@ -35,7 +35,7 @@ export function SrsStagesPicker({ ...props }: any): JSX.Element {
       {/* Show 'Locked' first */}
       <Select.Option value={10}>Locked</Select.Option>
 
-      {/* Show the remaining 10 SRS stages (Initiate -> Burned) */}
+      {/* Show the remaining 10 SRS stages (Lesson -> Burned) */}
       {Array(10).fill(0).map((_, i) =>
         <Select.Option key={i} value={i}>
           {stringifySrsStage(i)}
