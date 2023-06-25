@@ -48,3 +48,4 @@ export const setSupportedFont = createAction(constants.SET_SUPPORTED_FONT)<SetSu
 export const setSupportedFonts = createAction(constants.SET_SUPPORTED_FONTS)<Record<string, boolean>>();
 
 export const setTip = createAction(constants.SET_TIP)<number>();
+export const setGetReviewsWarning = createAction(constants.SET_GET_REVIEWS_WARNING)<boolean>();

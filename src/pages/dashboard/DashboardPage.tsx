@@ -32,6 +32,7 @@ import { useBooleanSetting } from "@utils";
 
 import useResizeObserver from "use-resize-observer";
 import { OverleveledAssignments } from "@pages/dashboard/OverleveledAssignments";
+import { GetReviewsWarning } from "@pages/dashboard/GetReviewsWarning";
 
 export function DashboardPage(): JSX.Element {
   const ongoingSession = useSelector((s: RootState) => s.session.ongoing);
@@ -58,6 +59,7 @@ export function DashboardPage(): JSX.Element {
 
   const page = <PageLayout siteTitle="Dashboard" className="dashboard-page">
     <SubscriptionStatus />
+    <GetReviewsWarning />
     <OverleveledAssignments />
 
     <DashboardTopRow />

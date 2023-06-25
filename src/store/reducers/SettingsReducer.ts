@@ -6,7 +6,7 @@ import { createReducer } from "typesafe-actions";
 import { loadSettings, SettingsState } from "@utils/settings";
 import {
   setBooleanSetting, setIntegerSetting, setStringSetting, setHotkeyHelpVisible,
-  setPresets, setTip, setCustomFonts, setSupportedFont, setSupportedFonts
+  setPresets, setTip, setCustomFonts, setSupportedFont, setSupportedFonts, setGetReviewsWarning
 } from "@actions/SettingsActions";
 
 import { Preset, PresetType } from "@comp/preset-editor";
@@ -14,7 +14,7 @@ import { Preset, PresetType } from "@comp/preset-editor";
 import { defaultFonts, lsGetNumber, lsGetObject } from "@utils";
 
 export type State = SettingsState & {
-  /** Whether or not the keyboard shortcuts modal is currently shown. */
+  /** Whether the keyboard shortcuts modal is currently shown. */
   readonly hotkeyHelpVisible: boolean;
 
   /** Study options presets. */
@@ -25,6 +25,7 @@ export type State = SettingsState & {
   readonly supportedFonts: Record<string, boolean>;
 
   readonly tip: number;
+  readonly getReviewsWarning: boolean;
 };
 
 export function getInitialSettingsState(): State {
@@ -37,7 +38,8 @@ export function getInitialSettingsState(): State {
     },
     customFonts: lsGetObject<string[]>("customFonts") ?? defaultFonts,
     supportedFonts: lsGetObject<Record<string, boolean>>("supportedFonts") ?? {},
-    tip: lsGetNumber("tip") ?? -1
+    tip: lsGetNumber("tip") ?? -1,
+    getReviewsWarning: lsGetObject<boolean>("getReviewsWarning") ?? false
   };
 }
 
@@ -73,4 +75,6 @@ export const SettingsReducer = createReducer({} as State)
   .handleAction(setSupportedFonts, (state, { payload }): State =>
     ({ ...state, supportedFonts: payload }))
   .handleAction(setTip, (state, { payload }): State =>
-    ({ ...state, tip: payload }));
+    ({ ...state, tip: payload }))
+  .handleAction(setGetReviewsWarning, (state, { payload }): State =>
+    ({ ...state, getReviewsWarning: payload }));
