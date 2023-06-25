@@ -14,7 +14,8 @@ import {
   ApiReviewStatistic, ApiReviewStatisticMap,
   ApiLevelProgressionMap, ApiLevelProgression,
   ApiStudyMaterialMap, ApiStudyMaterial,
-  StoredImageMap
+  StoredImageMap,
+  OverleveledAssignments
 } from "@api";
 
 import { StreakData } from "@pages/dashboard/summary/calculateStreak";
@@ -35,6 +36,7 @@ export const setSyncingAssignments = createAction(constants.SET_SYNCING_ASSIGNME
 export const setSyncingAssignmentsProgress = createAction(constants.SET_SYNCING_ASSIGNMENTS_PROGRESS)<SyncProgress>();
 export const initAssignments = createAction(constants.INIT_ASSIGNMENTS)<StoredAssignmentMap>();
 export const updateAssignment = createAction(constants.UPDATE_ASSIGNMENT)<StoredAssignment>();
+export const setOverleveledAssignments = createAction(constants.SET_OVERLEVELED_ASSIGNMENTS)<OverleveledAssignments | undefined>();
 
 export const setReviewStatisticsLastSynced = createAction(constants.SET_REVIEW_STATISTICS_LAST_SYNCED)<string>();
 export const setSyncingReviewStatistics = createAction(constants.SET_SYNCING_REVIEW_STATISTICS)<boolean>();

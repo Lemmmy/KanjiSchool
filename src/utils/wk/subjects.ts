@@ -4,9 +4,13 @@
 
 import {
   StoredSubjectMap, ApiSubject, ApiSubjectHasReadings, ApiSubjectKanjiReading,
-  AnyReading, StoredSubject, SubjectType, ApiSubjectVocabulary, ApiSubjectVocabularyLike, NormalizedSubjectType
+  AnyReading, StoredSubject, SubjectType, ApiSubjectVocabularyLike,
+  NormalizedSubjectType
 } from "@api";
+
 import { toKatakana } from "@utils";
+
+export type ShouldShowSubject = true | "over-level" | "hidden";
 
 /**
  * Determines whether or not a subject should be shown to the user. This will
@@ -21,14 +25,14 @@ export function shouldShowSubject(
   userLevel: number,
   subjects: StoredSubjectMap,
   subjectIdOrSubject: ApiSubject | number
-): boolean {
+): ShouldShowSubject {
   const subject = typeof subjectIdOrSubject === "number"
     ? subjects[subjectIdOrSubject]
     : subjectIdOrSubject;
 
-  return subject
-    && !subject.data.hidden_at
-    && subject.data.level <= userLevel;
+  if (!subject || subject.data.hidden_at) return "hidden";
+  else if (subject.data.level > userLevel) return "over-level";
+  else return true;
 }
 
 /** Returns the primary meaning of a subject, or the first available meaning. */

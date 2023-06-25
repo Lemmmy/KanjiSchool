@@ -13,9 +13,7 @@ import {
 } from "@api";
 import { db } from "@db";
 
-import {
-  lsGetNumber, lsSetString, lsSetNumber, shouldShowSubject
-} from "@utils";
+import { lsGetNumber, lsSetString, lsSetNumber, shouldShowSubject, getSubjectTitle } from "@utils";
 
 import { Mutex } from "async-mutex";
 
@@ -25,6 +23,7 @@ const debug = Debug("kanjischool:api-sync-assignments");
 export type StoredAssignment = ApiAssignment & {
   data: {
     internalShouldShow: boolean;
+    internalOverLevel: boolean;
   };
 }
 export type StoredAssignmentMap = Record<number, StoredAssignment>;
@@ -35,6 +34,13 @@ export type AssignmentWithSubject = StoredAssignment & {
 export type AssignmentSubjectId = [number, number];
 export type SubjectWithAssignment = [StoredSubject, StoredAssignment | undefined];
 export type SubjectAssignmentIdMap = Record<number, number>;
+
+export interface OverleveledAssignments {
+  prevLessons: number;
+  prevReviews: number;
+  currLessons: number;
+  currReviews: number;
+}
 
 const syncAssignmentsMutex = new Mutex();
 export async function syncAssignments(
@@ -56,7 +62,7 @@ async function _syncAssignments(
   // the date if fullSync is set to true.
   if (fullSync) debug("FULL ASSIGNMENTS SYNC");
   if (since) debug("ASSIGNMENTS SYNC SINCE %s", since);
-  const syncCurrentVersion = 4;
+  const syncCurrentVersion = 5;
   const syncLastVersion = lsGetNumber("syncAssignmentsLastVersion", 0);
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? (since ?? store.getState().sync.assignmentsLastSynced)
@@ -163,6 +169,9 @@ export function reloadAssignments(): void {
   // Calculate the 7-day review forecast
   const forecast = generateReviewForecast(userLevel, subjects, assignments);
   store.dispatch(actions.setReviewForecast(forecast));
+
+  // Check if any assignments are overleveled
+  checkOverleveledAssignments();
 }
 
 export function initAssignment(
@@ -180,6 +189,61 @@ export function initAssignment(
 
   // For all assignments, ignore based on level/hidden
   const newAss = assignment as StoredAssignment;
-  newAss.data.internalShouldShow = shouldShowSubject(userLevel, subjects, subject_id);
+
+  const shouldShow = shouldShowSubject(userLevel, subjects, subject_id);
+  newAss.data.internalShouldShow = shouldShow === true;
+  newAss.data.internalOverLevel = shouldShow === "over-level";
+
+  if (shouldShow !== true) {
+    const subject = subjects?.[subject_id];
+    if (subject) {
+      const title = getSubjectTitle(subject);
+      debug("got assignment %d for subject %d (%s) which should be hidden. shouldShow: %o, level: %d, hidden_at: %s",
+        assignment.id, subject_id, title, shouldShow, subject.data.level, subject.data.hidden_at);
+    } else {
+      debug("got assignment %d for subject %d which should be hidden, but subject not found", assignment.id, subject_id);
+    }
+  }
+
   return newAss;
+}
+
+function checkOverleveledAssignments() {
+  const { subjects, assignments } = store.getState().sync;
+  if (!subjects || !assignments) return;
+
+  // See if any more assignments are over-levelled since the last time we
+  // checked them.
+  let overleveledLessons = 0, overleveledReviews = 0;
+  for (const assignmentId in assignments) {
+    const assignment = assignments[assignmentId];
+    if (!assignment.data.internalOverLevel) continue;
+
+    const subject = subjects[assignment.data.subject_id];
+    if (!subject) continue;
+
+    if (assignment.data.srs_stage === 0) overleveledLessons++;
+    else overleveledReviews++;
+  }
+
+  const previousLessons = lsGetNumber("overleveledLessons", 0);
+  const previousReviews = lsGetNumber("overleveledReviews", 0);
+  if ((overleveledLessons > 0 && overleveledLessons !== previousLessons)
+    || (overleveledReviews > 0 && overleveledReviews !== previousReviews)) {
+    // Immediately set the local storage so that the warning won't appear on the
+    // next refresh.
+    debug("overleveled assignments changed. lessons: %d -> %d, reviews: %d -> %d",
+      previousLessons, overleveledLessons, previousReviews, overleveledReviews);
+    lsSetNumber("overleveledLessons", overleveledLessons);
+    lsSetNumber("overleveledReviews", overleveledReviews);
+
+    // Show the warning on the Dashboard, until the user dismisses it or reloads
+    // the page.
+    store.dispatch(actions.setOverleveledAssignments({
+      prevLessons: previousLessons ?? 0,
+      prevReviews: previousReviews ?? 0,
+      currLessons: overleveledLessons,
+      currReviews: overleveledReviews
+    }));
+  }
 }

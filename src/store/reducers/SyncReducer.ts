@@ -9,7 +9,7 @@ import {
   SyncProgress, StoredSubjectMap, StoredAssignmentMap, NextReviewsAvailable,
   ReviewForecast, AssignmentSubjectId, SubjectAssignmentIdMap,
   ApiReviewStatisticMap, ApiLevelProgressionMap, ApiStudyMaterialMap,
-  PartsOfSpeechCache, SlugCache, SubjectReviewStatisticIdMap, StoredImageMap, SubjectStudyMaterialIdMap
+  PartsOfSpeechCache, SlugCache, SubjectReviewStatisticIdMap, StoredImageMap, SubjectStudyMaterialIdMap, OverleveledAssignments
 } from "@api";
 
 import { StreakData } from "@pages/dashboard/summary/calculateStreak";
@@ -30,6 +30,7 @@ export interface State {
   readonly assignmentsProgress?: SyncProgress;
   readonly assignments?: StoredAssignmentMap;
   readonly subjectAssignmentIdMap: SubjectAssignmentIdMap;
+  readonly overleveledAssignments?: OverleveledAssignments;
 
   readonly reviewStatisticsLastSynced?: string;
   readonly syncingReviewStatistics: boolean;
@@ -83,6 +84,7 @@ export function getInitialSyncState(): State {
     syncingAssignments: false,
     assignments: undefined,
     subjectAssignmentIdMap: {},
+    overleveledAssignments: undefined,
 
     reviewStatisticsLastSynced: lsGetString("reviewStatisticsLastSynced"),
     syncingReviewStatistics: false,
@@ -182,6 +184,10 @@ export const SyncReducer = createReducer({} as State)
       [payload.data.subject_id]: payload.id
     }
   }))
+  // Set overleveled lessons and reviews. This is used to show a warning to the
+  // user if they have lessons or reviews that are overleveled.
+  .handleAction(actions.setOverleveledAssignments, (state, { payload }): State =>
+    ({ ...state, overleveledAssignments: payload }))
   // ---------------------------------------------------------------------------
   // Review statistics
   // ---------------------------------------------------------------------------
