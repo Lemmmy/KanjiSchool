@@ -2,17 +2,23 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useEffect, useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import { useHistory } from "react-router-dom";
 
 import { RootState } from "@store";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "@actions/SessionActions";
 
 import {
-  submitQuestionAnswer, chooseQuestion, SessionItem, skipQuestion, SkipType,
-  showSkipNotification, showNearMatchNotification, UndoType
+  chooseQuestion,
+  SessionItem,
+  showNearMatchNotification,
+  showSkipNotification,
+  skipQuestion,
+  SkipType,
+  submitQuestionAnswer,
+  UndoType
 } from "@session";
 
 import { useVocabAudio } from "@comp/subjects/AudioButton";
@@ -24,6 +30,7 @@ import { isVocabularyLike, NearMatchAction, useBooleanSetting, useStringSetting 
 import { AnswerVerdict } from "./checkAnswer";
 
 import { GlobalHotKeys, KeyMap } from "react-hotkeys";
+import { usePreventDocumentSpace } from "@utils/hooks/usePreventDocumentSpace";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:session-questions-page");
@@ -42,6 +49,8 @@ export type OnSkipFn = (
 export function SessionQuestionsPage(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  usePreventDocumentSpace();
 
   // Fetch all the required information from the Redux store.
   const subjects = api.useSubjects();
@@ -123,7 +132,7 @@ export function SessionQuestionsPage(): JSX.Element {
         showNearMatchNotification(givenAnswer, matchedAnswer);
       }
 
-      submitAnswer(ok);
+      submitAnswer(ok).catch(console.error);
     }
   }, [dispatch, question, subject, submitAnswer, playAudio, nearMatchAction]);
 
@@ -165,7 +174,9 @@ export function SessionQuestionsPage(): JSX.Element {
     dispatch(actions.setIncorrectAnswer(undefined));
   }, [dispatch, undoEnabled]);
 
-  const onIncorrectNext = useCallback(() => submitAnswer(false), [submitAnswer]);
+  const onIncorrectNext = useCallback(() => {
+    submitAnswer(false).catch(console.error);
+  }, [submitAnswer]);
 
   // Keyboard shortcuts
   const onUndoShortcut = useCallback((e?: KeyboardEvent) => {
@@ -175,8 +186,9 @@ export function SessionQuestionsPage(): JSX.Element {
       onIncorrectUndo();
     }
   }, [incorrectAnswer, onIncorrectUndo]);
+
   const onSpace = useCallback((e?: KeyboardEvent) => {
-    debug("space pressed");
+    debug("space pressed", e);
     if (incorrectAnswer !== undefined) {
       e?.stopPropagation();
       onIncorrectNext();
