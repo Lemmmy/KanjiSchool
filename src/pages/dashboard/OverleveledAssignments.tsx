@@ -44,6 +44,11 @@ export function OverleveledAssignments(): JSX.Element | null {
 
   const newLessons = Math.max(over.currLessons - over.prevLessons, 0);
   const newReviews = Math.max(over.currReviews - over.prevReviews, 0);
+
+  if (newLessons <= 0 && newReviews <= 0) {
+    return null;
+  }
+
   const total = newLessons + newReviews;
 
   const message = newLessons > 0 && newReviews > 0
