@@ -29,10 +29,10 @@ export function YourProgression({
     {/* SRS stage */}
     <SrsStageBar subject={subject} assignment={assignment} />
 
-    {/* Date row (unlocked, next review, etc) */}
-    <DateRow assignment={assignment} />
+    {/* Date row (unlocked, next review, etc.) */}
+    <DateRow subject={subject} assignment={assignment} />
 
-    {/* Correct bars (meaning/reading answered correctly, streak, etc) */}
+    {/* Correct bars (meaning/reading answered correctly, streak, etc.) */}
     <CorrectBars subject={subject} />
   </div>;
 }

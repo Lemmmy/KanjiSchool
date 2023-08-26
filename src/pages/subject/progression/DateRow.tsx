@@ -5,7 +5,7 @@
 import { Row, Col } from "antd";
 import classNames from "classnames";
 
-import { StoredAssignment } from "@api";
+import { StoredAssignment, StoredSubject } from "@api";
 
 import { ShortDuration } from "@comp/ShortDuration";
 
@@ -13,10 +13,11 @@ import dayjs from "dayjs";
 import { isPast, parseISO } from "date-fns";
 
 interface Props {
+  subject: StoredSubject;
   assignment: StoredAssignment;
 }
 
-export function DateRow({ assignment }: Props): JSX.Element {
+export function DateRow({ subject, assignment }: Props): JSX.Element {
   return <div className="date-row">
     <Row className="date-row-row" justify="center" gutter={[16, 16]}>
       <DateCol name="Unlocked at" date={assignment.data.unlocked_at} />
@@ -25,6 +26,7 @@ export function DateRow({ assignment }: Props): JSX.Element {
       <DateCol name="Next review" date={assignment.data.available_at} />
       <DateCol name="Burned at" date={assignment.data.burned_at} />
       <DateCol name="Resurrected at" date={assignment.data.resurrected_at} />
+      <DateCol name="Added to WaniKani" date={subject.data.created_at} short />
     </Row>
   </div>;
 }
@@ -32,9 +34,10 @@ export function DateRow({ assignment }: Props): JSX.Element {
 interface ColProps {
   name: string;
   date: string | null;
+  short?: boolean;
 }
 
-function DateCol({ name, date }: ColProps): JSX.Element | null {
+function DateCol({ name, date, short = false }: ColProps): JSX.Element | null {
   if (!date) return null;
 
   // Highlight the date in green for next review if it's available now
@@ -45,7 +48,7 @@ function DateCol({ name, date }: ColProps): JSX.Element | null {
 
   return <Col span={8} className={classes}>
     <span className="name">{name}</span>
-    <span className="date">{dayjs(date).format("llll")}</span>
+    <span className="date">{dayjs(date).format(short ? "ll" : "llll")}</span>
     {" "}
     <span className="short">
       ({availableNow
