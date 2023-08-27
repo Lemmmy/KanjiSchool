@@ -107,9 +107,12 @@ export async function fetchSubjectsAudios(
   lsSetNumber("audioFetchLastVersion", syncCurrentVersion);
 
   // Add the tasks into the queue and return when they're done
-  return await audioFetchQueue.addAll(
+  return await audioFetchQueue.addAll<StoredAudio>(
     fetchTasks.map(t => () => performAudioFetch(t)),
-    { priority: 10 } // Manual fetch tasks are likely high priority
+    {
+      priority: 10, // Manual fetch tasks are likely high priority
+      throwOnTimeout: true
+    }
   );
 }
 

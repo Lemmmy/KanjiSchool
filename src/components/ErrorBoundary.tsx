@@ -2,30 +2,42 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { Alert } from "antd";
 
 import * as Sentry from "@sentry/react";
 import { errorReporting } from "@utils";
+import { useRouteError } from "react-router-dom";
 
 interface Props {
-  name: string;
+  name?: string;
+  error?: Error;
+  children: ReactNode;
 }
 
-const WkErrorBoundary: FC<Props> = ({ name, children }) => {
+const WkErrorBoundary: FC<Props> = ({ name, error, children }) => {
   return <Sentry.ErrorBoundary
     fallback={() => <ErrorFallback />}
     onError={console.error}
 
     // Add the boundary name to the scope
     beforeCapture={scope => {
-      scope.setTag("error-boundary", name);
+      if (name) scope.setTag("error-boundary", name);
     }}
   >
     {children}
   </Sentry.ErrorBoundary>;
 };
 export const ErrorBoundary = WkErrorBoundary;
+
+export const ErroredRoute: FC = () => {
+  const error = useRouteError();
+  console.error(error); // TODO: Sentry.reactRouterV6Instrumentation
+
+  return <ErrorBoundary>
+    <ErrorFallback />
+  </ErrorBoundary>;
+};
 
 function ErrorFallback(): JSX.Element {
   return <Alert

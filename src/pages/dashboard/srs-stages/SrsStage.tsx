@@ -4,7 +4,7 @@
 
 import classNames from "classnames";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { gotoSearch } from "@api";
 import { getSrsStageBaseName, nts } from "@utils";
@@ -18,7 +18,7 @@ interface SrsStageProps {
 }
 
 export function SrsStage({ stageData, min, max }: SrsStageProps): JSX.Element {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (max === undefined)
     max = min;

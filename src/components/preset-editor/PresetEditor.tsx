@@ -47,7 +47,7 @@ export function PresetEditorModal({
   return <Modal
     className="preset-editor-modal"
     title={MODAL_TITLES[presetType] || "Preset editor"}
-    visible={visible}
+    open={visible}
     onCancel={closeFn}
 
     width={800}

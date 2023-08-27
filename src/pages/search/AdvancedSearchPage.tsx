@@ -7,7 +7,7 @@ import { Skeleton } from "antd";
 
 import { PageLayout } from "@layout/PageLayout";
 
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import {
   groupSearchResults, SearchParams, SearchResultsGrouped, searchSubjects,
@@ -32,8 +32,8 @@ interface Props {
 }
 
 export function AdvancedSearchPage({ selfStudy }: Props): JSX.Element {
-  const history = useHistory();
-  const location = useLocation<SearchLocationState>();
+  const navigate = useNavigate();
+  const state = useLocation()?.state as SearchLocationState | null;
   const [keywordSearch] = useKeywordSearch();
 
   const [results, setResults] = useState<SearchResultsGrouped>();
@@ -44,22 +44,22 @@ export function AdvancedSearchPage({ selfStudy }: Props): JSX.Element {
   const assignments = !!useAssignments();
   const reviewStatistics = !!useReviewStatistics();
 
-  // Whether or not to hide the search form by default.
-  const hideForm = location?.state?.hideForm;
+  // Whether to hide the search form by default.
+  const hideForm = state?.hideForm;
 
   const onSearch = useCallback((params: SearchParams) => {
     // Push the latest params into the history stack, which will trigger the
     // search via the useEffect
-    pushSearchState(history, params, true);
-  }, [history]);
+    pushSearchState(navigate, params, true);
+  }, [navigate]);
 
   // If we came here from gotoSearch with startSearch, or a history state change
   // (e.g. triggered by the search form button), perform the search. Don't
   // attempt to perform a search if there are no subjects or assignments loaded
   // yet.
   useEffect(() => {
-    if (!location?.state) return;
-    const { params, startSearch } = location.state;
+    if (!state) return;
+    const { params, startSearch } = state;
     if (!params || !startSearch) return;
 
     debug("setSearching true");
@@ -87,7 +87,7 @@ export function AdvancedSearchPage({ selfStudy }: Props): JSX.Element {
     {/* Search parameters form */}
     <SearchParamsForm
       results={results?.total}
-      initialParams={location?.state?.params}
+      initialParams={state?.params}
       hideForm={hideForm}
       showQueryInput={!selfStudy}
       selfStudy={selfStudy}

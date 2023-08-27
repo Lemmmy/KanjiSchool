@@ -12,7 +12,7 @@ import { RootState } from "@store";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import * as actions from "@actions/SessionActions";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useAssignments } from "@api";
 import { clearStudyQueue, gotoSession, startSession } from "@session";
@@ -65,7 +65,7 @@ export function StudyQueueModal(): JSX.Element | null {
       closable={false}
       closeIcon={null}
 
-      visible={(items?.length || 0) > 0}
+      open={(items?.length || 0) > 0}
       mask={false}
       maskClosable={false}
 
@@ -159,18 +159,18 @@ interface FooterProps {
 }
 
 function ModalFooter({ items }: FooterProps): JSX.Element {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const withLessons = useBooleanSetting("selfStudyWithLessons");
   const setWithLessons = useCallback((e: CheckboxChangeEvent) =>
-    setBooleanSetting("selfStudyWithLessons", !!e.target.checked, false), []);
+    setBooleanSetting("selfStudyWithLessons", e.target.checked, false), []);
 
   const start: PresetStartSessionFn = useCallback(opts => {
     // Clear the study queue before starting the lesson
     clearStudyQueue();
     // Start the session with the given items and preset options
-    gotoSession(history, startSession("self_study", items, withLessons, opts));
-  }, [history, items, withLessons]);
+    gotoSession(navigate, startSession("self_study", items, withLessons, opts));
+  }, [navigate, items, withLessons]);
 
   return <>
     {/* "With lessons" checkbox */}

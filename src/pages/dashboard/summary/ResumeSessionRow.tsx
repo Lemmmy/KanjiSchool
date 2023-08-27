@@ -8,7 +8,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 
 import { RootState } from "@store";
 import { useSelector, shallowEqual } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { SessionType, gotoSession } from "@session";
 import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonModal";
@@ -28,7 +28,7 @@ const SESSION_RESUME_TOOLTIPS: Record<SessionType, ReactNode> = {
 };
 
 export function ResumeSessionRow(): JSX.Element | null {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Get session state to resume session if possible
   const { ongoing, sessionState } =
@@ -53,7 +53,7 @@ export function ResumeSessionRow(): JSX.Element | null {
       {/* Resume session */}
       <Tooltip title={SESSION_RESUME_TOOLTIPS[sessionState.type]}>
         <Button type="primary" size="large"
-          onClick={() => gotoSession(history, sessionState)}>
+          onClick={() => gotoSession(navigate, sessionState)}>
           Resume {SESSION_TYPE_NAMES[sessionState.type]}
         </Button>
       </Tooltip>

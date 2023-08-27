@@ -104,7 +104,7 @@ export function useHwCanvas(
   const getCtx = (): [CanvasRenderingContext2D | undefined, HTMLCanvasElement | undefined] =>
     ([canvasRef.current?.getContext("2d") || undefined, canvasRef.current || undefined]);
 
-  // Whether or not the canvas is currently empty, used to show the pencil
+  // Whether the canvas is currently empty, used to show the pencil
   // background image to indicate a drawable area
   const [empty, setEmpty] = useState(true);
 

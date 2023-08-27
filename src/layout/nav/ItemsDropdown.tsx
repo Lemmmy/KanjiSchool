@@ -31,7 +31,7 @@ export function ItemsDropdown(): JSX.Element {
       </Menu.Item>
 
       <Menu.Item key="freq">
-        <ConditionalLink to="/items/freq" matchTo aria-label="Newspaper frequency">
+        <ConditionalLink to="/items/frequency" matchTo aria-label="Newspaper frequency">
           Newspaper frequency
         </ConditionalLink>
       </Menu.Item>

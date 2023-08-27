@@ -45,7 +45,7 @@ interface ModalProps {
 
 function HotkeyModal({ visible, setVisible }: ModalProps): JSX.Element {
   return <Modal
-    visible={visible}
+    open={visible}
     title="Keyboard shortcuts"
     className="hotkey-help-modal"
     footer={null}
@@ -104,6 +104,7 @@ function HotkeyModal({ visible, setVisible }: ModalProps): JSX.Element {
 
 interface GroupProps {
   title: string;
+  children: ReactNode;
 }
 
 const HotkeyGroup: FC<GroupProps> = ({ title, children }) => {

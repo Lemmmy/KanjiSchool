@@ -5,8 +5,7 @@
 import React, { useCallback, useMemo } from "react";
 import { Tooltip } from "antd";
 
-import { useHistory } from "react-router-dom";
-import { History } from "history";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import { LevelData, isComplete, SegmentData } from "./analyze";
 import { gotoSearch } from "@api";
@@ -65,15 +64,15 @@ function LevelProgressBar({
 }: BarProps): JSX.Element {
   const [locked, init, appr1, appr2, appr3, appr4, passed, total] = data;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const perc = useCallback((n: number) => ((n / total) * 100) + "%", [total]);
   const percParen = useCallback((n: number) =>
     `${nts(n)}/${nts(total)} ` +
     `(${((n / total) * 100).toFixed(1)}%)`, [total]);
 
-  const barPartProps = useMemo(() => ({ history, perc, percParen, level, type }),
-    [history, perc, percParen, level, type]);
+  const barPartProps = useMemo(() => ({ navigate, perc, percParen, level, type }),
+    [navigate, perc, percParen, level, type]);
 
   // Title for hovering over the bar type
   const mainTitle = useMemo(() => <>
@@ -115,7 +114,7 @@ type PercParenFn = PercFn;
 type BarPartStage = "locked" | "lesson" | "appr1" | "appr2" | "appr3" | "appr4"
   | "passed";
 interface BarPartProps {
-  history: History;
+  navigate: NavigateFunction;
   perc: PercFn;
   percParen: PercParenFn;
   level: number;
@@ -125,7 +124,7 @@ interface BarPartProps {
 }
 
 const BarPart = React.memo(function BarPart({
-  history,
+  navigate,
   perc, percParen,
   level, type, stage, n
 }: BarPartProps): JSX.Element {
@@ -137,7 +136,7 @@ const BarPart = React.memo(function BarPart({
     <div
       className={"bar bar-" + stage}
       style={{ width: perc(n) }}
-      onClick={() => gotoSearch(history, {
+      onClick={() => gotoSearch(navigate, {
         minLevel: level,
         maxLevel: level,
         subjectTypes: [type === "radicals" ? "radical" : type],

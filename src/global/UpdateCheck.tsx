@@ -2,72 +2,51 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Drawer, Button } from "antd";
 
-import * as serviceWorker from "@utils/setup/serviceWorkerRegistration";
-import { isLocalhost } from "@utils";
-
-import Debug from "debug";
-const debug = Debug("kanjischool:service-worker-check");
+import { useRegisterSW } from "virtual:pwa-register/react";
 
 export function UpdateCheck(): JSX.Element | null {
-  const [showReload, setShowReload] = useState(false);
-  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [drawerVisible, setDrawerVisible] = useState(false);
+  const {
+    offlineReady: [, setOfflineReady],
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker
+  } = useRegisterSW({
+    onNeedRefresh() {
+      setOpen(true);
+    },
 
-  function onUpdate(registration: ServiceWorkerRegistration) {
-    setShowReload(true);
-    setDrawerVisible(true);
-    setWaitingWorker(registration.waiting);
-  }
-
-  /** Force the service worker to update, wait for it to become active, then
-   * reload the page. */
-  function reloadPage() {
-    setLoading(true);
-    debug("emitting skipWaiting now");
-
-    waitingWorker?.postMessage({ type: "SKIP_WAITING" });
-
-    waitingWorker?.addEventListener("statechange", () => {
-      debug("SW state changed to %s", waitingWorker?.state);
-
-      if (waitingWorker?.state === "activated") {
-        debug("reloading now!");
-        window.location.reload();
-      }
-    });
-  }
-
-  // NOTE: The update checker is also responsible for registering the service
-  //       worker in the first place.
-  useEffect(() => {
-    debug("registering service worker");
-    serviceWorker.register({ onUpdate });
-  }, []);
-
-  // Always show the dialog on localhost if a thing is set
-  useEffect(() => {
-    if (isLocalhost && localStorage.getItem("su") === "true") {
-      setShowReload(true);
-      setDrawerVisible(true);
+    onRegisterError(err) {
+      console.error(err.message);
     }
-  }, []);
+  });
 
-  return showReload ? (
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const update = useCallback(() => {
+    setLoading(true);
+    updateServiceWorker(true).catch(console.error);
+  }, [updateServiceWorker]);
+
+  const close = useCallback(() => {
+    setOfflineReady(false);
+    setNeedRefresh(false);
+  }, [setOfflineReady, setNeedRefresh]);
+
+  return needRefresh ? (
     <Drawer
       title="Update available"
       className="update-drawer"
       placement="left"
       maskClosable={false}
-      visible={drawerVisible}
-      onClose={() => setDrawerVisible(false)}
+      open={open}
+      onClose={close}
     >
       <p>An update for the site is available. Please reload.</p>
 
-      <Button type="primary" onClick={reloadPage} loading={loading}>
+      <Button type="primary" onClick={update} loading={loading}>
         Reload
       </Button>
     </Drawer>

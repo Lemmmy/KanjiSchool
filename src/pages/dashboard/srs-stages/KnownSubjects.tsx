@@ -4,7 +4,7 @@
 
 import classNames from "classnames";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { gotoSearch, NormalizedSubjectType } from "@api";
 
@@ -19,12 +19,12 @@ interface KnownSubjectsProps {
 const KNOWN_STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export function KnownSubjects({ type, count }: KnownSubjectsProps): JSX.Element {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const name = startCase(type);
 
   function onClick() {
-    gotoSearch(history, {
+    gotoSearch(navigate, {
       srsStages: KNOWN_STAGES,
       subjectTypes: [type]
     }, true, true);

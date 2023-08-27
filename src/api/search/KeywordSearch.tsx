@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC, createContext, useState, useEffect, useMemo, useContext } from "react";
+import { createContext, useState, useEffect, useMemo, useContext, ReactNode } from "react";
 
 import { ApiSubjectKanji, StoredSubject, StoredSubjectMap, useSubjects } from "@api";
 
@@ -38,7 +38,7 @@ const FUSE_OPTS: Fuse.IFuseOptions<IndexedSubject> = {
   minMatchCharLength: 0
 };
 
-export const KeywordSearchProvider: FC = ({ children }) => {
+export const KeywordSearchProvider = ({ children }: { children: ReactNode }): JSX.Element => {
   const [fuse, setFuse] = useState<Fuse<IndexedSubject>>();
   const subjects = useSubjects();
 

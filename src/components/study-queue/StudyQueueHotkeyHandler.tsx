@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useMemo, useCallback, useContext, createContext, FC } from "react";
+import { useState, useMemo, useCallback, useContext, createContext, ReactNode } from "react";
 
 import { addToStudyQueue, isInStudyQueue, removeFromStudyQueue } from "@session";
 
@@ -26,7 +26,7 @@ export const StudyQueueHotkeyHandlerContext = createContext<CtxRes>({
   setCurrentSubject: () => { /* noop */ }
 });
 
-export const StudyQueueHotkeyHandlerProvider: FC = ({ children }) => {
+export const StudyQueueHotkeyHandlerProvider = ({ children }: { children: ReactNode }): JSX.Element => {
   const [currentSubjectId, setCurrentSubject] = useState<number>();
 
   const onHotkeyPressed = useCallback(() => {

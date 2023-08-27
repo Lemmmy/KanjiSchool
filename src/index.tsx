@@ -6,14 +6,16 @@ import "@utils/setup/errors";
 import "@utils/setup/setup";
 import { criticalError } from "@utils/setup/errors";
 
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+import { router } from "@global/AppRouter";
 
 import { notification } from "antd";
 
 import "./index.css";
-import App from "@app";
 
 import Debug from "debug";
+import React from "react";
 const debug = Debug("kanjischool:index");
 
 async function main() {
@@ -23,10 +25,9 @@ async function main() {
 
 function initialRender() {
   debug("performing initial render");
-  ReactDOM.render(
-    <App />,
-    document.getElementById("root")
-  );
+  ReactDOM
+    .createRoot(document.getElementById("root")!)
+    .render(<RouterProvider router={router} />);
 }
 
 main().catch(err => {

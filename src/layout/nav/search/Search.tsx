@@ -5,15 +5,15 @@
 import { useState, useMemo, useRef, ReactNode, Dispatch, SetStateAction, useCallback } from "react";
 import { AutoComplete, Input, Tooltip } from "antd";
 import { RefSelectProps } from "antd/lib/select";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import classNames from "classnames";
 
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 import { RootState } from "@store";
 import { useSelector } from "react-redux";
 
 import { GlobalHotKeys } from "react-hotkeys";
 import { ctrl, getSubjectUrl, useBooleanSetting } from "@utils";
-import { useBreakpoint } from "@utils/hooks";
 
 import { gotoSearch, useSubjects } from "@api";
 import { KeywordSearchResult, PerformSearchFn, useKeywordSearch } from "@api/search/KeywordSearch";
@@ -64,7 +64,7 @@ export function Search(): JSX.Element {
   const subjects = useSubjects();
   const [keywordSearch] = useKeywordSearch();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const bps = useBreakpoint();
 
   const [value, setValue] = useState("");
@@ -80,7 +80,7 @@ export function Search(): JSX.Element {
 
   const disableInSession = useBooleanSetting("sessionDisableSearch");
   const inSession = useSelector((s: RootState) => s.session.ongoing);
-  const inSessionRoute = useRouteMatch({ path: "/(.*)/session" });
+  const inSessionRoute = useMatch("/(.*)/session");
   const disabled = disableInSession && inSession && !!inSessionRoute;
 
   const onAutocomplete = useCallback((query: string) => {
@@ -120,7 +120,7 @@ export function Search(): JSX.Element {
   // will be used to shift the autocomplete results overlay if necessary
   const [hwPopover, hwButton, hwVisible, hwSetVisible] =
     useHandwritingInput(setValueAutocomplete);
-  // Whether or not to always open the handwriting input when focusing the
+  // Whether to always open the handwriting input when focusing the
   // search input
   const hwAlwaysOpen = useBooleanSetting("searchAlwaysHandwriting");
 
@@ -154,7 +154,7 @@ export function Search(): JSX.Element {
     if (!subject) throw new Error("Subject not found!");
 
     // Navigate to the subject page
-    history.push(getSubjectUrl(subject));
+    navigate(getSubjectUrl(subject));
 
     // De-focus the search textbox when an item is selected and hide the
     // handwriting input popover if it's visible
@@ -169,7 +169,7 @@ export function Search(): JSX.Element {
     debug("onInputSearch");
 
     // Goto the search screen with the query
-    gotoSearch(history, { query: value.trim() }, true, true);
+    gotoSearch(navigate, { query: value.trim() }, true, true);
 
     // Clear and de-focus the input textbox, and hide the handwriting popover
     setValue("");
@@ -218,7 +218,7 @@ export function Search(): JSX.Element {
         },
         ADV_SEARCH: e => {
           e?.preventDefault();
-          history.push("/search");
+          navigate("/search");
         }
       }}
     />
@@ -234,8 +234,8 @@ export function Search(): JSX.Element {
         ref={autocompleteRef}
 
         // Required to make the dropdown show on an Input.Search:
-        dropdownMatchSelectWidth={true}
-        dropdownClassName={classNames("site-header-search-menu", { "handwriting-input-visible": hwVisible })}
+        popupMatchSelectWidth={true}
+        popupClassName={classNames("site-header-search-menu", { "handwriting-input-visible": hwVisible })}
         className="site-header-search"
         value={value}
 

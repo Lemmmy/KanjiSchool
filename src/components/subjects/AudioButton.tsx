@@ -57,7 +57,7 @@ function playSound(
     source.connect(audioContext.destination);
     source.start();
     setPlaying(true);
-  } catch (e) {
+  } catch (e: any) {
     debug("error while playing audio", e);
     criticalError(e);
     setPlaying(false);
@@ -125,7 +125,7 @@ export function useVocabAudio(
       try {
         const buffer = await audioContext.decodeAudioData(audioData);
         newBuffers.push(buffer);
-      } catch (e) {
+      } catch (e: any) {
         debug("error while decoding audio", e);
 
         const audioEl = document.createElement("audio");

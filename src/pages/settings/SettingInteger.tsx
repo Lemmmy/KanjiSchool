@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { Input, InputNumber, Button } from "antd";
 
 import { SettingName, setIntegerSetting, useIntegerSetting, validateIntegerSetting } from "@utils/settings";
@@ -27,17 +27,21 @@ export function SettingInteger({
     && !isNaN(numVal)
     && validateIntegerSetting(setting, numVal);
 
-  function onSave() {
+  const onChange = useCallback((value: string | number | null) => {
+    setValue(value ?? "");
+  }, []);
+
+  const onSave = useCallback(() => {
     if (!isValid) return;
     setIntegerSetting(setting, numVal!);
-  }
+  }, [isValid, numVal, setting]);
 
   return <div className="menu-item-setting menu-item-setting-integer">
     <Input.Group compact>
       {/* Number input */}
       <InputNumber
         value={value}
-        onChange={setValue}
+        onChange={onChange}
         onPressEnter={onSave}
       />
 

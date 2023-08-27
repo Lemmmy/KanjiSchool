@@ -31,7 +31,7 @@ export async function paginateCollection<T>(
 
       nextPage = col.pages.next_url as string | null;
     } while (nextPage !== null);
-  } catch (err) {
+  } catch (err: any) {
     if (/must be in the past/i.test(err.message)) {
       console.error("pagination time-locked, ignoring");
     } else {

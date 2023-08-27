@@ -11,7 +11,7 @@ export function UndoButton({
   onUndo,
   ...buttonProps
 }: Props): JSX.Element | null {
-  // Whether or not to show the undo button
+  // Whether to show the undo button
   const undoEnabled = useStringSetting<UndoType>("undoEnabled");
   if (undoEnabled === "HIDDEN") return null;
 

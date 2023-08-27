@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React, { FC, useMemo } from "react";
+import React, { FC, ReactNode, useMemo } from "react";
 import { Tooltip } from "antd";
 import classNames from "classnames";
 
@@ -29,10 +29,9 @@ interface Props {
   width?: number;
   className?: string;
   renderTooltip: SubjectRenderTooltipFn;
+  children?: ReactNode;
 }
 export type SubjectGridItemProps = Props;
-
-const keepParentFalse = { keepParent: false };
 
 export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
   subject,
@@ -47,7 +46,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
 }): JSX.Element | null {
   const url = getSubjectUrl(subject);
 
-  // Whether or not this subject is in the self-study queue
+  // Whether this subject is in the self-study queue
   const inQueue = useIsInStudyQueue(subject.id) && !hideInQueue;
 
   // Get the SRS stage if it is available
@@ -73,7 +72,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
   return <Tooltip
     overlayClassName="subject-tooltip"
     title={boundRenderTooltip}
-    destroyTooltipOnHide={keepParentFalse}
+    destroyTooltipOnHide={false}
   >
     <Link
       to={url}

@@ -2,7 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { History } from "history";
+import { NavigateFunction } from "react-router-dom";
+
 import { SearchOrder, SearchParams, searchSubjects } from "@api";
 import { gotoSession, startSession } from "@session";
 import { SessionOpts } from "@session/order/options";
@@ -18,26 +19,26 @@ export interface SearchParamsWithoutOrder extends Omit<SearchParams, "sortOrder"
 }
 
 export function gotoSearch(
-  history: History,
+  navigate: NavigateFunction,
   params: SearchParamsWithoutOrder,
   startSearch?: boolean,
   hideForm?: boolean
 ): void {
   if (!params.sortOrder) params = { ...params, sortOrder: "TYPE" };
-  pushSearchState(history, params as SearchParams, startSearch, hideForm);
+  pushSearchState(navigate, params as SearchParams, startSearch, hideForm);
 }
 
 export function pushSearchState(
-  history: History,
+  navigate: NavigateFunction,
   params: SearchParams,
   startSearch?: boolean,
   hideForm?: boolean
 ): void {
-  history.push("/search", { params, startSearch, hideForm });
+  navigate("/search", { state: { params, startSearch, hideForm }});
 }
 
 export function gotoSelfStudy(
-  history: History,
+  navigate: NavigateFunction,
   keywordSearch: PerformSearchFn,
   params: SearchParamsWithoutOrder,
   withLessons?: boolean,
@@ -55,5 +56,5 @@ export function gotoSelfStudy(
 
   // Start and goto the session
   const state = startSession("self_study", subjectIds, withLessons, opts);
-  gotoSession(history, state);
+  gotoSession(navigate, state);
 }

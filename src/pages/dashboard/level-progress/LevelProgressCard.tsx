@@ -4,6 +4,7 @@
 
 import { useMemo, useEffect, useCallback } from "react";
 import { Card } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { useUserLevel, useAssignments, useSubjects, useUserMaxLevel } from "@api";
 
@@ -11,7 +12,7 @@ import { analyze, isComplete } from "./analyze";
 import { LevelProgressBars } from "./LevelProgressBars";
 import { LevelProgressLegend } from "./LevelProgressLegend";
 
-import { useBooleanSetting, useBreakpoint } from "@utils";
+import { useBooleanSetting } from "@utils";
 
 interface Props {
   height?: number;

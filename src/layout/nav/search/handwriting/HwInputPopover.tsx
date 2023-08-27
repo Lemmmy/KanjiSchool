@@ -48,10 +48,10 @@ function PopoverInner({ setValue }: Pick<Props, "setValue">): JSX.Element {
   const [predictions, setPredictions] = useState<string[]>([]);
   const [hwCanvas, undo, redo, clear] = useHwCanvas(setPredictions);
 
-  // Whether or not to always open the handwriting input
+  // Whether to always open the handwriting input
   const alwaysOpen = useBooleanSetting("searchAlwaysHandwriting");
 
-  // Whether or not the user is online. The handwriting recognition service
+  // Whether the user is online. The handwriting recognition service
   // requires an internet connection for the time being, so a notice will be
   // displayed if the user is offline.
   const isOnline = useOnlineStatus();

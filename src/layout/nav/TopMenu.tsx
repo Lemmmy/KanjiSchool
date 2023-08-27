@@ -2,12 +2,13 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useCallback, useMemo, useContext, createContext, FC, ReactNode } from "react";
-import { Menu, Dropdown } from "antd";
+import { useState, useCallback, useMemo, useContext, createContext, ReactNode } from "react";
+import { Menu, Dropdown, MenuItemProps, MenuProps } from "antd";
 import {
   MoreOutlined, SettingOutlined, BugOutlined, SearchOutlined, ReadOutlined,
   MacCommandOutlined, ReloadOutlined, GithubOutlined, UnorderedListOutlined
 } from "@ant-design/icons";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { useDispatch } from "react-redux";
 import { setHotkeyHelpVisible } from "@actions/SettingsActions";
@@ -17,7 +18,7 @@ import { MenuHotkey } from "@comp/MenuHotkey";
 
 import { syncAll, useUsername } from "@api";
 
-import { useBreakpoint, useOnlineStatus } from "@utils/hooks";
+import { useOnlineStatus } from "@utils/hooks";
 import { isLocalhost } from "@utils";
 
 import Debug from "debug";
@@ -25,11 +26,11 @@ import { MenuUserInfo } from "./UserInfo";
 import { ExtLink } from "@comp/ExtLink";
 const debug = Debug("kanjischool:top-menu");
 
-export type Opts = React.ReactNode | undefined;
+export type Opts = MenuProps["items"] | undefined;
 export type SetMenuOptsFn = (opts: Opts) => void;
 
 interface TopMenuCtxRes {
-  options?: ReactNode;
+  options?: MenuProps["items"];
   setMenuOptions?: SetMenuOptsFn;
 }
 
@@ -49,100 +50,114 @@ export function TopMenu(): JSX.Element {
   const ctxRes = useContext(TopMenuContext);
   const options = ctxRes?.options;
 
-  const menu = useMemo(() => (
-    <Dropdown
-      trigger={["click"]}
-      overlayClassName="site-header-dropdown-overlay site-header-top-dropdown-menu"
-      overlay={<Menu>
-        {/* Mobile-only: User info */}
-        {!sm && <MenuUserInfo />}
+  const menuProps: MenuProps = useMemo(() => {
+    const items: MenuProps["items"] = [
+      // Mobile-only: User info
+      sm ? { key: "menu-user-info", label: <MenuUserInfo /> } : null,
 
-        {/* Page-specified options */}
-        {options}
-        {options && <Menu.Divider key="menu-divider" />}
+      // Page-specified options
+      ...(options ?? []),
+      options ? { type: "divider" } : null,
 
-        {/* Advanced search */}
-        <Menu.Item key="menu-advanced-search" className="menu-item-has-hotkey">
-          <ConditionalLink to="/search" matchTo aria-label="Advanced search">
-            <SearchOutlined />Advanced search
-            <MenuHotkey shortcut="Ctrl+Shift+K" />
-          </ConditionalLink>
-        </Menu.Item>
+      // Advanced search
+      {
+        key: "menu-advanced-search",
+        className: "menu-item-has-hotkey",
+        label: <ConditionalLink to="/search" matchTo aria-label="Advanced search">
+          <SearchOutlined />Advanced search
+          <MenuHotkey shortcut="Ctrl+Shift+K" />
+        </ConditionalLink>
+      },
 
-        {/* Self-study (basically same as advanced search) */}
-        <Menu.Item key="menu-self-study" className="menu-item-has-hotkey">
-          <ConditionalLink to="/study" matchTo aria-label="Self-study">
-            <ReadOutlined />Self-study
-            <MenuHotkey shortcut="S" ifGroup="dashboard" />
-          </ConditionalLink>
-        </Menu.Item>
+      // Self-study (basically same as advanced search)
+      {
+        key: "menu-self-study",
+        className: "menu-item-has-hotkey",
+        label: <ConditionalLink to="/study" matchTo aria-label="Self-study">
+          <ReadOutlined />Self-study
+          <MenuHotkey shortcut="S" ifGroup="dashboard" />
+        </ConditionalLink>
+      },
 
-        <Menu.Divider key="menu-divider-2" />
+      { type: "divider" },
 
-        {/* Force sync all */}
-        <Menu.Item
-          key="menu-sync"
-          onClick={() => syncAll(true)}
-          disabled={!isOnline}
-        >
-          <ReloadOutlined />Re-sync all data
-        </Menu.Item>
+      // Force sync all
+      {
+        key: "menu-sync",
+        icon: <ReloadOutlined />, // TODO: does this render the same as having it in the label?
+        label: "Re-sync all data",
+        disabled: !isOnline,
+        onClick: () => syncAll(true)
+      },
 
-        <Menu.Divider key="menu-divider-3" />
+      { type: "divider" },
 
-        {/* Keyboard shortcuts */}
-        <Menu.Item
-          key="menu-keyboard-shortcuts"
-          className="menu-item-has-hotkey"
-          onClick={openHotkeyHelp}
-        >
-          <MacCommandOutlined />Keyboard shortcuts
+      // Keyboard shortcuts
+      {
+        key: "menu-keyboard-shortcuts",
+        className: "menu-item-has-hotkey",
+        icon: <MacCommandOutlined />,
+        label: <>
+          Keyboard shortcuts
           <MenuHotkey shortcut="?" />
-        </Menu.Item>
+        </>,
+        onClick: openHotkeyHelp
+      },
 
-        {/* Settings item */}
-        <Menu.Item key="menu-settings">
-          <ConditionalLink to="/settings" matchTo aria-label="Settings">
-            <SettingOutlined />Settings
-          </ConditionalLink>
-        </Menu.Item>
+      // Settings item
+      {
+        key: "menu-settings",
+        icon: <SettingOutlined />,
+        label: <ConditionalLink to="/settings" matchTo aria-label="Settings">
+          Settings
+        </ConditionalLink>
+      },
 
-        {/* Debug page (localhost only) */}
-        {(isLocalhost || username === "Lemmmy") && <Menu.Item key="menu-debug">
-          <ConditionalLink to="/debug" matchTo aria-label="Debug">
-            <BugOutlined />Debug
-          </ConditionalLink>
-        </Menu.Item>}
+      // Debug page (localhost only)
+      (isLocalhost || username === "Lemmmy") ? {
+        key: "menu-debug",
+        icon: <BugOutlined />,
+        label: <ConditionalLink to="/debug" matchTo aria-label="Debug">
+          Debug
+        </ConditionalLink>
+      } : null,
 
-        <Menu.Divider key="menu-divider-4" />
+      { type: "divider" },
 
-        {/* GitHub link */}
-        <Menu.Item key="menu-github">
-          <ExtLink href="https://github.com/Lemmmy/KanjiSchool">
-            <GithubOutlined />GitHub
-          </ExtLink>
-        </Menu.Item>
-        <Menu.Item key="menu-github-changelog">
-          <ExtLink href="https://github.com/Lemmmy/KanjiSchool/commits">
-            <UnorderedListOutlined />Changelog
-          </ExtLink>
-        </Menu.Item>
-        <Menu.Item key="menu-github-issues">
-          <ExtLink href="https://github.com/Lemmmy/KanjiSchool/issues">
-            <BugOutlined />Report issues
-          </ExtLink>
-        </Menu.Item>
-      </Menu>}
-    >
-      <div className="site-header-element"><MoreOutlined /></div>
-    </Dropdown>
-  ), [options, username, openHotkeyHelp, isOnline, sm]);
+      // GitHub links
+      {
+        key: "menu-github",
+        icon: <GithubOutlined />,
+        label: <ExtLink href="https://github.com/Lemmmy/KanjiSchool">GitHub</ExtLink>
+      },
+      {
+        key: "menu-github-changelog",
+        icon: <UnorderedListOutlined />,
+        label: <ExtLink href="https://github.com/Lemmmy/KanjiSchool/commits">Changelog</ExtLink>
+      },
+      {
+        key: "menu-github-issues",
+        icon: <BugOutlined />,
+        label: <ExtLink href="https://github.com/Lemmmy/KanjiSchool/issues">Report issues</ExtLink>
+      }
+    ];
 
-  return menu;
+    return {
+      items: items.filter(i => i !== null)
+    };
+  }, [options, username, openHotkeyHelp, isOnline, sm]);
+
+  return <Dropdown
+    trigger={["click"]}
+    overlayClassName="site-header-dropdown-overlay site-header-top-dropdown-menu"
+    menu={menuProps}
+  >
+    <div className="site-header-element"><MoreOutlined /></div>
+  </Dropdown>;
 }
 
-export const TopMenuProvider: FC = ({ children }) => {
-  const [menuOptions, setMenuOptions] = useState<ReactNode>();
+export const TopMenuProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+  const [menuOptions, setMenuOptions] = useState<MenuProps["items"]>();
 
   const res: TopMenuCtxRes = useMemo(() => ({
     options: menuOptions, setMenuOptions
@@ -173,6 +188,6 @@ export function useTopMenuOptions(): TopMenuOptionsHookRes {
     setMenuOptions?.(undefined);
   }, [setMenuOptions]);
 
-  // Return whether or not the options are being shown
+  // Return whether the options are being shown
   return [!bps.md, set, unset];
 }

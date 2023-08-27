@@ -4,6 +4,7 @@
 
 import { useMemo } from "react";
 import { Tooltip } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import {
   useUser, useSubjects, useLevelProgressions,
@@ -14,8 +15,6 @@ import { Streak } from "./Streak";
 
 import { DhmDuration } from "@comp/DhmDuration";
 import dayjs from "dayjs";
-
-import { useBreakpoint } from "@utils";
 
 interface Data {
   startDate: Date;

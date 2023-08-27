@@ -4,7 +4,7 @@
 
 import { useCallback, useEffect } from "react";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { RootState } from "@store";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
@@ -48,7 +48,7 @@ export type OnSkipFn = (
 
 export function SessionQuestionsPage(): JSX.Element {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   usePreventDocumentSpace();
 
@@ -103,8 +103,8 @@ export function SessionQuestionsPage(): JSX.Element {
     const complete = submitQuestionAnswer(question.type, question.itemId, item, correct);
 
     // If the session is completed, return to the dashboard.
-    if (complete) history.push("/");
-  }, [history, question, item]);
+    if (complete) navigate("/");
+  }, [navigate, question, item]);
 
   const onAnswered: OnAnsweredFn = useCallback(async ({
     givenAnswer, ok, nearMatch, matchedAnswer, digraphMatch
@@ -122,7 +122,7 @@ export function SessionQuestionsPage(): JSX.Element {
     } else {
       // Otherwise, if it was correct, submit the answer immediately, and play
       // the audio if possible (vocabulary readings)
-      if (question.type === "reading" && isVocabularyLike) {
+      if (question.type === "reading" && isVocabularyLike(subject)) {
         playAudio(givenAnswer);
       }
 
@@ -163,9 +163,9 @@ export function SessionQuestionsPage(): JSX.Element {
     // in SKIP_REMOVE.
     if (complete) {
       showSkipNotification("complete");
-      history.push("/");
+      navigate("/");
     }
-  }, [history, question, skipEnabled, skipNotification, skipType]);
+  }, [navigate, question, skipEnabled, skipNotification, skipType]);
 
   const undoEnabled = useStringSetting<UndoType>("undoEnabled");
   const onIncorrectUndo = useCallback(() => {

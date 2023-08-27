@@ -3,14 +3,13 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useMemo } from "react";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
 
 import * as api from "@api";
 import { StoredSubjectMap, StoredAssignmentMap } from "@api";
-
-import { useBreakpoint } from "@utils/hooks";
 
 import dayjs from "dayjs";
 import { normalizeVocabType, nts } from "@utils";

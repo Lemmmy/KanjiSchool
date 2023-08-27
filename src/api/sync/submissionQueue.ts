@@ -111,7 +111,7 @@ export async function processQueue(): Promise<void> {
     }
   } while (!connected);
 
-  // Track whether or not a potential level-up review was submitted. If so, the
+  // Track whether a potential level-up review was submitted. If so, the
   // user may also be re-fetched.
   let hasLevelUp = false;
 

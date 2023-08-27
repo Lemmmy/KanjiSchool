@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import classNames from "classnames";
 
 import Markdown from "markdown-to-jsx";
@@ -12,7 +12,11 @@ interface Props {
   className?: string;
 }
 
-const NoParagraph: FC = ({ children, ...props }) => (
+interface NoParagraphProps {
+  children?: ReactNode;
+}
+
+const NoParagraph: FC<NoParagraphProps> = ({ children, ...props }) => (
   <span {...props}>{children}</span>
 );
 
@@ -50,15 +54,19 @@ export const SubjectMarkup: FC<Props> = ({ children, className }) => {
   </Markdown>;
 };
 
-const MarkupRadical: FC = ({ children }) =>
+interface MarkupPartProps {
+  children: ReactNode;
+}
+
+const MarkupRadical = ({ children }: MarkupPartProps): ReactNode =>
   <span className="markup-part markup-radical">{children}</span>;
-const MarkupKanji: FC = ({ children }) =>
+const MarkupKanji = ({ children }: MarkupPartProps): ReactNode =>
   <span className="markup-part markup-kanji">{children}</span>;
-const MarkupVocabulary: FC = ({ children }) =>
+const MarkupVocabulary = ({ children }: MarkupPartProps): ReactNode =>
   <span className="markup-part markup-vocabulary">{children}</span>;
-const MarkupMeaning: FC = ({ children }) =>
+const MarkupMeaning = ({ children }: MarkupPartProps): ReactNode =>
   <span className="markup-part markup-meaning">{children}</span>;
-const MarkupReading: FC = ({ children }) =>
+const MarkupReading = ({ children }: MarkupPartProps): ReactNode =>
   <span className="markup-part markup-reading">{children}</span>;
-const MarkupJa: FC = ({ children }) =>
+const MarkupJa = ({ children }: MarkupPartProps): ReactNode =>
   <span className="markup-ja ja">{children}</span>;

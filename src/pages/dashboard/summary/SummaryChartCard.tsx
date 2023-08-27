@@ -11,7 +11,7 @@ import { RootState } from "@store";
 import { Bucket, ReviewForecast } from "@api";
 
 import { Bar } from "react-chartjs-2";
-import { ChartData } from "chart.js";
+import { Chart as ChartJS, ChartData, LinearScale, TimeScale, BarElement, PointElement, LineElement } from "chart.js";
 import "chartjs-adapter-date-fns";
 
 import { ColorPalette } from "@global/theme";
@@ -19,12 +19,14 @@ import { ColorPalette } from "@global/theme";
 import dayjs from "dayjs";
 import { useIntegerSetting, usePalette } from "@utils";
 
+ChartJS.register(LinearScale, TimeScale, BarElement, PointElement, LineElement);
+
 const CHART_HEIGHT = 196;
 
 const CHART_DATASET_OPTIONS = {
   yAxisID: "y",
   borderWidth: 0
-};
+} as const;
 
 const CHART_CUM_DATASET_OPTIONS = {
   label: "Cumulative",
@@ -35,7 +37,7 @@ const CHART_CUM_DATASET_OPTIONS = {
   pointRadius: 0,
   cubicInterpolationMode: "monotone",
   borderColor: "#095cb5"
-};
+} as const;
 
 const CHART_X_AXIS_OPTIONS = {
   type: "time",
@@ -50,14 +52,14 @@ const CHART_X_AXIS_OPTIONS = {
       return d.isToday() ? d.format("HH:mm") : d.format("ddd HH:mm");
     }
   }
-};
+} as const;
 
 const CHART_Y_AXIS_SRS_OPTIONS = {
   stacked: true,
   ticks: {
     padding: 0
   }
-};
+} as const;
 
 const CHART_Y_AXIS_CUM_OPTIONS = {
   type: "linear",
@@ -65,7 +67,7 @@ const CHART_Y_AXIS_CUM_OPTIONS = {
   ticks: {
     padding: 0
   }
-};
+} as const;
 
 const CHART_OPTIONS = {
   maintainAspectRatio: false,

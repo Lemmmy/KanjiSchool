@@ -4,13 +4,12 @@
 
 import { useState } from "react";
 import { Button, Card } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { Heatmap } from "./Heatmap";
 import { HeatmapDay } from "./data";
 import { ReviewHeatmapTooltip } from "./ReviewHeatmapTooltip";
 import { ReviewHeatmapLegend } from "./ReviewHeatmapLegend";
-
-import { useBreakpoint } from "@utils";
 
 export function ReviewHeatmapCard(): JSX.Element {
   const [showAll, setShowAll] = useState(false);

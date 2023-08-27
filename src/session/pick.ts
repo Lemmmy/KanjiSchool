@@ -44,7 +44,7 @@ export function pickSessionItems(
     case "self_study":
       return pickSelfStudyItems(options as Partial<ReviewOpts>, candidateSubjectIds);
     }
-  } catch (e) {
+  } catch (e: any) {
     debug("error picking session items", e);
     debug("context:", type, options, candidateSubjectIds);
     criticalError(e, { contexts: { session: {
@@ -79,7 +79,7 @@ export function pickSubjects(
 
   const comparator = buildSessionComparator(type, opts);
 
-  // Whether or not the subject list should be shuffled prior to applying the
+  // Whether the subject list should be shuffled prior to applying the
   // ordering rules
   const shouldShuffle = type !== "lesson"
     || LESSON_ORDERS[(opts as LessonOpts).order].shuffle;

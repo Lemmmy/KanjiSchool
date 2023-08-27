@@ -12,9 +12,7 @@ import { saveAs } from "file-saver";
 
 import { DEFAULT_SETTINGS, AnySettingName, getSettingKey } from "@utils";
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const __GIT_VERSION__: string;
-export const gitVersion: string = __GIT_VERSION__;
+const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 
 export function SettingsExportButton(): JSX.Element {
   return <Button

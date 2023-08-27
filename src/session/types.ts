@@ -23,7 +23,7 @@ export interface SessionItem {
   choiceDelay: number;
   putEnd?: boolean;
 
-  // Whether or not this item has been removed from the queue (unstarted items
+  // Whether this item has been removed from the queue (unstarted items
   // after wrapping up)
   abandoned: boolean;
 }

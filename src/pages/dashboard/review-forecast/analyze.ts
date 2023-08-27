@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 export interface HourData {
   /** Human-readable formatted hour (e.g. `15:00`) */
   hourName: string;
-  /** Whether or not this is the current hour */
+  /** Whether this is the current hour */
   isNow: boolean;
 
   /** Total number of reviews in this hour (for `total` grouping type) **/

@@ -33,6 +33,7 @@ import { useBooleanSetting } from "@utils";
 import useResizeObserver from "use-resize-observer";
 import { OverleveledAssignments } from "@pages/dashboard/OverleveledAssignments";
 import { GetReviewsWarning } from "@pages/dashboard/GetReviewsWarning";
+import { MenuHotkey } from "@comp/MenuHotkey.tsx";
 
 export function DashboardPage(): JSX.Element {
   const ongoingSession = useSelector((s: RootState) => s.session.ongoing);
@@ -43,15 +44,16 @@ export function DashboardPage(): JSX.Element {
   // const showLevelProgressRow = useBooleanSetting("dashboardLevelProgressRow");
 
   // Show an 'abandon session' button if there is an ongoing session
-  const [,set, unset] = useTopMenuOptions();
+  const [, set, unset] = useTopMenuOptions();
   useEffect(() => {
     if (ongoingSession) {
-      set(<>
-        {/* Abandon session */}
-        <Menu.Item key="top-abandon" danger onClick={() => showSessionAbandonModal()}>
-          <DeleteOutlined />Abandon session
-        </Menu.Item>
-      </>);
+      set([{
+        key: "top-abandon",
+        onClick: () => showSessionAbandonModal(),
+        danger: true,
+        icon: <DeleteOutlined />,
+        label: "Abandon session"
+      }]);
     }
 
     return unset;

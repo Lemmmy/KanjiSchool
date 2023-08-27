@@ -1,21 +1,21 @@
 {
   "extends": "./tsconfig.extend.json",
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2020",
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "es2020"
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -30,5 +30,6 @@
   "include": [
     "src",
     "typings"
-  ]
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

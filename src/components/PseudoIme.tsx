@@ -6,6 +6,7 @@ import React, { useCallback, Ref } from "react";
 import { Input, InputProps } from "antd";
 
 import { KANA_MAP } from "./ime-data";
+import { InputRef } from "rc-input/es/interface";
 
 export function toKana(s: string): string {
   let start = 0, end = s.length;
@@ -57,7 +58,7 @@ export function toKana(s: string): string {
 interface Props extends InputProps {
   value: string;
   setValue: (value: string) => void;
-  inputRef?: Ref<Input>;
+  inputRef?: Ref<InputRef>;
 }
 
 export function PseudoIme({

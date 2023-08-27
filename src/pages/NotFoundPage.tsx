@@ -5,7 +5,7 @@
 import { Button } from "antd";
 import { FrownOutlined } from "@ant-design/icons";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { SmallResult } from "@comp/results/SmallResult";
 
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function NotFoundPage({ nyi }: Props): JSX.Element {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return <SmallResult
     icon={<FrownOutlined />}
@@ -22,7 +22,7 @@ export function NotFoundPage({ nyi }: Props): JSX.Element {
     title={nyi ? "Not yet implemented" : "Page not found"}
     subTitle={nyi ? "This feature will be coming soon!" : undefined}
     extra={(
-      <Button type="primary" onClick={() => history.goBack()}>
+      <Button type="primary" onClick={() => navigate(-1)}>
         Go back
       </Button>
     )}

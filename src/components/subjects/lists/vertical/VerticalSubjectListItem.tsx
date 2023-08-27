@@ -22,8 +22,6 @@ interface Props {
   renderTooltip: SubjectRenderTooltipFn;
 }
 
-const keepParentFalse = { keepParent: false };
-
 export const VerticalSubjectListItem = React.memo(function VerticalSubjectListItem({
   subject,
   assignment,
@@ -33,7 +31,7 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
 }: Props): JSX.Element | null {
   const url = getSubjectUrl(subject);
 
-  // Whether or not this subject is in the self-study queue
+  // Whether this subject is in the self-study queue
   const inQueue = useIsInStudyQueue(subject.id);
 
   const boundRenderTooltip = useMemo(() =>
@@ -47,7 +45,7 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
   return <Tooltip
     overlayClassName="subject-tooltip"
     title={boundRenderTooltip}
-    destroyTooltipOnHide={keepParentFalse}
+    destroyTooltipOnHide={false}
   >
     <List.Item className={classes} style={style}>
       <ConditionalLink to={url} matchTo>

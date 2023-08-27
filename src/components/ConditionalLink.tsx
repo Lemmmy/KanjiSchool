@@ -2,9 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 
 interface Props {
   to?: string;
@@ -15,8 +15,8 @@ interface Props {
   matchTo?: boolean;
   matchPath?: string;
   matchExact?: boolean;
-  matchStrict?: boolean;
-  matchSensitive?: boolean;
+
+  children?: ReactNode;
 }
 
 export const ConditionalLink: FC<Props> = ({
@@ -28,8 +28,6 @@ export const ConditionalLink: FC<Props> = ({
   matchTo,
   matchPath,
   matchExact,
-  matchStrict,
-  matchSensitive,
 
   children, ...props
 }): JSX.Element => {
@@ -37,12 +35,11 @@ export const ConditionalLink: FC<Props> = ({
   const wantsCondition = condition !== undefined;
   const wantsMatch = matchTo || !!matchPath;
 
-  const match = useRouteMatch(wantsMatch ? {
-    path: matchTo && to ? to : matchPath,
-    exact: matchExact,
-    strict: matchStrict,
-    sensitive: matchSensitive
-  } : {});
+  const pattern = (matchTo && to ? to : matchPath) || "";
+  const match = useMatch({
+    path: pattern,
+    end: matchExact
+  });
 
   const active = (!wantsCondition || !!condition) && (!wantsMatch || !match);
 

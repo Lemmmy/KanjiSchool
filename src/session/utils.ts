@@ -32,11 +32,11 @@ export const isMeaning = (q: MappedQuestion): boolean => q.question.type === "me
 /** Returns whether this question is a reading question. */
 export const isReading = (q: MappedQuestion): boolean => q.question.type === "reading";
 
-/** Returns whether or not an item has been started. An item is started if it
+/** Returns whether an item has been started. An item is started if it
  * has at least one answer, but hasn't been completed. */
 export const isItemStarted = (i: SessionItem): boolean =>
   i.numAnswers > 0 && !isItemFinished(i);
-/** Returns whether or not a question's item has been started. An item is
+/** Returns whether a question's item has been started. An item is
  * started if it has at least one answer, but hasn't been completed. */
 export const isStarted = (q: MappedQuestion): boolean => isItemStarted(q.item);
 /** Returns the total number of started items in the session. */
@@ -46,11 +46,11 @@ export const getNumStartedItems = (items: SessionItem[]): number =>
 export const getNumStarted = (qs: MappedQuestion[]): number =>
   qs.reduce((sum, q) => sum + (isStarted(q) ? 1 : 0), 0);
 
-/** Returns whether or not an item has been finished. An item is finished if all
+/** Returns whether an item has been finished. An item is finished if all
  * its questions have been completed. */
 export const isItemFinished = (i: SessionItem): boolean =>
   i.meaningCompleted && i.readingCompleted;
-/** Returns whether or not a question's item has been finished. An item is
+/** Returns whether a question's item has been finished. An item is
  * finished if all its questions have been completed. */
 export const isFinished = (q: MappedQuestion): boolean => isItemFinished(q.item);
 /** Returns the total number of finished items in the session. */
@@ -71,18 +71,18 @@ export const getNumSkippedItems = (items: SessionItem[]): number =>
 export const getNumTotalItems = (items: SessionItem[]): number =>
   items.reduce((sum, item) => sum + (item.abandoned ? 0 : 1), 0);
 
-/** Returns whether or not an item has been finished and has no incorrect
+/** Returns whether an item has been finished and has no incorrect
  * answers. */
 export const isItemCorrect = (i: SessionItem): boolean =>
   i.meaningCompleted && i.readingCompleted
   && i.meaningIncorrectAnswers <= 0 && i.readingIncorrectAnswers <= 0;
-/** Returns whether or not an item has been finished and has at least one
+/** Returns whether an item has been finished and has at least one
  * incorrect answer. */
 export const isItemIncorrect = (i: SessionItem): boolean =>
   i.meaningCompleted && i.readingCompleted
   && (i.meaningIncorrectAnswers > 0 || i.readingIncorrectAnswers > 0);
 
-/** Returns whether or not the SessionItem has a meaning and reading question
+/** Returns whether the SessionItem has a meaning and reading question
  * still to be answered. */
 export const hasPendingMeaningAndReading = (q: MappedQuestion): boolean =>
   !q.item.meaningCompleted && !q.item.readingCompleted;
@@ -97,7 +97,7 @@ export interface SessionItemsCount {
 
 /**
  * Gets the number of finished items and total number of items in the session,
- * and whether or not the session is 'wrapping up' (i.e. the number of started
+ * and whether the session is 'wrapping up' (i.e. the number of started
  * items is equal to the total number of items).
  */
 export function countSessionItems(

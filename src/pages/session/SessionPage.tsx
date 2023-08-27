@@ -11,7 +11,7 @@ import { PageLayout } from "@layout/PageLayout";
 import { useTopMenuOptions } from "@layout/nav/TopMenu";
 import { MenuHotkey } from "@comp/MenuHotkey";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { RootState } from "@store";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -36,7 +36,7 @@ const KEY_MAP: KeyMap = {
 
 export function SessionPage(): JSX.Element {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const subjects = useSubjects();
   const ongoing = useSelector((s: RootState) => s.session.ongoing);
@@ -50,36 +50,38 @@ export function SessionPage(): JSX.Element {
   // TODO: This is a temporary workaround for session wrap-up and abandon. When
   //       a results screen is added, this will not work.
   useEffect(() => {
-    if (!ongoing) history.push("/");
-  }, [history, ongoing]);
+    if (!ongoing) navigate("/");
+  }, [navigate, ongoing]);
 
   // Wrap-up and abandon session top menu buttons
   const [,set, unset] = useTopMenuOptions();
   useEffect(() => {
-    set(<>
-      {/* Wrap up session */}
-      {!doingLessons && (
-        <Menu.Item
-          key="top-wrap-up"
-          onClick={() => wrapUpSession()}
-          className="menu-item-has-hotkey"
-        >
-          <CloseOutlined />Wrap up session
+    set([
+      // Wrap up session
+      !doingLessons ? {
+        key: "top-wrap-up",
+        onClick: () => wrapUpSession(),
+        className: "menu-item-has-hotkey",
+        icon: <CloseOutlined />,
+        label: <>
+          Wrap up session
           <MenuHotkey shortcut="Esc" />
-        </Menu.Item>
-      )}
+        </>
+      } : null,
 
-      {/* Abandon session */}
-      <Menu.Item
-        key="top-abandon"
-        danger
-        onClick={() => showSessionAbandonModal()}
-        className="menu-item-has-hotkey"
-      >
-        <DeleteOutlined />Abandon session
-        <MenuHotkey shortcut="Shift+Esc" />
-      </Menu.Item>
-    </>);
+      // Abandon session
+      {
+        key: "top-abandon",
+        onClick: () => showSessionAbandonModal(),
+        danger: true,
+        className: "menu-item-has-hotkey",
+        icon: <DeleteOutlined />,
+        label: <>
+          Abandon session
+          <MenuHotkey shortcut="Shift+Esc" />
+        </>
+      }
+    ]);
 
     return unset;
   }, [dispatch, set, unset, doingLessons]);

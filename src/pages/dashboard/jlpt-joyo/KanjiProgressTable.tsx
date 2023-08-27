@@ -4,7 +4,7 @@
 
 import classNames from "classnames";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { DataPart } from "./analyze";
 import { JlptLevels, JoyoGrades } from "@data";
@@ -32,7 +32,7 @@ export function KanjiProgressTable<T extends number>({
   data,
   totals
 }: Props<T>): JSX.Element | null {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (!data || !totals) return null;
 
@@ -63,7 +63,7 @@ export function KanjiProgressTable<T extends number>({
         return <tr
           key={k}
           onClick={() => gotoSearch(
-            history,
+            navigate,
             type === "jlpt"
               ? { ...searchKeys, jlptLevels: [k as JlptLevels] }
               : { ...searchKeys, joyoGrades: [k as JoyoGrades] },

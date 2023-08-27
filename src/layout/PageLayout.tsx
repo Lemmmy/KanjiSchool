@@ -2,18 +2,18 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC, useEffect } from "react";
+import { FC, HTMLProps, ReactNode, useEffect } from "react";
 import classNames from "classnames";
-import { PageHeader } from "antd";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { PageHeader } from "@ant-design/pro-layout";
 
-export type PageLayoutProps = React.HTMLProps<HTMLDivElement> & {
+export type PageLayoutProps = HTMLProps<HTMLDivElement> & {
   siteTitle?: string;
-  title?: React.ReactNode | string;
-  subTitle?: React.ReactNode | string;
+  title?: ReactNode | string;
+  subTitle?: ReactNode | string;
 
-  extra?: React.ReactNode;
+  extra?: ReactNode;
   noHeader?: boolean;
 
   className?: string;
@@ -33,7 +33,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
 
   children, ...rest
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (siteTitle) document.title = `${siteTitle} - KanjiSchool`;
@@ -52,8 +52,8 @@ export const PageLayout: FC<PageLayoutProps> = ({
 
       onBack={() => {
         if (onBack) onBack();
-        else if (backLink) history.push(backLink);
-        else history.goBack();
+        else if (backLink) navigate(backLink);
+        else navigate(-1);
       }}
     />}
 

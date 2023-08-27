@@ -11,11 +11,11 @@ import * as actions from "@actions/SyncActions";
 
 import { lsSetNumber, plural, pluralN } from "@utils";
 import { gotoSearch, useUserLevel } from "@api";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function OverleveledAssignments(): JSX.Element | null {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const level = useUserLevel();
   const over = useSelector((s: RootState) => s.sync.overleveledAssignments);
@@ -31,12 +31,12 @@ export function OverleveledAssignments(): JSX.Element | null {
     if (!over) return;
     hide();
 
-    gotoSearch(history, {
+    gotoSearch(navigate, {
       sortOrder: "LEVEL_THEN_TYPE",
       minLevel: level + 1,
       srsStages: [0, 1, 2, 3, 4, 5, 6, 7, 8] // Not burned
     }, true, true);
-  }, [history, level, over, hide]);
+  }, [navigate, level, over, hide]);
 
   if (!over || (over.currLessons <= 0 && over.currReviews <= 0)) {
     return null;

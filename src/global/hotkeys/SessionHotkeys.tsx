@@ -9,7 +9,7 @@ import { useSelector, shallowEqual } from "react-redux";
 
 import { GlobalHotKeys, KeyMap } from "react-hotkeys";
 
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 
 import { SessionType, gotoSession, startSession } from "@session";
 import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonModal";
@@ -26,13 +26,12 @@ const KEY_MAP: KeyMap = {
 };
 
 export function SessionHotkeys(): JSX.Element | null {
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  // Disable the hotkeys on the session pages, so typing will still auto-focus
-  // the inputs.
-  const routeMatch = useRouteMatch({
-    path: ["/review/session", "/lesson/session", "/study/session"]
-  });
+  // Disable the hotkeys on the session pages, so typing will still autofocus the inputs.
+  const reviewMatch = useMatch("/review/session");
+  const lessonMatch = useMatch("/lesson/session");
+  const studyMatch = useMatch("/study/session");
 
   const pendingLessons = useSelector((s: RootState) => s.sync.pendingLessons);
   const pendingReviews = useSelector((s: RootState) => s.sync.pendingReviews);
@@ -52,36 +51,36 @@ export function SessionHotkeys(): JSX.Element | null {
       }
 
       debug("hotkey: resuming session");
-      gotoSession(history, sessionState);
+      gotoSession(navigate, sessionState);
       return;
     }
 
     // If this is a lesson hotkey and there are pending lessons, start them
     if (type === "lesson" && pendingLessons.length) {
       debug("hotkey: starting lessons");
-      gotoSession(history, startSession("lesson"));
+      gotoSession(navigate, startSession("lesson"));
       return;
     }
 
     // If this is a review hotkey and there are pending reviews, start them
     if (type === "review" && pendingReviews.length) {
       debug("hotkey: starting reviews");
-      gotoSession(history, startSession("review"));
+      gotoSession(navigate, startSession("review"));
       return;
     }
-  }, [pendingLessons.length, pendingReviews.length, history, ongoing, sessionState]);
+  }, [pendingLessons.length, pendingReviews.length, navigate, ongoing, sessionState]);
 
   const onHotkeyStartLessons = useCallback(() =>
     onSessionHotkey("lesson"), [onSessionHotkey]);
   const onHotkeyStartReviews = useCallback(() =>
     onSessionHotkey("review"), [onSessionHotkey]);
   const onHotkeyStartSelfStudy = useCallback(() =>
-    history.push("/study"), [history]);
+    navigate("/study"), [history]);
   const onHotkeyAbandonSession = useCallback(() =>
     showSessionAbandonModal(), []);
 
   // Don't render the hotkeys if on a session page
-  if (routeMatch) return null;
+  if (reviewMatch || lessonMatch || studyMatch) return null;
 
   return <GlobalHotKeys
     keyMap={KEY_MAP}

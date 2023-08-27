@@ -3,6 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Layout } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import * as api from "@api";
 
@@ -15,11 +16,7 @@ import { Search } from "./search/Search";
 import { UserInfo } from "./UserInfo";
 import { TopMenu } from "./TopMenu";
 
-import { useBreakpoint } from "@utils";
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const __GIT_VERSION__: string;
-const gitVersion: string = __GIT_VERSION__;
+const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 
 export function AppHeader(): JSX.Element | null {
   // Hide certain features on mobile (TODO)

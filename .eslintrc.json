@@ -3,17 +3,17 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
-    "eslint-plugin-tsdoc"
+    "eslint-plugin-tsdoc",
+    "react-refresh"
   ],
-  "parserOptions": {
-    "project": "./tsconfig.json",
-    "tsconfigRootDir": ".",
-    "ecmaVersion": 2018,
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "sourceType": "module"
+  "env": {
+    "browser": true,
+    "es2020": true
   },
+  "ignorePatterns": [
+    "dist",
+    ".eslintrc.json"
+  ],
   "settings": {
     "react": {
       "version": "detect"
@@ -80,6 +80,11 @@
         },
         "format": ["strictCamelCase", "StrictPascalCase"]
       }
+    ],
+
+    "react-refresh/only-export-components": [
+      "warn",
+      { "allowConstantExport": true }
     ]
   },
   "extends": [

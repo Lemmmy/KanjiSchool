@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Switch, Route, Redirect } from "react-router-dom";
+import { createBrowserRouter, Route, Routes } from "react-router-dom";
 
 import { DashboardPage } from "@pages/dashboard/DashboardPage";
 import { SubjectPage } from "@pages/subject/SubjectPage";
@@ -16,55 +16,38 @@ import { DebugPage } from "@pages/debug/DebugPage";
 import { DebugPickTest } from "@pages/debug/PickTest";
 
 import { NotFoundPage } from "@pages/NotFoundPage";
-import { ErrorBoundary } from "@comp/ErrorBoundary";
+import { ErroredRoute } from "@comp/ErrorBoundary";
+import App from "@app";
 
-interface AppRoute {
-  path: string;
-  name: string;
-  component?: React.ReactNode;
-}
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErroredRoute />,
+    children: [
+      { path: "/", element: <DashboardPage /> },
 
-export const APP_ROUTES: AppRoute[] = [
-  { path: "/", name: "dashboard", component: <DashboardPage /> },
+      { path: "/radical/:slug",    element: <SubjectPage type="radical" /> },
+      { path: "/kanji/:slug",      element: <SubjectPage type="kanji" /> },
+      { path: "/vocabulary/:slug", element: <SubjectPage type="vocabulary" /> },
 
-  { path: "/radical/:slug", name: "subjectRadical", component: <SubjectPage type="radical" /> },
-  { path: "/kanji/:slug", name: "subjectKanji", component: <SubjectPage type="kanji" /> },
-  { path: "/vocabulary/:slug", name: "subjectVocabulary", component: <SubjectPage type="vocabulary" /> },
+      { path: "/lesson/session",   element: <SessionPage /> },
+      { path: "/review/session",   element: <SessionPage /> },
+      { path: "/study/session",    element: <SessionPage /> },
 
-  { path: "/lesson/session", name: "lessonSession", component: <SessionPage /> },
-  { path: "/review/session", name: "reviewSession", component: <SessionPage /> },
-  { path: "/study/session", name: "studySession", component: <SessionPage /> },
+      { path: "/search",           element: <AdvancedSearchPage /> },
+      { path: "/study",            element: <AdvancedSearchPage selfStudy /> },
 
-  { path: "/search", name: "advancedSearch", component: <AdvancedSearchPage /> },
-  { path: "/study", name: "selfStudySearch", component: <AdvancedSearchPage selfStudy /> },
+      { path: "/items/wk",         element: <ItemsPage type="wk" /> },
+      { path: "/items/jlpt",       element: <ItemsPage type="jlpt" /> },
+      { path: "/items/joyo",       element: <ItemsPage type="joyo" /> },
+      { path: "/items/frequency",  element: <ItemsPage type="freq" /> },
 
-  { path: "/items/wk", name: "itemsWk", component: <ItemsPage type="wk" /> },
-  { path: "/items/jlpt", name: "itemsJlpt", component: <ItemsPage type="jlpt" /> },
-  { path: "/items/joyo", name: "itemsJoyo", component: <ItemsPage type="joyo" /> },
-  { path: "/items/frequency", name: "itemsFreq", component: <ItemsPage type="freq" /> },
+      { path: "/settings",         element: <SettingsPage /> },
+      { path: "/debug",            element: <DebugPage /> },
+      { path: "/debug/picktest",   element: <DebugPickTest /> },
 
-  { path: "/settings", name: "settings", component: <SettingsPage /> },
-  { path: "/debug", name: "debug", component: <DebugPage /> },
-  { path: "/debug/picktest", name: "debugPicktest", component: <DebugPickTest /> },
-];
-
-export function AppRouter(): JSX.Element {
-  return <Switch>
-    {/* Render the matched route's page component */}
-    {APP_ROUTES.map(({ path, component }, key) => {
-      if (!component) return null;
-      return <Route key={key} exact={true} path={path}>
-        <ErrorBoundary name={"router-" + key}>
-          {component}
-        </ErrorBoundary>
-      </Route>;
-    })}
-
-    <Redirect from="/session" to="/review/session" exact />
-    <Redirect from="/vocab/:slug" to="/vocabulary/:slug" />
-    <Redirect from="/items" to="/items/wk" exact />
-    <Redirect from="/items/freq" to="/items/frequency" exact />
-
-    <Route path="*"><NotFoundPage /></Route>
-  </Switch>;
-}
+      { path: "*",                 element: <NotFoundPage /> }
+    ]
+  },
+]);

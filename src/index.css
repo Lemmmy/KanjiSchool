@@ -2,6 +2,11 @@
  * This file is part of KanjiSchool under AGPL-3.0.
  * Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE */
 
+/* Don't include base Tailwind styles since we're using antd too. */
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

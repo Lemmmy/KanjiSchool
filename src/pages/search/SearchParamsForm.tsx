@@ -7,7 +7,7 @@ import { Form, Row, Col, Input, Select, Button, Collapse, Typography, Checkbox }
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import classNames from "classnames";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useKeywordSearch } from "@api/search/KeywordSearch";
 
 import { InputRange } from "./InputRange";
@@ -52,7 +52,7 @@ export function SearchParamsForm({
   const [form] = Form.useForm<SearchParams>();
 
   // Used for `onSelfStudy`
-  const history = useHistory();
+  const navigate = useNavigate();
   const [keywordSearch] = useKeywordSearch();
 
   const defaultCollapseKey = hideForm ? undefined : "main";
@@ -94,7 +94,7 @@ export function SearchParamsForm({
     try {
       const values = await form.validateFields();
       const params = normalizeSearchParams(values);
-      gotoSelfStudy(history, keywordSearch, params, withLessons, opts);
+      gotoSelfStudy(navigate, keywordSearch, params, withLessons, opts);
     } catch (err) {
       console.error(err);
       return;

@@ -18,8 +18,6 @@ interface Props extends ButtonProps {
   noDanger?: boolean;
 }
 
-const keepParentFalse = { keepParent: false };
-
 export function StudyQueueButton({
   subjectId, subjectIds,
   iconOnly,
@@ -47,7 +45,7 @@ export function StudyQueueButton({
   // Tooltip (in case this is an icon-only button)
   return <Tooltip
     title={() => <>{longTitle} <b>(Q)</b></>}
-    destroyTooltipOnHide={keepParentFalse}
+    destroyTooltipOnHide={false}
   >
     {/* Add/remove to/from self-study queue button */}
     <Button

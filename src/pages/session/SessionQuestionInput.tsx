@@ -19,13 +19,14 @@ import { showSessionAbandonModal } from "./modals/SessionAbandonModal";
 import { NearMatchAction, useBooleanSetting } from "@utils";
 
 import Debug from "debug";
+import { InputRef } from "rc-input/es/interface";
 const debug = Debug("kanjischool:session-question-input");
 
 interface Props {
   isCurrent: boolean;
   questionType: "meaning" | "reading";
 
-  inputRef: Ref<Input>;
+  inputRef: Ref<InputRef>;
   inputValue: string;
   setInputValue: Dispatch<SetStateAction<string>>;
 
@@ -144,7 +145,7 @@ export function useSessionQuestionInput(
   onAnswered: OnAnsweredFn,
   onSkip: OnSkipFn,
 ): HookRes {
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<InputRef>(null);
 
   const [inputValue, setInputValue] = useState("");
 

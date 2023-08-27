@@ -78,7 +78,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   const assignment = useAssignmentBySubjectId(subject.id);
   const studyMaterial = useStudyMaterialBySubjectId(subject.id);
 
-  // Whether or not a certain subject info object should be shown, based on the
+  // Whether a certain subject info object should be shown, based on the
   // current hint stage and question type.
   const show = shouldShowObject.bind(
     shouldShowObject, useHintStage, objectType, questionType, hintStage

@@ -128,7 +128,7 @@ function _stringifySrsStageDuration(srsId: number, stage: number): string {
 export const stringifySrsStageDuration = memoize(_stringifySrsStageDuration);
 
 /**
- * Returns whether or not a subject is overdue: has at least [threshold] percent
+ * Returns whether a subject is overdue: has at least [threshold] percent
  * of the SRS interval elapsed since the latest review became available?
  */
 export function isOverdue([subject, assignment]: SubjectWithAssignment): boolean {

@@ -5,6 +5,7 @@
 import { useMemo } from "react";
 import classNames from "classnames";
 import { Row, Col, Button, ButtonProps } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { ApiSubject } from "@api";
 
@@ -13,7 +14,7 @@ import { QuestionSrsStage } from "./QuestionSrsStage";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 
 import { startCase, kebabCase } from "lodash-es";
-import { normalizeVocabType, nts, useBooleanSetting, useBreakpoint, useRandomFont, useStringSetting } from "@utils";
+import { normalizeVocabType, nts, useBooleanSetting, useRandomFont, useStringSetting } from "@utils";
 import { UndoButton } from "./UndoButton";
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
@@ -59,7 +60,7 @@ export function SessionQuestionHeader({
     size: sm ? undefined : "large"
   }), [sm]);
 
-  // Whether or not to show the skip button
+  // Whether to show the skip button
   const skipEnabled = useBooleanSetting("skipEnabled");
 
   const questionTypeHeaderColor = useStringSetting<QuestionHeaderTypeColor>("questionHeaderTypeColor");

@@ -4,6 +4,7 @@
 
 import { useState } from "react";
 import { Form, Input, Button, Card, Row, Col, Divider } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { AppLoading } from "@global/AppLoading";
 import { PageLayout } from "@layout/PageLayout";
@@ -14,8 +15,6 @@ import { ExtLink } from "@comp/ExtLink";
 import { criticalError } from "@utils";
 import { LoginFooter } from "./LoginFooter";
 import { DemoCarousel } from "./DemoCarousel";
-
-import { useBreakpoint } from "@utils";
 
 const UUID_RE = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 
@@ -40,7 +39,7 @@ export function LoginPage(): JSX.Element {
       setLoginFailed(false);
 
       await api.attemptLogIn(values.apiKey);
-    } catch (err) {
+    } catch (err: any) {
       criticalError(err);
       setLoginFailed(true);
     } finally {

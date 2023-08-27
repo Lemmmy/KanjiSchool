@@ -7,27 +7,25 @@ import { notification } from "antd";
 import { store } from "@app";
 import * as actions from "@actions/SessionActions";
 
-import { History } from "history";
-
 import { SessionState } from "./types";
 
 import { reloadAssignments } from "@api";
 import { lsSetString, lsSetBoolean } from "@utils";
+import { NavigateFunction } from "react-router-dom";
 
 export function gotoSession(
-  history: History,
+  navigate: NavigateFunction,
   sessionState?: SessionState
 ): void {
   if (!sessionState) return;
   switch (sessionState.type) {
-  case "lesson": return history.push("/lesson/session");
-  case "review": return history.push("/review/session");
-  case "self_study": return history.push("/study/session");
+  case "lesson": return navigate("/lesson/session");
+  case "review": return navigate("/review/session");
+  case "self_study": return navigate("/study/session");
   }
 }
 
-/** Forcibly ends the session regardless of whether or not there are any
- * in-progress (started) items. */
+/** Forcibly ends the session regardless of whether there are any in-progress (started) items. */
 export function abandonSession(): void {
   const ongoing = store.getState().session.ongoing;
   if (!ongoing) return;

@@ -3,11 +3,12 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import classNames from "classnames";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { gotoSearch } from "@api";
-import { nts, useBreakpoint } from "@utils";
+import { nts } from "@utils";
 
 interface LockedProps {
   level: number;
@@ -18,10 +19,10 @@ export function LockedSubjects({ level, count }: LockedProps): JSX.Element {
   // Hide the level on mobile for space
   const { sm } = useBreakpoint();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function onClick() {
-    gotoSearch(history, {
+    gotoSearch(navigate, {
       minLevel: level,
       maxLevel: level,
       srsStages: [10],

@@ -19,8 +19,6 @@ const TOOLTIP_TITLES: Record<string, string> = {
   "vocabulary": "Vocabulary"
 };
 
-const keepParentFalse = { keepParent: false };
-
 export function HourBar({ n, max, className }: Props): JSX.Element | null {
   if (!n || !max) return null;
 
@@ -40,7 +38,7 @@ export function HourBar({ n, max, className }: Props): JSX.Element | null {
     ? (
       <Tooltip
         title={tooltipTitle}
-        destroyTooltipOnHide={keepParentFalse}
+        destroyTooltipOnHide={false}
       >
         {bar}
       </Tooltip>

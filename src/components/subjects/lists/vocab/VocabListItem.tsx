@@ -29,8 +29,6 @@ interface Props {
   renderTooltip: SubjectRenderTooltipFn;
 }
 
-const keepParentFalse = { keepParent: false };
-
 export const VocabListItem = React.memo(function VocabListItem({
   subject,
   assignment,
@@ -42,7 +40,7 @@ export const VocabListItem = React.memo(function VocabListItem({
 }: Props): JSX.Element | null {
   const url = getSubjectUrl(subject);
 
-  // Whether or not this subject is in the self-study queue
+  // Whether this subject is in the self-study queue
   const inQueue = useIsInStudyQueue(subject.id);
 
   // Get the first available primary meaning and reading
@@ -69,7 +67,7 @@ export const VocabListItem = React.memo(function VocabListItem({
   return <Tooltip
     overlayClassName="subject-tooltip"
     title={boundRenderTooltip}
-    destroyTooltipOnHide={keepParentFalse}
+    destroyTooltipOnHide={false}
   >
     <Row className={classes} ref={divRef} style={style}>
       <ConditionalLink to={url} matchTo>

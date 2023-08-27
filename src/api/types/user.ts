@@ -5,7 +5,7 @@
 import { ApiObject } from "./";
 
 export interface ApiSubscription {
-  /** Whether or not the user currently has a paid subscription. */
+  /** Whether the user currently has a paid subscription. */
   active: boolean;
 
   /** The maximum level of content accessible to the user. */

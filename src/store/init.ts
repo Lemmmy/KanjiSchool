@@ -8,7 +8,7 @@ import { getInitialSessionState } from "@reducers/SessionReducer";
 import { getInitialSettingsState } from "@reducers/SettingsReducer";
 
 import { Action, createStore, Store } from "redux";
-import { devToolsEnhancer } from "redux-devtools-extension";
+import { composeWithDevTools } from "@redux-devtools/extension";
 import rootReducer from "./reducers/RootReducer";
 
 import { RootState, RootAction } from "./index";
@@ -27,6 +27,26 @@ export const actionSanitizers: Record<string, (action: Action, id: number) => Ac
   "INIT_REVIEW_STATISTICS": action => ({ type: action.type, "note": "Too large." })
 };
 
+const composeEnhancers = composeWithDevTools({
+  actionSanitizer: (action, id) =>
+    (actionSanitizers[action.type] as any)?.(action, id) ?? action,
+  actionsDenylist: [
+    "INIT_SUBJECTS", "INIT_ASSIGNMENTS", "INIT_REVIEW_STATISTICS",
+    "SET_SYNCING_IMAGES_PROGRESS", "SET_SYNCING_AUDIO_PROGRESS"
+  ],
+  stateSanitizer: (state: any) => ({
+    ...state,
+    sync: {
+      ...(state as any).sync,
+      subjects: { "note": "Too large." },
+      partsOfSpeechCache: { "note": "Too large." },
+      slugCache: { "note": "Too large." },
+      assignments: { "note": "Too large." },
+      reviewStatistics: { "note": "Too large." },
+    }
+  })
+});
+
 export const initStore = (): Store<RootState, RootAction> => {
   debug("initializing redux store");
   return createStore(
@@ -37,24 +57,6 @@ export const initStore = (): Store<RootState, RootAction> => {
       session: getInitialSessionState(),
       settings: getInitialSettingsState(),
     },
-    devToolsEnhancer({
-      actionSanitizer: (action, id) =>
-        (actionSanitizers[action.type] as any)?.(action, id) ?? action,
-      actionsBlacklist: [
-        "INIT_SUBJECTS", "INIT_ASSIGNMENTS", "INIT_REVIEW_STATISTICS",
-        "SET_SYNCING_IMAGES_PROGRESS", "SET_SYNCING_AUDIO_PROGRESS"
-      ],
-      stateSanitizer: (state: any) => ({
-        ...state,
-        sync: {
-          ...(state as any).sync,
-          subjects: { "note": "Too large." },
-          partsOfSpeechCache: { "note": "Too large." },
-          slugCache: { "note": "Too large." },
-          assignments: { "note": "Too large." },
-          reviewStatistics: { "note": "Too large." },
-        }
-      })
-    })
+    composeEnhancers()
   );
 };

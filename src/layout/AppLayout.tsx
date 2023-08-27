@@ -2,14 +2,14 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, createContext } from "react";
+import React, { useState, createContext } from "react";
 import { Layout } from "antd";
-
-import { AppRouter } from "@global/AppRouter";
 
 import { AppHeader } from "./nav/AppHeader";
 import { TopMenuProvider } from "./nav/TopMenu";
 import { KeywordSearchProvider } from "@api/search/KeywordSearch";
+import { ScrollToAnchor } from "@utils/hooks/useScrollToAnchor";
+import { Outlet } from "react-router-dom";
 
 export type SiteLayoutRef = HTMLDivElement | null;
 export const SiteLayoutContext = createContext<SiteLayoutRef>(null);
@@ -29,7 +29,8 @@ export function AppLayout(): JSX.Element {
             onKeyDown={noSpace}
             ref={setSiteLayout}
           >
-            <AppRouter />
+            <Outlet />
+            <ScrollToAnchor />
           </div>
         </SiteLayoutContext.Provider>
       </TopMenuProvider>

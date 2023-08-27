@@ -8,12 +8,10 @@ import { Integrations } from "@sentry/tracing";
 
 import { message } from "antd";
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const __GIT_VERSION__: string;
-const gitVersion: string = __GIT_VERSION__;
+const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 
 const ls = localStorage.getItem("settings.errorReporting");
-export const errorReporting = process.env.DISABLE_SENTRY !== "true" &&
+export const errorReporting = import.meta.env.VITE_DISABLE_SENTRY !== "true" &&
   (ls === null || ls === "true");
 export const messageOnErrorReport = localStorage.getItem("settings.messageOnErrorReport") === "true";
 

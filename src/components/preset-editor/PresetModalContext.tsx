@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useCallback, useContext, createContext, FC } from "react";
+import { useState, useCallback, useContext, createContext, FC, ReactNode } from "react";
 
 import { PresetEditorModal, PresetType } from ".";
 
@@ -14,7 +14,7 @@ interface ModalProps {
   visible: boolean;
 }
 
-export const PresetModalProvider: FC = ({ children }) => {
+export const PresetModalProvider = ({ children }: { children: ReactNode }): JSX.Element => {
   const [modalProps, setModalProps] = useState<Omit<ModalProps, "closeFn">>({ type: "lesson", visible: false });
   const openFn = useCallback((type: PresetType) => setModalProps({ type, visible: true }), []);
   const closeFn = useCallback(() => setModalProps(p => ({ type: p.type, visible: false })), []);

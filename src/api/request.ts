@@ -17,7 +17,7 @@ export class ApiError extends Error {
   }
 }
 
-export type ApiResponseErrorable<T extends Record<string, any>> = T & {
+export type ApiResponseErrorable<T> = T & {
   error?: string;
   code?: number;
 }
@@ -73,7 +73,7 @@ export async function request<T>(
     }
 
     return data;
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
 
     // Print a message specifically for timeouts

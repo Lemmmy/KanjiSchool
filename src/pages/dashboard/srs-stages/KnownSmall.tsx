@@ -4,7 +4,7 @@
 
 import classNames from "classnames";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { gotoSearch } from "@api";
 import { nts } from "@utils";
@@ -25,10 +25,10 @@ const KNOWN_SMALL_STAGES: Record<KnownSmallType, number[]> = {
 export function KnownSmall({
   type, name, count
 }: KnownSmallProps): JSX.Element {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function onClick() {
-    gotoSearch(history, { srsStages: KNOWN_SMALL_STAGES[type] }, true, true);
+    gotoSearch(navigate, { srsStages: KNOWN_SMALL_STAGES[type] }, true, true);
   }
 
   const classes = classNames(

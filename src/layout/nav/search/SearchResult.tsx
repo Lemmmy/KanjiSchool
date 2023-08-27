@@ -10,6 +10,7 @@ import { StoredSubject, useUserLevel } from "@api";
 import { ConditionalLink } from "@comp/ConditionalLink";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { CommaList } from "@pages/subject/CommaList";
+
 import Highlighter from "react-highlight-words";
 
 import { getPrimaryReading, getSubjectUrl } from "@utils";

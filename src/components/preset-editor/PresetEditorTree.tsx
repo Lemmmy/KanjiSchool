@@ -8,6 +8,7 @@ import { Tree } from "antd";
 import { PresetType, Preset, getDefaultPresets, usePresets } from ".";
 import { movePreset } from "./move";
 import { AntTreeNode } from "antd/lib/tree";
+import { DataNode } from "rc-tree/lib/interface";
 
 const TREE_TITLES: Record<PresetType, string> = {
   "lesson": "My lesson presets",
@@ -80,10 +81,10 @@ export function PresetEditorTree({
       nodeDraggable: (({ key }: { key: string }) =>
         !(key.toString()).startsWith("default-")
         && !(key.toString()).startsWith("root-")
-      ) as unknown as (node: AntTreeNode) => boolean
+      ) as unknown as (node: DataNode) => boolean
     }}
 
-    onDrop={({ dragNode, dropToGap, dropPosition, node, ...rest }) => {
+    onDrop={({ dragNode, dropToGap, dropPosition, node }) => {
       // Don't allow dropping onto other nodes or outside of the root
       // TODO: enforce this visually
       if (!dropToGap || (node && (node.key.toString()).startsWith("root-"))) {

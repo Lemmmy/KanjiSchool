@@ -5,7 +5,7 @@
 import { useCallback, useMemo } from "react";
 import { Form, Card, Row, Input, Dropdown, Menu } from "antd";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { StoredSubject } from "@api";
 import { gotoSession, SessionType, startSession } from "@session";
@@ -32,7 +32,7 @@ function normalizeSubjectIds(value?: string): number[] {
 export function useCustomSessionCard(): HookRes {
   const [form] = Form.useForm<FormValues>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Add a new subject to the custom session input
   const onAddSubject = useCallback((subject: StoredSubject) => {
@@ -49,8 +49,8 @@ export function useCustomSessionCard(): HookRes {
     const values = await form.validateFields();
     const ids = normalizeSubjectIds(values.subjectIds);
     const state = startSession(type, ids);
-    gotoSession(history, state);
-  }, [history, form]);
+    gotoSession(navigate, state);
+  }, [navigate, form]);
   const onStartSelfStudy = useCallback(() =>
     onStartSession("self_study"), [onStartSession]);
 
