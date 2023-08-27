@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import classNames from "classnames";
-
 import { nts } from "@utils";
 
 interface Props {
@@ -24,9 +22,8 @@ export function OrdinalNumber({
   className
 }: Props): JSX.Element {
   const suffix = getOrdinalSuffix(value);
-  const classes = classNames("ordinal-number", className);
-  return <span className={classes}>
-    <span className="ordinal-number-value">{nts(value)}</span>
-    <span className="ordinal-number-suffix">{suffix}</span>
+  return <span className={className}>
+    <span>{nts(value)}</span>
+    <span className="align-super text-sm">{suffix}</span>
   </span>;
 }

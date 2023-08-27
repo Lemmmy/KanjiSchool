@@ -15,6 +15,5 @@ export const usePalette = (): ColorPalette => PALETTES[usePaletteName()];
 
 export function usePaletteStyles(): CSSProperties {
   const palette = usePalette();
-  const styles = useMemo(() => buildPaletteStyles(palette), [palette]);
-  return styles;
+  return useMemo(() => buildPaletteStyles(palette), [palette]);
 }

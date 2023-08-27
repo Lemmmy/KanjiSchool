@@ -60,15 +60,15 @@ export function LoginPage(): JSX.Element {
   }
 
   // Actually show the login page
-  return <PageLayout siteTitle="Log in" noHeader className="login-page-layout">
+  return <PageLayout siteTitle="Log in" noHeader verticallyCentered>
     <Row justify="center" align="middle">
       <Col>
-        <Card title="KanjiSchool" style={{ minWidth: 320, width: "100%", maxWidth: 720 }}>
+        <Card title="KanjiSchool" className="min-w-[320px] w-full max-w-[720px]">
           {/* Top section - lead text and carousel */}
           <Row>
             {/* Lead text */}
             <Col flex="1">
-              <p>
+              <p className="mt-0">
                 Welcome to KanjiSchool, a client for <ExtLink href="https://www.wanikani.com">WaniKani</ExtLink>, an SRS
                 kanji learning app created by <ExtLink href="https://www.tofugu.com">Tofugu</ExtLink>.
               </p>
@@ -90,18 +90,19 @@ export function LoginPage(): JSX.Element {
 
           {/* Onboarding */}
           <p>
-            To get started, enter your <ExtLink href="https://www.wanikani.com/settings/personal_access_tokens">WaniKani API v2 key</ExtLink>.
+            To get started, enter your <ExtLink href="https://www.wanikani.com/settings/personal_access_tokens">WaniKani
+            API v2 key</ExtLink>.
             Permissions required:
           </p>
 
-          <ul className="perms">
+          <ul className="mt-0 grid grid-cols-2 gap-xs">
             <li><code>assignments:start</code></li>
             <li><code>reviews:create</code></li>
             <li><code>study_materials:create</code></li>
             <li><code>study_materials:update</code></li>
           </ul>
 
-          <p className="login-account-hint">
+          <p className="text-desc">
             If you don&apos;t yet have a WaniKani account, create
             one <ExtLink href="https://www.wanikani.com">here</ExtLink>.
           </p>
@@ -162,7 +163,7 @@ export function LoginPage(): JSX.Element {
           {/* Carousel on mobile */}
           {!md && <>
             <Divider />
-            <Row className="demo-carousel-row-mobile">
+            <Row className="mt-lg justify-center">
               <Col><DemoCarousel /></Col>
             </Row>
           </>}

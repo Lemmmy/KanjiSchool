@@ -1,0 +1,15 @@
+<component name="CopyrightManager">
+  <settings>
+    <module2copyright>
+      <element module="All" copyright="KanjiSchool" />
+    </module2copyright>
+    <LanguageOptions name="JavaScript">
+      <option name="fileTypeOverride" value="3" />
+      <option name="block" value="false" />
+    </LanguageOptions>
+    <LanguageOptions name="TypeScript">
+      <option name="fileTypeOverride" value="3" />
+      <option name="block" value="false" />
+    </LanguageOptions>
+  </settings>
+</component>

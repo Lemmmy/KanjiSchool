@@ -24,8 +24,11 @@ export function GetReviewsWarning(): JSX.Element | null {
 
   return <Alert
     type="warning"
-    message={<>
-      <p>
+    className="mb-lg"
+    onClose={hide}
+    closable
+    message={<div>
+      <p className="mt-0">
         In April 2023, WaniKani turned off the ability for third-party applications to get the review history. This will
         impact the accuracy of the review heatmap and streak counter. KanjiSchool will remember your review history for
         reviews made on the site, but cannot get history for reviews made on other sites or apps.
@@ -47,7 +50,6 @@ export function GetReviewsWarning(): JSX.Element | null {
           Learn more
         </Button>
       </Space>
-    </>}
-    style={{ marginBottom: 24 }}
+    </div>}
   />;
 }

@@ -16,7 +16,7 @@ import { StorageUsageCard } from "./StorageUsageCard";
 
 const THEME_NAMES = [
   { value: "dark", label: "Dark (default)" },
-  // { value: "light", label: "Light" }
+  { value: "light", label: "Light" }
 ];
 const PALETTE_NAMES = [
   { value: "kanjiSchool", label: "KanjiSchool (default)" },

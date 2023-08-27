@@ -81,7 +81,7 @@ export function StudyQueueModal(): JSX.Element | null {
       >
         <SubjectGrid
           size="tiny"
-          className="color-by-type"
+          colorBy="type"
           hasVocabulary
           hideInQueue
           alignLeft

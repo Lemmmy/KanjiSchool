@@ -63,6 +63,6 @@ function HeatmapInner({ d3Ref, ...props }: InnerProps): JSX.Element | null {
   return <svg
     {...props}
     ref={d3Ref}
-    className="review-heatmap d3"
+    className="min-w-min mx-auto"
   />;
 }

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 import { gotoSearch } from "@api";
 import { nts } from "@utils";
+import { baseStageClasses } from "@pages/dashboard/srs-stages/SrsStagesCard.tsx";
 
 interface LockedProps {
   level: number;
@@ -30,10 +31,10 @@ export function LockedSubjects({ level, count }: LockedProps): JSX.Element {
     }, true, true);
   }
 
-  const classes = classNames("srs-stage", "locked-subjects");
+  const classes = classNames(baseStageClasses, "text-white bg-srs-locked hover:bg-srs-locked-lighter");
 
   return <div className={classes} onClick={onClick}>
-    <span className="stage-name">Locked {sm && <>(lvl {level})</>}</span>
-    <span className="stage-count">{nts(count)}</span>
+    <div>Locked {sm && <>(lvl {level})</>}</div>
+    <div className="text-4xl">{nts(count)}</div>
   </div>;
 }

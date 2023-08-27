@@ -49,11 +49,17 @@ export function getJpCharBlocks(input: string): CharacterBlock[] {
   return out;
 }
 
+const charBlockClasses: Record<string, string> = {
+  "hiragana": "text-vocabulary-hiragana",
+  "katakana": "text-vocabulary-katakana",
+  "other"   : "text-vocabulary",
+};
+
 export function renderCharBlocks(blocks: CharacterBlock[]): JSX.Element[] {
   return blocks.map(b => (
     <span
       key={`${b.type}-${b.characters}`}
-      className={"char-block char-block-type-" + b.type}
+      className={charBlockClasses[b.type] || charBlockClasses["other"]}
     >
       {b.characters}
     </span>

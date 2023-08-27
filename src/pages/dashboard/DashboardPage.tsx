@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect } from "react";
-import { Row, Col, Menu } from "antd";
+import { Row, Col } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { PageLayout } from "@layout/PageLayout";
@@ -17,7 +17,7 @@ import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonMod
 
 import { SummaryCard } from "./summary/SummaryCard";
 import { LevelProgressCard } from "./level-progress/LevelProgressCard";
-import { SummaryChartCard } from "./summary/SummaryChartCard";
+import { UpcomingReviewsCard } from "./summary/UpcomingReviewsCard.tsx";
 import { SrsStagesCard } from "./srs-stages/SrsStagesCard";
 import { NewUnlocksCard } from "./NewUnlocksCard";
 import { CriticalConditionCard } from "./CriticalConditionCard";
@@ -59,21 +59,24 @@ export function DashboardPage(): JSX.Element {
     return unset;
   }, [ongoingSession, set, unset]);
 
-  const page = <PageLayout siteTitle="Dashboard" className="dashboard-page">
+  const page = <PageLayout
+    siteTitle="Dashboard"
+    className="[&_.ant-card]:h-full [&_.ant-card]:flex [&_.ant-card]:flex-col [&_.ant-card>.ant-card-body]:flex-1"
+  >
     <SubscriptionStatus />
     <GetReviewsWarning />
     <OverleveledAssignments />
 
     <DashboardTopRow />
 
-    <Row gutter={16} className="dashboard-row">
-      {/* Summary chart */}
-      <Col span={24} lg={14}><SummaryChartCard /></Col>
+    <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
+      {/* Upcoming reviews chart */}
+      <Col span={24} lg={14}><UpcomingReviewsCard /></Col>
       {/* SRS stage item count */}
       <Col span={24} lg={10}><SrsStagesCard /></Col>
     </Row>
 
-    <Row gutter={16} className="dashboard-row">
+    <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
       <Col span={24} xl={12} style={{ display: "flex", flexDirection: "column" }}>
         {/* Review heatmap */}
         <ReviewHeatmapCard />
@@ -85,13 +88,13 @@ export function DashboardPage(): JSX.Element {
       <Col span={24} xl={6} xxl={6}><ReviewForecastCard /></Col>
     </Row>
 
-    <Row gutter={16} className="dashboard-row">
+    <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
       {/* Kanji progress */}
       <Col span={24} lg={12}><KanjiProgressCard /></Col>
 
       <Col span={24} lg={12} style={{ display: "flex", flexDirection: "column" }}>
         {/* Unlocked/burned items */}
-        <Row gutter={16} className="unlocks-area">
+        <Row gutter={16} className="mb-md">
           <Col span={24} xl={12}><NewUnlocksCard dateField="unlocked_at" /></Col>
           <Col span={24} xl={12}><NewUnlocksCard dateField="burned_at" /></Col>
         </Row>
@@ -115,7 +118,7 @@ function DashboardTopRow(): JSX.Element {
   // height.
   const { ref, height } = useResizeObserver<HTMLDivElement>();
 
-  return <Row gutter={16} className="dashboard-row">
+  return <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
     {/* Summary */}
     <Col span={24} lg={16} xl={14}>
       <SummaryCard ref={ref} />

@@ -2,12 +2,23 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-export function KanjiProgressLegend(): JSX.Element {
-  return <div className="kanji-progress-legend">
-    <div className="legend-square legend-burned"></div>
-    <span className="legend-label">Burned</span>
+import classNames from "classnames";
 
-    <div className="legend-square legend-passed"></div>
-    <span className="legend-label">Passed</span>
+export function KanjiProgressLegend(): JSX.Element {
+  return <div className="hidden md:flex items-center text-sm text-desc">
+    <LegendSquare className="bg-green" />
+    <span className="mx-xs">Burned</span>
+
+    <LegendSquare className="bg-lime" />
+    <span className="ml-xs">Passed</span>
   </div>;
+}
+
+function LegendSquare({ className }: { className: string }): JSX.Element {
+  return <span
+    className={classNames(
+      "inline-block w-[16px] h-[16px] whitespace-nowrap rounded-sm",
+      className
+    )}
+  />;
 }

@@ -4,8 +4,7 @@ export function DemoCarousel(): JSX.Element {
   return <Carousel
     autoplay
     dots={false}
-    className="demo-carousel"
-    style={{ width: 240 }}
+    className="w-[240px] ml-0 md:ml-md [&_.ant-image-img]:rounded"
   >
     <Image width={240} src="/kanjischool-demo-1.jpg" />
     <Image width={240} src="/kanjischool-demo-2.jpg" />

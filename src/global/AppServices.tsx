@@ -1,24 +1,15 @@
-// Copyright (c) 2021-2023 Drew Edwards
+// Copyright (c) 2023 Drew Edwards
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import {ApplyPalette, ApplyTheme} from "./theme";
-import {SyncHandlers} from "./sync";
-import {LastResultsSave} from "./LastResultsSave";
-import {HotkeyServices} from "./hotkeys";
-import {StudyQueueModal} from "@comp/study-queue/StudyQueueModal";
-import {AdvanceTip} from "@pages/dashboard/tips/TipsCard";
-import {ReducedMotionClass} from "@global/ReducedMotionClass";
+import { ReducedMotionClass } from "@global/ReducedMotionClass.tsx";
+import { ApplyWkTheme } from "@global/theme";
+import { ApplyAntThemeVariables } from "@global/theme/ApplyAntThemeVariables.tsx";
 
 export function AppServices(): JSX.Element {
   return <>
     <ReducedMotionClass />
-    <ApplyTheme />
-    <ApplyPalette />
-    <SyncHandlers />
-    <LastResultsSave />
-    <HotkeyServices />
-    <StudyQueueModal />
-    <AdvanceTip />
+    <ApplyWkTheme />
+    <ApplyAntThemeVariables />
   </>;
 }

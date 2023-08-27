@@ -5,7 +5,7 @@
 import React, { useMemo } from "react";
 import classNames from "classnames";
 
-import { ApiSubject, ApiSubjectRadicalInner } from "@api";
+import { ApiSubject, ApiSubjectRadicalInner, NormalizedSubjectType } from "@api";
 
 import { Textfit } from "react-textfit";
 import { CharacterImage } from "./CharacterImage";
@@ -25,14 +25,29 @@ interface Props {
   useCharBlocks?: boolean;
 
   className?: string;
+  fontClassName?: string;
+  imageClassName?: string;
+  imageSizeClassName?: string;
   style?: React.CSSProperties;
 }
 
+const colorClasses: Record<NormalizedSubjectType, string> = {
+  radical   : "text-radical",
+  kanji     : "text-kanji",
+  vocabulary: "text-vocabulary"
+};
+
 export const SubjectCharacters = React.memo(({
   subject,
-  textfit, min, max,
+  textfit,
+  min,
+  max,
   useCharBlocks,
-  className, style
+  className,
+  fontClassName = "text-[32px]",
+  imageClassName,
+  imageSizeClassName,
+  style
 }: Props): JSX.Element | null => {
   const objectType = subject.object;
   const normObjectType = normalizeVocabType(objectType);
@@ -57,8 +72,9 @@ export const SubjectCharacters = React.memo(({
   }
 
   const classes = classNames(
-    "subject-characters ja",
-    "type-" + normObjectType,
+    "font-ja",
+    colorClasses[normObjectType],
+    fontClassName,
     className,
     {
       "subject-characters-textfit": textfit,
@@ -69,7 +85,8 @@ export const SubjectCharacters = React.memo(({
   if (characterImages) {
     // Character image for radicals
     return <CharacterImage
-      className={classes}
+      className={classNames(classes, imageClassName)}
+      sizeClassName={imageSizeClassName}
       subjectId={subject.id}
       size={max}
     />;
@@ -79,9 +96,10 @@ export const SubjectCharacters = React.memo(({
       <Textfit
         mode="single"
         forceSingleModeWidth
-        min={min} max={max}
+        min={min}
+        max={max}
       >
-        {charBlocks ?? characters}
+        {charBlocks ?? characters ?? ""}
       </Textfit>
     </div>;
   } else {

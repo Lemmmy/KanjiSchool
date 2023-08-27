@@ -59,8 +59,11 @@ export function OverleveledAssignments(): JSX.Element | null {
 
   return <Alert
     type="info"
+    className="mb-lg"
+    onClose={hide}
+    closable
     message={<>
-      <p>
+      <p className="mt-0">
         Since you last visited KanjiSchool, WaniKani have raised the {plural(total, "level")} of {message} in your
         queue. You will still be able to complete these assignments.
       </p>
@@ -81,13 +84,10 @@ export function OverleveledAssignments(): JSX.Element | null {
           Learn more
         </Button>
 
-        <Button
-          onClick={hide}
-        >
+        <Button onClick={hide}>
           Hide
         </Button>
       </Space>
     </>}
-    style={{ marginBottom: 24 }}
   />;
 }

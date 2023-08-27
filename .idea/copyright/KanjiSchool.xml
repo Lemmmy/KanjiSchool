@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="Copyright (c) &amp;#36;originalComment.match(&quot;Copyright \(c\) (\d+)&quot;, 1, &quot;-&quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year Drew Edwards&#10;This file is part of KanjiSchool under AGPL-3.0.&#10;Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE" />
+    <option name="myName" value="KanjiSchool" />
+  </copyright>
+</component>

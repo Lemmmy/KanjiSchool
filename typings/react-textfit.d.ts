@@ -8,9 +8,9 @@ declare module "react-textfit" {
     forceSingleModeWidth?: boolean;
     throttle?: number;
     onReady?: () => void;
+    children: React.ReactNode;
   }
 
   declare class Textfit extends React.Component<TextfitProps, any> {}
   export { Textfit };
-  export default Textfit;
 }

@@ -12,20 +12,32 @@ import { isPast, parseISO } from "date-fns";
 
 interface Props {
   assignment: StoredAssignment;
+  className?: string;
+  fontClassName?: string;
 }
 
-export function SrsStageShort({ assignment }: Props): JSX.Element {
+export function SrsStageShort({
+  assignment,
+  className,
+  fontClassName = "text-sm"
+}: Props): JSX.Element {
   const { srs_stage, available_at } = assignment.data;
   const availableNow = available_at ? isPast(parseISO(available_at)) : false;
 
-  const classes = classNames("txt", "srs", {
-    "now": availableNow
-  });
+  const classes = classNames(
+    "line-clamp-2 text-ellipsis leading-[1.35]",
+    className,
+    fontClassName,
+    {
+      "text-green": availableNow,
+      "text-desc": !availableNow
+    }
+  );
 
   return <span className={classes}>
     {stringifySrsStageShort(srs_stage)}
     {available_at && <>
-      <span className="sep">-</span>
+      <span className="inline-block mx-[0.3em]">-</span>
       {availableNow ? "Now" : <ShortDuration date={available_at} />}
     </>}
   </span>;

@@ -22,7 +22,7 @@ export function KanjiProgressCard(): JSX.Element {
 
   return <Card
     title="Kanji progress"
-    className="dashboard-epic-table-card"
+    className="[&>.ant-card-body]:p-0 [&>.ant-card-body]:overflow-hidden"
     extra={<KanjiProgressLegend />}
   >
     <KanjiProgressTable
@@ -32,6 +32,7 @@ export function KanjiProgressCard(): JSX.Element {
       data={data?.joyo}
       totals={data?.joyoTotals}
     />
+
     <KanjiProgressTable
       type="jlpt"
       title="JLPT progress"

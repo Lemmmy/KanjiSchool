@@ -108,7 +108,7 @@ export function NewUnlocksCard({ dateField }: Props): JSX.Element {
         >
           <SubjectGrid
             size="tiny"
-            className="color-by-type"
+            colorBy="type"
             subjectIds={data}
             hasVocabulary
             alignLeft

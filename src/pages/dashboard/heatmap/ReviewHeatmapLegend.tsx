@@ -12,19 +12,21 @@ const LEGEND_COLORS_FUTURE = [...COLORS_FUTURE]; LEGEND_COLORS_FUTURE.reverse();
 export function ReviewHeatmapLegend(): JSX.Element {
   const includeFuture = useBooleanSetting("reviewHeatmapIncludeFuture");
 
-  return <div className="heatmap-legend">
-    <div className="squares">
-      {LEGEND_COLORS.map(c =>
-        <span key={c} className="legend-square" style={{ background: c }} />)}
-    </div>
-    <span className="legend-label">Reviews</span>
+  return <div className="flex items-center">
+    <div>{LEGEND_COLORS.map(c => <LegendSquare key={c} color={c} />)}</div>
+    <span className="inline-block ml-xs mr-sm last:mr-0">Reviews</span>
 
     {includeFuture && <>
-      <div className="squares">
-        {LEGEND_COLORS_FUTURE.map(c =>
-          <span key={c} className="legend-square" style={{ background: c }} />)}
-      </div>
-      <span className="legend-label">Upcoming reviews</span>
+      <div>{LEGEND_COLORS_FUTURE.map(c => <LegendSquare key={c} color={c} />)}</div>
+      <span className="inline-block ml-xs mr-sm last:mr-0">Upcoming reviews</span>
     </>}
   </div>;
+}
+
+function LegendSquare({ color }: { color: string }): JSX.Element {
+  return <span
+    className="inline-block w-[10px] h-[10px] whitespace-nowrap
+      first:rounded-l-sm last:rounded-r-sm"
+    style={{ background: color }}
+  />;
 }

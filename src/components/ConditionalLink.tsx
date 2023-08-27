@@ -54,7 +54,7 @@ export const ConditionalLink: FC<Props> = ({
       </Link>
     )
     : (
-      <span className="conditional-link-disabled" {...props}>
+      <span className="cursor-pointer text-primary" {...props}>
         {children}
       </span>
     );

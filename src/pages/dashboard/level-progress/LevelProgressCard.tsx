@@ -38,7 +38,7 @@ export function LevelProgressCard({
   return <Card
     title="Level progress"
     extra={<LevelProgressLegend />}
-    className="dashboard-level-progress-card"
+    className="dashboard-level-progress-card [&_.ant-card-body]:overflow-y-auto"
     style={{
       // Apply forced height from Summary card except on mobile
       height: sm ? height : undefined
@@ -70,23 +70,25 @@ function LevelProgressCardInner({ scrollToBottom }: InnerProps): JSX.Element {
   // Scroll to the bottom if the data changes
   useEffect(() => scrollToBottom, [scrollToBottom, levelData, includePassed]);
 
-  return <>{levelData.map(({ level, radicals, kanji, vocabulary }) => {
-    // Don't show any level progress bars if the level is fully passed
-    if (isComplete(radicals, includePassed)
-      && isComplete(kanji, includePassed)
-      && isComplete(vocabulary, includePassed)) {
-      return null;
-    }
+  return <div className="flex flex-col gap-xs">
+    {levelData.map(({ level, radicals, kanji, vocabulary }) => {
+      // Don't show any level progress bars if the level is fully passed
+      if (isComplete(radicals, includePassed)
+        && isComplete(kanji, includePassed)
+        && isComplete(vocabulary, includePassed)) {
+        return null;
+      }
 
-    return <LevelProgressBars
-      key={level}
-      userLevel={userLevel}
-      level={level}
-      radicals={radicals}
-      kanji={kanji}
-      vocabulary={vocabulary}
-      includePassed={includePassed}
-      // endRef={userLevel === level ? endRef : undefined}
-    />;
-  })}</>;
+      return <LevelProgressBars
+        key={level}
+        userLevel={userLevel}
+        level={level}
+        radicals={radicals}
+        kanji={kanji}
+        vocabulary={vocabulary}
+        includePassed={includePassed}
+        // endRef={userLevel === level ? endRef : undefined}
+      />;
+    })}
+  </div>;
 }

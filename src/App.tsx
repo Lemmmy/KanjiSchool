@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { initStore } from "@store/init";
 
 import { AppLayout } from "@layout/AppLayout";
-import { AppServices } from "@global/AppServices";
+import { InnerAppServices } from "@global/InnerAppServices.tsx";
 import { UpdateCheck } from "@global/UpdateCheck";
 import { StudyQueueHotkeyHandlerProvider } from "@comp/study-queue/StudyQueueHotkeyHandler";
 import { PresetModalProvider } from "@comp/preset-editor/PresetModalContext";
@@ -23,9 +23,11 @@ import { SyncPage } from "@pages/login/SyncPage";
 import { criticalError } from "@utils";
 import { ErrorBoundary } from "@comp/ErrorBoundary";
 
-import { wkTheme } from "@style/wkTheme.ts";
+import { getTheme } from "@global/theme";
 
 import Debug from "debug";
+import { ThemeProvider } from "@global/theme/ThemeContext.tsx";
+import { AppServices } from "@global/AppServices.tsx";
 const debug = Debug("kanjischool:app");
 
 export let store: ReturnType<typeof initStore>;
@@ -35,22 +37,25 @@ export default function App(): JSX.Element {
   if (!store) store = initStore();
 
   return <>
-    <ConfigProvider theme={wkTheme}>
-      {/* Have the update checker run at the highest level possible, as it is
+    <ThemeProvider>
+      {(themeName) => <ConfigProvider theme={getTheme(themeName).antTheme}>
+        {/* Have the update checker run at the highest level possible, as it is
         * responsible for registering the service worker. */}
-      <UpdateCheck />
+        <UpdateCheck />
 
-      <Provider store={store}>
-        {/* Highest level error boundary underneath the Redux store, to prevent
+        <Provider store={store}>
+          {/* Highest level error boundary underneath the Redux store, to prevent
           * nuking the data if something goes SUPER wrong. If the Redux store gets
           * re-initialized due to the uppermost App component re-rendering, it
           * will trigger further errors and probably cause confusion while
           * debugging. */}
-        <ErrorBoundary name="app-top-level">
-          <AppInner />
-        </ErrorBoundary>
-      </Provider>
-    </ConfigProvider>
+          <ErrorBoundary name="app-top-level">
+            <AppServices />
+            <AppInner />
+          </ErrorBoundary>
+        </Provider>
+      </ConfigProvider>}
+    </ThemeProvider>
   </>;
 }
 
@@ -95,7 +100,7 @@ function AppInner(): JSX.Element {
     <StudyQueueHotkeyHandlerProvider>
       <ErrorBoundary name="app-layout-and-services">
         <AppLayout />
-        <AppServices />
+        <InnerAppServices />
       </ErrorBoundary>
     </StudyQueueHotkeyHandlerProvider>
   </PresetModalProvider>;

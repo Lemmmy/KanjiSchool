@@ -10,7 +10,6 @@ export function GridItemGeneric({
   ...rest
 }: SubjectGridItemProps): JSX.Element {
   return <SubjectGridItem
-    className="type-generic"
     subject={subject}
     {...rest}
   />;

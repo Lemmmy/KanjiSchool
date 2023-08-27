@@ -16,7 +16,6 @@ export function GridItemVocab({
   }
 
   return <SubjectGridItem
-    className="type-vocab"
     subject={subject}
     {...rest}
   />;

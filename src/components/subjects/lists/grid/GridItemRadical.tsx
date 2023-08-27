@@ -18,11 +18,10 @@ export function GridItemRadical({
 
   return <SubjectGridItem
     subject={subject}
-    className="type-radical"
     {...rest}
   >
     {/* Primary meaning */}
-    {!hideMeaning && <span className="txt meaning radical-meaning">
+    {!hideMeaning && <span className="text-xs leading-[1.3]">
       {meaning}
     </span>}
   </SubjectGridItem>;

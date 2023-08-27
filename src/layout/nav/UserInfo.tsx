@@ -12,12 +12,12 @@ export function UserInfo(): JSX.Element | null {
   const level = Math.min(user.data.level, sub.max_level_granted);
   const isFree = sub.type === "free" || sub.type === "unknown";
 
-  return <div className="site-header-user">
-    <span className="user-username">{user.data.username}</span>
-    <span className="user-lower">
-      <span className="user-level">Level {level}</span>
-      {isFree && <span className="user-free">Free</span>}
-    </span>
+  return <div className="flex flex-col items-end justify-center text-right px-lg leading-snug">
+    <div className="font-bold">{user.data.username}</div>
+    <div>
+      <span className="text-sm">Level {level}</span>
+      {isFree && <span className="inline-block ml-xs text-desc text-sm">Free</span>}
+    </div>
   </div>;
 }
 
@@ -29,9 +29,9 @@ export function MenuUserInfo(): JSX.Element | null {
   const level = Math.min(user.data.level, sub.max_level_granted);
   const isFree = sub.type === "free" || sub.type === "unknown";
 
-  return <div className="menu-user-info">
-    <span className="user-username">{user.data.username}</span>
-    <span className="user-level">Level {level}</span>
-    {isFree && <span className="user-free">Free</span>}
+  return <div className="flex mt-[-4px] px-md py-xs text-base bg-black/8">
+    <span className="flex-1 bold">{user.data.username}</span>
+    <span>Level {level}</span>
+    {isFree && <span>Free</span>}
   </div>;
 }

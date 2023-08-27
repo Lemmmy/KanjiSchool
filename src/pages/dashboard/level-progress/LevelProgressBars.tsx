@@ -4,6 +4,7 @@
 
 import React, { useCallback, useMemo } from "react";
 import { Tooltip } from "antd";
+import classNames from "classnames";
 
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
@@ -30,10 +31,10 @@ export function LevelProgressBars({
   const showKanjiLine = userLevel === level;
 
   return <>
-    <div className="level-progress-bars">
-      <div className="level">{level}</div>
+    <div className="flex items-center justify-center select-none">
+      <div className="flex-none pr-sm text-center relative top-[-2px]">{level}</div>
 
-      <div className="bars">
+      <div className="flex-1">
         {!isComplete(radicals, includePassed) && (
           <LevelProgressBar level={level} type="radicals" data={radicals} />
         )}
@@ -76,23 +77,35 @@ function LevelProgressBar({
 
   // Title for hovering over the bar type
   const mainTitle = useMemo(() => <>
-    <div className="level-head">Level {level} {type}</div>
-    <div className="txt">{percParen(total - locked)} started</div>
-    <div className="txt">{percParen(passed)} passed</div>
+    <div className="w-full pb-[2px] border-0 border-solid border-b border-b-white/15">
+      Level {level} {type}
+    </div>
+
+    <div className="text-desc text-sm">
+      {percParen(total - locked)} started
+    </div>
+
+    <div className="text-desc text-sm">
+      {percParen(passed)} passed
+    </div>
   </>, [level, type, percParen, total, locked, passed]);
 
   // Round the kanji line up to the nearest subject
   const kanjiLineN = Math.ceil(0.9 * total);
 
-  return <div className="level-progress-bar">
+  return <div className="flex justify-center w-[full] leading-[24px]">
     {/* R, K or V */}
-    <Tooltip title={mainTitle} overlayClassName="level-progress-bar-main-tooltip">
-      <span className="bar-type">
+    <Tooltip
+      title={mainTitle}
+      overlayClassName="[&_.ant-tooltip-inner]:text-center [&_.ant-tooltip-inner]:select-none"
+      mouseLeaveDelay={0}
+    >
+      <span className="inline-block w-[24px] text-left text-sm text-desc align-middle">
         {type.charAt(0).toUpperCase()}
       </span>
     </Tooltip>
 
-    <div className="bar-container">
+    <div className="w-full h-[24px] mb-xss flex-1 relative rounded-sm overflow-hidden">
       <BarPart {...barPartProps} stage={"passed"} n={passed} />
       <BarPart {...barPartProps} stage={"appr4"}  n={appr4} />
       <BarPart {...barPartProps} stage={"appr3"}  n={appr3} />
@@ -103,7 +116,10 @@ function LevelProgressBar({
 
       {/* Show a black line at 90% kanji to show where level-up would be */}
       {showKanjiLine && (
-        <div className="kanji-line" style={{ left: perc(kanjiLineN)}} />
+        <div
+          className="absolute top-0 bottom-0 w-[2px] bg-black"
+          style={{ left: perc(kanjiLineN)}}
+        />
       )}
     </div>
   </div>;
@@ -123,6 +139,16 @@ interface BarPartProps {
   n: number;
 }
 
+const stageClasses: Record<BarPartStage, string> = {
+  "locked": "bg-srs-locked hover:bg-srs-locked-lighter",
+  "lesson": "bg-srs-lesson hover:bg-srs-lesson-lighter",
+  "appr1":  "bg-srs-apprentice-1 hover:bg-srs-apprentice-1-lighter",
+  "appr2":  "bg-srs-apprentice-2 hover:bg-srs-apprentice-2-lighter",
+  "appr3":  "bg-srs-apprentice-3 hover:bg-srs-apprentice-3-lighter",
+  "appr4":  "bg-srs-apprentice-4 hover:bg-srs-apprentice-4-lighter",
+  "passed": "bg-srs-passed hover:bg-srs-passed-lighter",
+};
+
 const BarPart = React.memo(function BarPart({
   navigate,
   perc, percParen,
@@ -134,7 +160,7 @@ const BarPart = React.memo(function BarPart({
 
   return <Tooltip title={title}>
     <div
-      className={"bar bar-" + stage}
+      className={classNames("inline-block h-[24px] cursor-pointer transition-colors", stageClasses[stage])}
       style={{ width: perc(n) }}
       onClick={() => gotoSearch(navigate, {
         minLevel: level,

@@ -15,23 +15,47 @@ export type PageLayoutProps = HTMLProps<HTMLDivElement> & {
 
   extra?: ReactNode;
   noHeader?: boolean;
+  centered?: boolean;
+  verticallyCentered?: boolean;
+  hasToc?: boolean;
 
   className?: string;
-
+  headerClassName?: string;
+  contentsClassName?: string;
+  contentsHeightClassName?: string;
+  centeredClassName?: string;
+  verticallyCenteredClassName?: string;
   onBack?: () => void;
   backLink?: string;
 }
 
 export const PageLayout: FC<PageLayoutProps> = ({
-  siteTitle, title, subTitle,
-
-  extra, noHeader,
-
+  siteTitle,
+  title,
+  subTitle,
+  extra,
+  noHeader,
+  centered,
+  verticallyCentered,
+  hasToc,
   className,
-
-  onBack, backLink,
-
-  children, ...rest
+  headerClassName,
+  contentsClassName,
+  contentsHeightClassName = noHeader
+    ? `h-screen`
+    : `h-[calc(100%-56px)]`,
+  centeredClassName = centered
+    ? hasToc
+      ? "max-w-md pr-0 md:max-w-[972px] md:pr-[204px]" // 768px(md) + 180px(toc width) + 24px(m-lg)
+      : "max-w-md mx-auto"
+    : "",
+  verticallyCenteredClassName = verticallyCentered
+    ? "flex flex-col justify-center"
+    : "",
+  onBack,
+  backLink,
+  children,
+  ...rest
 }) => {
   const navigate = useNavigate();
 
@@ -39,12 +63,15 @@ export const PageLayout: FC<PageLayoutProps> = ({
     if (siteTitle) document.title = `${siteTitle} - KanjiSchool`;
   }, [siteTitle]);
 
-  const classes = classNames("page-layout", className);
+  const classes = classNames("h-full", className, centeredClassName);
 
   return <div className={classes} {...rest}>
     {/* Page header */}
     {!noHeader && title && <PageHeader
-      className="page-layout-header"
+      className={classNames(
+        "min-h-[56px] pb-0 box-border [&_.ant-page-header-heading-sub-title_.ant_typography]:text-inherit",
+        headerClassName
+      )}
 
       title={title}
       subTitle={subTitle}
@@ -58,7 +85,12 @@ export const PageLayout: FC<PageLayoutProps> = ({
     />}
 
     {/* Page contents */}
-    <div className="page-layout-contents">
+    <div className={classNames(
+      "p-sm md:p-lg relative box-border",
+      contentsHeightClassName,
+      contentsClassName,
+      verticallyCenteredClassName
+    )}>
       {children}
     </div>
   </div>;

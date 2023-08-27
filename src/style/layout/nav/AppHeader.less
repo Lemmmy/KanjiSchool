@@ -2,89 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-.site-header + .ant-layout {
-  z-index: 1;
-  margin-top: @layout-header-height;
-}
-
 .site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  display: flex;
-  flex-direction: row;
-
-  padding: 0;
-  z-index: 2;
-
-  .site-header-brand {
-    margin: 0 @padding-lg;
-
-    user-select: none;
-
-    .title {
-      font-size: @font-size-lg * 1.25;
-      &, a { color: @white !important; }
-    }
-
-    .version {
-      display: block;
-      height: auto;
-      line-height: 1;
-
-      position: relative;
-      left: 0;
-      bottom: 2em;
-
-      font-size: @font-size-sm * 0.85;
-      color: @text-color-secondary;
-
-      white-space: nowrap;
-      user-select: none;
-    }
-  }
-
-  .site-header-spacer {
-    flex: 1;
-  }
-
-  .site-header-user {
-    display: flex;
-    flex-direction: column;
-
-    align-items: flex-end;
-    justify-content: center;
-    text-align: right;
-
-    padding: 0 @padding-lg;
-
-    .user-username, .user-lower, .user-level, .user-free {
-      line-height: @line-height-base;
-    }
-
-    .user-username {
-      display: block;
-      font-weight: bold;
-    }
-
-    .user-lower {
-      display: block;
-
-      .user-level {
-        font-size: @font-size-sm;
-      }
-
-      .user-free {
-        display: inline-block;
-        margin-left: @padding-xs;
-        color: @text-color-secondary;
-        font-size: @font-size-sm;
-      }
-    }
-  }
-
   > .ant-menu {
     background: transparent;
     flex-shrink: 0;
@@ -100,12 +18,6 @@
         background: @item-hover-bg;
       }
     }
-  }
-
-  .site-header-element-end-spacer {
-    height: @layout-header-height;
-    margin-right: @margin-md;
-    border-right: 1px solid @border-color-split;
   }
 
   .site-header-element {
@@ -185,22 +97,6 @@
   position: fixed;
 
   top: @layout-header-height !important;
-
-  .menu-user-info {
-    // Negate the dropdown menu padding
-    margin-top: -4px;
-    padding: 8px 16px;
-    font-size: @font-size-base;
-
-    background: darken(@menu-dark-bg, 5%);
-
-    display: flex;
-
-    .user-username {
-      font-weight: bold;
-      flex: 1;
-    }
-  }
 
   .ant-dropdown-menu-item {
     padding: 8px 16px;

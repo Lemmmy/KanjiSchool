@@ -166,7 +166,7 @@ function renderSubjectList(
     .slice(0, limit);
 
   return <SubjectGrid
-    className={"color-by-" + colorBy}
+    colorBy={colorBy}
     size={size}
     subjectIds={subjectIds}
     renderTooltip={renderTooltip}

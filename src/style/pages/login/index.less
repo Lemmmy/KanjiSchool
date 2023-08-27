@@ -3,40 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 .login-page-layout {
-  .page-layout-contents {
-    height: 100vh;
-    overflow-y: auto;
-  }
-
-  .demo-carousel {
-    margin-left: @margin-md;
-
-    .ant-image-img {
-      border-radius: @border-radius-base;
-    }
-
-    @media (max-width: @screen-md) {
-      margin-left: 0;
-    }
-  }
-
-  .demo-carousel-row-mobile {
-    margin-top: @margin-lg;
-    justify-content: center;
-  }
-
-  .perms {
-    margin-top: 0;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: @padding-xs;
-  }
-
-  .login-account-hint {
-    color: @text-color-secondary;
-  }
-
   .login-form {
     @media (max-width: @screen-md) {
       .login-api-key {

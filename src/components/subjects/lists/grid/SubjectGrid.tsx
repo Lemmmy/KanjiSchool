@@ -55,6 +55,12 @@ const COMPONENT_TYPES: Record<SubjectType, GridItemComponentType> = {
   "kana_vocabulary": GridItemVocab,
 };
 
+const rowPaddingClasses: Record<Size, string> = {
+  "tiny": "pt-0",
+  "small": "pt-sm",
+  "normal": "pt-sm"
+};
+
 // Props required to be implemented by a grid item component.
 interface RequiredComponentTypeProps {
   subject: StoredSubject;
@@ -132,6 +138,10 @@ export function SubjectGrid({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjects, assignments, subjectAssignmentIds, sortByStr, subjectIdsStr]);
 
+  // If there are more than 20 items, render the virtual list. Otherwise, render
+  // the regular list.
+  const isVirtual = forceVirtual || items.length > 20;
+
   const renderItem = useCallback((i: number, width?: number): JSX.Element => {
     const [subject, assignment] = items[i];
     const component = itemComponent ?? COMPONENT_TYPES[subject.object];
@@ -142,25 +152,23 @@ export function SubjectGrid({
       size,
       hideSrs,
       width,
+      isVirtual,
       renderTooltip: renderTooltipFn,
       ...rest
     });
-  }, [items, itemComponent, rest, size, hideSrs, renderTooltipFn]);
+  }, [items, itemComponent, rest, size, hideSrs, isVirtual, renderTooltipFn]);
 
   if (!subjects) return null;
 
-  // If there are more than 20 items, render the virtual list. Otherwise, render
-  // the regular list.
-  const isVirtual = forceVirtual || items.length > 20;
-
   const classes = classNames(
-    "subject-grid",
-    "size-" + size,
+    "items-start",
     className,
     {
-      "align-left": alignLeft,
-      "is-virtual": isVirtual
-    });
+      "justify-start": alignLeft,
+      "justify-center": !alignLeft,
+      "leading-none": size === "tiny"
+    }
+  );
 
   if (isVirtual) {
     // If there are vocabulary, use the dynamic virtual list. Otherwise, use the
@@ -247,7 +255,7 @@ function SubjectGridVirtual({
   return <div ref={ref} className="subject-grid-resize-observer">
     <EpicVirtualList
       className={classes}
-      rowClassName="virtual-list-row"
+      rowClassName={rowPaddingClasses[size]}
       itemCount={rowCount}
       itemHeight={rowHeight}
       overscanCount={overscanCount}

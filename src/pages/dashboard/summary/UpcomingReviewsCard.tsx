@@ -11,7 +11,18 @@ import { RootState } from "@store";
 import { Bucket, ReviewForecast } from "@api";
 
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, ChartData, LinearScale, TimeScale, BarElement, PointElement, LineElement } from "chart.js";
+import {
+  Chart as ChartJS,
+  ChartData,
+  LinearScale,
+  TimeScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Tick,
+  Legend,
+  Tooltip
+} from "chart.js";
 import "chartjs-adapter-date-fns";
 
 import { ColorPalette } from "@global/theme";
@@ -19,7 +30,7 @@ import { ColorPalette } from "@global/theme";
 import dayjs from "dayjs";
 import { useIntegerSetting, usePalette } from "@utils";
 
-ChartJS.register(LinearScale, TimeScale, BarElement, PointElement, LineElement);
+ChartJS.register(LinearScale, TimeScale, BarElement, PointElement, LineElement, Legend, Tooltip);
 
 const CHART_HEIGHT = 196;
 
@@ -39,6 +50,7 @@ const CHART_CUM_DATASET_OPTIONS = {
   borderColor: "#095cb5"
 } as const;
 
+// noinspection JSUnusedGlobalSymbols
 const CHART_X_AXIS_OPTIONS = {
   type: "time",
   stacked: true,
@@ -47,7 +59,7 @@ const CHART_X_AXIS_OPTIONS = {
     padding: 0,
     minRotation: 0,
     maxRotation: 0,
-    callback(_: any, i: number, values: { value: Date }[]) {
+    callback(_: number | string, i: number, values: Tick[]) {
       const d = dayjs(values[i].value);
       return d.isToday() ? d.format("HH:mm") : d.format("ddd HH:mm");
     }
@@ -74,6 +86,11 @@ const CHART_OPTIONS = {
 
   animation: false,
 
+  interaction: {
+    intersect: false,
+    mode: "index"
+  },
+
   plugins: {
     legend: {
       position: "bottom",
@@ -83,7 +100,7 @@ const CHART_OPTIONS = {
       }
     }
   }
-};
+} as const;
 
 interface ChartPoint { x: string; y: number }
 
@@ -104,7 +121,7 @@ function generateChart(
   forecast: ReviewForecast | undefined,
   maxDate: string,
   theme: ColorPalette
-): ChartData | undefined {
+): ChartData<"bar"> | undefined {
   if (!forecast) return;
   const { apprentice, guru, master, enlightened } = forecast;
 
@@ -159,7 +176,7 @@ function generateChart(
   };
 }
 
-export function SummaryChartCard(): JSX.Element {
+export function UpcomingReviewsCard(): JSX.Element {
   const maxDays = useIntegerSetting("dashboardReviewChartDays");
   const theme = usePalette();
 
@@ -173,13 +190,12 @@ export function SummaryChartCard(): JSX.Element {
     [forecast, nowMaxStr, theme]);
 
   return <Card
-    className="summary-chart-card"
+    className="[&>.ant-card-body]:pt-md [&>.ant-card-body]:px-lg [&>.ant-card-body]:pb-xs"
     title="Upcoming reviews"
     loading={!data}
-    extra={<SummaryChartExtra />}
+    extra={<UpcomingReviewsExtra />}
   >
     {data && <Bar
-      type="bar"
       height={CHART_HEIGHT}
 
       data={data}
@@ -200,13 +216,13 @@ export function SummaryChartCard(): JSX.Element {
   </Card>;
 }
 
-function SummaryChartExtra(): JSX.Element | null {
+function UpcomingReviewsExtra(): JSX.Element | null {
   const nextReviewsWeek = useSelector((s: RootState) =>
     s.sync.nextReviewsAvailable.nextReviewsWeek);
 
   if (!nextReviewsWeek) return null;
 
-  return <span className="upcoming-reviews">
+  return <span className="text-desc">
     <b>{nextReviewsWeek}</b> upcoming in 7 days
   </span>;
 }

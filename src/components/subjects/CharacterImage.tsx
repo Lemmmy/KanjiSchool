@@ -15,19 +15,26 @@ interface Props {
   subjectId: number;
   size?: number;
   className?: string;
+  sizeClassName?: string;
 }
 
 export const CharacterImage = React.memo(({
   subjectId,
   size,
-  className
+  className,
+  sizeClassName = "w-[32px] h-[32px] text-[32px]"
 }: Props) => {
   const image = useSelector((s: RootState) => s.sync.images?.[subjectId]?.svg);
 
   const memoImg: JSX.Element | undefined = useMemo(() => {
     if (!image) return;
 
-    const classes = classNames("subject-characters", "character-image", className);
+    const classes = classNames(
+      "leading-none fill-none [stroke:currentColor] [stroke-linecap:square] [stroke-miterlimit:2] [stroke-width:68px]",
+      className,
+      sizeClassName
+    );
+
     return <InlineSVG
       className={classes}
       src={image.replace(/<title>\w+?<\/title>/, "")} // lol

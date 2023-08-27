@@ -7,11 +7,17 @@ import { Space } from "antd";
 import { ExtLink } from "@comp/ExtLink";
 
 export function LoginFooter(): JSX.Element {
-  return <Space align="center" wrap className="login-page-footer">
-    <ExtLink href="https://github.com/Lemmmy/KanjiSchool">GitHub</ExtLink>
-    <span className="sep">&middot;</span>
+  return <Space
+    align="center"
+    wrap
+    className="min-w-[320px] w-full max-w-sm my-lg justify-center text-desc-c/75"
+  >
+    <ExtLink href="https://github.com/Lemmmy/KanjiSchool" className="text-desc">
+      GitHub
+    </ExtLink>
+    <span className="text-desc-c/35">&middot;</span>
     <span>
-      Created by <ExtLink href="https://lemmmy.me">Lemmmy</ExtLink>
+      Created by <ExtLink href="https://lemmmy.me" className="text-desc">Lemmmy</ExtLink>
     </span>
   </Space>;
 }

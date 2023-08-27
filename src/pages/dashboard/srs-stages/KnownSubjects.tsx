@@ -10,6 +10,7 @@ import { gotoSearch, NormalizedSubjectType } from "@api";
 
 import { startCase } from "lodash-es";
 import { nts } from "@utils";
+import { baseStageClasses } from "@pages/dashboard/srs-stages/SrsStagesCard.tsx";
 
 interface KnownSubjectsProps {
   type: NormalizedSubjectType;
@@ -17,6 +18,12 @@ interface KnownSubjectsProps {
 }
 
 const KNOWN_STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+const typeClasses: Record<NormalizedSubjectType, string> = {
+  radical:    "bg-radical hover:bg-radical-lighter",
+  kanji:      "bg-kanji hover:bg-kanji-lighter",
+  vocabulary: "bg-vocabulary hover:bg-vocabulary-lighter",
+};
 
 export function KnownSubjects({ type, count }: KnownSubjectsProps): JSX.Element {
   const navigate = useNavigate();
@@ -30,10 +37,10 @@ export function KnownSubjects({ type, count }: KnownSubjectsProps): JSX.Element 
     }, true, true);
   }
 
-  const classes = classNames("srs-stage", "known-subjects", "subject-" + type);
+  const classes = classNames(baseStageClasses, "mt-md", typeClasses[type]);
 
   return <div className={classes} onClick={onClick}>
-    <span className="stage-name">{name}</span>
-    <span className="stage-count">{nts(count)}</span>
+    <div>{name}</div>
+    <div className="text-4xl">{nts(count)}</div>
   </div>;
 }

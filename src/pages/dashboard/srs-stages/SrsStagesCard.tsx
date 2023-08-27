@@ -98,6 +98,8 @@ function countLocked(
   return locked;
 }
 
+export const baseStageClasses = "inline-block p-sm rounded transition-colors text-center leading-tight cursor-pointer";
+
 export function SrsStagesCard(): JSX.Element | null {
   const userLevel = useUserLevel();
   const assignments = useAssignments();
@@ -110,7 +112,7 @@ export function SrsStagesCard(): JSX.Element | null {
   if (!assignments || !subjects || !data) return null;
   const [stageData, knownSubjects] = data;
 
-  return <div className="dashboard-srs-stages-card">
+  return <div className="grid grid-cols-3 gap-xss">
     <SrsStage stageData={stageData} min={1} max={4} /> {/* Apprentice */}
     <SrsStage stageData={stageData} min={5} max={6} /> {/* Guru */}
     <SrsStage stageData={stageData} min={7} /> {/* Master */}

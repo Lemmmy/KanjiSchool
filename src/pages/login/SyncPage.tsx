@@ -26,10 +26,10 @@ export function SyncPage(): JSX.Element {
     {/* Important: SyncSubjects handler */}
     <SyncSubjects />
 
-    <PageLayout siteTitle="Downloading data" noHeader>
-      <Row justify="center" align="middle" style={{ height: "100%" }}>
+    <PageLayout siteTitle="Downloading data" noHeader verticallyCentered>
+      <Row justify="center" align="middle" className="h-full">
         <Col>
-          <Card title="Downloading data" style={{ minWidth: 512 }}>
+          <Card title="Downloading data" className="min-w-[512px]">
             {/* Offline warning */}
             {!isOnline && <Alert
               type="error"
@@ -37,7 +37,7 @@ export function SyncPage(): JSX.Element {
               description="Restore network connectivity to continue setting up KanjiSchool."
               showIcon
               icon={<CloudDisconnectedOutlined />}
-              style={{ margin: "0 auto 16px auto" }}
+              className="mx-auto mb-4"
             />}
 
             {/* Progress bar */}

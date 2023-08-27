@@ -53,19 +53,21 @@ export function TipsCard(): JSX.Element {
 
   return <Card
     title="Tip of the day"
-    className="dashboard-tips-card"
+    className="h-full flex-1 mt-md [&>.ant-card-head]:pr-sm"
 
     // Prev/Next tip buttons
     extra={<>
-      <Button type="link" onClick={previousTip}>
+      <Button type="link" onClick={previousTip} className="border-0 my-px mx-0 h-[54px]">
         <CaretLeftOutlined />Prev
       </Button>
 
-      <Button type="link" onClick={nextTip}>
+      <Button type="link" onClick={nextTip} className="border-0 my-px mx-0 h-[54px]">
         Next<CaretRightOutlined />
       </Button>
     </>}
   >
-    <p>{TIPS[currentTip] ?? "Error"}</p>
+    <p className="mt-0">
+      {TIPS[currentTip] ?? "Error"}
+    </p>
   </Card>;
 }

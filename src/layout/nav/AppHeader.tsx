@@ -24,11 +24,15 @@ export function AppHeader(): JSX.Element | null {
 
   if (!api.useIsLoggedIn()) return null;
 
-  return <Layout.Header className="site-header">
+  return <Layout.Header className="bg-[#1f1f1f] fixed inset-x-0 top-0 flex p-0 z-20">
     <ConditionalLink to="/" matchTo matchExact>
-      <div className="site-header-brand">
-        <span className="title">KanjiSchool</span>
-        <span className="version">{gitVersion}</span>
+      <div className="mx-lg select-none whitespace-nowrap">
+        <span className="text-[22.5px] text-white">
+          KanjiSchool
+        </span>
+        <span className="text-[11px] block h-auto leading-none relative left-0 bottom-[2em] text-desc">
+          {gitVersion}
+        </span>
       </div>
     </ConditionalLink>
 
@@ -38,13 +42,13 @@ export function AppHeader(): JSX.Element | null {
     <SyncProgressBars />
 
     {/* Spacer */}
-    {md && <div className="site-header-spacer" />}
+    {md && <div className="flex-1" />}
 
     {/* Non-mobile stuff */}
     {sm && <>
       {/* Items dropdown */}
       <ItemsDropdown />
-      <div className="site-header-element-end-spacer" />
+      <div className="h-[64px] mr-md border-0 border-solid border-r border-r-split" />
 
       {/* Search box */}
       <Search />
@@ -53,7 +57,7 @@ export function AppHeader(): JSX.Element | null {
     </>}
 
     {/* Settings button and dropdown menu */}
-    {!sm && <div className="site-header-spacer" />}
+    {!sm && <div className="flex-1" />}
     <TopMenu />
   </Layout.Header>;
 }

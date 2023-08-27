@@ -5,6 +5,7 @@
 import { useState } from "react";
 import { Button, Card } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import classNames from "classnames";
 
 import { Heatmap } from "./Heatmap";
 import { HeatmapDay } from "./data";
@@ -17,18 +18,18 @@ export function ReviewHeatmapCard(): JSX.Element {
 
   return <Card
     title="Review heatmap"
-    className="dashboard-review-heatmap-card"
+    className="h-auto flex-none [&>.ant-card-body]:p-0 [&>.ant-card-head]:pr-sm"
 
     // Show all button in top right of card
     extra={!showAll && <Button
-      className="show-all"
+      className="border-0 my-px mx-0 h-[54px]"
       type="link"
       onClick={() => setShowAll(true)}
     >
       Show all
     </Button>}
   >
-    <div className="heatmap-card-inner">
+    <div className="flex justify-stretch max-h-[200px] overflow-auto p-md">
       <Heatmap currentYearOnly={!showAll} setHoverDay={setHoverDay} />
     </div>
 
@@ -44,11 +45,13 @@ function CardFooter({ hoverDay }: FooterProps): JSX.Element | null {
   const { sm } = useBreakpoint();
   if (!sm) return null; // Hide footer entirely on mobile
 
-  return <div className="heatmap-card-footer">
+  return <div
+    className="flex gap-sm py-sm px-md bg-white/4 border-solid border-0 border-t border-t-split text-desc text-sm"
+  >
     {hoverDay
       ? <ReviewHeatmapTooltip day={hoverDay} />
-      : <span className="hover-hint">Hover over a day for more info</span>}
-    <div className="spacer" />
+      : <span className="opacity-75">Hover over a day for more info</span>}
+    <div className="flex-1" />
     <ReviewHeatmapLegend />
   </div>;
 }

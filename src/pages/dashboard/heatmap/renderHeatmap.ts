@@ -60,21 +60,21 @@ export function renderHeatmap(
   const year = group.selectAll("g")
     .data(data)
     .join("g")
-    .classed("year", true)
-    .attr("transform", (d, i) => `translate(48, ${YEAR_FULL_HEIGHT * i + CELL_SIZE * 1.5})`);
+    .attr("transform", (_, i) => `translate(48, ${YEAR_FULL_HEIGHT * i + CELL_SIZE * 1.5})`);
 
   // Year label
   year.append("text")
-    .classed("year-label", true)
-    .attr("transform", `translate(-36, ${YEAR_HEIGHT / 2}) rotate(-90)`)
+    .classed("fill-desc [text-anchor:middle] text-sm font-bold [writing-mode:vertical-lr] font-ja", true)
+    .attr("transform", `translate(-32, ${(YEAR_HEIGHT - 6) / 2}) rotate(180)`)
     .text(d => d.year);
 
   // Month label
   year.append("g")
-    .classed("month-label", true)
+    .classed("fill-desc", true)
     .selectAll("text")
     .data(y => d3.range(12).map(i => new Date(y.year, i, 1)))
     .join("text")
+    .attr("class", "[text-anchor:start] text-[9px] font-ja")
     // TODO: Round weeks up like github?
     .attr("x", d => d3.timeWeek.count(d3.timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
     .attr("y", 0)
@@ -83,10 +83,11 @@ export function renderHeatmap(
 
   // Day label
   year.append("g")
-    .classed("day-label", true)
+    .classed("fill-desc", true)
     .selectAll("text")
     .data(y => d3.range(7).map(i => new Date(y.year, 0, i)))
     .join("text")
+    .attr("class", "[text-anchor:end] text-[10px] font-ja")
     .attr("x", -4)
     .attr("y", d => d.getDay() * (CELL_SIZE + CELL_SPACING))
     .attr("dy", "0.85em")
@@ -103,6 +104,7 @@ export function renderHeatmap(
       return { d, year, day };
     }))
     .join("rect")
+    .attr("class", "cursor-pointer hover:[filter:brightness(1.5)]")
     .attr("width", CELL_SIZE).attr("height", CELL_SIZE)
     .attr("rx", CELL_ROUNDING).attr("ry", CELL_ROUNDING)
     .attr("x", ({ d }) =>
@@ -114,14 +116,14 @@ export function renderHeatmap(
       const scale = day.isFuture ? year.colorScaleFuture : year.colorScale;
       return scale(day.total);
     })
-    .classed("today", ({ d }) => isToday(d))
+    .classed("stroke-green stroke-2", ({ d }) => isToday(d))
     .on("mouseover", onDayMouseOver)
     .on("mouseout", onDayMouseOut);
 
   // Month paths
   if (monthSep) {
     year.append("g")
-      .classed("month-path", true)
+      .classed("stroke-[#565656] fill-none [translate:-1px_-1px]", true)
       .selectAll("path")
       // Don't draw one for December
       .data(y => d3.range(11).map(i => new Date(y.year, i, 1)))

@@ -3,8 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { CSSProperties } from "react";
-import { kebabCase } from "lodash";
-import { TinyColor, mostReadable } from "@ctrl/tinycolor";
+import { TinyColor } from "@ctrl/tinycolor";
+import { convertKeyName } from "@global/theme/themeUtil.ts";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:colors");
@@ -34,8 +34,7 @@ export interface ColorPalette {
   srsEnlightened: string;
   srsBurned     : string;
   srsLocked     : string;
-
-  srsStageCardsText: string;
+  srsNotOnWk    : string;
 }
 
 export const PALETTE_KANJI_SCHOOL: ColorPalette = {
@@ -63,8 +62,7 @@ export const PALETTE_KANJI_SCHOOL: ColorPalette = {
   srsEnlightened: "#E89A3C", // @orange-7
   srsBurned     : "#E84749", // @red-7
   srsLocked     : "#373737", // fade(@white, 15%) (converted to hex)
-
-  srsStageCardsText: "var(--wktc-text-color-dark)"
+  srsNotOnWk    : "#531dab", // @purple-7
 };
 
 /**
@@ -122,8 +120,7 @@ export const PALETTE_FD_LIGHT: ColorPalette = {
   srsEnlightened: "#0094EB", // stageBucketColors[5]
   srsBurned     : "#444444", // stageBucketColors[6]
   srsLocked     : "#373737", // fade(@white, 15%) (converted to hex)
-
-  srsStageCardsText: "var(--wktc-text-color-light)"
+  srsNotOnWk    : "#531dab", // @purple-7
 };
 
 export const PALETTE_FD_DARK: ColorPalette = {
@@ -152,8 +149,7 @@ export const PALETTE_FD_DARK: ColorPalette = {
   srsEnlightened: "#F67400", // stageBucketColors[5]
   srsBurned     : "#D53B49", // stageBucketColors[6]
   srsLocked     : "#373737", // fade(@white, 15%) (converted to hex)
-
-  srsStageCardsText: "var(--wktc-text-color-dark)"
+  srsNotOnWk    : "#531dab", // @purple-7
 };
 
 export const SRS_STAGE_TO_PALETTE: Record<number, keyof ColorPalette> = {
@@ -176,16 +172,6 @@ export const PALETTES: Record<PaletteName, ColorPalette> = {
   fdLight: PALETTE_FD_LIGHT,
   fdDark: PALETTE_FD_DARK
 };
-
-const TEXT_COLORS = ["rgba(255, 255, 255, 0.85)", "rgba(0, 0, 0, 0.85)"];
-
-function convertKeyName(keyName: string): string {
-  return kebabCase(keyName.replace(/(\d+)/, "-$1"));
-}
-
-export function getReadableTextColor(palette: ColorPalette, key: keyof ColorPalette): string {
-  return mostReadable(palette[key], TEXT_COLORS, { includeFallbackColors: true })!.toHexString();
-}
 
 export function buildPaletteStyles(palette: ColorPalette): CSSProperties {
   const props: Record<string, string> = {};

@@ -53,7 +53,7 @@ export function TopMenu(): JSX.Element {
   const menuProps: MenuProps = useMemo(() => {
     const items: MenuProps["items"] = [
       // Mobile-only: User info
-      sm ? { key: "menu-user-info", label: <MenuUserInfo /> } : null,
+      !sm ? { key: "menu-user-info", label: <MenuUserInfo /> } : null,
 
       // Page-specified options
       ...(options ?? []),

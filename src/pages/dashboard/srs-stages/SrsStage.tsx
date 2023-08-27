@@ -7,15 +7,23 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
 import { gotoSearch } from "@api";
-import { getSrsStageBaseName, nts } from "@utils";
+import { getSrsStageBaseName, nts, SrsStageBaseName } from "@utils";
 
-import { StageData } from "./SrsStagesCard";
+import { baseStageClasses, StageData } from "./SrsStagesCard";
 
 interface SrsStageProps {
   stageData?: StageData;
   min: number;
   max?: number;
 }
+
+const stageClasses: Partial<Record<SrsStageBaseName, string>> = {
+  "Apprentice":  "bg-srs-apprentice hover:bg-srs-apprentice-lighter",
+  "Guru":        "bg-srs-guru hover:bg-srs-guru-lighter",
+  "Master":      "bg-srs-master hover:bg-srs-master-lighter",
+  "Enlightened": "bg-srs-enlightened hover:bg-srs-enlightened-lighter",
+  "Burned":      "bg-srs-burned hover:bg-srs-burned-lighter"
+};
 
 export function SrsStage({ stageData, min, max }: SrsStageProps): JSX.Element {
   const navigate = useNavigate();
@@ -33,16 +41,16 @@ export function SrsStage({ stageData, min, max }: SrsStageProps): JSX.Element {
   }
 
   function onClick() {
-    gotoSearch(history, {
+    gotoSearch(navigate, {
       srsStages: stages,
       sortOrder: "SRS_THEN_TYPE"
     }, true, true);
   }
 
-  const classes = classNames("srs-stage", "stage-" + stageName.toLowerCase());
+  const classes = classNames(baseStageClasses, stageClasses[stageName]);
 
   return <div className={classes} onClick={onClick}>
-    <span className="stage-name">{stageName}</span>
-    <span className="stage-count">{nts(count)}</span>
+    <div>{stageName}</div>
+    <div className="text-4xl">{nts(count)}</div>
   </div>;
 }

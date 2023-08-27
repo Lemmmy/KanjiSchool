@@ -109,7 +109,7 @@ export function useAnswersPanel(
         </Divider>
 
         <SubjectGrid
-          className="color-by-type"
+          colorBy="type"
           size="tiny"
           subjectIds={ids}
           hasVocabulary={hasVocabulary}

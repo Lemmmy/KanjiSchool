@@ -3,26 +3,35 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Tooltip } from "antd";
+import classNames from "classnames";
 
 export function LevelProgressLegend(): JSX.Element {
-  return <div className="level-progress-legend">
-    <div className="legend-square legend-passed"></div>
-    <span className="legend-label">Passed</span>
+  return <div className="none md:flex items-center text-sm text-desc">
+    <LegendSquare className="bg-srs-passed rounded-sm" />
+    <LegendLabel>Passed</LegendLabel>
 
-    <div className="legend-square legend-appr4"></div>
-    <div className="legend-square legend-appr3"></div>
-    <div className="legend-square legend-appr2"></div>
-    <div className="legend-square legend-appr1"></div>
+    <LegendSquare className="bg-srs-apprentice-4 rounded-l-sm" />
+    <LegendSquare className="bg-srs-apprentice-3" />
+    <LegendSquare className="bg-srs-apprentice-2" />
+    <LegendSquare className="bg-srs-apprentice-1 rounded-r-sm" />
     <Tooltip title="Apprentice">
-      <span className="legend-label">Appr.</span>
+      <LegendLabel>Appr.</LegendLabel>
     </Tooltip>
 
-    <div className="legend-square legend-lesson"></div>
+    <LegendSquare className="bg-srs-lesson rounded-sm" />
     <Tooltip title="Lesson">
-      <span className="legend-label">Less.</span>
+      <LegendLabel>Less.</LegendLabel>
     </Tooltip>
 
-    <div className="legend-square legend-locked"></div>
-    <span className="legend-label">Locked</span>
+    <LegendSquare className="bg-srs-locked rounded-sm" />
+    <LegendLabel>Locked</LegendLabel>
   </div>;
+}
+
+function LegendSquare({ className }: { className: string }): JSX.Element {
+  return <span className={classNames("inline-block w-[16px] h-[16px] whitespace-nowrap", className)} />;
+}
+
+function LegendLabel({ children }: { children: React.ReactNode }): JSX.Element {
+  return <span className="inline-block ml-xs mr-sm last:mr-0">{children}</span>;
 }

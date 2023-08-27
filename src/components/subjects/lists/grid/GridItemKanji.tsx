@@ -23,17 +23,16 @@ export function GridItemKanji({
   const reading = hasReadings(subject) ? getOneReading(subject, onyomiInKatakana) : null;
 
   return <SubjectGridItem
-    className="type-kanji"
     subject={subject}
     {...rest}
   >
     {/* Primary meaning */}
-    {!hideMeaning && <span className="txt meaning kanji-meaning">
+    {!hideMeaning && <span className="text-xs leading-[1.3]">
       {meaning}
     </span>}
 
     {/* Primary reading */}
-    {!hideReading && reading && <span className="txt reading kanji-reading ja">
+    {!hideReading && reading && <span className="text-xs leading-[1.3] font-ja text-base">
       {reading}
     </span>}
   </SubjectGridItem>;
