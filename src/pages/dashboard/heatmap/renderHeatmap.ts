@@ -104,7 +104,7 @@ export function renderHeatmap(
       return { d, year, day };
     }))
     .join("rect")
-    .attr("class", "cursor-pointer hover:[filter:brightness(1.5)]")
+    .attr("class", "cursor-pointer hover:brightness-150")
     .attr("width", CELL_SIZE).attr("height", CELL_SIZE)
     .attr("rx", CELL_ROUNDING).attr("ry", CELL_ROUNDING)
     .attr("x", ({ d }) =>

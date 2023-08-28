@@ -5,7 +5,6 @@
 import { useState } from "react";
 import { Button, Card } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import classNames from "classnames";
 
 import { Heatmap } from "./Heatmap";
 import { HeatmapDay } from "./data";
@@ -18,7 +17,7 @@ export function ReviewHeatmapCard(): JSX.Element {
 
   return <Card
     title="Review heatmap"
-    className="h-auto flex-none [&>.ant-card-body]:p-0 [&>.ant-card-head]:pr-sm"
+    className="h-auto [&>.ant-card-body]:p-0 [&>.ant-card-head]:pr-sm"
 
     // Show all button in top right of card
     extra={!showAll && <Button

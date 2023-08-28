@@ -37,11 +37,14 @@ export function ResumeSessionRow(): JSX.Element | null {
   // Don't show row if no ongoing session
   if (!ongoing || !sessionState) return null;
 
-  return <div className="resume-session-row">
+  return <div>
     {/* Session progress bar */}
-    <SessionProgress responsive={false} />
+    <SessionProgress
+      className="!mb-0 !bg-black/8 border-0 border-solid border-y border-y-split !rounded-none"
+      heightClassName="h-[16px]"
+    />
 
-    <div className="resume-session-inner">
+    <div className="flex items-center justify-center gap-sm flex-wrap p-sm bg-white/4">
       {/* Abandon session */}
       <Tooltip title={<>Abandon {SESSION_TYPE_NAMES[sessionState.type]} <b>(A)</b></>}>
         <Button danger size="large" icon={<DeleteOutlined />}

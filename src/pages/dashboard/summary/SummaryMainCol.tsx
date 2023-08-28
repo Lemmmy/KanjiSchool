@@ -50,12 +50,21 @@ export function SummaryMainCol({ type, available }: Props): JSX.Element {
 
   const pendingCount = useSelector((s: RootState) => s.sync[pendingKey]?.length);
 
-  return <Col span={24} sm={12} className="summary-main-col">
-    <div className="top-row">
+  return <Col
+    span={24}
+    sm={12}
+    className="p-lg border-0 border-solid border-b border-b-split last:border-b-0
+      sm:border-b-0 sm:border-r sm:border-r-split last:border-r-0"
+  >
+    <div className="flex">
       {/* Lesson/review count */}
-      <Statistic title={title} value={pendingCount} />
+      <Statistic
+        title={title}
+        value={pendingCount}
+        className="leading-none [&>.ant-statistic-title]:text-lg [&>.ant-statistic-content]:text-4xl"
+      />
 
-      <div className="spacer" />
+      <div className="flex-1" />
 
       {/* Start session button */}
       {pendingCount > 0 && <StartSessionButton type={type} />}
@@ -66,7 +75,7 @@ export function SummaryMainCol({ type, available }: Props): JSX.Element {
     </div>
 
     {/* Available assignments section */}
-    <div className="bottom-row">
+    <div>
       <AvailableAssignmentsTable type={type} data={available} />
     </div>
   </Col>;

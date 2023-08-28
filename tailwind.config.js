@@ -24,6 +24,10 @@ export default {
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  corePlugins: {
+    // Disable tailwind's CSS reset
+    preflight: false,
+  },
   theme: {
     darkMode: "class",
 
@@ -39,11 +43,13 @@ export default {
     extend: {
       spacing: {
         // antd compatible spacing
-        lg : "24px",
-        md : "16px",
-        sm : "12px",
-        xs : "8px",
-        xss: "4px",
+        lg    : "24px",
+        md    : "16px",
+        sm    : "12px",
+        xs    : "8px",
+        xss   : "4px",
+        header: "64px",
+        text  : "0.3em"
       },
 
       fontFamily: {
@@ -55,12 +61,19 @@ export default {
         xs: "12px",
         sm: "13px",
         base: "16px",
-        lg: "16px",
+        lg: "18px",
         xl: "20px",
       },
 
       borderRadius: {
+        xss: "2px",
+        xs: "3px",
+        sm: "4px",
         DEFAULT: "6px", // antd default
+      },
+
+      aspectRatio: {
+        "2/1": "2 / 1",
       },
 
       opacity: {
@@ -69,7 +82,13 @@ export default {
         "15": ".15",
         "35": ".35",
         "65": ".65"
-      }
+      },
+
+      cursor: {
+        pen: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA5SURBVChTYyAE/gMBlIkfwBQS1ICuAKcGmAQ6jQHQJYa0QhAASYIAjA0WxAEYkRUwAgGUiQUwMAAAr3dXrhd5j3gAAAAASUVORK5CYII=") 0 10, auto`
+      },
+
+      // END OF EXTEND
     },
 
     colors: {
@@ -86,6 +105,8 @@ export default {
       "disabled"  : "var(--antd-text-disabled)",
       "disabled-c": "rgb(var(--antd-text-disabled-c) / <alpha-value>)",
       "split"     : "var(--antd-split)",
+      "container" : "rgb(var(--antd-container) / <alpha-value>)",
+      "header"    : "rgb(var(--antd-header) / <alpha-value>)",
 
       // wktc base colors
       "radical"             : "var(--wktc-radical)",
@@ -175,7 +196,13 @@ export default {
       "srs-not-on-wk-dark"       : "var(--wktc-srs-not-on-wk-dark)",
 
       // antd colors
-      ...generateAntColors()
+      ...generateAntColors(),
+
+      // misc missing values
+      "transparent": "transparent",
+      "none"       : "none",
+      "inherit"    : "inherit",
+      "current"    : "currentColor"
     },
   },
   plugins: [],

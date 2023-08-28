@@ -6,6 +6,7 @@ import { Progress } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { nts } from "@utils";
+import classNames from "classnames";
 
 interface Props {
   title: string;
@@ -22,15 +23,22 @@ export function HeaderProgress({
   const percent = Math.floor((count / total) * 100);
   const showSpinner = indeterminate || count < 0 || total <= 0;
 
-  return <div className="site-header-progress">
-    <div className="site-header-progress-top-row">
-      <span className="site-header-progress-title">{title}</span>
+  return <div className="flex flex-col justify-center h-header px-lg border-0 border-solid border-l border-l-split">
+    <div className="text-desc flex-0 leading-none text-sm flex">
+      <span className="overflow-hidden overflow-ellipsis line-clamp-1">{title}</span>
 
       {/* Count or spinner */}
       {showSpinner
-        ? <LoadingOutlined spin width={24} height={24} />
+        ? (
+          <LoadingOutlined
+            spin
+            width={24}
+            height={24}
+            className="text-base ml-sm"
+          />
+        )
         : (
-          <span className="site-header-progress-count">
+          <span className="inline-block ml-[0.5em] text-base-c/70">
             ({nts(count)}/{nts(total)})
           </span>
         )}
@@ -40,6 +48,7 @@ export function HeaderProgress({
       percent={indeterminate ? 100 : percent}
       status={indeterminate ? "active" : undefined}
       showInfo
+      className="w-[220px] h-[20px] [&_.ant-progress-text]:leading-[8px]"
     />}
   </div>;
 }

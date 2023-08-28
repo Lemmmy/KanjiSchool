@@ -59,14 +59,21 @@ export function VerticalSubjectList({
     />;
   }, [items, assignments, subjectAssignmentIds, renderTooltipFn]);
 
-  const classes = classNames("vertical-subject-list", className);
+  const classes = classNames(
+    "[&_.ant-list-items]:overflow-y-auto [&_.ant-list-items]:max-height-[420px]", // one item is 42px
+    className
+  );
 
   return <List
     size="small"
     className={classes}
     dataSource={items ?? []}
-    loadMore={onShowAll && <div className="show-all">
-      <Button type="link" onClick={onShowAll}>Load all...</Button>
+    loadMore={onShowAll && <div className="flex justify-center mt-md">
+      <Button type="link" className="w-full text-sm group" onClick={onShowAll}>
+        <span className="text-desc group-hover:text-white/80 transition-colors">
+          Show all...
+        </span>
+      </Button>
     </div>}
   >
     <AutoSizer disableHeight>

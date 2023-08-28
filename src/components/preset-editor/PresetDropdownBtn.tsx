@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC, useMemo } from "react";
-import { Dropdown, Menu } from "antd";
+import { FC, useCallback, useMemo } from "react";
+import { Dropdown, Menu, MenuProps } from "antd";
 import { DropdownButtonProps } from "antd/lib/dropdown";
 import { EditOutlined } from "@ant-design/icons";
 
@@ -27,53 +27,61 @@ export const PresetDropdownBtn: FC<Props> = ({
   children,
   ...props
 }) => {
-  // User-defined presets
-  const userPresets = usePresets(presetType);
-
   // Preset editor modal open function
   const [openPresetEditor] = usePresetModal();
 
-  const menu = useMemo(() => {
-    const defaultPresets = getDefaultPresets(presetType);
+  const defaultPresets = useMemo(() => getDefaultPresets(presetType), [presetType]);
+  const userPresets = usePresets(presetType);
 
-    function handleMenuClick({ key }: MenuInfo) {
-      // Find the preset's options
-      const search = key.startsWith("default-") ? defaultPresets : userPresets;
-      const preset = search.find(p => p.uuid === key);
-      if (!preset) return;
+  const handleMenuClick = useCallback(({ key }: MenuInfo) => {
+    // Find the options for the preset
+    const search = key.startsWith("default-") ? defaultPresets : userPresets;
+    const preset = search.find(p => p.uuid === key);
+    if (!preset) return;
 
-      // Start the session with the preset options. Parent is responsible for
-      // actually calling startSession/gotoSession now.
-      start(preset.opts);
+    // Start the session with the preset options. Parent is responsible for
+    // actually calling startSession/gotoSession now.
+    start(preset.opts);
+  }, [defaultPresets, userPresets, start]);
+
+  const menu: MenuProps = useMemo(() => {
+    const items: MenuProps["items"] = [];
+
+    // User-defined presets, if any
+    if (userPresets.length > 0) {
+      for (const p of userPresets) {
+        items.push({
+          key: p.uuid,
+          label: p.name || "Unnamed preset"
+        });
+      }
+
+      items.push({ type: "divider" });
     }
 
-    return <Menu onClick={handleMenuClick} className="preset-editor-overlay">
-      {/* User-defined presets, if any */}
-      {userPresets.length > 0 && <>
-        {userPresets.map(p => (
-          <Menu.Item key={p.uuid} className="user">
-            {p.name || "Unnamed preset"}
-          </Menu.Item>
-        ))}
+    // Then the default presets
+    for (const p of defaultPresets) {
+      items.push({
+        key: p.uuid,
+        label: p.name || "Unnamed preset"
+      });
+    }
 
-        <Menu.Divider />
-      </>}
+    items.push({ type: "divider" });
 
-      {/* Then the default presets */}
-      {defaultPresets.map(p => (
-        <Menu.Item key={p.uuid} className="default">
-          {(p.nameNode ?? p.name) || "Unnamed preset"}
-        </Menu.Item>
-      ))}
+    // Preset editor
+    items.push({
+      key: "editor",
+      icon: <EditOutlined />,
+      label: "Preset editor",
+      onClick: () => openPresetEditor(presetType)
+    });
 
-      <Menu.Divider />
-
-      <Menu.Item key="editor" className="preset-editor-button"
-        onClick={() => openPresetEditor(presetType)}>
-        <EditOutlined />Preset editor
-      </Menu.Item>
-    </Menu>;
-  }, [presetType, userPresets, start, openPresetEditor]);
+    return {
+      items,
+      onClick: handleMenuClick
+    };
+  }, [presetType, handleMenuClick, userPresets, defaultPresets, openPresetEditor]);
 
   return <Dropdown.Button
     trigger={CLICK_TRIGGER}
@@ -84,7 +92,7 @@ export const PresetDropdownBtn: FC<Props> = ({
     {...props}
 
     // Always use our overlay, not parent's
-    overlay={menu}
+    menu={menu}
   >
     {children}
   </Dropdown.Button>;

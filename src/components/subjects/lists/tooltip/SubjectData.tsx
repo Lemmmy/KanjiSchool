@@ -11,6 +11,7 @@ import { CommaList } from "@pages/subject/CommaList";
 
 import { isVocabularyLike, normalizeVocabType, onyomiToKatakana, useBooleanSetting } from "@utils";
 import { startCase } from "lodash-es";
+import { SubjectTooltipLabel } from "@comp/subjects/lists/tooltip/SubjectTooltipLabel.tsx";
 
 interface Props {
   subject: StoredSubject;
@@ -40,49 +41,58 @@ export function SubjectTooltipSubjectData({ subject }: Props): JSX.Element {
 
   return <>
     {/* Top part - subject characters, level and type */}
-    <div className="subject-tooltip-top">
-      <SubjectCharacters subject={subject} />
+    <div className="flex flex-col items-center w-full text-center">
+      <SubjectCharacters
+        subject={subject}
+        className="mb-xss"
+        fontClassName="text-[40px] leading-[40px]"
+        imageSizeClassName="w-[40px] h-[40px]"
+      />
 
-      <div className="subject-tooltip-level">
+      <div className="text-desc mb-xs text-sm">
         Level {level} {startCase(normalizeVocabType(objectType))}
       </div>
     </div>
 
     {/* Meaning/reading info */}
     {/* Meaning */}
-    <div className="row meaning-row">
-      <span className="label">Meaning:</span>
+    <div>
+      <SubjectTooltipLabel>Meaning:</SubjectTooltipLabel>
       <CommaList
         type="meaning"
         values={meanings.map(m => [m.meaning, m.primary])}
+        className="inline"
       />
     </div>
 
     {/* Vocabulary readings */}
-    {isVocab && readings?.length && <div className="row reading-row">
-      <span className="label">Reading:</span>
+    {isVocab && readings?.length && <div>
+      <SubjectTooltipLabel>Reading:</SubjectTooltipLabel>
       <CommaList
         type="reading"
         values={readings.map(r => [r.reading, r.primary])}
+        className="inline"
       />
     </div>}
 
     {/* Kanji readings */}
     {/* On'yomi */}
-    {isKanji && (onyomiReadings?.length || 0) > 0 && <div className="row reading-row">
-      <span className="label">On&apos;yomi:</span>
+    {isKanji && (onyomiReadings?.length || 0) > 0 && <div>
+      <SubjectTooltipLabel>On&apos;yomi:</SubjectTooltipLabel>
       <CommaList
         type="reading"
         values={onyomiReadings!.map(r => [r.reading, r.primary])}
+        className="inline"
       />
     </div>}
 
     {/* Kun'yomi */}
-    {isKanji && (kunyomiReadings?.length || 0) > 0 && <div className="row reading-row">
-      <span className="label">Kun&apos;yomi:</span>
+    {isKanji && (kunyomiReadings?.length || 0) > 0 && <div>
+      <SubjectTooltipLabel>Kun&apos;yomi:</SubjectTooltipLabel>
       <CommaList
         type="reading"
         values={kunyomiReadings!.map(r => [r.reading, r.primary])}
+        className="inline"
       />
     </div>}
   </>;

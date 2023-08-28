@@ -38,8 +38,8 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
     renderTooltip.bind(renderTooltip, subject, assignment),
   [renderTooltip, subject, assignment]);
 
-  const classes = classNames("vertical-subject-list-item", {
-    "in-queue": inQueue
+  const classes = classNames("!p-0", {
+    "ring-inset ring-2 ring-white/75": inQueue,
   });
 
   return <Tooltip
@@ -48,9 +48,19 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
     destroyTooltipOnHide={false}
   >
     <List.Item className={classes} style={style}>
-      <ConditionalLink to={url} matchTo>
-        <SubjectCharacters subject={subject} textfit={false} />
-        {extra && <div className="extra">{extra}</div>}
+      <ConditionalLink
+        to={url}
+        matchTo
+        className="flex-1 flex items-center justify-between py-xs px-md transition-all bg-transparent hover:bg-white/10"
+      >
+        <SubjectCharacters
+          subject={subject}
+          textfit={false}
+          fontClassName="text-lg"
+          imageSizeClassName="text-lg w-[16px]"
+        />
+
+        {extra && <div className="extra text-base">{extra}</div>}
       </ConditionalLink>
     </List.Item>
   </Tooltip>;

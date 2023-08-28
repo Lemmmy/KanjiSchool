@@ -4,11 +4,13 @@
 
 import { useState, useEffect } from "react";
 import { Tooltip } from "antd";
+import classNames from "classnames";
 
 import { RootState } from "@store";
 import { useSelector } from "react-redux";
 
 import { CloudDisconnectedOutlined } from "@comp/icons/CloudDisconnectedOutlined";
+import { headerElementClass } from "@layout/nav/AppHeader.tsx";
 
 import { db } from "@db";
 import { useAssignments } from "@api";
@@ -25,14 +27,17 @@ export function OnlineStatus(): JSX.Element | null {
   if (isOnline) return null;
 
   // Show the offline icon
-  return <Tooltip
-    title="Currently offline. Restore network connectivity to sync assignments."
-  >
-    <div className="site-header-element site-online-status">
+  return <Tooltip title="Currently offline. Restore network connectivity to sync assignments.">
+    <div
+      className={classNames(
+        headerElementClass,
+        "flex flex-col items-start min-w-[160px] text-red leading-tight align-middle cursor-default"
+      )}
+    >
       {/* Top row - icon and 'offline' text */}
-      <div className="online-status-row">
-        <CloudDisconnectedOutlined />
-        <span className="online-text">Offline</span>
+      <div className="online-status-row flex gap-xs items-center leading-normal">
+        <CloudDisconnectedOutlined className="relative top-px" />
+        <span className="none md:inline online-text text-sm uppercase">Offline</span>
       </div>
 
       {/* Bottom row - queue size */}
@@ -62,7 +67,7 @@ function OnlineStatusQueueSize(): JSX.Element | null {
 
   if (queueSize <= 0) return null;
 
-  return <span className="online-status-queue-size">
+  return <span className="inline-block text-sm text-desc">
     {pluralN(queueSize, "unsubmitted item")}
   </span>;
 }

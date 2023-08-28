@@ -31,7 +31,9 @@ export function MenuHotkey({
 
   if (shouldHide) return null;
 
-  return <span className="menu-hotkey">
+  return <span
+    className="ml-md -mr-xs text-desc text-xs float-right leading-[24px] align-middle px-2 bg-black/20 rounded-sm"
+  >
     {shortcut.replace("Ctrl", ctrl)}
   </span>;
 }

@@ -7,13 +7,19 @@ import { EditFilled, EditOutlined } from "@ant-design/icons";
 import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
 import classNames from "classnames";
 
+import Debug from "debug";
+const debug = Debug("kanjischool:hw-input-button");
+
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 export function HwInputButton({ visible, setVisible, ...props }: Props): JSX.Element {
-  const open = useCallback(() => setVisible(true), [setVisible]);
+  const open = useCallback(() => {
+    debug("opening handwriting input");
+    setVisible(true);
+  }, [setVisible]);
 
   const classes = classNames("ant-input-clear-icon handwriting-input-button", { visible });
   const iconProps: Omit<AntdIconProps, "ref"> = {

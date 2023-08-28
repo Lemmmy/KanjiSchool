@@ -183,7 +183,9 @@ export function AudioButton({
     setHasAutoPlayed(true);
   }, [triggerPlay, autoPlay, hasAutoPlayed]);
 
-  const classes = classNames("subject-audio-button", { playing });
+  const classes = classNames({
+    "border-vocabulary text-vocabulary": playing
+  });
 
   return <>
     {/* Wrap the button in a tooltip to help with keyboard shortcut

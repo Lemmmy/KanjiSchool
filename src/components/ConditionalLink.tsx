@@ -5,6 +5,7 @@
 import { FC, ReactNode } from "react";
 
 import { Link, useMatch } from "react-router-dom";
+import classNames from "classnames";
 
 interface Props {
   to?: string;
@@ -17,6 +18,7 @@ interface Props {
   matchExact?: boolean;
 
   children?: ReactNode;
+  className?: string;
 }
 
 export const ConditionalLink: FC<Props> = ({
@@ -29,7 +31,9 @@ export const ConditionalLink: FC<Props> = ({
   matchPath,
   matchExact,
 
-  children, ...props
+  children,
+  className,
+  ...props
 }): JSX.Element => {
   // Disable the link if we're already on that route
   const wantsCondition = condition !== undefined;
@@ -48,13 +52,14 @@ export const ConditionalLink: FC<Props> = ({
       <Link
         to={to}
         replace={replace}
+        className={className}
         {...props}
       >
         {children}
       </Link>
     )
     : (
-      <span className="cursor-pointer text-primary" {...props}>
+      <span className={classNames("clink-dis cursor-pointer text-link", className)} {...props}>
         {children}
       </span>
     );

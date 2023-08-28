@@ -3,11 +3,11 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Tooltip } from "antd";
-import classNames from "classnames";
 
 import { RootState } from "@store";
 import { useSelector, shallowEqual } from "react-redux";
 
+import { LevelInfoRowPart } from "@pages/dashboard/summary/LevelInfoRowPart.tsx";
 import { nts, useBooleanSetting } from "@utils";
 
 export function Streak(): JSX.Element | null {
@@ -20,19 +20,19 @@ export function Streak(): JSX.Element | null {
   if (!showStreak) return null;
   if (currentStreak === 0 && maxStreak === 0) return null;
 
-  const classes = classNames("level-info-part streak", {
-    "current-zero": currentStreak === 0,
-    "today-in-streak": todayInStreak
-  });
+  const streakColor = currentStreak === 0
+    ? "text-red"
+    : todayInStreak
+      ? "text-green"
+      : "text-yellow";
 
-  return <div className={classes}>
-    <span className="label">Streak: </span>
+  return <LevelInfoRowPart label="Streak">
     <Tooltip title="Current streak">
-      <span className="streak-current">{nts(currentStreak ?? 0)}</span>
+      <span className={streakColor}>{nts(currentStreak ?? 0)}</span>
     </Tooltip>
     &nbsp;/&nbsp;
     <Tooltip title="Highest streak">
-      <span className="streak-max">{nts(maxStreak ?? 0)}</span>
+      {nts(maxStreak ?? 0)}
     </Tooltip>
-  </div>;
+  </LevelInfoRowPart>;
 }

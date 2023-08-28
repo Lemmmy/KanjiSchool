@@ -2,8 +2,7 @@
  * This file is part of KanjiSchool under AGPL-3.0.
  * Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE */
 
-/* Don't include base Tailwind styles since we're using antd too. */
-/* @tailwind base; */
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -51,4 +50,34 @@ code {
 :root {
   scrollbar-color: var(--wk-scrollbar-thumb-color) var(--wk-scrollbar-track-color) !important;
   scrollbar-width: thin !important;
+}
+
+/* ant-design menu overrides */
+@media (max-width: 576px) {
+  /* Make the top menu dropdown full-width and slightly larger on mobile */
+  .ant-dropdown.site-header-dropdown-overlay {
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  .ant-dropdown.site-header-dropdown-overlay > .ant-dropdown-menu {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .ant-dropdown.site-header-dropdown-overlay .ant-dropdown-menu-item {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+
+  .ant-dropdown.site-header-dropdown-overlay .ant-dropdown-menu-item > span > div {
+    margin: -8px -16px;
+    padding: 8px 16px;
+  }
+}
+
+/* TODO: Temporary workaround until
+         https://github.com/ant-design/ant-design/commit/27e54c9 is released in a feature update. */
+.ant-btn.ant-btn-sm {
+  font-size: 13px;
 }

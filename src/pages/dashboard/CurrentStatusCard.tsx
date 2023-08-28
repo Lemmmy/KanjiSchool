@@ -79,6 +79,27 @@ const TYPE_LABELS: Record<NormalizedSubjectType, [string, string]> = {
   vocabulary: ["vocabulary", "単語"],
 };
 
+/*
+
+  .dashboard-current-status-card {
+    .type {
+      margin-right: @padding-xs;
+      &:last-child { margin-right: 0; }
+
+      &.radical { color: @color-radical; }
+      &.kanji { color: @color-kanji; }
+      &.vocab { color: @color-vocabulary; }
+    }
+  }
+
+  .dashboard-current-status-card {
+    td:not(:first-child) {
+      text-align: left !important;
+    }
+  }
+
+ */
+
 export function CurrentStatusCard(): JSX.Element {
   const [data, setData] = useState<Data>();
 

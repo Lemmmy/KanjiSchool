@@ -37,7 +37,7 @@ export function SrsStageShort({
   return <span className={classes}>
     {stringifySrsStageShort(srs_stage)}
     {available_at && <>
-      <span className="inline-block mx-[0.3em]">-</span>
+      <span className="inline-block mx-text">-</span>
       {availableNow ? "Now" : <ShortDuration date={available_at} />}
     </>}
   </span>;

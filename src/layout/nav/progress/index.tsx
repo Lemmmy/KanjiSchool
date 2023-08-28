@@ -8,7 +8,7 @@ import { SyncAudioProgress } from "./SyncAudioProgress";
 import { AssignmentQueueProgress } from "./AssignmentQueueProgress";
 
 export function SyncProgressBars(): JSX.Element {
-  return <div className="site-header-progresses">
+  return <div className="flex max-w-[calc(100vw-720px)] overflow-hidden mr-sm relative">
     <GenericSyncingProgress name="subjects"
       syncingKey="syncingSubjects" syncProgressKey="subjectsProgress" />
     <GenericSyncingProgress name="assignments"
@@ -24,5 +24,10 @@ export function SyncProgressBars(): JSX.Element {
     <SyncImagesProgress />
     <SyncAudioProgress />
     <AssignmentQueueProgress />
+
+    {/* Fade out on the right (in event of overflow) */}
+    <div
+      className="absolute inset-y-0 right-0 w-lg bg-gradient-to-r from-transparent to-header pointer-events-none z-50"
+    />
   </div>;
 }

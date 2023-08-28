@@ -13,6 +13,7 @@ import { StoredSubjectMap, StoredAssignmentMap } from "@api";
 
 import dayjs from "dayjs";
 import { normalizeVocabType, nts } from "@utils";
+import classNames from "classnames";
 
 const allZero = ([r, k, v]: Rkv): boolean => r === 0 && k === 0 && v === 0;
 
@@ -104,6 +105,8 @@ interface Props {
   data?: AvailableAssignments;
 }
 
+const cellClass = "w-[40px] text-center";
+
 export function AvailableAssignmentsTable({
   type,
   data
@@ -114,13 +117,13 @@ export function AvailableAssignmentsTable({
   // Don't render the table at all if there's nothing interesting to show.
   if (!data) return null;
 
-  return <table className="available-assignments-table">
+  return <table className="mt-sm md:mt-md text-sm xxl:text-base w-full">
     <thead>
       <tr>
         <th></th>
-        <th className="radical" title="Radical">R</th>
-        <th className="kanji" title="Kanji">K</th>
-        <th className="vocab" title="Vocabulary">V</th>
+        <th className={classNames(cellClass, "text-radical")} title="Radical">R</th>
+        <th className={classNames(cellClass, "text-kanji")} title="Kanji">K</th>
+        <th className={classNames(cellClass, "text-vocabulary")} title="Vocabulary">V</th>
       </tr>
     </thead>
 
@@ -152,9 +155,9 @@ function AssRow({
   const [r, k, v] = rkv;
 
   return <tr>
-    <td className="txt">{title}</td>
-    <td className="radical">{num(r)}</td>
-    <td className="kanji">{num(k)}</td>
-    <td className="vocab">{num(v)}</td>
+    <td className="text-desc">{title}</td>
+    <td className={classNames(cellClass, "text-radical")}>{num(r)}</td>
+    <td className={classNames(cellClass, "text-kanji")}>{num(k)}</td>
+    <td className={classNames(cellClass, "text-vocabulary")}>{num(v)}</td>
   </tr>;
 }

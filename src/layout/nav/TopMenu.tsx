@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useCallback, useMemo, useContext, createContext, ReactNode } from "react";
-import { Menu, Dropdown, MenuItemProps, MenuProps } from "antd";
+import { Dropdown, MenuProps } from "antd";
 import {
   MoreOutlined, SettingOutlined, BugOutlined, SearchOutlined, ReadOutlined,
   MacCommandOutlined, ReloadOutlined, GithubOutlined, UnorderedListOutlined
@@ -14,7 +14,10 @@ import { useDispatch } from "react-redux";
 import { setHotkeyHelpVisible } from "@actions/SettingsActions";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
+import { ExtLink } from "@comp/ExtLink";
 import { MenuHotkey } from "@comp/MenuHotkey";
+import { MenuUserInfo } from "./UserInfo";
+import { dropdownOverlayClass, headerElementClass } from "./AppHeader.tsx";
 
 import { syncAll, useUsername } from "@api";
 
@@ -22,8 +25,7 @@ import { useOnlineStatus } from "@utils/hooks";
 import { isLocalhost } from "@utils";
 
 import Debug from "debug";
-import { MenuUserInfo } from "./UserInfo";
-import { ExtLink } from "@comp/ExtLink";
+import classNames from "classnames";
 const debug = Debug("kanjischool:top-menu");
 
 export type Opts = MenuProps["items"] | undefined;
@@ -62,9 +64,9 @@ export function TopMenu(): JSX.Element {
       // Advanced search
       {
         key: "menu-advanced-search",
-        className: "menu-item-has-hotkey",
+        icon: <SearchOutlined />,
         label: <ConditionalLink to="/search" matchTo aria-label="Advanced search">
-          <SearchOutlined />Advanced search
+          Advanced search
           <MenuHotkey shortcut="Ctrl+Shift+K" />
         </ConditionalLink>
       },
@@ -72,9 +74,9 @@ export function TopMenu(): JSX.Element {
       // Self-study (basically same as advanced search)
       {
         key: "menu-self-study",
-        className: "menu-item-has-hotkey",
+        icon: <ReadOutlined />,
         label: <ConditionalLink to="/study" matchTo aria-label="Self-study">
-          <ReadOutlined />Self-study
+          Self-study
           <MenuHotkey shortcut="S" ifGroup="dashboard" />
         </ConditionalLink>
       },
@@ -95,7 +97,6 @@ export function TopMenu(): JSX.Element {
       // Keyboard shortcuts
       {
         key: "menu-keyboard-shortcuts",
-        className: "menu-item-has-hotkey",
         icon: <MacCommandOutlined />,
         label: <>
           Keyboard shortcuts
@@ -149,10 +150,10 @@ export function TopMenu(): JSX.Element {
 
   return <Dropdown
     trigger={["click"]}
-    overlayClassName="site-header-dropdown-overlay site-header-top-dropdown-menu"
+    overlayClassName={dropdownOverlayClass}
     menu={menuProps}
   >
-    <div className="site-header-element"><MoreOutlined /></div>
+    <div className={headerElementClass}><MoreOutlined /></div>
   </Dropdown>;
 }
 

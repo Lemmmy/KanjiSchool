@@ -32,7 +32,7 @@ export function PresetDropdownSetting({
       <Select
         disabled={disabled}
         options={items}
-        dropdownMatchSelectWidth={false}
+        popupMatchSelectWidth={false}
       />
     </Form.Item>
   </div>;

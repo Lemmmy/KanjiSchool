@@ -7,7 +7,6 @@ import { useState, useMemo, Dispatch, SetStateAction } from "react";
 import { HwInputPopover } from "./HwInputPopover";
 
 export type HwInputHookRes = [
-  JSX.Element, // Handwriting input popover
   JSX.Element, // Input button
   boolean, // Visibility state
   Dispatch<SetStateAction<boolean>>, // Set visibility state
@@ -18,9 +17,10 @@ export function useHandwritingInput(
 ): HwInputHookRes {
   const [visible, setVisible] = useState(false);
   const button = useMemo(() => <HwInputPopover
-    visible={visible} setVisible={setVisible}
+    visible={visible}
+    setVisible={setVisible}
     setValue={setValue}
   />, [visible, setValue]);
 
-  return [<></>, button, visible, setVisible];
+  return [button, visible, setVisible];
 }

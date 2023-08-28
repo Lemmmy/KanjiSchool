@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useMemo, useRef, ReactNode, Dispatch, SetStateAction, useCallback } from "react";
+import { useState, useMemo, useRef, ReactNode, Dispatch, SetStateAction, useCallback, useEffect } from "react";
 import { AutoComplete, Input, Tooltip } from "antd";
 import { RefSelectProps } from "antd/lib/select";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
@@ -73,6 +73,7 @@ export function Search(): JSX.Element {
 
   // Used to focus the search when the hotkey is received, or de-focus it when
   // a search result is selected
+  const mainRef = useRef<HTMLDivElement | null>(null);
   const autocompleteRef = useRef<RefSelectProps | null>(null);
 
   const debouncedAutocomplete = useMemo(() => debounce(performAutocomplete, SEARCH_THROTTLE), []);
@@ -118,25 +119,38 @@ export function Search(): JSX.Element {
 
   // Handwriting input prompt open button + the canvas popover itself. hwVisible
   // will be used to shift the autocomplete results overlay if necessary
-  const [hwPopover, hwButton, hwVisible, hwSetVisible] =
-    useHandwritingInput(setValueAutocomplete);
+  const [hwButton, hwVisible, hwSetVisible] = useHandwritingInput(setValueAutocomplete);
   // Whether to always open the handwriting input when focusing the
   // search input
   const hwAlwaysOpen = useBooleanSetting("searchAlwaysHandwriting");
 
-  /** Open the handwriting input prompt on focus if desired */
-  function onFocus() {
+  const onFocus = useCallback(() => {
+    debug("onFocus, hwSetVisible(true), hwAlwaysOpen: %s", hwAlwaysOpen);
     setOpen(true);
     if (hwAlwaysOpen) hwSetVisible(true);
-  }
+  }, [hwAlwaysOpen, hwSetVisible]);
 
-  function onBlur() {
-    setOpen(false);
-    hwSetVisible(false);
-  }
+  const onBlur = useCallback((e: React.FocusEvent) => {
+    const searchEl = mainRef.current as HTMLElement | null;
+    const newFocus = (e.relatedTarget) as HTMLElement | null;
+    if (!searchEl) return;
+
+    debug("onBlur, newFocus: %o, searchEl: %o", newFocus, searchEl);
+
+    // If the search input is focused, open the handwriting input if desired
+    if (newFocus && searchEl.contains(newFocus)) {
+      debug("window focusin, hwSetVisible(true), hwAlwaysOpen: %s", hwAlwaysOpen);
+      setOpen(true);
+      if (hwAlwaysOpen) hwSetVisible(true);
+    } else {
+      debug("window focusin, hwSetVisible(false)");
+      setOpen(false);
+      hwSetVisible(false);
+    }
+  }, [hwAlwaysOpen, hwSetVisible]);
 
   /** Navigate to the selected autocomplete result. */
-  function onSelect(query: string) {
+  const onSelect = useCallback((query: string) => {
     debug("onSelect %s", query);
 
     // Reset the search value when a result is selected. This is because,
@@ -158,14 +172,15 @@ export function Search(): JSX.Element {
 
     // De-focus the search textbox when an item is selected and hide the
     // handwriting input popover if it's visible
+    debug("onSelect, hwSetVisible(false)");
     hwSetVisible(false);
     autocompleteRef.current?.blur();
-  }
+  }, [subjects, results, navigate, hwSetVisible]);
 
   /** Navigate to the 'Advanced search' screen with the keyword populated if the
    * user presses enter or clicks the search button, rather than clicking a
    * result directly. */
-  function onInputSearch() {
+  const onInputSearch = useCallback(() => {
     debug("onInputSearch");
 
     // Goto the search screen with the query
@@ -173,9 +188,10 @@ export function Search(): JSX.Element {
 
     // Clear and de-focus the input textbox, and hide the handwriting popover
     setValue("");
+    debug("onInputSearch, hwSetVisible(false)");
     hwSetVisible(false);
     autocompleteRef.current?.blur();
-  }
+  }, [navigate, value, hwSetVisible]);
 
   // Render the autocomplete options when the results change
   const options = useMemo((): AutocompleteOption[] => {
@@ -203,7 +219,10 @@ export function Search(): JSX.Element {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjects, results]);
 
-  return <div className="site-header-search-container">
+  return <div
+    className="flex-1 lg:flex-shrink-0 lg:min-w-[350px] xl:max-w-[400px] flex items-center justify-end"
+    ref={mainRef}
+  >
     <GlobalHotKeys
       keyMap={KEY_MAP}
       handlers={{
@@ -214,6 +233,7 @@ export function Search(): JSX.Element {
         SEARCH_WITH_HANDWRITING: e => {
           e?.preventDefault();
           autocompleteRef.current?.focus();
+          debug("search with handwriting, hwSetVisible(true)");
           hwSetVisible(true);
         },
         ADV_SEARCH: e => {
@@ -234,9 +254,16 @@ export function Search(): JSX.Element {
         ref={autocompleteRef}
 
         // Required to make the dropdown show on an Input.Search:
-        popupMatchSelectWidth={true}
-        popupClassName={classNames("site-header-search-menu", { "handwriting-input-visible": hwVisible })}
-        className="site-header-search"
+        popupMatchSelectWidth
+        popupClassName={classNames(
+          // Add the scrollbar back to the autocomplete results
+          "[&_.rc-virtual-list-holder]:!overflow-y-auto [&_.rc-virtual-list-holder]:pr-1",
+          {
+            // Move the search autocomplete overlay to the left if the handwriting input popover is also visible
+            "w-full max-w-[350px] fixed !top-header !left-auto !right-[400px]": hwVisible && open
+          }
+        )}
+        className="max-w-full md:max-w-auto w-full"
         value={value}
 
         disabled={disabled}
@@ -268,8 +295,5 @@ export function Search(): JSX.Element {
         />
       </AutoComplete>
     </Tooltip>
-
-    {/* Deploy the handwriting input popover when it is visible */}
-    {hwPopover}
   </div>;
 }

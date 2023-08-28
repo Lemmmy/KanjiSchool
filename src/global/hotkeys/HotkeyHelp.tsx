@@ -47,12 +47,11 @@ function HotkeyModal({ visible, setVisible }: ModalProps): JSX.Element {
   return <Modal
     open={visible}
     title="Keyboard shortcuts"
-    className="hotkey-help-modal"
     footer={null}
     onCancel={() => setVisible(false)}
     width={720}
   >
-    <Row gutter={16} className="hotkey-main-grid">
+    <Row gutter={16}>
       <Col span={12}>
         <HotkeyGroup title="General">
           <Hotkey name="Search" keys={["Ctrl+K"]} />
@@ -108,9 +107,11 @@ interface GroupProps {
 }
 
 const HotkeyGroup: FC<GroupProps> = ({ title, children }) => {
-  return <div className="hotkey-group">
+  return <div className="group">
     {/* Title */}
-    <h4>{title}</h4>
+    <h4 className="mt-lg mb-0 group-first:mt-0">
+      {title}
+    </h4>
 
     {/* Hotkeys */}
     {children}
@@ -125,17 +126,19 @@ interface HotkeyProps {
 }
 
 function Hotkey({ keys, desc, name }: HotkeyProps): JSX.Element {
-  return <Row className="hotkey-row">
+  return <Row>
     {/* Name */}
-    <Col span={12} className="hotkey-name">{name}</Col>
+    <Col span={12} className="text-sm leading-[24px] align-middle">
+      {name}
+    </Col>
 
     {/* Key(s) */}
-    <Col span={12} className="hotkey-keys">
+    <Col span={12} className="text-sm leading-[24px]">
       {desc || (keys || []).map((k, i, a) => <Fragment key={k}>
-        <Text keyboard>
+        <Text keyboard className="text-[95%] whitespace-nowrap">
           {k.replace("Ctrl", ctrl)}
         </Text>
-        {i < a.length - 1 && <span className="or">or</span>}
+        {i < a.length - 1 && <span className="mx-[0.2em]">or</span>}
       </Fragment>)}
     </Col>
   </Row>;

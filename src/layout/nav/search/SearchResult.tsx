@@ -31,28 +31,41 @@ export const SearchResultEl = React.memo(({
 
   const userLevel = useUserLevel();
 
-  const classes = classNames("search-result", {
-    "unlocked": userLevel >= level
+  const classes = classNames("text-base whitespace-normal", {
+    "opacity-70": userLevel < level
   });
+
+  const highlightClass = "!bg-transparent p-0 text-inherit font-bold";
 
   // URL for the subject page
   const url = getSubjectUrl(subject);
 
   const contents = <div className={classes}>
     {/* Subject level */}
-    <span className="search-result-level">Lvl {level}</span>
+    <span
+      className={classNames("float-right font-sm text-desc", {
+        "text-red": userLevel < level
+      })}
+    >
+      Lvl {level}
+    </span>
 
     {/* Subject characters and reading */}
-    <div className="result-row result-top">
-      <SubjectCharacters subject={subject} max={20} />
+    <div>
+      <SubjectCharacters
+        subject={subject}
+        max={20}
+        fontClassName="text-[24px] leading-[24px]"
+        imageSizeClassName="w-[24px] h-[24px]"
+      />
 
       {/* Single primary reading */}
       {reading && <>
-        <span className="sep">-</span>
-        <span className="reading ja">
+        <span className="mx-xss font-lg">-</span>
+        <span className="font-lg font-ja">
           <Highlighter
             autoEscape
-            highlightClassName="search-highlight"
+            highlightClassName={highlightClass}
             searchWords={[query, queryKana]}
             textToHighlight={reading}
           />
@@ -61,7 +74,7 @@ export const SearchResultEl = React.memo(({
     </div>
 
     {/* Meanings */}
-    <div className="result-row">
+    <div>
       <CommaList
         type="meaning"
         values={meanings.map(m => [
@@ -70,7 +83,7 @@ export const SearchResultEl = React.memo(({
           <Highlighter
             autoEscape
             key="hl"
-            highlightClassName="search-highlight"
+            highlightClassName={highlightClass}
             searchWords={[query]}
             textToHighlight={m.meaning}
           />

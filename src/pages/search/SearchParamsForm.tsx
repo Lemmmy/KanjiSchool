@@ -246,7 +246,7 @@ export function SearchParamsForm({
               ? <>Sort by&nbsp;<Text type="secondary">(preview only)</Text></>
               : "Sort by"}
           >
-            <Select style={{ maxWidth: 200 }} dropdownMatchSelectWidth>
+            <Select style={{ maxWidth: 200 }} popupMatchSelectWidth>
               {Object.entries(SEARCH_ORDERS).map(([v, o]) =>
                 <Select.Option key={v} value={v}>{o.name}</Select.Option>)}
             </Select>

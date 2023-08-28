@@ -18,7 +18,7 @@ export interface WkTheme {
   antTheme: Partial<ThemeConfig>;
 
   scrollbarThumbColor     : string;
-  scrollbarThumbColorHover: string;
+  scrollbarThumbHoverColor: string;
   scrollbarTrackColor     : string;
 }
 
@@ -43,7 +43,7 @@ const THEME_LIGHT: WkTheme = {
   },
 
   scrollbarThumbColor     : "rgba(0, 0, 0, 0.2)",
-  scrollbarThumbColorHover: "rgba(0, 0, 0, 0.3)",
+  scrollbarThumbHoverColor: "rgba(0, 0, 0, 0.3)",
   scrollbarTrackColor     : "rgba(0, 0, 0, 0.1)"
 };
 
@@ -54,7 +54,7 @@ const THEME_DARK: WkTheme = {
   },
 
   scrollbarThumbColor     : "rgba(255, 255, 255, 0.15)",
-  scrollbarThumbColorHover: "rgba(255, 255, 255, 0.3)",
+  scrollbarThumbHoverColor: "rgba(255, 255, 255, 0.3)",
   scrollbarTrackColor     : "rgba(0, 0, 0, 0.1)"
 };
 

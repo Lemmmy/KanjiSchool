@@ -15,23 +15,19 @@ export function UpcomingReviews(): JSX.Element | null {
 
   if (!nextReviewsAt) return null;
 
-  const classes = classNames("summary-upcoming-reviews", {
-    "now": nextReviewsNow
-  });
-
-  return <div className={classes}>
+  return <div className={"flex flex-col items-center justify-center text-lg mt-md md:mt-0"}>
     {/* Next set of reviews */}
-    <span className="upcoming-reviews-next">
+    <div className={classNames({ "text-green": nextReviewsNow })}>
       <b>{nextReviewsCount}</b>
       {nextReviewsCount === 1 ? " review" : " reviews"}
       {nextReviewsNow
         ? <> available</>
         : <> in <b><ShortDuration date={nextReviewsAt} /></b></>}
-    </span>
+    </div>
 
     {/* Total amount of reviews in the summary */}
-    <span className="upcoming-reviews">
+    <div>
       <b>{nextReviewsWeek}</b> upcoming in 7d
-    </span>
+    </div>
   </div>;
 }

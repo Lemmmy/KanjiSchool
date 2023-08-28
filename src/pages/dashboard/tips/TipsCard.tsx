@@ -53,7 +53,7 @@ export function TipsCard(): JSX.Element {
 
   return <Card
     title="Tip of the day"
-    className="h-full flex-1 mt-md [&>.ant-card-head]:pr-sm"
+    className="h-full flex-auto mt-md [&>.ant-card-head]:pr-sm"
 
     // Prev/Next tip buttons
     extra={<>

@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { pluralN } from "@utils";
 
 interface Props {
+  short?: boolean;
   showYears?: boolean;
   showHours?: boolean;
   showMinutes?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function DhmDuration({
+  short = false,
   showYears = false,
   showHours = true,
   showMinutes = true,
@@ -32,13 +34,14 @@ export function DhmDuration({
     const m = Math.floor(seconds / 60) % 60;
 
     let out = "";
-    if (showYears && y > 0) out += `${pluralN(y, "year")}, `;
+    if (showYears && y > 0)
+      out += short ? `${y}y ` : `${pluralN(y, "year")}, `;
     if (d > 0)
-      out += `${pluralN(d, "day")}, `;
+      out += short ? `${d}d ` : `${pluralN(d, "day")}, `;
     if ((showHours || (y === 0 && d === 0)) && h > 0)
-      out += `${pluralN(h, "hour")}, `;
+      out += short ? `${h}h ` : `${pluralN(h, "hour")}, `;
     if ((showMinutes || (y === 0 && d === 0 && h === 0)) && m > 0)
-      out += `${pluralN(m, "minute")}`;
+      out += short ? `${m}m ` : `${pluralN(m, "minute")}`;
 
     out = out.trim().replace(/,$/, "");
 
@@ -47,7 +50,7 @@ export function DhmDuration({
     }
 
     return out || undefined;
-  }, [showYears, showHours, showMinutes, seconds, tooLow]);
+  }, [short, showYears, showHours, showMinutes, seconds, tooLow]);
 
   if (!date) return null;
   return <span className="dhm-duration">{date}</span>;

@@ -41,10 +41,6 @@ function getData(
     .filter(a => ago30d.isBefore(a.data[dateField]!));
 
   // Generate the list items
-  // return recentUnlocks.map(a => ({
-  //   subject: subjects[a.data.subject_id],
-  //   extra: <TimeAgo date={a.data[dateField]!} />
-  // }));
   return recentUnlocks.map(a => a.data.subject_id);
 }
 
@@ -80,8 +76,8 @@ export function NewUnlocksCard({ dateField }: Props): JSX.Element {
   }, []);
 
   const isEmpty = data && !data.length;
-  const classes = classNames("dashboard-subject-list-card", {
-    "card-empty": isEmpty
+  const classes = classNames("[&>.ant-card-body]:p-0", {
+    "[&>.ant-card-body]:flex [&>.ant-card-body]:items-center [&>.ant-card-body]:justify-center": isEmpty
   });
 
   return <Card
@@ -93,12 +89,8 @@ export function NewUnlocksCard({ dateField }: Props): JSX.Element {
   >
     {data && (data.length
       ? (
-        // <VerticalSubjectList
-        //   items={data}
-        //   onShowAll={showingAll ? undefined : onShowAll}
-        // />
         <div
-          className="dashboard-tiny-subject-list-inner-container"
+          className="h-full max-h-[253px] overflow-y-auto p-md"
           // Ref here is for the SubjectGrid, so that it can handle scroll
           // windowing correctly
           ref={r => {
@@ -112,14 +104,18 @@ export function NewUnlocksCard({ dateField }: Props): JSX.Element {
             subjectIds={data}
             hasVocabulary
             alignLeft
-            maxHeight={227}
+            maxHeight={221}
             containerRef={innerContainerRef}
             simpleWindowing
             overscanCount={3}
           />
 
-          {!showingAll && <div className="show-all">
-            <Button type="link" onClick={onShowAll}>Load all...</Button>
+          {!showingAll && <div className="flex justify-center mt-md">
+            <Button type="link" className="w-full text-sm group" onClick={onShowAll}>
+              <span className="text-desc group-hover:text-white/80 transition-colors">
+                Show all...
+              </span>
+            </Button>
           </div>}
         </div>
       )

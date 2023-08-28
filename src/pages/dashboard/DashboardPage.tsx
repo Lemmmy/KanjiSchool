@@ -33,7 +33,6 @@ import { useBooleanSetting } from "@utils";
 import useResizeObserver from "use-resize-observer";
 import { OverleveledAssignments } from "@pages/dashboard/OverleveledAssignments";
 import { GetReviewsWarning } from "@pages/dashboard/GetReviewsWarning";
-import { MenuHotkey } from "@comp/MenuHotkey.tsx";
 
 export function DashboardPage(): JSX.Element {
   const ongoingSession = useSelector((s: RootState) => s.session.ongoing);

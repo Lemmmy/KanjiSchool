@@ -15,8 +15,21 @@ import { ItemsDropdown } from "./ItemsDropdown";
 import { Search } from "./search/Search";
 import { UserInfo } from "./UserInfo";
 import { TopMenu } from "./TopMenu";
+import classNames from "classnames";
 
 const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
+
+export const headerElementClass = classNames(
+  "flex-0 h-header py-0 px-[20px] flex items-center justify-center",
+  "border-0 border-l border-solid border-l-white/10",
+  "bg-transparent transition-colors hover:bg-white/5 cursor-pointer"
+);
+
+export const dropdownOverlayClass = classNames(
+  "fixed !top-header site-header-dropdown-overlay",
+  "[&_.ant-dropdown-menu-item]:px-md [&_.ant-dropdown-menu-item]:py-xs",
+  // See also the styles in index.css
+);
 
 export function AppHeader(): JSX.Element | null {
   // Hide certain features on mobile (TODO)
@@ -24,7 +37,7 @@ export function AppHeader(): JSX.Element | null {
 
   if (!api.useIsLoggedIn()) return null;
 
-  return <Layout.Header className="bg-[#1f1f1f] fixed inset-x-0 top-0 flex p-0 z-20">
+  return <Layout.Header className="bg-header fixed inset-x-0 top-0 flex p-0 z-20">
     <ConditionalLink to="/" matchTo matchExact>
       <div className="mx-lg select-none whitespace-nowrap">
         <span className="text-[22.5px] text-white">
@@ -42,13 +55,13 @@ export function AppHeader(): JSX.Element | null {
     <SyncProgressBars />
 
     {/* Spacer */}
-    {md && <div className="flex-1" />}
+    {md && <div className="lg:flex-1" />}
 
     {/* Non-mobile stuff */}
     {sm && <>
       {/* Items dropdown */}
       <ItemsDropdown />
-      <div className="h-[64px] mr-md border-0 border-solid border-r border-r-split" />
+      <div className="h-header mr-md border-0 border-solid border-r border-r-white/10" />
 
       {/* Search box */}
       <Search />

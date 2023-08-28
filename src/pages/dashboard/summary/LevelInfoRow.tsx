@@ -6,11 +6,9 @@ import { useMemo } from "react";
 import { Tooltip } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
-import {
-  useUser, useSubjects, useLevelProgressions,
-  ApiUser, StoredSubjectMap, ApiLevelProgressionMap
-} from "@api";
+import { ApiLevelProgressionMap, ApiUser, StoredSubjectMap, useLevelProgressions, useSubjects, useUser } from "@api";
 
+import { LevelInfoRowPart } from "./LevelInfoRowPart.tsx";
 import { Streak } from "./Streak";
 
 import { DhmDuration } from "@comp/DhmDuration";
@@ -61,32 +59,33 @@ export function LevelInfoRow(): JSX.Element {
   const data = useMemo(() => getData(user, subjects, levelProgressions),
     [user, subjects, levelProgressions]);
 
-  return <div className="level-info-row">
+  return <div
+    className="bg-[#303030] border-0 border-solid border-y border-y-[#303030] flex flex-row gap-px flex-wrap"
+  >
     {user !== undefined && (
-      <div className="level-info-part">
-        <span className="label">Level: </span>
+      <LevelInfoRowPart label="Current level">
         {Math.min(user.data.level, maxLevel)} / {maxLevel}
-      </div>
+      </LevelInfoRowPart>
     )}
 
-    {(user?.data.level || 1) <= maxLevel && <div className="level-info-part">
-      <span className="label">Time on level: </span>
-      {data?.timeOnLevel !== undefined
-        ? <DhmDuration seconds={data.timeOnLevel} showYears />
-        : <span className="not-started">Not started yet</span>}
-    </div>}
+    {(user?.data.level || 1) <= maxLevel && (
+      <LevelInfoRowPart label="Time on level">
+        {data?.timeOnLevel !== undefined
+          ? <DhmDuration seconds={data.timeOnLevel} showYears short={!xl} />
+          : <span className="text-desc-c/35 italic">Not started yet</span>}
+      </LevelInfoRowPart>
+    )}
 
     {xl && data?.startDate !== undefined && data?.startDateSeconds !== undefined && (
       <Tooltip title={data.startDate.toLocaleString()}>
-        <div className="level-info-part">
-          <span className="label">Signed up: </span>
+        <LevelInfoRowPart label="Started">
           <DhmDuration
             seconds={data.startDateSeconds}
             showYears
             showHours={false}
             showMinutes={false}
           /> ago
-        </div>
+        </LevelInfoRowPart>
       </Tooltip>
     )}
 

@@ -25,18 +25,13 @@ export function HwInputPopover({
   visible, setVisible,
   setValue
 }: Props): JSX.Element {
-  // Real popover was too buggy with visibility changes, so here's a fake
-  // looking one!
   return <>
-    {/* Fake popover */}
-    {visible && <div className="ant-popover ant-popover-placement-bottom handwriting-input-popover">
-      <div className="ant-popover-content">
-        <div className="ant-popover-inner">
-          <div className="ant-popover-inner-content">
-            <PopoverInner setValue={setValue} />
-          </div>
-        </div>
-      </div>
+    {visible && <div
+      className="w-full max-w-[400px] fixed top-header right-0 z-50 bg-container rounded-b !mr-0"
+      // Allows onBlur.relatedTarget to work in the search box
+      tabIndex={0}
+    >
+      <PopoverInner setValue={setValue} />
     </div>}
 
     {/* The normal input button */}
@@ -71,16 +66,22 @@ function PopoverInner({ setValue }: Pick<Props, "setValue">): JSX.Element {
     clear();
   }, [setValue, clear]);
 
-  return <div className="hw-popover-inner">
+  const btnClass = "h-[48px] mr-sm last:mr-0";
+
+  return <div className="flex flex-col">
     {/* Title area + settings */}
-    <div className="hw-header">
-      <span className="hw-title">Handwriting</span>
+    <div className="flex items-center w-full border-0 border-solid border-b border-b-split py-xs px-sm">
+      {/* Title */}
+      <span className="block leading-none font-semibold">
+        Handwriting
+      </span>
 
       {/* Always open setting */}
-      <div className="hw-settings">
+      <div className="ml-auto">
         <Checkbox
           checked={alwaysOpen}
           onChange={e => setBooleanSetting("searchAlwaysHandwriting", e.target.checked, false)}
+          tabIndex={7}
         >
           Open with search
         </Checkbox>
@@ -94,35 +95,40 @@ function PopoverInner({ setValue }: Pick<Props, "setValue">): JSX.Element {
         {hwCanvas}
 
         {/* Suggested character row */}
-        <div className="hw-suggestions">
+        <div
+          className="border-0 border-solid border-t border-t-split whitespace-nowrap overflow-x-auto min-h-[49px]
+            [scrollbar-width]:none [-ms-overflow-style]:none [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0"
+          tabIndex={1}
+        >
           {predictions.map(c => (
-            <div
+            <span
               key={c}
-              className={"hw-suggestion"}
+              className="inline-block cursor-pointer px-md h-[48px] leading-[48px] text-center align-middle
+                 border-0 border-solid border-r border-r-split font-ja text-lg select-none hover:bg-white/5"
               onClick={() => appendValue(c)}
             >
               {c}
-            </div>
+            </span>
           ))}
         </div>
       </>
       : <HwOfflineWarning />}
 
-    <div className="hw-controls">
-      <Button className="hw-backspace" onClick={backspace}><BackspaceFilled /></Button>
-      <Button className="hw-undo" onClick={undo}><UndoOutlined /></Button>
-      <Button className="hw-space" onClick={space}><SpaceOutlined /></Button>
-      <Button className="hw-redo" onClick={redo}><RedoOutlined /></Button>
-      <Button className="hw-clear" onClick={clear}><DeleteFilled /></Button>
+    <div className="flex bg-white/5 border-0 border-solid border-t border-t-split py-xs px-sm mb-px">
+      <Button tabIndex={2} className={btnClass} onClick={backspace}><BackspaceFilled /></Button>
+      <Button tabIndex={3} className={btnClass} onClick={undo}><UndoOutlined /></Button>
+      <Button tabIndex={4} className={btnClass + " flex-1"} onClick={space}><SpaceOutlined /></Button>
+      <Button tabIndex={5} className={btnClass} onClick={redo}><RedoOutlined /></Button>
+      <Button tabIndex={6} className={btnClass} onClick={clear}><DeleteFilled /></Button>
     </div>
   </div>;
 }
 
 function HwOfflineWarning(): JSX.Element {
-  return <div className="hw-offline-warning">
-    <CloudDisconnectedOutlined />
+  return <div className="relative flex items-center justify-center p-lg">
+    <CloudDisconnectedOutlined className="!text-red/50 text-[4rem] mr-lg" />
 
-    <span className="hw-offline-subtitle">
+    <span className="text-desc">
       An internet connection is required for handwriting recognition.
     </span>
   </div>;

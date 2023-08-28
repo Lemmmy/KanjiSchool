@@ -23,13 +23,11 @@ const NoParagraph: FC<NoParagraphProps> = ({ children, ...props }) => (
 export const SubjectMarkup: FC<Props> = ({ children, className }) => {
   if (!children) return null;
 
-  const classes = classNames("subject-markup", className);
-
   // Newlines to <br />, since paragraphs get removed
   children = children.replace(/\n/g, "<br />");
 
   return <Markdown
-    className={classes}
+    className={classNames("block [&_br]:block [&_br]:[content:''] [&_br]:mb-sm", className)}
     options={{
       forceInline: true,
       overrides: {
@@ -58,15 +56,18 @@ interface MarkupPartProps {
   children: ReactNode;
 }
 
+const partClass = "inline-block px-[0.325em] mx-[0.1em] text-white bg-container rounded-sm font-bold leading-[1.25] " +
+  "whitespace-nowrap [text-shadow:0_2px_0_rgba(0,0,0,0.4),0_1px_3px_rgba(0,0,0,0.5)]";
+
 const MarkupRadical = ({ children }: MarkupPartProps): ReactNode =>
-  <span className="markup-part markup-radical">{children}</span>;
+  <span className={classNames(partClass, "!bg-radical-dark")}>{children}</span>;
 const MarkupKanji = ({ children }: MarkupPartProps): ReactNode =>
-  <span className="markup-part markup-kanji">{children}</span>;
+  <span className={classNames(partClass, "!bg-kanji-dark")}>{children}</span>;
 const MarkupVocabulary = ({ children }: MarkupPartProps): ReactNode =>
-  <span className="markup-part markup-vocabulary">{children}</span>;
+  <span className={classNames(partClass, "!bg-vocabulary-adrk")}>{children}</span>;
 const MarkupMeaning = ({ children }: MarkupPartProps): ReactNode =>
-  <span className="markup-part markup-meaning">{children}</span>;
+  <span className={partClass}>{children}</span>;
 const MarkupReading = ({ children }: MarkupPartProps): ReactNode =>
-  <span className="markup-part markup-reading">{children}</span>;
+  <span className={classNames(partClass, "!bg-reading")}>{children}</span>;
 const MarkupJa = ({ children }: MarkupPartProps): ReactNode =>
-  <span className="markup-ja ja">{children}</span>;
+  <span className="font-ja">{children}</span>;

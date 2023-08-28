@@ -17,7 +17,7 @@ export function UpcomingReviewsNext(): JSX.Element | null {
     return null;
   }
 
-  return <span className="upcoming-reviews-next">
+  return <span className="text-desc leading-none">
     <b>{nts(nextReviewsCount)}</b>
     {nextReviewsCount === 1 ? " review " : " reviews "}
     in <b><ShortDuration date={nextReviewsAt} /></b>

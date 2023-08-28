@@ -34,8 +34,8 @@ export function StartSessionButton({ type }: Props): JSX.Element {
   [navigate, type]);
 
   return <PresetDropdownBtn
-    className="session-btn"
     type="primary"
+    className="w-auto"
 
     // Shrink and disable the button if there is an ongoing session
     size={(md || !sm) && !ongoing ? "large" : "middle"}

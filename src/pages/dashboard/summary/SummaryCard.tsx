@@ -19,18 +19,12 @@ export const SummaryCard = forwardRef<HTMLDivElement>((_, ref) => {
   // Get the available assignments shared between the lessons and reviews cols
   const available = useAvailableAssignments();
 
-  return <div
-    // Card doesn't have a forwardRef, so we have to wrap it in a div :/
-    ref={ref}
-  >
+  return <div ref={ref}>
     <Card
       title={user ? "Summary for " + user.data.username : "Summary"}
-
-      className="dashboard-summary-card"
-
-      // Refresh button in top right of summary card, with a loading icon if they
-      // are currently syncing
-      extra={<RefreshButton />}
+      className="[&>.ant-card-body]:p-0 [&>.ant-card-head]:pr-sm"
+      // Refresh button in top right of summary card, with a loading icon when syncing
+      extra={<RefreshButton className="border-0 my-px mx-0 h-[54px]" />}
     >
       {/* Current level, time on level, etc. */}
       <LevelInfoRow />

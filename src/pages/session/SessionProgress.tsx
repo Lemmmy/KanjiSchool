@@ -12,11 +12,17 @@ import { countSessionItems } from "@session";
 import { useBooleanSetting } from "@utils";
 
 interface Props {
-  responsive?: boolean;
+  className?: string;
+  heightClassName?: string;
+  barClassName?: string;
+  barHeightClassName?: string;
 }
 
 export function SessionProgress({
-  responsive = true
+  className,
+  heightClassName = "h-[12px]",
+  barClassName = "inline-block transition-all",
+  barHeightClassName = heightClassName,
 }: Props): JSX.Element {
   const doingLessons = useSelector((s: RootState) => s.session.doingLessons);
   const lessonCounter = useSelector((s: RootState) => s.session.lessonCounter);
@@ -35,19 +41,29 @@ export function SessionProgress({
   const perc = useCallback((n: number) => ((n / totalItems) * 100) + "%",
     [totalItems]);
 
-  const classes = classNames("session-progress-container", { responsive });
+  const classes = classNames(
+    "flex flex-1 mb-lg bg-white/4 rounded-2xl overflow-hidden",
+    heightClassName,
+    className
+  );
 
   return <div className={classes}>
     {/* Finished items */}
-    <div className="bar-part bar-finished"
-      style={{ width: perc(barFinished) }} />
+    <div
+      className={classNames(barClassName, barHeightClassName, "bg-primary")}
+      style={{ width: perc(barFinished) }}
+    />
 
     {/* Started items */}
-    {showStarted && <div className="bar-part bar-started"
-      style={{ width: perc(startedItems) }} />}
+    {showStarted && <div
+      className={classNames(barClassName, barHeightClassName, "bg-primary/50")}
+      style={{ width: perc(startedItems) }}
+    />}
 
     {/* Skipped items */}
-    {showSkipped && <div className="bar-part bar-skipped"
-      style={{ width: perc(skippedItems) }} />}
+    {showSkipped && <div
+      className={classNames(barClassName, barHeightClassName, "bg-orange/25")}
+      style={{ width: perc(skippedItems) }}
+    />}
   </div>;
 }

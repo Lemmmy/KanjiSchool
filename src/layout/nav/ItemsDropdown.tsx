@@ -2,43 +2,44 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Dropdown, Menu } from "antd";
+import { Dropdown, MenuProps } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
+import { headerElementClass, dropdownOverlayClass } from "./AppHeader.tsx";
+
+const menu: MenuProps = {
+  items: [{
+    key: "all-items",
+    label: <ConditionalLink to="/items/wk" matchTo aria-label="All items">
+      All items
+    </ConditionalLink>
+  }, {
+    key: "jlpt",
+    label: <ConditionalLink to="/items/jlpt" matchTo aria-label="JLPT kanji">
+      JLPT kanji
+    </ConditionalLink>
+  }, {
+    key: "joyo",
+    label: <ConditionalLink to="/items/joyo" matchTo aria-label="Jōyō kanji">
+      Jōyō kanji
+    </ConditionalLink>
+  }, {
+    key: "freq",
+    label: <ConditionalLink to="/items/frequency" matchTo aria-label="Newspaper frequency">
+      Newspaper frequency
+    </ConditionalLink>
+  }]
+};
 
 export function ItemsDropdown(): JSX.Element {
   return <Dropdown
     trigger={["click"]}
-    overlayClassName="site-header-dropdown-overlay site-header-items-dropdown-menu"
-    overlay={<Menu>
-      <Menu.Item key="all-items">
-        <ConditionalLink to="/items/wk" matchTo aria-label="All items">
-          All items
-        </ConditionalLink>
-      </Menu.Item>
-
-      <Menu.Item key="jlpt">
-        <ConditionalLink to="/items/jlpt" matchTo aria-label="JLPT kanji">
-          JLPT kanji
-        </ConditionalLink>
-      </Menu.Item>
-
-      <Menu.Item key="joyo">
-        <ConditionalLink to="/items/joyo" matchTo aria-label="Jōyō kanji">
-        Jōyō kanji
-        </ConditionalLink>
-      </Menu.Item>
-
-      <Menu.Item key="freq">
-        <ConditionalLink to="/items/frequency" matchTo aria-label="Newspaper frequency">
-          Newspaper frequency
-        </ConditionalLink>
-      </Menu.Item>
-    </Menu>}
+    overlayClassName={dropdownOverlayClass}
+    menu={menu}
   >
-    <div className="ant-dropdown-link site-header-element">
-      Items <DownOutlined />
+    <div className={headerElementClass}> {/* ant-dropdown-link */}
+      Items <DownOutlined className="hidden lg:inline-block text-xss ml-md" />
     </div>
   </Dropdown>;
 }

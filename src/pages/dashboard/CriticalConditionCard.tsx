@@ -97,8 +97,8 @@ export function CriticalConditionCard(): JSX.Element {
   const onShowAll = useCallback(() => setShowingAll(true), []);
 
   const isEmpty = data && !data[0].length;
-  const classes = classNames("dashboard-subject-list-card", {
-    "card-empty": isEmpty
+  const classes = classNames("[&>.ant-card-body]:p-0", {
+    "[&>.ant-card-body]:flex [&>.ant-card-body]:items-center [&>.ant-card-body]:justify-center": isEmpty
   });
 
   return <Card

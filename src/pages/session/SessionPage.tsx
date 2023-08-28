@@ -61,7 +61,6 @@ export function SessionPage(): JSX.Element {
       !doingLessons ? {
         key: "top-wrap-up",
         onClick: () => wrapUpSession(),
-        className: "menu-item-has-hotkey",
         icon: <CloseOutlined />,
         label: <>
           Wrap up session
@@ -74,7 +73,6 @@ export function SessionPage(): JSX.Element {
         key: "top-abandon",
         onClick: () => showSessionAbandonModal(),
         danger: true,
-        className: "menu-item-has-hotkey",
         icon: <DeleteOutlined />,
         label: <>
           Abandon session

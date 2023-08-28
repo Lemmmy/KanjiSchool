@@ -15,19 +15,22 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
 
   useEffect(() => {
     const properties: Record<string, string> = {
-      "--antd-primary"         : token.colorPrimary,
-      "--antd-link"            : token.colorLink,
-      "--antd-text"            : token.colorText,
-      "--antd-text-o-70"       : fadeColor(new TinyColor(token.colorText), 0.7).toRgbString(),
-      "--antd-text-desc"       : token.colorTextDescription,
-      "--antd-text-disabled"   : token.colorTextDisabled,
-      "--antd-split"           : token.colorSplit,
+      "--antd-primary"      : token.colorPrimary,
+      "--antd-link"         : token.colorLink,
+      "--antd-text"         : token.colorText,
+      "--antd-text-o-70"    : fadeColor(new TinyColor(token.colorText), 0.7).toRgbString(),
+      "--antd-text-desc"    : token.colorTextDescription,
+      "--antd-text-disabled": token.colorTextDisabled,
+      "--antd-split"        : token.colorSplit,
+      "--antd-container"    : token.colorBgContainer,
+      "--antd-header"       : "#101010", // TODO: light theme
     };
 
     const propertiesWithAlpha: Record<string, boolean> = {
       "--antd-text"         : true,
       "--antd-text-desc"    : true,
       "--antd-text-disabled": true,
+      "--antd-split"        : true,
     };
 
     // Add the colors from the antd color palette
@@ -35,19 +38,22 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
       const palette = presetPalettes[colorName];
 
       for (const shade in palette) {
-        properties[`--antd-${colorName}-${shade}`] = colorToRgbOnly(new TinyColor(palette[shade]));
+        properties[`--antd-${colorName}-${shade}`] = palette[shade];
       }
     }
 
     for (const key in properties) {
-      document.documentElement.style.setProperty(key, properties[key]);
+      const col = properties[key];
 
       // Versions of the colors in the form "255, 255, 255" so they can have alpha applied by Tailwind
       if (propertiesWithAlpha[key]) {
+        document.documentElement.style.setProperty(key, col);
         document.documentElement.style.setProperty(
           key + "-c",
-          colorToRgbOnly(new TinyColor(properties[key]))
+          colorToRgbOnly(new TinyColor(col))
         );
+      } else {
+        document.documentElement.style.setProperty(key, colorToRgbOnly(new TinyColor(col)));
       }
     }
   }, [token]);

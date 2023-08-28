@@ -15,7 +15,11 @@ import { useOnlineStatus } from "@utils";
 import Debug from "debug";
 const debug = Debug("kanjischool:summary-refresh");
 
-export function RefreshButton(): JSX.Element {
+interface Props {
+  className?: string;
+}
+
+export function RefreshButton({ className }: Props): JSX.Element {
   const isOnline = useOnlineStatus();
 
   const user = useUser();
@@ -41,6 +45,7 @@ export function RefreshButton(): JSX.Element {
     loading={syncing}
     onClick={refresh}
     disabled={!isOnline}
+    className={className}
   >
     Refresh
   </Button>;

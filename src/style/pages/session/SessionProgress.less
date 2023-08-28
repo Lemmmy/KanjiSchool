@@ -3,22 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 .session-progress-container {
-  display: flex;
-  flex: 1;
-  height: 12px;
-
-  margin-bottom: @margin-lg;
-
-  background: @component-background;
-  border-radius: 6px;
-  overflow: hidden;
-
-  .bar-part {
-    display: inline-block;
-    height: 12px;
-    transition: width @animation-duration-base ease-in-out;
-  }
-
   .bar-finished { background: @primary-color; }
   .bar-started { background: fade(@primary-color, 50%); }
   .bar-skipped { background: fade(@orange-base, 25%); }

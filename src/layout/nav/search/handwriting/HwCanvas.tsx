@@ -2,23 +2,24 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React, { Dispatch, useCallback, useRef, useState } from "react";
+import React, { Dispatch, useCallback, useRef, useState, SetStateAction } from "react";
+import { theme } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
 import { recognize } from "./recognition";
 import { throttle } from "lodash-es";
 
 import Debug from "debug";
-import { SetStateAction } from "react";
 const debug = Debug("kanjischool:hw-canvas");
 
 /*
-Based on https://github.com/ChenYuHo/handwriting.js
-MIT Licensed
-*/
+ * Based on https://github.com/ChenYuHo/handwriting.js
+ * MIT Licensed
+ */
+
+const { useToken } = theme;
 
 const LINE_WIDTH = 4;
-const LINE_COLOR = "#1890ff";
 const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 200;
 const RECOGNITION_THROTTLE = 300;
@@ -100,6 +101,9 @@ const throttledRecognizeAndSet = throttle(recognizeAndSet, RECOGNITION_THROTTLE)
 export function useHwCanvas(
   setPredictions: Dispatch<SetStateAction<string[]>>
 ): HookRes {
+  const { token } = useToken();
+  const penColor = token.colorPrimary;
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const getCtx = (): [CanvasRenderingContext2D | undefined, HTMLCanvasElement | undefined] =>
     ([canvasRef.current?.getContext("2d") || undefined, canvasRef.current || undefined]);
@@ -108,7 +112,7 @@ export function useHwCanvas(
   // background image to indicate a drawable area
   const [empty, setEmpty] = useState(true);
 
-  // State is stored in a ref so it can be used by all the callbacks without
+  // State is stored in a ref, so it can be used by all the callbacks without
   // re-rendering everything every single time something happens
   const stateRef = useRef<CanvasState>({
     drawing: false,
@@ -134,10 +138,10 @@ export function useHwCanvas(
     ctx.lineWidth = LINE_WIDTH;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = LINE_COLOR;
+    ctx.strokeStyle = penColor;
 
     debug("handwriting canvas init", canvas.width, canvas.height);
-  }, []);
+  }, [penColor]);
 
   /// Raw pen down event shared by mouse and touch
   const penDown = useCallback((x: number, y: number) => {
@@ -311,19 +315,22 @@ export function useHwCanvas(
 
   // Canvas is cached so its ref doesn't change when `empty` state changes
   const canvasEl = React.useMemo(() => <canvas
-    className="hw-canvas"
+    className="w-full aspect-2/1 cursor-pen touch-none select-none"
 
     ref={onCanvasInit}
     onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}
     onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
   />, [onCanvasInit, onMouseDown, onMouseMove, onMouseUp, onTouchStart, onTouchMove, onTouchEnd]);
 
-  const el = React.useMemo(() => <div className="hw-canvas-container">
+  const el = React.useMemo(() => <div className="relative">
     {/* Cached canvas */}
     {canvasEl}
     {/* Pencil background image shown when the canvas is empty, used to indicate
       * a drawable area to the user */}
-    {empty && <EditOutlined className="hw-canvas-bg" />}
+    {empty && <EditOutlined
+      className="w-full flex items-center justify-center absolute inset-0 text-white/10 pointer-events-none
+        [&_svg]:w-1/2 [&_svg]:h-1/2"
+    />}
   </div>, [empty, canvasEl]);
 
   return [el, undo, redo, clear];

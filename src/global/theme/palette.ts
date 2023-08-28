@@ -182,7 +182,7 @@ export function buildPaletteStyles(palette: ColorPalette): CSSProperties {
 
     // Lighten the color (for hover etc.)
     props[`--wktc-${convertKeyName(origKey)}-lighter`] =
-      new TinyColor(color).lighten(7.5).toHexString();
+      new TinyColor(color).lighten(10).toHexString();
 
     // Darken the color (for hover etc.)
     props[`--wktc-${convertKeyName(origKey)}-darker`] =
