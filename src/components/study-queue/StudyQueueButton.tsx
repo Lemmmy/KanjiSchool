@@ -38,6 +38,7 @@ export function StudyQueueButton({
   // Bind the self-study hotkey to this button being mounted
   useEffect(() => {
     if (subjectIds) return; // Do nothing if this is a multiple-subject button
+    console.log("binding hotkey to subject", subjectId);
     hover(subjectId);
     return unhover;
   }, [subjectId, subjectIds, hover, unhover]);
@@ -45,7 +46,7 @@ export function StudyQueueButton({
   // Tooltip (in case this is an icon-only button)
   return <Tooltip
     title={() => <>{longTitle} <b>(Q)</b></>}
-    destroyTooltipOnHide={false}
+    destroyTooltipOnHide={true}
   >
     {/* Add/remove to/from self-study queue button */}
     <Button

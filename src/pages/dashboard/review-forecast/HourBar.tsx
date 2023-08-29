@@ -5,13 +5,16 @@
 import { Tooltip } from "antd";
 import classNames from "classnames";
 
+type HourBarType = "non-level-up" | "level-up" | "radical" | "kanji" | "vocabulary";
+
 interface Props {
   n?: number;
   max?: number;
-  className?: string;
+  type?: HourBarType;
+  bgClassName?: string;
 }
 
-const TOOLTIP_TITLES: Record<string, string> = {
+const TOOLTIP_TITLES: Record<HourBarType, string> = {
   "non-level-up": "Non-level-up reviews",
   "level-up": "Level-up reviews (current-level radicals/kanji)",
   "radical": "Radicals",
@@ -19,12 +22,17 @@ const TOOLTIP_TITLES: Record<string, string> = {
   "vocabulary": "Vocabulary"
 };
 
-export function HourBar({ n, max, className }: Props): JSX.Element | null {
+export function HourBar({
+  n,
+  max,
+  type,
+  bgClassName = "bg-primary"
+}: Props): JSX.Element | null {
   if (!n || !max) return null;
 
-  const tooltipTitle = className ? TOOLTIP_TITLES[className] : undefined;
+  const tooltipTitle = type ? TOOLTIP_TITLES[type] : undefined;
 
-  const classes = classNames("bar-inner", className);
+  const classes = classNames("inline-block h-[12.8px] last:rounded-r-[6.4px]", bgClassName);
 
   const bar = <div
     className={classes}

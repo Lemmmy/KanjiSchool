@@ -17,8 +17,11 @@ export const makeRenderTooltipFn = (
 ): SubjectRenderTooltipFn =>
   (subject: StoredSubject, assignment?: StoredAssignment): ReactNode => (
     <SubjectTooltipInner
-      subject={subject} assignment={assignment}
-      showJlpt={showJlpt} showJoyo={showJoyo} showFreq={showFreq}
+      subject={subject}
+      assignment={assignment}
+      showJlpt={showJlpt}
+      showJoyo={showJoyo}
+      showFreq={showFreq}
     />
   );
 

@@ -2,25 +2,36 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import classNames from "classnames";
 import { nts } from "@utils";
 
 interface Props {
   reviews: number;
   cum: number;
+  isNow?: boolean;
+  className?: string;
+  sepHeightClass?: string;
 }
 
-export function Numbers({ reviews, cum }: Props): JSX.Element {
-  return <div className="numbers">
+export function Numbers({
+  reviews,
+  cum,
+  isNow,
+  className,
+  sepHeightClass = "h-[24px]"
+}: Props): JSX.Element {
+  return <div className={classNames("flex items-center -mr-xs", className)}>
     {/* Review count (+n) */}
-    <span className="review-count">
-      <span className="plus">+</span>
-      <span className="count">{nts(reviews)}</span>
+    <span className="inline-block w-[3em] text-right">
+      <span className={isNow ? "text-green/60" : "text-desc"}>+</span>
+      {nts(reviews)}
     </span>
 
-    <span className="sep" />
+    {/* Separator */}
+    <span className={classNames("inline-block mx-sm w-px bg-white/20", sepHeightClass)} />
 
     {/* Cumulative review count*/}
-    <span className="review-count-cum">
+    <span className="inline-block w-[2em]">
       {nts(cum)}
     </span>
   </div>;

@@ -43,13 +43,14 @@ export default {
     extend: {
       spacing: {
         // antd compatible spacing
-        lg    : "24px",
-        md    : "16px",
-        sm    : "12px",
-        xs    : "8px",
-        xss   : "4px",
-        header: "64px",
-        text  : "0.3em"
+        lg           : "24px",
+        md           : "16px",
+        sm           : "12px",
+        xs           : "8px",
+        xss          : "4px",
+        header       : "64px",
+        text         : "0.3em",
+        "study-modal": "182px", // 150px + md * 2
       },
 
       fontFamily: {
@@ -96,6 +97,7 @@ export default {
       "white"     : "rgb(255 255 255 / <alpha-value>)",
       "black"     : "rgb(0 0 0 / <alpha-value>)",
       "primary"   : "rgb(var(--antd-primary) / <alpha-value>)",
+      "success"   : "rgb(var(--antd-success) / <alpha-value>)",
       "link"      : "rgb(var(--antd-link) / <alpha-value>)",
       "base"      : "var(--antd-text)",
       "base-c"    : "rgb(var(--antd-text-c) / <alpha-value>)",

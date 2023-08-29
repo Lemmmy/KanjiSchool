@@ -152,7 +152,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
   return <Tooltip
     overlayClassName="subject-tooltip"
     title={boundRenderTooltip}
-    destroyTooltipOnHide={false}
+    destroyTooltipOnHide={true}
   >
     <Link
       to={url}

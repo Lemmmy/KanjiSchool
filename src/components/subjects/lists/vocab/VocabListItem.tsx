@@ -67,7 +67,7 @@ export const VocabListItem = React.memo(function VocabListItem({
   return <Tooltip
     overlayClassName="subject-tooltip"
     title={boundRenderTooltip}
-    destroyTooltipOnHide={false}
+    destroyTooltipOnHide={true}
   >
     <Row className={classes} ref={divRef} style={style}>
       <ConditionalLink to={url} matchTo>

@@ -16,6 +16,7 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
   useEffect(() => {
     const properties: Record<string, string> = {
       "--antd-primary"      : token.colorPrimary,
+      "--antd-success"      : token.colorSuccess,
       "--antd-link"         : token.colorLink,
       "--antd-text"         : token.colorText,
       "--antd-text-o-70"    : fadeColor(new TinyColor(token.colorText), 0.7).toRgbString(),

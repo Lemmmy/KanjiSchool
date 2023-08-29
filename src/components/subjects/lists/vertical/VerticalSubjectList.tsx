@@ -60,7 +60,7 @@ export function VerticalSubjectList({
   }, [items, assignments, subjectAssignmentIds, renderTooltipFn]);
 
   const classes = classNames(
-    "[&_.ant-list-items]:overflow-y-auto [&_.ant-list-items]:max-height-[420px]", // one item is 42px
+    "[&_.ant-list-items]:overflow-y-auto [&_.ant-list-items]:max-h-[420px]", // one item is 42px
     className
   );
 

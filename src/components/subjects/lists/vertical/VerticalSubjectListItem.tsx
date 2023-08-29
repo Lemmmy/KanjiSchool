@@ -45,7 +45,7 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
   return <Tooltip
     overlayClassName="subject-tooltip"
     title={boundRenderTooltip}
-    destroyTooltipOnHide={false}
+    destroyTooltipOnHide={true}
   >
     <List.Item className={classes} style={style}>
       <ConditionalLink

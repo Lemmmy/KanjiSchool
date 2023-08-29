@@ -46,12 +46,32 @@ export function StudyQueueModal(): JSX.Element | null {
   const hasAssignments = !!useAssignments();
   if (!hasAssignments) return null;
 
-  const classes = classNames("study-queue-modal", { collapsed });
+  const classes = classNames(
+    "mt-auto mr-lg mb-lg ml-auto pb-0 absolute top-[unset] left-[unset] right-0 bottom-0 pointer-events-auto",
+
+    // Center the close buttons a little better
+    "[&_.ant-modal-close]:top-[20px]",
+
+    "[&_.ant-modal-body]:h-full [&_.ant-modal-body]:max-h-study-modal",
+    "[&_.ant-modal-body]:p-0 [&_.ant-modal-body]:overflow-y-hidden",
+    "[&_.ant-modal-body]:transition-[max-height,margin-bottom]",
+
+    "[&_.ant-modal-footer]:h-full [&_.ant-modal-footer]:max-h-study-modal [&_.ant-modal-footer]:overflow-y-hidden",
+    "[&_.ant-modal-footer]:transition-[max-height,margin-top]",
+    "[&_.ant-modal-footer]:items-center [&_.ant-modal-footer]:text-left",
+
+    {
+      // Collapsed state
+      "[&_.ant-modal-header]:!mb-0": collapsed,
+      "[&_.ant-modal-body]:!max-h-0": collapsed,
+      "[&_.ant-modal-footer]:!max-h-0 [&_.ant-modal-footer]:!mt-0": collapsed,
+    }
+  );
 
   return <>
     <Modal
       className={classes}
-      wrapClassName="study-queue-modal-wrap"
+      wrapClassName="pointer-events-none"
       width={420}
 
       // Header
@@ -74,7 +94,7 @@ export function StudyQueueModal(): JSX.Element | null {
     >
       {/* Subjects */}
       <div
-        className="study-queue-inner-container"
+        className="h-full max-h-study-modal transition-study-modal overflow-y-auto mt-xss"
         // Ref here is for the SubjectGrid, so that it can handle scroll
         // windowing correctly
         ref={r => setInnerContainerRef(r)}
@@ -121,7 +141,7 @@ function ModalHeader({
 
   return <>
     <span className="study-title">
-      Self-study queue <span className="study-count">
+      Self-study queue <span className="ml-text text-base font-normal">
         ({pluralN(count, "subject")})
       </span>
     </span>
@@ -131,7 +151,7 @@ function ModalHeader({
       <button
         type="button"
         aria-label="Hide"
-        className="ant-modal-close study-modal-collapse"
+        className="ant-modal-close !right-[56px]"
         onClick={toggleCollapse}
       >
         <span className="ant-modal-close-x">
@@ -172,28 +192,27 @@ function ModalFooter({ items }: FooterProps): JSX.Element {
     gotoSession(navigate, startSession("self_study", items, withLessons, opts));
   }, [navigate, items, withLessons]);
 
-  return <>
+  return <div className="flex items-center">
     {/* "With lessons" checkbox */}
     <Checkbox
       onChange={setWithLessons}
       checked={withLessons}
-      style={{ float: "left" }}
+      className="flex-1"
     >
       With lessons
     </Checkbox>
 
-    {/* Spacer */}
-    <div className="spacer" />
-
     {/* Self-study button */}
     <PresetDropdownBtn
-      type="primary" presetType="review"
+      type="primary"
+      presetType="review"
       disabled={(items?.length || 0) === 0}
       start={start}
+      className="w-auto"
     >
       Start self-study
     </PresetDropdownBtn>
-  </>;
+  </div>;
 }
 
 function promptClear() {
