@@ -22,8 +22,10 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
       "--antd-text-o-70"    : fadeColor(new TinyColor(token.colorText), 0.7).toRgbString(),
       "--antd-text-desc"    : token.colorTextDescription,
       "--antd-text-disabled": token.colorTextDisabled,
+      "--antd-text-solid"   : token.colorTextLightSolid,
       "--antd-split"        : token.colorSplit,
       "--antd-container"    : token.colorBgContainer,
+      "--antd-spotlight"    : token.colorBgSpotlight,
       "--antd-header"       : "#101010", // TODO: light theme
     };
 

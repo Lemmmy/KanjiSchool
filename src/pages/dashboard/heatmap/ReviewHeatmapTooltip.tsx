@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function ReviewHeatmapTooltip({ day }: Props): JSX.Element {
-  return <div className="flex flex-wrap gap-sm text-base">
+  return <div className="flex flex-wrap gap-sm text-base-c">
     <span className="whitespace-nowrap">
       {isToday(day.date)
         ? <b>Today</b>

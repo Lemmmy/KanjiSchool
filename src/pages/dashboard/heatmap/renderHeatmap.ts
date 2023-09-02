@@ -4,7 +4,7 @@
 
 import { HeatmapDatum, HeatmapDay } from "./data";
 
-import { Selection } from "d3";
+import { Selection } from "d3-selection";
 import { timeDays, timeWeek, timeYear } from "d3-time";
 import { range, index } from "d3-array";
 
@@ -76,7 +76,7 @@ export function renderHeatmap(
     .selectAll("text")
     .data(y => range(12).map(i => new Date(y.year, i, 1)))
     .join("text")
-    .attr("class", "[text-anchor:start] text-[9px] font-ja")
+    .classed("[text-anchor:start] text-[9px] font-ja", true)
     // TODO: Round weeks up like github?
     .attr("x", d => timeWeek.count(timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
     .attr("y", 0)
@@ -89,7 +89,7 @@ export function renderHeatmap(
     .selectAll("text")
     .data(y => range(7).map(i => new Date(y.year, 0, i)))
     .join("text")
-    .attr("class", "[text-anchor:end] text-[10px] font-ja")
+    .classed("[text-anchor:end] text-[10px] font-ja", true)
     .attr("x", -4)
     .attr("y", d => d.getDay() * (CELL_SIZE + CELL_SPACING))
     .attr("dy", "0.85em")
@@ -106,7 +106,7 @@ export function renderHeatmap(
       return { d, year, day };
     }))
     .join("rect")
-    .attr("class", "cursor-pointer hover:brightness-150")
+    .classed("cursor-pointer hover:brightness-150", true)
     .attr("width", CELL_SIZE).attr("height", CELL_SIZE)
     .attr("rx", CELL_ROUNDING).attr("ry", CELL_ROUNDING)
     .attr("x", ({ d }) =>

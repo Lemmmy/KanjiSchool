@@ -137,7 +137,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
 
   const normType = normalizeVocabType(subject.object);
   const classes = classNames(
-    "inline-block box-content text-center transition group text-base",
+    "inline-block box-content text-center transition group",
     sizeClassesObj.base,
     sizeClassesObj.types?.[normType],
     bgClassName,

@@ -1807,13 +1807,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kurkle/color@npm:^0.3.0":
-  version: 0.3.2
-  resolution: "@kurkle/color@npm:0.3.2"
-  checksum: 79e97b31f8f6efb28c69d373f94b0c7480226fe8ec95221f518ac998e156444a496727ce47de6d728eb5c3369288e794cba82cae34253deb0d472d3bfe080e49
-  languageName: node
-  linkType: hard
-
 "@microsoft/tsdoc-config@npm:0.16.2":
   version: 0.16.2
   resolution: "@microsoft/tsdoc-config@npm:0.16.2"
@@ -3454,25 +3447,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "chart.js@npm:4.4.0"
-  dependencies:
-    "@kurkle/color": ^0.3.0
-  checksum: 5ee2d99b78608025525b5790af17178fdaa5adc3294e082deba2718029b0496109ba124f1b08dd1e4c8a04d6e842be7f384f2cfe9a11df8d1c6fe884acece52b
-  languageName: node
-  linkType: hard
-
-"chartjs-adapter-dayjs-4@npm:^1.0.4":
-  version: 1.2.3
-  resolution: "chartjs-adapter-dayjs-4@npm:1.2.3"
-  peerDependencies:
-    chart.js: ">=4.0.1"
-    dayjs: ^1.9.7
-  checksum: 302b43843ac62948fdf58d1f7cae16af42989d50e555a449616eb28a33d238db49892a47ee14457cdb464d07a3afa51a5d1a526c71cab39b381a62e748f37275
-  languageName: node
-  linkType: hard
-
 "chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
@@ -3721,6 +3695,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-axis@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "d3-axis@npm:3.0.0"
+  checksum: 227ddaa6d4bad083539c1ec245e2228b4620cca941997a8a650cb0af239375dc20271993127eedac66f0543f331027aca09385e1e16eed023f93eac937cddf0b
+  languageName: node
+  linkType: hard
+
 "d3-color@npm:1 - 3":
   version: 3.0.1
   resolution: "d3-color@npm:3.0.1"
@@ -3744,6 +3725,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-path@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "d3-path@npm:3.1.0"
+  checksum: 2306f1bd9191e1eac895ec13e3064f732a85f243d6e627d242a313f9777756838a2215ea11562f0c7630c7c3b16a19ec1fe0948b1c82f3317fac55882f6ee5d8
+  languageName: node
+  linkType: hard
+
 "d3-scale@npm:^4.0.2":
   version: 4.0.2
   resolution: "d3-scale@npm:4.0.2"
@@ -3764,12 +3752,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-shape@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "d3-shape@npm:3.2.0"
+  dependencies:
+    d3-path: ^3.1.0
+  checksum: de2af5fc9a93036a7b68581ca0bfc4aca2d5a328aa7ba7064c11aedd44d24f310c20c40157cb654359d4c15c3ef369f95ee53d71221017276e34172c7b719cfa
+  languageName: node
+  linkType: hard
+
 "d3-time-format@npm:2 - 4":
   version: 4.0.0
   resolution: "d3-time-format@npm:4.0.0"
   dependencies:
     d3-time: 1 - 3
   checksum: 64a41ab9fce3810c6a220c50be4efe7074d8db2de95086ddc2aa76a96c1e2a758c051d5f589f17b068a00e007fc36e8979d9204afe5933f0634fea07c9bdef44
+  languageName: node
+  linkType: hard
+
+"d3-time-format@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "d3-time-format@npm:4.1.0"
+  dependencies:
+    d3-time: 1 - 3
+  checksum: 7342bce28355378152bbd4db4e275405439cabba082d9cd01946d40581140481c8328456d91740b0fe513c51ec4a467f4471ffa390c7e0e30ea30e9ec98fcdf4
   languageName: node
   linkType: hard
 
@@ -5765,14 +5771,15 @@ __metadata:
     async-mutex: ^0.4.0
     autoprefixer: ^10.4.15
     axios: ^1.5.0
-    chart.js: ^4.4.0
-    chartjs-adapter-dayjs-4: ^1.0.4
     classnames: ^2.3.2
     cross-env: ^7.0.3
     d3-array: ^3.2.4
+    d3-axis: ^3.0.0
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
+    d3-shape: ^3.2.0
     d3-time: ^3.1.0
+    d3-time-format: ^4.1.0
     date-fns: ^2.30.0
     dayjs: ^1.11.9
     debug: ^4.3.4
@@ -5794,7 +5801,6 @@ __metadata:
     postcss: ^8.4.29
     progress: ^2.0.3
     react: ^18.2.0
-    react-chartjs-2: ^5.2.0
     react-dom: ^18.2.0
     react-error-boundary: ^4.0.11
     react-highlight-words: ^0.20.0
@@ -7441,16 +7447,6 @@ __metadata:
     react: "*"
     react-dom: "*"
   checksum: 0d8d8a20eba339eb639a898e43df6ec0210f10f21ba3e760bacff6352f15b2d725fd37fd4eb6348b9e6cddb1dd29761671c48e5f604e9f55bdc52453822023f2
-  languageName: node
-  linkType: hard
-
-"react-chartjs-2@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "react-chartjs-2@npm:5.2.0"
-  peerDependencies:
-    chart.js: ^4.1.1
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: ace702185be1450e5888a8bcd8b5fc1995067e3b11d236764a67f5567a3d7c32ff16923b8d48d3d39bda6e45135da6c044c9b43fbe8e1978f95aca9d2c0ce348
   languageName: node
   linkType: hard
 

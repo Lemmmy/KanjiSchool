@@ -137,8 +137,10 @@ export default {
       "desc-c"    : "rgb(var(--antd-text-desc-c) / <alpha-value>)",
       "disabled"  : "var(--antd-text-disabled)",
       "disabled-c": "rgb(var(--antd-text-disabled-c) / <alpha-value>)",
+      "solid"     : "rgb(var(--antd-text-solid) / <alpha-value>)",
       "split"     : "var(--antd-split)",
       "container" : "rgb(var(--antd-container) / <alpha-value>)",
+      "spotlight" : "rgb(var(--antd-spotlight) / <alpha-value>)",
       "header"    : "rgb(var(--antd-header) / <alpha-value>)",
 
       // wktc base colors
@@ -236,6 +238,7 @@ export default {
       "question-meaning-dark-hc": "#bfbfbf",
       "question-meaning-light": "#eeeeee", // TODO
       "question-meaning-light-hc": "#eeeeee", // TODO
+      "reviews-cumulative": "#095cb5",
 
       // misc missing values
       "transparent": "transparent",

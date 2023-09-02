@@ -32,7 +32,7 @@ import { GetReviewsWarning } from "@pages/dashboard/GetReviewsWarning";
 
 // Lazy load some of the cards that result in a large bundle size:
 // UpcomingReviewsCard depends on Chart.JS
-const UpcomingReviewsCard = lazy(() => import("./summary/UpcomingReviewsCard.tsx"));
+const UpcomingReviewsCard = lazy(() => import("./summary/upcoming-reviews-chart/UpcomingReviewsCard.tsx"));
 // ReviewHeatmapCard depends on D3
 const ReviewHeatmapCard = lazy(() => import("./heatmap/ReviewHeatmapCard.tsx"));
 // CriticalConditionCard and NewUnlocksCard depend on the subject list components, which have a variety of windowing
