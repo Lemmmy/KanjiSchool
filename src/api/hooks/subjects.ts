@@ -15,8 +15,8 @@ export function useSubject(id?: number): StoredSubject | undefined {
   return id !== undefined ? subject : undefined;
 }
 
-export function useSubjectBySlug(type: NormalizedSubjectType, slug: string): StoredSubject | undefined {
-  const id = useSelector((s: RootState) => s.sync.slugCache?.[type][slug]);
+export function useSubjectBySlug(type: NormalizedSubjectType, slug: string | undefined): StoredSubject | undefined {
+  const id = useSelector((s: RootState) => slug ? s.sync.slugCache?.[type][slug] : undefined);
   return useSelector((s: RootState) => s.sync.subjects?.[id || -1], shallowEqual);
 }
 

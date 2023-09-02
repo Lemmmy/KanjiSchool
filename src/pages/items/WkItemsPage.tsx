@@ -2,6 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { AdvancedSearchPageBase } from "@pages/search/AdvancedSearchPageBase.tsx";
+import { ItemsPage } from "@pages/items/ItemsPage.tsx";
 
-export const Component = (): JSX.Element => <AdvancedSearchPageBase />;
+export const Component = (): JSX.Element => <ItemsPage type="wk" />;

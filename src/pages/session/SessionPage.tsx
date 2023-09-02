@@ -33,7 +33,7 @@ const KEY_MAP: KeyMap = {
   "ABANDON": { sequence: "shift+Escape", action: "keydown" }
 };
 
-export function SessionPage(): JSX.Element {
+function SessionPage(): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -124,3 +124,5 @@ export function SessionPage(): JSX.Element {
     />
   </PageLayout>;
 }
+
+export const Component = SessionPage;

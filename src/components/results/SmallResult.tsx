@@ -39,6 +39,7 @@ export interface ResultProps {
   className?: string;
   style?: React.CSSProperties;
   fullPage?: boolean;
+  children?: React.ReactNode;
 }
 
 /**

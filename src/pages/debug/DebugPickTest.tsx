@@ -79,7 +79,7 @@ const COLUMNS: ColumnsType<DataRow> = [
     render: v => <>{v ? "true" : "false"}</> },
 ];
 
-export function DebugPickTest(): JSX.Element {
+export function Component(): JSX.Element {
   const [data, setData] = useState<DataRow[]>();
 
   function pickAndSet(type: SessionType) {

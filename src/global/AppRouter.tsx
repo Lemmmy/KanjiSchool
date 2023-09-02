@@ -2,18 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { createBrowserRouter, Route, Routes } from "react-router-dom";
-
-import { DashboardPage } from "@pages/dashboard/DashboardPage";
-import { SubjectPage } from "@pages/subject/SubjectPage";
-import { SessionPage } from "@pages/session/SessionPage";
-
-import { AdvancedSearchPage } from "@pages/search/AdvancedSearchPage";
-import { ItemsPage } from "@pages/items/ItemsPage";
-
-import { SettingsPage } from "@pages/settings/SettingsPage";
-import { DebugPage } from "@pages/debug/DebugPage";
-import { DebugPickTest } from "@pages/debug/PickTest";
+import { createBrowserRouter } from "react-router-dom";
 
 import { NotFoundPage } from "@pages/NotFoundPage";
 import { ErroredRoute } from "@comp/ErrorBoundary";
@@ -25,27 +14,27 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErroredRoute />,
     children: [
-      { path: "/", element: <DashboardPage /> },
+      { path: "/",                 lazy: () => import("@pages/dashboard/DashboardPage.tsx") },
 
-      { path: "/radical/:slug",    element: <SubjectPage type="radical" /> },
-      { path: "/kanji/:slug",      element: <SubjectPage type="kanji" /> },
-      { path: "/vocabulary/:slug", element: <SubjectPage type="vocabulary" /> },
+      { path: "/radical/:slug",    lazy: () => import("@pages/subject/RadicalSubjectPage.tsx") },
+      { path: "/kanji/:slug",      lazy: () => import("@pages/subject/KanjiSubjectPage.tsx") },
+      { path: "/vocabulary/:slug", lazy: () => import("@pages/subject/VocabularySubjectPage.tsx") },
 
-      { path: "/lesson/session",   element: <SessionPage /> },
-      { path: "/review/session",   element: <SessionPage /> },
-      { path: "/study/session",    element: <SessionPage /> },
+      { path: "/lesson/session",   lazy: () => import("@pages/session/SessionPage.tsx") },
+      { path: "/review/session",   lazy: () => import("@pages/session/SessionPage.tsx") },
+      { path: "/study/session",    lazy: () => import("@pages/session/SessionPage.tsx") },
 
-      { path: "/search",           element: <AdvancedSearchPage /> },
-      { path: "/study",            element: <AdvancedSearchPage selfStudy /> },
+      { path: "/search",           lazy: () => import("@pages/search/AdvancedSearchPage.tsx") },
+      { path: "/study",            lazy: () => import("@pages/search/AdvancedSearchPageSelfStudy.tsx") },
 
-      { path: "/items/wk",         element: <ItemsPage type="wk" /> },
-      { path: "/items/jlpt",       element: <ItemsPage type="jlpt" /> },
-      { path: "/items/joyo",       element: <ItemsPage type="joyo" /> },
-      { path: "/items/frequency",  element: <ItemsPage type="freq" /> },
+      { path: "/items/wk",         lazy: () => import("@pages/items/WkItemsPage.tsx") },
+      { path: "/items/jlpt",       lazy: () => import("@pages/items/JlptItemsPage.tsx") },
+      { path: "/items/joyo",       lazy: () => import("@pages/items/JoyoItemsPage.tsx") },
+      { path: "/items/frequency",  lazy: () => import("@pages/items/FreqItemsPage.tsx") },
 
-      { path: "/settings",         element: <SettingsPage /> },
-      { path: "/debug",            element: <DebugPage /> },
-      { path: "/debug/picktest",   element: <DebugPickTest /> },
+      { path: "/settings",         lazy: () => import("@pages/settings/SettingsPage.tsx") },
+      { path: "/debug",            lazy: () => import("@pages/debug/DebugPage.tsx") },
+      { path: "/debug/picktest",   lazy: () => import("@pages/debug/DebugPickTest.tsx") },
 
       { path: "*",                 element: <NotFoundPage /> }
     ]

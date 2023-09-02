@@ -2,35 +2,12 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useMemo } from "react";
-
 import { PageLayout } from "@layout/PageLayout";
 
-import { useParams } from "react-router-dom";
-
-import { NormalizedSubjectType } from "@api";
 import { SubjectInfo } from "./SubjectInfo";
+import { SubjectPageHook } from "@pages/subject/useSubjectPage.ts";
 
-import { useSubjectBySlug } from "@api";
-import { getSubjectTitle } from "@utils";
-
-interface Params {
-  slug: string;
-}
-
-interface Props {
-  type: NormalizedSubjectType;
-}
-
-export function SubjectPage({ type }: Props): JSX.Element | null {
-  const { slug } = useParams<Params>();
-
-  // Look up the subject by the slug.
-  const subject = useSubjectBySlug(type, slug);
-  const siteTitle = useMemo(() => getSubjectTitle(subject), [subject]);
-
-  if (!subject) return null;
-
+export function SubjectPage({ siteTitle, subject }: SubjectPageHook): JSX.Element | null {
   return <PageLayout
     siteTitle={siteTitle}
     centered

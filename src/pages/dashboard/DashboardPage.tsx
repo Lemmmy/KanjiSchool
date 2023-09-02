@@ -34,7 +34,7 @@ import useResizeObserver from "use-resize-observer";
 import { OverleveledAssignments } from "@pages/dashboard/OverleveledAssignments";
 import { GetReviewsWarning } from "@pages/dashboard/GetReviewsWarning";
 
-export function DashboardPage(): JSX.Element {
+function DashboardPage(): JSX.Element {
   const ongoingSession = useSelector((s: RootState) => s.session.ongoing);
 
   const showLastSessionSummary = useBooleanSetting("dashboardLastSessionSummary");
@@ -109,6 +109,8 @@ export function DashboardPage(): JSX.Element {
     {page}
   </>;
 }
+
+export const Component = DashboardPage;
 
 function DashboardTopRow(): JSX.Element {
   // Couldn't find a nice CSS-only way to get the level progress overflow to

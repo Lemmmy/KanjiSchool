@@ -56,7 +56,7 @@ const NEAR_MATCH_ACTIONS = [
   { value: "REJECT", label: "Reject the answer" },
 ];
 
-export function SettingsPage(): JSX.Element {
+function SettingsPage(): JSX.Element {
   return <PageLayout
     className="settings-page"
     siteTitle="Settings"
@@ -169,3 +169,5 @@ export function SettingsPage(): JSX.Element {
     <StorageUsageCard />
   </PageLayout>;
 }
+
+export const Component = SettingsPage;

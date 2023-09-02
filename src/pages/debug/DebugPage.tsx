@@ -11,7 +11,7 @@ import { DebugSubjectsCard } from "./DebugSubjectsCard";
 import { DebugMiscCard } from "./DebugMiscCard";
 import { Heatmap } from "@pages/dashboard/heatmap/Heatmap";
 
-export function DebugPage(): JSX.Element {
+export function Component(): JSX.Element {
   const [customSessionCard, onAddSubject] = useCustomSessionCard();
 
   return <PageLayout siteTitle="Debug" title="Debug" className="debug-page">
