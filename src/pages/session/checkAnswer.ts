@@ -4,6 +4,7 @@
 
 import { ApiSubject, ApiSubjectKanjiInner, ApiSubjectVocabularyInner } from "@api";
 
+import { QuestionType } from "@session";
 import {
   fuzzyMeaningMatches, readingMatches, DigraphMatch, readingMatchesDigraph,
   NearMatchAction,
@@ -23,7 +24,7 @@ export interface AnswerVerdict {
 }
 
 export function cleanAnswer(
-  type: "meaning" | "reading",
+  type: QuestionType,
   answer: string
 ): string {
   // Replace trailing 'n' with 'ん' for reading answers.
@@ -35,7 +36,7 @@ export function cleanAnswer(
 }
 
 export function checkAnswer(
-  type: "meaning" | "reading",
+  type: QuestionType,
   subject: ApiSubject,
   matchingKanji: ApiSubject | undefined,
   givenAnswer: string,

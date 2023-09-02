@@ -87,30 +87,3 @@
     background: @purple-base;
   }
 }
-
-@wk-toc-width: 180px;
-
-.toc-affix {
-  position: absolute;
-  top: @margin-lg;
-  right: -@wk-toc-width - @margin-lg;
-
-  width: @wk-toc-width;
-
-  .toc {
-    .ant-anchor { font-size: @font-size-sm; }
-
-    .ant-anchor-link {
-      padding: 5px 0 5px 16px;
-      line-height: @line-height-base;
-    }
-
-    .ant-anchor-link.toc-debug .ant-anchor-link-title {
-      color: @purple-base;
-    }
-  }
-
-  @media (max-width: @screen-md) {
-    display: none;
-  }
-}

@@ -8,7 +8,7 @@ import classNames from "classnames";
 type CommaListValue = [string, boolean] | [string, boolean, ReactNode];
 
 interface CommaListProps {
-  type: "meaning" | "reading" | string;
+  type: "meaning" | "reading";
   values?: CommaListValue[];
   alwaysBoldPrimary?: boolean;
   className?: string;
@@ -27,7 +27,8 @@ export function CommaList({
       {values.map(([value, primary, node], id, arr) => {
         // Bold the primary values, only if there are more than one
         const classes = classNames(type, {
-          "font-bold": !noBold && primary
+          "font-bold": !noBold && primary,
+          "font-ja": type === "reading"
         });
 
         return <React.Fragment key={value}>

@@ -9,7 +9,7 @@ import { RootState } from "@store";
 import { useSelector, shallowEqual } from "react-redux";
 
 import { countSessionItems } from "@session";
-import { useBooleanSetting } from "@utils";
+import { useBooleanSetting, useReducedMotion } from "@utils";
 
 interface Props {
   className?: string;
@@ -21,7 +21,7 @@ interface Props {
 export function SessionProgress({
   className,
   heightClassName = "h-[12px]",
-  barClassName = "inline-block transition-all",
+  barClassName = "inline-block",
   barHeightClassName = heightClassName,
 }: Props): JSX.Element {
   const doingLessons = useSelector((s: RootState) => s.session.doingLessons);
@@ -47,22 +47,31 @@ export function SessionProgress({
     className
   );
 
+  const reducedMotion = useReducedMotion();
+  const barClasses = classNames(
+    barClassName,
+    barHeightClassName,
+    {
+      "transition-all": !reducedMotion
+    }
+  );
+
   return <div className={classes}>
     {/* Finished items */}
     <div
-      className={classNames(barClassName, barHeightClassName, "bg-primary")}
+      className={classNames(barClasses, "bg-primary")}
       style={{ width: perc(barFinished) }}
     />
 
     {/* Started items */}
     {showStarted && <div
-      className={classNames(barClassName, barHeightClassName, "bg-primary/50")}
+      className={classNames(barClasses, "bg-primary/50")}
       style={{ width: perc(startedItems) }}
     />}
 
     {/* Skipped items */}
     {showSkipped && <div
-      className={classNames(barClassName, barHeightClassName, "bg-orange/25")}
+      className={classNames(barClasses, "bg-orange/25")}
       style={{ width: perc(skippedItems) }}
     />}
   </div>;

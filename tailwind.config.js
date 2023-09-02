@@ -32,25 +32,30 @@ export default {
     darkMode: "class",
 
     screens: {
+      xs : "480px",
+      sm : "576px",
+      md : "768px",
+      lg : "992px",
+      xl : "1200px",
       xxl: "1600px",
-      xl: "1200px",
-      lg: "992px",
-      md: "768px",
-      sm: "576px",
-      xs: "480px",
     },
 
     extend: {
       spacing: {
         // antd compatible spacing
-        lg           : "24px",
-        md           : "16px",
-        sm           : "12px",
-        xs           : "8px",
         xss          : "4px",
-        header       : "64px",
-        text         : "0.3em",
+        xs           : "8px",
+        sm           : "12px",
+        md           : "16px",
+        lg           : "24px",
+
+        // component/layout sizes
+        "page-header": "56px",
+        "header"     : "64px",
+        "toc"        : "180px",
+        "toc-right"  : "-204px", // -toc - lg
         "study-modal": "182px", // 150px + md * 2
+        "text"       : "0.3em",
       },
 
       fontFamily: {
@@ -58,18 +63,19 @@ export default {
       },
 
       fontSize: {
-        xss: "11px",
-        xs: "12px",
-        sm: "13px",
+        xss : "11px",
+        xs  : "12px",
+        sm  : "13px",
         base: "16px",
-        lg: "18px",
-        xl: "20px",
+        lg  : "18px",
+        xl  : "20px",
+        xxl : "27px",
       },
 
       borderRadius: {
-        xss: "2px",
-        xs: "3px",
-        sm: "4px",
+        xss    : "2px",
+        xs     : "3px",
+        sm     : "4px",
         DEFAULT: "6px", // antd default
       },
 
@@ -78,8 +84,8 @@ export default {
       },
 
       opacity: {
-        "4": ".04",
-        "8": ".08",
+        "4" : ".04",
+        "8" : ".08",
         "15": ".15",
         "35": ".35",
         "65": ".65"
@@ -87,6 +93,31 @@ export default {
 
       cursor: {
         pen: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA5SURBVChTYyAE/gMBlIkfwBQS1ICuAKcGmAQ6jQHQJYa0QhAASYIAjA0WxAEYkRUwAgGUiQUwMAAAr3dXrhd5j3gAAAAASUVORK5CYII=") 0 10, auto`
+      },
+
+      keyframes: {
+        "shake": {
+          "10%, 90%":      { "transform": "translateX(-3px)" },
+          "20%, 80%":      { "transform": "translateX(6px)" },
+          "30%, 50%, 70%": { "transform": "translateX(-8px)" },
+          "40%, 60%":      { "transform": "translateX(8px)" }
+        }
+      },
+
+      animations: {
+        "shake": "shake 750ms ease-in-out both"
+      },
+
+      transitionProperty: {
+        "session-page": "opacity, transform",
+      },
+
+      transitionDuration: {
+        "session-page": "250ms",
+      },
+
+      transitionTimingFunction: {
+        "session-page": "ease",
       },
 
       // END OF EXTEND
@@ -199,6 +230,12 @@ export default {
 
       // antd colors
       ...generateAntColors(),
+
+      // others
+      "question-meaning-dark": "#1f1f1f",
+      "question-meaning-dark-hc": "#bfbfbf",
+      "question-meaning-light": "#eeeeee", // TODO
+      "question-meaning-light-hc": "#eeeeee", // TODO
 
       // misc missing values
       "transparent": "transparent",

@@ -12,6 +12,7 @@ import * as actions from "@actions/SessionActions";
 
 import {
   chooseQuestion,
+  QuestionType,
   SessionItem,
   showNearMatchNotification,
   showSkipNotification,
@@ -196,7 +197,7 @@ export function SessionQuestionsPage(): JSX.Element {
   }, [incorrectAnswer, onIncorrectNext]);
 
   const renderQuestion = useCallback((
-    type: "meaning" | "reading",
+    type: QuestionType,
     item: SessionItem,
     itemId: number
   ): JSX.Element | null => {

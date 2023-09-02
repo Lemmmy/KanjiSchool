@@ -46,8 +46,8 @@ export const PageLayout: FC<PageLayoutProps> = ({
     : `h-[calc(100%-56px)]`,
   centeredClassName = centered
     ? hasToc
-      ? "max-w-md pr-0 md:max-w-[972px] md:pr-[204px]" // 768px(md) + 180px(toc width) + 24px(m-lg)
-      : "max-w-md mx-auto"
+      ? "max-w-[768px] mx-auto pr-0 md:max-w-[972px] md:pr-[204px]" // 768px(md) + 180px(toc width) + 24px(m-lg)
+      : "max-w-[768px] mx-auto"
     : "",
   verticallyCenteredClassName = verticallyCentered
     ? "flex flex-col justify-center"
@@ -69,7 +69,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
     {/* Page header */}
     {!noHeader && title && <PageHeader
       className={classNames(
-        "min-h-[56px] pb-0 box-border [&_.ant-page-header-heading-sub-title_.ant_typography]:text-inherit",
+        "min-h-page-header pb-0 box-border [&_.ant-page-header-heading-sub-title_.ant_typography]:text-inherit",
         headerClassName
       )}
 

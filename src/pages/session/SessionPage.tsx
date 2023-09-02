@@ -3,7 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect } from "react";
-import { Menu } from "antd";
 import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
@@ -88,16 +87,20 @@ export function SessionPage(): JSX.Element {
     return <b>Loading...</b>;
 
   // Show the table of contents if lessons are happening
-  const classes = classNames("session-page", "page-centered", {
+  const classes = classNames("w-full", {
     "has-toc": doingLessons
   });
 
   return <PageLayout
     siteTitle="Session"
+    centered
     className={classes}
   >
     {/* Top progress bar */}
-    {showProgress && <SessionProgress />}
+    {showProgress && <SessionProgress
+      className="!rounded-none md:!rounded-2xl absolute inset-x-0 top-0 md:static"
+      heightClassName="h-[2rem] md:h-[12px]"
+    />}
 
     {doingLessons
       ? <SessionLessonsPage />

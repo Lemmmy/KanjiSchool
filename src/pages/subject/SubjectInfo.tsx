@@ -46,6 +46,10 @@ export interface SubjectInfoProps {
   autoPlayAudio?: boolean;
 
   showToc?: boolean;
+
+  subjectCharactersClass?: string;
+  subjectCharactersFontClass?: string;
+  subjectCharactersImageClass?: string;
 }
 
 export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
@@ -93,7 +97,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   // vocabulary
   const hasSingleCharacter = !hasCharacter || characters?.length === 1;
   const classes = classNames(
-    "subject-info-container",
+    "pb-[36px]",
     "type-" + objectType,
     {
       "subject-info-single-character": hasSingleCharacter,
@@ -130,6 +134,10 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
       hideAudio={!show("audio")}
 
       autoPlayAudio={autoPlayAudio}
+
+      subjectCharactersClass={props.subjectCharactersClass}
+      subjectCharactersFontClass={props.subjectCharactersFontClass}
+      subjectCharactersImageClass={props.subjectCharactersImageClass}
     />
 
     {/* Kanji used radicals */}

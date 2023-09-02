@@ -14,6 +14,7 @@ import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { AudioButtons } from "@comp/subjects/AudioButtons";
 
 import { hasReadings, isVocabularyLike, normalizeVocabType, onyomiToKatakana, useBooleanSetting } from "@utils";
+import classNames from "classnames";
 
 interface Props {
   subject: ApiSubject;
@@ -29,18 +30,23 @@ interface Props {
   hideAudio?: boolean;
 
   autoPlayAudio?: boolean;
+
+  subjectCharactersClass?: string;
+  subjectCharactersFontClass?: string;
+  subjectCharactersImageClass?: string;
 }
 
 function getReadingsComp(
   readings: ApiSubjectKanjiReading[] | undefined,
-  type: "meaning" | "reading" | string = "reading"
+  className?: string,
 ): JSX.Element {
   return <CommaList
-    type={type}
+    type="reading"
     values={readings
       // Hide the nanori readings for now
       ?.filter(r => (r as ApiSubjectKanjiReading).type !== "nanori")
       .map(r => [r.reading, r.primary])}
+    className={className}
   />;
 }
 
@@ -56,7 +62,11 @@ export function SubjectInfoTopRow({
   hideReadings,
   hideAudio,
 
-  autoPlayAudio
+  autoPlayAudio,
+
+  subjectCharactersClass,
+  subjectCharactersFontClass,
+  subjectCharactersImageClass,
 }: Props): JSX.Element {
   const objectType = subject.object;
   const normObjectType = normalizeVocabType(subject.object);
@@ -87,34 +97,44 @@ export function SubjectInfoTopRow({
   const meaningsComp = useMemo(() => <CommaList
     type="meaning"
     values={meanings.map(m => [m.meaning, m.primary])}
+    className="text-[21.6px]"
   />, [meanings]);
 
   // Get the primary readings and convert on'yomi to katakana if desired. For
   // vocabulary, get all readings, and highlight the primary ones.
+  const readingsClass = "inline-block text-xxl";
   const primaryReadings = readings
     ?.filter(r => (objectType === "vocabulary" || r.primary) && r.type !== "nanori")
     .map(r => ({ ...r, reading: onyomiToKatakana(r, onyomiInKatakana) }));
-  const primaryReadingsComp = useMemo(() => getReadingsComp(primaryReadings), [primaryReadings]);
+  const primaryReadingsComp = useMemo(() =>
+    getReadingsComp(primaryReadings, readingsClass), [primaryReadings]);
 
   const onyomiReadingsComp = useMemo(() =>
-    getReadingsComp(onyomiReadings, "reading-sub"), [onyomiReadings]);
+    getReadingsComp(onyomiReadings, readingsClass), [onyomiReadings]);
   const kunyomiReadingsComp = useMemo(() =>
-    getReadingsComp(kunyomiReadings, "reading-sub"), [kunyomiReadings]);
+    getReadingsComp(kunyomiReadings, readingsClass), [kunyomiReadings]);
 
   return hasSingleCharacter
     ? (
       // Single character
       <div className="subject-info-top">
-        <Row className="subject-info-top-upper">
+        <Row>
           {/* Characters */}
           <Col flex="none">
-            <SubjectCharacters subject={subject} />
+            <SubjectCharacters
+              subject={subject}
+              className="leading-none"
+              fontClassName="text-[72px] m-lg"
+              imageSizeClassName="w-[72px] h-[72px] mx-lg"
+            />
           </Col>
 
           {/* Level, name, reading */}
           <Col flex="auto">
             {/* Level & object type */}
-            <div className="subject-info-level">Level {level} {normObjectType}</div>
+            <div className="text-sm text-desc">
+              Level {level} {normObjectType}
+            </div>
             {/* Meanings */}
             {!hideMeanings && meaningsComp}
             {/* Readings. For kanji, only show the on'yomi readings. */}
@@ -136,19 +156,23 @@ export function SubjectInfoTopRow({
 
         {/* On'yomi and kun'yomi readings */}
         {!hideReadings && (onyomiReadings?.length || kunyomiReadings?.length) ? (
-          <div className="subject-info-top-lower">
+          <div className="mt-md">
             {/* On'yomi */}
             {onyomiReadings?.length ? (
-              <div className="readings-sub readings-onyomi">
-                <span className="readings-label">On&apos;yomi:</span>
+              <div className="readings-onyomi">
+                <span className="inline-block mr-xss font-bold">
+                  On&apos;yomi:
+                </span>
                 {onyomiReadingsComp}
               </div>
             ) : null }
 
             {/* Kun'yomi */}
             {kunyomiReadings?.length ? (
-              <div className="readings-sub readings-kunyomi">
-                <span className="readings-label">Kun&apos;yomi:</span>
+              <div className="readings-kunyomi">
+                <span className="inline-block mr-xss font-bold">
+                  Kun&apos;yomi:
+                </span>
                 {kunyomiReadingsComp}
               </div>
             ) : null}
@@ -160,7 +184,9 @@ export function SubjectInfoTopRow({
       // Multiple characters
       <div className="subject-info-top">
         {/* Level & object type */}
-        <div className="subject-info-level">Level {level} {normObjectType}</div>
+        <div className="text-sm text-desc">
+          Level {level} {normObjectType}
+        </div>
 
         {/* Characters */}
         <SubjectCharacters
@@ -168,6 +194,10 @@ export function SubjectInfoTopRow({
           textfit
           min={32} max={charactersMax || 96}
           useCharBlocks
+
+          className={classNames(subjectCharactersClass, "w-full max-w-[768px] text-[96px] my-md leading-none")}
+          fontClassName={subjectCharactersFontClass}
+          imageSizeClassName={subjectCharactersImageClass}
         />
 
         {/* Meanings, readings, buttons */}

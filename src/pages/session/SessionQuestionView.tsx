@@ -52,11 +52,8 @@ export function SessionQuestionView({
   );
 
   const classes = classNames(
-    "session-question-container",
-    "type-" + normalizeVocabType(subject.object),
-    {
-      ja: questionType === "reading"
-    }
+    // Attempt to work around keyboard screen shifting on mobile
+    "fixed inset-x-sm bottom-sm top-[68px] md:static", // sm + page-header = 68px
   );
 
   return <div className={classes}>
@@ -73,7 +70,7 @@ export function SessionQuestionView({
     />
 
     {/* Question input */}
-    <Row className="session-question-input">
+    <Row>
       {inputEl}
     </Row>
   </div>;

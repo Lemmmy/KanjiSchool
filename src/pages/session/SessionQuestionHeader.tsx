@@ -5,7 +5,6 @@
 import { useMemo } from "react";
 import classNames from "classnames";
 import { Row, Col, Button, ButtonProps } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { ApiSubject } from "@api";
 
@@ -13,11 +12,13 @@ import { OnSkipFn } from "./SessionQuestionsPage";
 import { QuestionSrsStage } from "./QuestionSrsStage";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 
-import { startCase, kebabCase } from "lodash-es";
+import { startCase } from "lodash-es";
 import { normalizeVocabType, nts, useBooleanSetting, useRandomFont, useStringSetting } from "@utils";
 import { UndoButton } from "./UndoButton";
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
+import { QuestionType } from "@session";
+import { useSingleBreakpoint } from "@utils/hooks/useSingleBreakpoint.ts";
 
 /** High contrast/inverted color mode for the 'Reading/Meaning' type header */
 export type QuestionHeaderTypeColor = "DEFAULT"
@@ -31,12 +32,39 @@ interface Props {
   wrappingUp?: boolean;
   subject: ApiSubject;
   incorrectAnswer?: string;
-  type: "meaning" | "reading";
+  type: QuestionType;
   onNext?: () => void;
   onUndo?: () => void;
   onDontKnow?: () => void;
   onSkip?: OnSkipFn;
 }
+
+// TODO: light theme
+const questionTypeBaseClass = "block w-full p-xss my-sm rounded text-center text-lg font-bold";
+
+const questionTypeColorClass: Record<QuestionHeaderTypeColor, Record<QuestionType, string>> = {
+  DEFAULT: {
+    meaning: "bg-question-meaning-light text-base dark:bg-question-meaning-dark dark:text-white",
+    reading: "bg-white text-base dark:bg-black dark:text-desc",
+  },
+  DEFAULT_HIGH_CONTRAST: {
+    meaning: "bg-question-meaning-light-hc text-black dark:bg-question-meaning-dark-hc dark:text-black",
+    reading: "bg-white text-base dark:bg-black dark:text-white",
+  },
+  INVERTED: {
+    meaning: "bg-white text-base dark:bg-black dark:text-desc",
+    reading: "bg-question-meaning-light text-base dark:bg-question-meaning-dark dark:text-white",
+  },
+  INVERTED_HIGH_CONTRAST: {
+    meaning: "bg-white text-base dark:bg-black dark:text-white",
+    reading: "bg-question-meaning-light-hc text-black dark:bg-question-meaning-dark-hc dark:text-black",
+  },
+};
+
+const incorrectAnswerClass = classNames(
+  questionTypeBaseClass,
+  "-mt-sm mb-md bg-red-8 text-white rounded-t-none !text-xxl !font-normal"
+);
 
 export function SessionQuestionHeader({
   questionCount,
@@ -51,49 +79,54 @@ export function SessionQuestionHeader({
   onSkip
 }: Props): JSX.Element {
   // Make the buttons larger on mobile
-  const { sm } = useBreakpoint();
+  const md = useSingleBreakpoint("md");
 
   const objectType = normalizeVocabType(subject.object);
 
   // Props for all header buttons. Make the buttons larger on mobile.
   const buttonProps: ButtonProps = useMemo(() => ({
-    size: sm ? undefined : "large"
-  }), [sm]);
+    size: !md ? "large" : undefined
+  }), [md]);
 
   // Whether to show the skip button
   const skipEnabled = useBooleanSetting("skipEnabled");
 
   const questionTypeHeaderColor = useStringSetting<QuestionHeaderTypeColor>("questionHeaderTypeColor");
   const questionTypeClasses = classNames(
-    "session-question-type",
-    "type-" + questionType,
-    "color-" + kebabCase(questionTypeHeaderColor)
+    questionTypeBaseClass,
+    questionTypeColorClass[questionTypeHeaderColor][questionType],
+    {
+      "rounded-b-none": incorrectAnswer !== undefined
+    }
   );
 
   const { characters } = subject.data;
   const hasCharacter = characters !== null;
 
   const sessionUuid = useSelector((state: RootState) => state.session?.sessionState?.uuid);
+  const shouldShakeIncorrect = useBooleanSetting("shakeCharactersIncorrect");
   const randomFontEnabled = useBooleanSetting("randomFontEnabled");
   const randomFontHover = useBooleanSetting("randomFontHover");
   const randomFontShowName = useBooleanSetting("randomFontShowName");
   const randomFont = useRandomFont(hasCharacter ? characters : undefined, sessionUuid, questionType);
   const style = useMemo(() => ({ fontFamily: randomFont }), [randomFont]);
 
-  const classes = classNames("session-question-header", "type-" + objectType, {
-    ja: questionType === "reading",
-    incorrect: incorrectAnswer !== undefined,
-    "random-font-enabled": randomFontEnabled && randomFont && hasCharacter,
-    "random-font-hover": randomFontHover
-  });
+  const charactersClasses = classNames(
+    // Hack for text fitting
+    "w-full max-w-[768px] block text-center leading-none",
+    {
+      "hover:!font-ja": randomFontEnabled && randomFontHover && randomFont && hasCharacter,
+      "animation-shake transform-[translateX(0)]": incorrectAnswer !== undefined && shouldShakeIncorrect,
+    }
+  );
 
-  return <div className={classes}>
+  return <div>
     {/* Subject top */}
-    <Row className="session-top">
+    <Row className="text-desc relative h-[1rem] mb-md">
       {questionCount !== undefined && questionTotal !== undefined
         && (
-          <span className="session-count">
-            {wrappingUp && <span className="session-count-wrapping-up">
+          <span className="absolute w-full">
+            {wrappingUp && <span className="opacity-90 italic">
               Wrap-up:&nbsp;
             </span>}
             {nts(questionCount)}/{nts(questionTotal)}
@@ -105,27 +138,33 @@ export function SessionQuestionHeader({
 
       {/* Random font name */}
       {randomFontEnabled && randomFontShowName && randomFont && hasCharacter && (
-        <span className="session-random-font-name">
+        <span className="absolute right-0 w-[30%] text-sm text-right whitespace-nowrap overflow-hidden text-ellipsis">
           {randomFont}
         </span>
       )}
     </Row>
 
     {/* Subject question */}
-    <Row className="session-question-main">
+    <Row className="mb-sm md:mb-md">
       <SubjectCharacters
         subject={subject}
         textfit
-        min={32} max={sm ? 150 : 100}
+        min={32}
+        max={md ? 150 : 100}
         useCharBlocks
+
+        className={charactersClasses}
+        fontClassName="text-[100px] md:text-[150px]" // Hack for text fitting
+        imageClassName="mx-auto"
+
         style={style}
       />
     </Row>
 
     {/* Buttons */}
-    <Row className="session-buttons">
+    <Row>
       {/* Don't know/undo and skip */}
-      <Col span={12} className="session-button-left-col">
+      <Col span={12} className="flex gap-sm">
         {incorrectAnswer !== undefined
           ? (
             // Undo. Only shown if enabled/disabled (i.e. not hidden)
@@ -133,18 +172,13 @@ export function SessionQuestionHeader({
           )
           : (
             // Don't know
-            <Button
-              className="session-button-left session-button-dont-know"
-              onClick={onDontKnow}
-              {...buttonProps}
-            >
+            <Button onClick={onDontKnow} {...buttonProps}>
               Don&apos;t know
             </Button>
           )}
 
         {/* Skip */}
         {skipEnabled && onSkip && <Button
-          className="session-button-left session-button-skip"
           onClick={() => onSkip(false)}
           {...buttonProps}
         >
@@ -154,11 +188,7 @@ export function SessionQuestionHeader({
 
       {/* Submit */}
       <Col span={12}>
-        <Button
-          className="session-button-right session-button-submit"
-          onClick={onNext}
-          {...buttonProps}
-        >
+        <Button onClick={onNext} className="float-right" {...buttonProps}>
           Next
         </Button>
       </Col>
@@ -171,9 +201,9 @@ export function SessionQuestionHeader({
         : (startCase(objectType) + " " + startCase(questionType))}
     </Row>
 
-    {/* Incorrect answer */}
+    {/* In  correct answer */}
     {incorrectAnswer !== undefined && (
-      <Row className="session-question-incorrect-answer">
+      <Row className={incorrectAnswerClass}>
         {incorrectAnswer || <>&nbsp;</>}
       </Row>
     )}

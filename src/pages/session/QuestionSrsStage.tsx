@@ -15,7 +15,7 @@ export function QuestionSrsStage({ subject }: Props): JSX.Element | null {
 
   if (srsStage === undefined) return null;
 
-  return <span className="session-srs">
+  return <span className="absolute w-full text-center">
     {stringifySrsStage(srsStage)}
   </span>;
 }

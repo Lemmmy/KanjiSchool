@@ -45,8 +45,10 @@ export interface SessionState {
   comparatorOptions: SessionOpts;
 }
 
+export type QuestionType = "meaning" | "reading";
+
 export interface SessionQuestion {
-  type: "meaning" | "reading";
+  type: QuestionType;
   itemId: number;
 }
 

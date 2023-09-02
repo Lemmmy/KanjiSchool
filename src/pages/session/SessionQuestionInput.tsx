@@ -5,10 +5,12 @@
 import { useEffect, useState, useCallback, useRef, Ref, ReactNode, Dispatch, SetStateAction } from "react";
 import { Input, InputProps } from "antd";
 import classNames from "classnames";
+import { InputRef } from "rc-input/es/interface";
 
 import { ApiSubject } from "@api";
 
 import { PseudoIme } from "@comp/PseudoIme";
+import { QuestionType } from "@session";
 
 import { OnAnsweredFn, OnSkipFn } from "./SessionQuestionsPage";
 import { checkAnswer, cleanAnswer } from "./checkAnswer";
@@ -19,12 +21,11 @@ import { showSessionAbandonModal } from "./modals/SessionAbandonModal";
 import { NearMatchAction, useBooleanSetting } from "@utils";
 
 import Debug from "debug";
-import { InputRef } from "rc-input/es/interface";
 const debug = Debug("kanjischool:session-question-input");
 
 interface Props {
   isCurrent: boolean;
-  questionType: "meaning" | "reading";
+  questionType: QuestionType;
 
   inputRef: Ref<InputRef>;
   inputValue: string;
@@ -80,8 +81,10 @@ function SessionQuestionInput({
 
   // debug("rendering SessionQuestionInput %s", inputValue);
 
-  const classes = classNames("question-input-box", {
-    "shake": inputShake
+  // `.question-input-box` class is needed for `ourInputFocused` check below
+  const classes = classNames("question-input-box text-xxl text-center bg-transparent", {
+    "animation-shake transform-[translateX(0)]": inputShake,
+    "font-ja": questionType === "reading",
   });
 
   const inputProps: InputProps & { value: string } = {
@@ -138,7 +141,7 @@ let lastInput = -1;
 
 export function useSessionQuestionInput(
   isCurrent: boolean,
-  questionType: "meaning" | "reading",
+  questionType: QuestionType,
   subject: ApiSubject,
   meaningSynonyms: string[] | undefined,
   nearMatchAction: NearMatchAction,

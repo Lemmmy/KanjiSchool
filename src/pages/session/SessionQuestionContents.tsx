@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { RootState } from "@store";
 import { useSelector, shallowEqual } from "react-redux";
 
-import { countSessionItems } from "@session";
+import { countSessionItems, QuestionType } from "@session";
 
 import { OnAnsweredFn, OnSkipFn } from "./SessionQuestionsPage";
 import { SessionQuestionHeader } from "./SessionQuestionHeader";
@@ -16,12 +16,13 @@ import { SubjectInfo } from "@pages/subject/SubjectInfo";
 import { DigraphAlert } from "./DigraphAlert";
 
 import { StoredSubject } from "@api";
-import { useBooleanSetting, useReducedMotion } from "@utils";
+import { useReducedMotion } from "@utils";
 
 import { CSSTransition } from "react-transition-group";
+import { CSSTransitionClassNames } from "react-transition-group/CSSTransition";
 
 interface Props {
-  type: "meaning" | "reading";
+  type: QuestionType;
   itemId: number;
   subject: StoredSubject;
   current: boolean;
@@ -33,6 +34,24 @@ interface Props {
   onSkip: OnSkipFn;
 }
 
+const cssTransitionBase = classNames(
+  "select-none pointer-events-none fixed inset-0 md:static",
+  "[&_.toc-affix]:opacity-0 [&_.toc-affix]:!transition-none"
+);
+const cssTransitionAnim = "transition-session-page duration-session-page ease-session-page";
+const cssTransitionEnter = "scale-105 md:scale-110 opacity-0";
+const cssTransitionEnterActive = "opacity-100 scale-100";
+const cssTransitionExit = "!absolute !inset-lg";
+const cssTransitionExitActive = "scale-95 md:scale-90 opacity-0";
+
+const cssTransitionClasses: CSSTransitionClassNames = {
+  appear: classNames(cssTransitionEnter),
+  appearActive: classNames(cssTransitionBase, cssTransitionAnim, cssTransitionEnterActive),
+  enter: classNames(cssTransitionEnter),
+  enterActive: classNames(cssTransitionBase, cssTransitionAnim, cssTransitionEnterActive),
+  exit: classNames(cssTransitionBase, cssTransitionExit, cssTransitionEnterActive),
+  exitActive: classNames(cssTransitionBase, cssTransitionAnim, cssTransitionExit, cssTransitionExitActive),
+};
 
 const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
   shouldWrap: boolean;
@@ -45,7 +64,7 @@ const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
     in={current}
     appear
     timeout={300}
-    classNames="session-page-inner-container"
+    classNames={cssTransitionClasses}
     unmountOnExit
   >
     {children}
@@ -64,7 +83,7 @@ export function SessionQuestionContents(props: Props): JSX.Element {
     transitionKey={`${itemId}-${type}`}
     current={current}
   >
-    <div className="session-page-inner-container">
+    <div>
       {incorrectAnswer !== undefined
         ? <IncorrectAnswerPart incorrectAnswer={incorrectAnswer} {...props} />
         : <SessionQuestionPart {...props} />}
@@ -80,12 +99,10 @@ function IncorrectAnswerPart({
 
   const { finishedItems, totalItems, wrappingUp } = countSessionItems();
 
-  const shouldShakeIncorrect = useBooleanSetting("shakeCharactersIncorrect");
-  const classes = classNames("session-question-incorrect-container", {
-    "should-shake-incorrect": shouldShakeIncorrect
-  });
+  const hasSingleCharacter = subject.data.characters === null || subject.data.characters?.length === 1;
 
-  return <div className={classes}>
+  // Attempt to work around keyboard screen shifting on mobile
+  return <div className="mt-0 md:-mt-xs">
     <SessionQuestionHeader
       questionCount={finishedItems}
       questionTotal={totalItems}
@@ -106,6 +123,11 @@ function IncorrectAnswerPart({
       useHintStage
       questionType={type}
       charactersMax={48}
+
+      // Shrink a multi-character vocabulary's text
+      subjectCharactersClass={!hasSingleCharacter ? "m-0" : undefined}
+      subjectCharactersFontClass={!hasSingleCharacter ? "text-[32px]" : undefined}
+      subjectCharactersImageClass={!hasSingleCharacter ? "w-[32px] h-[32px]" : undefined}
     />
   </div>;
 }

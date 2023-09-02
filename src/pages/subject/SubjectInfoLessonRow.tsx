@@ -19,24 +19,24 @@ export function SubjectInfoLessonRow({
   onPrevLesson,
   onNextLesson
 }: Props): JSX.Element {
-  return <Row className="subject-info-lesson-row">
+  return <Row className="mb-lg">
     {/* Previous lesson button */}
-    <Col className="prev-btn-col">
+    <Col>
       <Button disabled={lessonCounter <= 0} onClick={onPrevLesson}>
         Prev
       </Button>
     </Col>
 
     {/* Counter */}
-    <Col flex="auto" className="lesson-counter">
+    <Col flex="auto" className="text-center text-desc">
       {nts(lessonCounter + 1)}
       /
       {nts(lessonsTotal)}
     </Col>
 
     {/* Next lesson button */}
-    <Col className="next-btn-col">
-      <Button onClick={onNextLesson}>
+    <Col>
+      <Button onClick={onNextLesson} className="float-right">
         {lessonCounter + 1 >= lessonsTotal
           ? "Review"
           : "Next"}

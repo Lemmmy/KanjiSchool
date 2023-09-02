@@ -33,8 +33,12 @@ export function SubjectPage({ type }: Props): JSX.Element | null {
 
   return <PageLayout
     siteTitle={siteTitle}
-    className="subject-page page-centered has-toc"
+    centered
+    hasToc
   >
-    <SubjectInfo subject={subject} showToc />
+    <SubjectInfo
+      subject={subject}
+      showToc
+    />
   </PageLayout>;
 }
