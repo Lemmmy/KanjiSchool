@@ -5,7 +5,10 @@
 import { ApiReview, StoredAssignment } from "@api";
 import { db } from "@db";
 
-import * as d3 from "d3";
+import { ScaleQuantize, InternMap } from "d3";
+import { timeYear, timeDay } from "d3-time";
+import { rollup, sort, union, map, group, index, extent } from "d3-array";
+import { scaleQuantize } from "d3-scale";
 
 import { COLORS, COLORS_FUTURE } from "./renderHeatmap";
 
@@ -29,10 +32,10 @@ export interface HeatmapDatum {
 
   min: number;
   max: number;
-  colorScale: d3.ScaleQuantize<string, never>;
-  colorScaleFuture: d3.ScaleQuantize<string, never>;
+  colorScale: ScaleQuantize<string, never>;
+  colorScaleFuture: ScaleQuantize<string, never>;
 
-  dayMap: d3.InternMap<Date, HeatmapDay>;
+  dayMap: InternMap<Date, HeatmapDay>;
 }
 
 export async function generateHeatmapData(
@@ -40,18 +43,18 @@ export async function generateHeatmapData(
   includeFuture: boolean
 ): Promise<HeatmapDatum[]> {
   const now = new Date();
-  const today = +d3.timeDay.floor(now);
-  const yearEnd = d3.timeYear.ceil(now);
+  const today = +timeDay.floor(now);
+  const yearEnd = timeYear.ceil(now);
 
   let lessons: StoredAssignment[];
   let reviews: ApiReview[];
   if (currentYearOnly) {
     // Get all the data from the current year (in the user's timezone)
-    const yearStart = d3.timeYear.floor(now);
+    const yearStart = timeYear.floor(now);
     debug("year start: %o", yearStart);
 
     // Dates are stored in ISO-8601 in the database and toISOString() will
-    // always return a UTC string so we can do a simple string comparison like
+    // always return a UTC string, so we can do a simple string comparison like
     // this
     reviews = await db.reviews
       .where("data_updated_at")
@@ -77,20 +80,20 @@ export async function generateHeatmapData(
     reviews.length, lessons.length, futures.length);
 
   // Group the reviews, lessons and futures into day and count
-  const rolledReviews = d3.rollup(reviews, v => v.length,
-    d => d3.timeDay.floor(new Date(d.data_updated_at)));
-  const rolledLessons = d3.rollup(lessons, v => v.length,
-    d => d3.timeDay.floor(new Date(d.data.started_at!)));
-  const rolledFutures = d3.rollup(futures, v => v.length,
-    d => d3.timeDay.floor(new Date(d.data.available_at!)));
+  const rolledReviews = rollup(reviews, v => v.length,
+    d => timeDay.floor(new Date(d.data_updated_at)));
+  const rolledLessons = rollup(lessons, v => v.length,
+    d => timeDay.floor(new Date(d.data.started_at!)));
+  const rolledFutures = rollup(futures, v => v.length,
+    d => timeDay.floor(new Date(d.data.available_at!)));
   debug("rolled: %d reviews, %d lessons, %d futures",
     rolledReviews.size, rolledLessons.size, rolledFutures.size);
 
   // Zip all the rollups together into HeatmapDay[]
-  const dayKeys = d3.sort(d3.union(
+  const dayKeys = sort(union(
     rolledReviews.keys(), rolledLessons.keys(), rolledFutures.keys()
   ));
-  const days = d3.map<Date, HeatmapDay>(dayKeys, date => {
+  const days = map<Date, HeatmapDay>(dayKeys, date => {
     const reviewsN = rolledReviews.get(date) ?? 0;
     const lessonsN = rolledLessons.get(date) ?? 0;
     const futuresN = rolledFutures.get(date) ?? 0;
@@ -107,16 +110,16 @@ export async function generateHeatmapData(
   });
 
   // Group again into years
-  const years = d3.group(days, d => d.date.getFullYear());
+  const years = group(days, d => d.date.getFullYear());
   const yearsArray = Array.from(years, ([year, days]) => {
     // Turn the HeatmapDay[] back into an InternMap
-    const dayMap = d3.index(days, d => d.date);
+    const dayMap = index(days, d => d.date);
 
     // Get the min and max number of reviews for the whole year
-    const [min, max] = d3.extent(days, d => d.total);
+    const [min, max] = extent(days, d => d.total);
 
     // Generate the color scales
-    const baseScale = () => d3.scaleQuantize<string>()
+    const baseScale = () => scaleQuantize<string>()
       .domain([min ?? 0, max ?? 1]);
     const colorScale = baseScale().range(COLORS);
     const colorScaleFuture = baseScale().range(COLORS_FUTURE);

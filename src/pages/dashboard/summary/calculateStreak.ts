@@ -7,7 +7,8 @@ import { setStreak } from "@actions/SyncActions";
 
 import { db } from "@db";
 
-import * as d3 from "d3";
+import { timeDay } from "d3-time";
+import { map, sort, union } from "d3-array";
 
 import { lsSetNumber } from "@utils";
 import { debounce } from "lodash-es";
@@ -32,8 +33,8 @@ export const calculateStreak = debounce(() => {
 
 async function _calculateStreak(): Promise<void> {
   const now = new Date();
-  const today = d3.timeDay.floor(now), nToday = +today;
-  const yesterday = d3.timeDay.offset(today, -1), nYesterday = +yesterday;
+  const today = timeDay.floor(now), nToday = +today;
+  const yesterday = timeDay.offset(today, -1), nYesterday = +yesterday;
 
   // Get all reviews we have, ignore 1970 lol
   const invalid = new Date(0).toISOString();
@@ -47,12 +48,12 @@ async function _calculateStreak(): Promise<void> {
     .toArray();
 
   // Get a set of dates that reviews and lessons occurred on
-  const reviewDays = d3.map(reviews,
-    d => d3.timeDay.floor(new Date(d.data_updated_at)));
-  const lessonDays = d3.map(lessons,
-    d => d3.timeDay.floor(new Date(d.data.started_at!)));
+  const reviewDays = map(reviews,
+    d => timeDay.floor(new Date(d.data_updated_at)));
+  const lessonDays = map(lessons,
+    d => timeDay.floor(new Date(d.data.started_at!)));
   // Combine reviews and lessons and sort by date ascending
-  const days = d3.sort(d3.union(reviewDays, lessonDays));
+  const days = sort(union(reviewDays, lessonDays));
 
   debug("got %d review and lesson days", days.length);
 
@@ -65,7 +66,7 @@ async function _calculateStreak(): Promise<void> {
     // Difference between this date and the next date (e.g. yesterday then today)
     const first = days[i], nFirst = +first;
     const second = days[i + 1] ?? first;
-    const diff = d3.timeDay.count(first, second);
+    const diff = timeDay.count(first, second);
 
     isToday = isToday || nFirst >= nToday; // today or future
     isYesterday = isYesterday || nFirst >= nYesterday;

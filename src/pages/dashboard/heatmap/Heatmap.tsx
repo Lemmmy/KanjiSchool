@@ -4,7 +4,7 @@
 
 import { SVGProps, LegacyRef, useEffect, useMemo, useRef, useState } from "react";
 
-import * as d3 from "d3";
+import { select } from "d3-selection";
 import { generateHeatmapData, HeatmapDatum, HeatmapDay } from "./data";
 import { renderHeatmap } from "./renderHeatmap";
 
@@ -47,7 +47,7 @@ export function Heatmap({
   // Render d3
   useEffect(() => {
     if (!data || !d3Ref.current) return;
-    const svg = d3.select<SVGSVGElement, HeatmapDatum>(d3Ref.current);
+    const svg = select<SVGSVGElement, HeatmapDatum>(d3Ref.current);
     renderHeatmap(svg, data, jp, monthSep, setHoverDay);
   }, [data, jp, monthSep, setHoverDay]);
 

@@ -12,7 +12,7 @@ import {
 } from "@session";
 
 import { DigraphMatch, lsGetBoolean, lsGetNumber, lsGetObject, unlut } from "@utils";
-import * as d3 from "d3";
+import { max } from "d3-array";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:session-reducer");
@@ -96,7 +96,7 @@ const delaySkipHandler = (putEnd: boolean) => (
     // in chooseQuestion
     const maxBucket = Math.max(
       items.length + 1,
-      d3.max(items, i => i.bucket) ?? 1
+      max(items, i => i.bucket) ?? 1
     );
     debug("pushing item %d to max bucket %d", itemId, maxBucket);
     item.bucket = maxBucket;

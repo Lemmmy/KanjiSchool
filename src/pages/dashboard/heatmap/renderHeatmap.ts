@@ -4,7 +4,9 @@
 
 import { HeatmapDatum, HeatmapDay } from "./data";
 
-import * as d3 from "d3";
+import { Selection } from "d3";
+import { timeDays, timeWeek, timeYear } from "d3-time";
+import { range, index } from "d3-array";
 
 import { isToday } from "date-fns";
 
@@ -43,7 +45,7 @@ interface DayDatum {
 }
 
 export function renderHeatmap(
-  ctx: d3.Selection<SVGSVGElement, HeatmapDatum, null, undefined>,
+  ctx: Selection<SVGSVGElement, HeatmapDatum, null, undefined>,
   data: HeatmapDatum[],
   jp: boolean,
   monthSep: boolean,
@@ -51,7 +53,7 @@ export function renderHeatmap(
 ): void {
   debug("rendering heatmap with %d years", data.length);
 
-  const yearsData = d3.index(data, d => d.year);
+  const yearsData = index(data, d => d.year);
 
   ctx.selectAll("g").remove();
   const group = ctx.append("g");
@@ -72,11 +74,11 @@ export function renderHeatmap(
   year.append("g")
     .classed("fill-desc", true)
     .selectAll("text")
-    .data(y => d3.range(12).map(i => new Date(y.year, i, 1)))
+    .data(y => range(12).map(i => new Date(y.year, i, 1)))
     .join("text")
     .attr("class", "[text-anchor:start] text-[9px] font-ja")
     // TODO: Round weeks up like github?
-    .attr("x", d => d3.timeWeek.count(d3.timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
+    .attr("x", d => timeWeek.count(timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
     .attr("y", 0)
     .attr("dy", "-0.5em")
     .text(d => formatMonth(d, jp));
@@ -85,7 +87,7 @@ export function renderHeatmap(
   year.append("g")
     .classed("fill-desc", true)
     .selectAll("text")
-    .data(y => d3.range(7).map(i => new Date(y.year, 0, i)))
+    .data(y => range(7).map(i => new Date(y.year, 0, i)))
     .join("text")
     .attr("class", "[text-anchor:end] text-[10px] font-ja")
     .attr("x", -4)
@@ -98,7 +100,7 @@ export function renderHeatmap(
     .classed("days", true)
     .selectAll("rect")
     // Use all days in the year as data, merge in the real data after
-    .data<DayDatum>(y => d3.timeDays(y.yearStart, y.yearEnd).map(d => {
+    .data<DayDatum>(y => timeDays(y.yearStart, y.yearEnd).map(d => {
       const year = yearsData.get(d.getFullYear());
       const day = year?.dayMap.get(d);
       return { d, year, day };
@@ -108,7 +110,7 @@ export function renderHeatmap(
     .attr("width", CELL_SIZE).attr("height", CELL_SIZE)
     .attr("rx", CELL_ROUNDING).attr("ry", CELL_ROUNDING)
     .attr("x", ({ d }) =>
-      d3.timeWeek.count(d3.timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
+      timeWeek.count(timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
     .attr("y", ({ d }) =>
       d.getDay() * (CELL_SIZE + CELL_SPACING))
     .attr("fill", ({ year, day }) => {
@@ -126,7 +128,7 @@ export function renderHeatmap(
       .classed("stroke-[#565656] fill-none [translate:-1px_-1px]", true)
       .selectAll("path")
       // Don't draw one for December
-      .data(y => d3.range(11).map(i => new Date(y.year, i, 1)))
+      .data(y => range(11).map(i => new Date(y.year, i, 1)))
       .enter()
       .append("path")
       .attr("shape-rendering", "crispEdges")
@@ -153,7 +155,7 @@ export function renderHeatmap(
 
 function pathMonth(t0: Date) {
   const t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
-    d1 = t1.getDay(), w1 = d3.timeWeek.count(d3.timeYear(t1), t1);
+    d1 = t1.getDay(), w1 = timeWeek.count(timeYear(t1), t1);
   const s = CELL_SIZE + CELL_SPACING;
 
   if (d1 === 6) {
