@@ -9,9 +9,9 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import * as actions from "@actions/SessionActions";
 
 import { SubjectInfo } from "@pages/subject/SubjectInfo";
+import { SessionPageTransition } from "@pages/session/SessionPageTransition.tsx";
 import { StoredSubject, useSubjects } from "@api";
 
-import { CSSTransition } from "react-transition-group";
 import { GlobalHotKeys } from "react-hotkeys";
 import { useReducedMotion } from "@utils";
 
@@ -54,24 +54,6 @@ export function SessionLessonsPage(): JSX.Element {
   </GlobalHotKeys>;
 }
 
-const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
-  shouldWrap: boolean;
-  transitionKey: string;
-  current: boolean;
-  children: JSX.Element;
-}) => shouldWrap
-  ? <CSSTransition
-    key={transitionKey}
-    in={current}
-    appear
-    timeout={250}
-    classNames="session-page-inner-container"
-    unmountOnExit
-  >
-    {children}
-  </CSSTransition>
-  : (current ? children : null);
-
 function SessionLessonContents({
   id, current,
   subject,
@@ -88,12 +70,12 @@ function SessionLessonContents({
 }): JSX.Element {
   const reducedMotion = useReducedMotion();
 
-  return <Wrapper
+  return <SessionPageTransition
     shouldWrap={!reducedMotion}
     transitionKey={id}
     current={current}
   >
-    <div className="session-lesson-container session-page-inner-container">
+    <div>
       <SubjectInfo
         subject={subject}
         questionType="meaning"
@@ -109,5 +91,5 @@ function SessionLessonContents({
         showToc
       />
     </div>
-  </Wrapper>;
+  </SessionPageTransition>;
 }

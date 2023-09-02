@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import classNames from "classnames";
-
 import { RootState } from "@store";
 import { useSelector, shallowEqual } from "react-redux";
 
@@ -14,12 +12,10 @@ import { SessionQuestionHeader } from "./SessionQuestionHeader";
 import { SessionQuestionView } from "./SessionQuestionView";
 import { SubjectInfo } from "@pages/subject/SubjectInfo";
 import { DigraphAlert } from "./DigraphAlert";
+import { SessionPageTransition } from "@pages/session/SessionPageTransition.tsx";
 
 import { StoredSubject } from "@api";
 import { useReducedMotion } from "@utils";
-
-import { CSSTransition } from "react-transition-group";
-import { CSSTransitionClassNames } from "react-transition-group/CSSTransition";
 
 interface Props {
   type: QuestionType;
@@ -34,43 +30,6 @@ interface Props {
   onSkip: OnSkipFn;
 }
 
-const cssTransitionBase = classNames(
-  "select-none pointer-events-none fixed inset-0 md:static",
-  "[&_.toc-affix]:opacity-0 [&_.toc-affix]:!transition-none"
-);
-const cssTransitionAnim = "transition-session-page duration-session-page ease-session-page";
-const cssTransitionEnter = "scale-105 md:scale-110 opacity-0";
-const cssTransitionEnterActive = "opacity-100 scale-100";
-const cssTransitionExit = "!absolute !inset-lg";
-const cssTransitionExitActive = "scale-95 md:scale-90 opacity-0";
-
-const cssTransitionClasses: CSSTransitionClassNames = {
-  appear: classNames(cssTransitionEnter),
-  appearActive: classNames(cssTransitionBase, cssTransitionAnim, cssTransitionEnterActive),
-  enter: classNames(cssTransitionEnter),
-  enterActive: classNames(cssTransitionBase, cssTransitionAnim, cssTransitionEnterActive),
-  exit: classNames(cssTransitionBase, cssTransitionExit, cssTransitionEnterActive),
-  exitActive: classNames(cssTransitionBase, cssTransitionAnim, cssTransitionExit, cssTransitionExitActive),
-};
-
-const Wrapper = ({ shouldWrap, transitionKey, current, children }: {
-  shouldWrap: boolean;
-  transitionKey: string;
-  current: boolean;
-  children: JSX.Element;
-}) => shouldWrap
-  ? <CSSTransition
-    key={transitionKey}
-    in={current}
-    appear
-    timeout={300}
-    classNames={cssTransitionClasses}
-    unmountOnExit
-  >
-    {children}
-  </CSSTransition>
-  : (current ? children : null);
-
 export function SessionQuestionContents(props: Props): JSX.Element {
   const { type, itemId, current } = props;
 
@@ -78,7 +37,7 @@ export function SessionQuestionContents(props: Props): JSX.Element {
 
   const reducedMotion = useReducedMotion();
 
-  return <Wrapper
+  return <SessionPageTransition
     shouldWrap={!reducedMotion}
     transitionKey={`${itemId}-${type}`}
     current={current}
@@ -88,7 +47,7 @@ export function SessionQuestionContents(props: Props): JSX.Element {
         ? <IncorrectAnswerPart incorrectAnswer={incorrectAnswer} {...props} />
         : <SessionQuestionPart {...props} />}
     </div>
-  </Wrapper>;
+  </SessionPageTransition>;
 }
 
 function IncorrectAnswerPart({
