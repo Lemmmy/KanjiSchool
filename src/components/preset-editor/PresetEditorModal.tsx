@@ -20,7 +20,7 @@ interface Props {
   closeFn: () => void;
 }
 
-export function PresetEditorModal({
+export default function PresetEditorModal({
   type: presetType,
   visible,
   closeFn

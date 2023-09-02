@@ -9,6 +9,5 @@ export * from "./move";
 export * from "./new";
 export * from "./Preset";
 export * from "./PresetDropdownBtn";
-export * from "./PresetEditor";
 export * from "./PresetModalContext";
 export * from "./save";

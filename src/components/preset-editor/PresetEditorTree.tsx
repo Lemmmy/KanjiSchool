@@ -7,7 +7,6 @@ import { Tree } from "antd";
 
 import { PresetType, Preset, getDefaultPresets, usePresets } from ".";
 import { movePreset } from "./move";
-import { AntTreeNode } from "antd/lib/tree";
 import { DataNode } from "rc-tree/lib/interface";
 
 const TREE_TITLES: Record<PresetType, string> = {
