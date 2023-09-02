@@ -11,26 +11,25 @@ import { RootState } from "@store";
 import { Bucket, ReviewForecast } from "@api";
 
 import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  ChartData,
-  LinearScale,
-  TimeScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Tick,
-  Legend,
-  Tooltip
-} from "chart.js";
-import "chartjs-adapter-date-fns";
+import { Chart as ChartJS, ChartData, LinearScale, BarController, TimeScale, BarElement, PointElement, LineController,
+  LineElement, Tick, Legend, Tooltip } from "chart.js";
+import "chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm";
 
 import { ColorPalette } from "@global/theme";
 
 import dayjs from "dayjs";
 import { useIntegerSetting, usePalette } from "@utils";
 
-ChartJS.register(LinearScale, TimeScale, BarElement, PointElement, LineElement, Legend, Tooltip);
+ChartJS.register(
+  // Bar chart
+  BarController, BarElement,
+  // Line chart
+  LineController, LineElement, PointElement,
+  // Scales
+  LinearScale, TimeScale,
+  // Misc
+  Legend, Tooltip
+);
 
 const CHART_HEIGHT = 196;
 
@@ -176,7 +175,7 @@ function generateChart(
   };
 }
 
-export function UpcomingReviewsCard(): JSX.Element {
+export default function UpcomingReviewsCard(): JSX.Element {
   const maxDays = useIntegerSetting("dashboardReviewChartDays");
   const theme = usePalette();
 

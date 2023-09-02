@@ -2,57 +2,52 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC, ReactNode } from "react";
+import { ErrorInfo, FC, ReactNode, useCallback } from "react";
 import { Alert } from "antd";
 
-import * as Sentry from "@sentry/react";
-import { errorReporting } from "@utils";
 import { useRouteError } from "react-router-dom";
 
-interface Props {
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+
+interface WkErrorBoundaryProps {
   name?: string;
-  error?: Error;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
-const WkErrorBoundary: FC<Props> = ({ name, error, children }) => {
-  return <Sentry.ErrorBoundary
-    fallback={() => <ErrorFallback />}
-    onError={console.error}
+export function WkErrorBoundary({ name, children }: WkErrorBoundaryProps): JSX.Element {
+  const onError = useCallback((error: Error, info: ErrorInfo) => {
+    console.error(`Error in ${name ?? "unnamed"} error boundary:`, error, info);
+  }, [name]);
 
-    // Add the boundary name to the scope
-    beforeCapture={scope => {
-      if (name) scope.setTag("error-boundary", name);
-    }}
+  return <ErrorBoundary
+    FallbackComponent={ErrorFallback}
+    onError={onError}
   >
     {children}
-  </Sentry.ErrorBoundary>;
-};
-export const ErrorBoundary = WkErrorBoundary;
+  </ErrorBoundary>;
+}
 
 export const ErroredRoute: FC = () => {
   const error = useRouteError();
   console.error(error); // TODO: Sentry.reactRouterV6Instrumentation
 
-  return <ErrorBoundary>
-    <ErrorFallback />
-  </ErrorBoundary>;
+  return <ErrorFallback error={error} />;
 };
 
-function ErrorFallback(): JSX.Element {
+type ErrorFallbackProps = Pick<FallbackProps, "error">;
+
+function ErrorFallback({ error }: ErrorFallbackProps): JSX.Element {
   return <Alert
     type="error"
-    style={{ margin: 16 }}
+    className="m-lg"
 
     message="Critical error"
     description={<>
       <p>A critical error has occurred in KanjiSchool, so this page was terminated. See console for details.</p>
-
-      {/* If Sentry error reporting is enabled, add a message saying the error
-        * was automatically reported. */}
-      {errorReporting && (
-        <p style={{ marginBottom: 0}}>This error was automatically reported.</p>
-      )}
+1
+      {error && <p>
+        <b>Error:</b> {error.message}
+      </p>}
     </>}
   />;
 }

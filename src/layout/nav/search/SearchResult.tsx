@@ -21,7 +21,7 @@ interface Props {
   queryKana: string;
 }
 
-export const SearchResultEl = React.memo(({
+const SearchResult = React.memo(({
   subject,
   query,
   queryKana
@@ -96,3 +96,5 @@ export const SearchResultEl = React.memo(({
     {contents}
   </ConditionalLink>;
 });
+
+export default SearchResult;

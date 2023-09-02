@@ -20,8 +20,7 @@ import { AppLoading } from "@global/AppLoading";
 import { LoginPage } from "@pages/login/LoginPage";
 import { SyncPage } from "@pages/login/SyncPage";
 
-import { criticalError } from "@utils";
-import { ErrorBoundary } from "@comp/ErrorBoundary";
+import { WkErrorBoundary } from "@comp/ErrorBoundary";
 
 import { getTheme } from "@global/theme";
 
@@ -49,10 +48,10 @@ export default function App(): JSX.Element {
           * re-initialized due to the uppermost App component re-rendering, it
           * will trigger further errors and probably cause confusion while
           * debugging. */}
-          <ErrorBoundary name="app-top-level">
+          <WkErrorBoundary name="app-top-level">
             <AppServices />
             <AppInner />
-          </ErrorBoundary>
+          </WkErrorBoundary>
         </Provider>
       </ConfigProvider>}
     </ThemeProvider>
@@ -80,7 +79,7 @@ function AppInner(): JSX.Element {
     initDbAndLoadAll()
       .then(() => setDbInit(true))
       .catch(err => {
-        criticalError(err);
+        console.error(err);
         notification.error({ message: "Error loading database. "});
       });
   }, [dbInit]);
@@ -98,10 +97,10 @@ function AppInner(): JSX.Element {
   // whole app and router.
   return <PresetModalProvider>
     <StudyQueueHotkeyHandlerProvider>
-      <ErrorBoundary name="app-layout-and-services">
+      <WkErrorBoundary name="app-layout-and-services">
         <AppLayout />
         <InnerAppServices />
-      </ErrorBoundary>
+      </WkErrorBoundary>
     </StudyQueueHotkeyHandlerProvider>
   </PresetModalProvider>;
 }

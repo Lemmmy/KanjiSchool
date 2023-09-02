@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useMemo, useRef, ReactNode, Dispatch, SetStateAction, useCallback, useEffect } from "react";
-import { AutoComplete, Input, Tooltip } from "antd";
+import { useState, useMemo, useRef, ReactNode, Dispatch, SetStateAction, useCallback, lazy, Suspense } from "react";
+import { AutoComplete, Input, Spin, Tooltip } from "antd";
 import { RefSelectProps } from "antd/lib/select";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import classNames from "classnames";
@@ -18,14 +18,14 @@ import { ctrl, getSubjectUrl, useBooleanSetting } from "@utils";
 import { gotoSearch, useSubjects } from "@api";
 import { KeywordSearchResult, PerformSearchFn, useKeywordSearch } from "@api/search/KeywordSearch";
 import { throttle, debounce } from "lodash-es";
-import { SearchResultEl } from "./SearchResult";
 import { toKana } from "@comp/PseudoIme";
 
 import { useHandwritingInput } from "./handwriting/HandwritingInput";
 
-import * as Sentry from "@sentry/react";
 import Debug from "debug";
 const debug = Debug("kanjischool:layout-nav-search");
+
+const SearchResult = lazy(() => import("./SearchResult"));
 
 const SEARCH_THROTTLE = 400;
 const SEARCH_RESULT_LIMIT = 10;
@@ -52,11 +52,7 @@ function performAutocomplete(
     const results = keywordSearch(query, SEARCH_RESULT_LIMIT);
     setResults(results);
   } catch (err) {
-    Sentry.withScope(scope => {
-      scope.setTag("search-query", query);
-      Sentry.captureException(err);
-      console.error(err);
-    });
+    console.error("error performing search", err);
   }
 }
 
@@ -207,11 +203,13 @@ export function Search(): JSX.Element {
       const subject = subjects[result.item.id];
       options.push({
         value: result.item.id.toString(),
-        label: <SearchResultEl
-          subject={subject}
-          query={cleanQuery}
-          queryKana={cleanQueryKana}
-        />
+        label: <Suspense fallback={<Spin />}>
+          <SearchResult
+            subject={subject}
+            query={cleanQuery}
+            queryKana={cleanQueryKana}
+          />
+        </Suspense>
       });
     }
 

@@ -10,7 +10,7 @@ interface Props {
   subject: ApiSubjectVocabularyInner | ApiSubjectKanaVocabularyInner;
 }
 
-export function ContextSentences({ subject }: Props): JSX.Element {
+export default function ContextSentences({ subject }: Props): JSX.Element {
   return <div className="subject-info-context-sentences">
     {subject.context_sentences.map(s => (
       <div className="context-sentence" key={s.ja}>

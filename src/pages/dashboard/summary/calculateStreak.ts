@@ -9,7 +9,7 @@ import { db } from "@db";
 
 import * as d3 from "d3";
 
-import { criticalError, lsSetNumber } from "@utils";
+import { lsSetNumber } from "@utils";
 import { debounce } from "lodash-es";
 
 import Debug from "debug";
@@ -26,8 +26,7 @@ export const calculateStreak = debounce(() => {
   _calculateStreak()
     .then(() => debug("streak updated"))
     .catch(e => {
-      debug("error updating streak", e);
-      criticalError(e);
+      console.error("error updating streak", e);
     });
 }, STREAK_DEBOUNCE);
 

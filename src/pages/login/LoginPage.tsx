@@ -12,7 +12,6 @@ import { PageLayout } from "@layout/PageLayout";
 import * as api from "@api";
 
 import { ExtLink } from "@comp/ExtLink";
-import { criticalError } from "@utils";
 import { LoginFooter } from "./LoginFooter";
 import { DemoCarousel } from "./DemoCarousel";
 
@@ -40,7 +39,7 @@ export function LoginPage(): JSX.Element {
 
       await api.attemptLogIn(values.apiKey);
     } catch (err: any) {
-      criticalError(err);
+      console.error("login failed:", err);
       setLoginFailed(true);
     } finally {
       setLoggingIn(false);

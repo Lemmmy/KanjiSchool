@@ -11,7 +11,7 @@ import { HeatmapDay } from "./data";
 import { ReviewHeatmapTooltip } from "./ReviewHeatmapTooltip";
 import { ReviewHeatmapLegend } from "./ReviewHeatmapLegend";
 
-export function ReviewHeatmapCard(): JSX.Element {
+export default function ReviewHeatmapCard(): JSX.Element {
   const [showAll, setShowAll] = useState(false);
   const [hoverDay, setHoverDay] = useState<HeatmapDay>();
 

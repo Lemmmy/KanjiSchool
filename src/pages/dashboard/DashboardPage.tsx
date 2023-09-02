@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useEffect } from "react";
-import { Row, Col } from "antd";
+import { useEffect, lazy, Suspense } from "react";
+import { Row, Col, Card } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { PageLayout } from "@layout/PageLayout";
@@ -17,15 +17,11 @@ import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonMod
 
 import { SummaryCard } from "./summary/SummaryCard";
 import { LevelProgressCard } from "./level-progress/LevelProgressCard";
-import { UpcomingReviewsCard } from "./summary/UpcomingReviewsCard.tsx";
 import { SrsStagesCard } from "./srs-stages/SrsStagesCard";
-import { NewUnlocksCard } from "./NewUnlocksCard";
-import { CriticalConditionCard } from "./CriticalConditionCard";
 import { ReviewForecastCard } from "./review-forecast/ReviewForecastCard";
 import { KanjiProgressCard } from "./jlpt-joyo/KanjiProgressCard";
 import { ReviewAccuracyCard } from "./ReviewAccuracyCard";
 import { TipsCard } from "./tips/TipsCard";
-import { ReviewHeatmapCard } from "./heatmap/ReviewHeatmapCard";
 import { SubscriptionStatus } from "./SubscriptionStatus";
 
 import { useBooleanSetting } from "@utils";
@@ -33,6 +29,16 @@ import { useBooleanSetting } from "@utils";
 import useResizeObserver from "use-resize-observer";
 import { OverleveledAssignments } from "@pages/dashboard/OverleveledAssignments";
 import { GetReviewsWarning } from "@pages/dashboard/GetReviewsWarning";
+
+// Lazy load some of the cards that result in a large bundle size:
+// UpcomingReviewsCard depends on Chart.JS
+const UpcomingReviewsCard = lazy(() => import("./summary/UpcomingReviewsCard.tsx"));
+// ReviewHeatmapCard depends on D3
+const ReviewHeatmapCard = lazy(() => import("./heatmap/ReviewHeatmapCard.tsx"));
+// CriticalConditionCard and NewUnlocksCard depend on the subject list components, which have a variety of windowing
+// dependencies and a lot of other code
+const CriticalConditionCard = lazy(() => import("./CriticalConditionCard.tsx"));
+const NewUnlocksCard = lazy(() => import("./NewUnlocksCard.tsx"));
 
 function DashboardPage(): JSX.Element {
   const ongoingSession = useSelector((s: RootState) => s.session.ongoing);
@@ -70,7 +76,12 @@ function DashboardPage(): JSX.Element {
 
     <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
       {/* Upcoming reviews chart */}
-      <Col span={24} lg={14}><UpcomingReviewsCard /></Col>
+      <Col span={24} lg={14}>
+        <Suspense fallback={<Card loading />}>
+          <UpcomingReviewsCard />
+        </Suspense>
+      </Col>
+
       {/* SRS stage item count */}
       <Col span={24} lg={10}><SrsStagesCard /></Col>
     </Row>
@@ -78,12 +89,21 @@ function DashboardPage(): JSX.Element {
     <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
       <Col span={24} xl={12} style={{ display: "flex", flexDirection: "column" }}>
         {/* Review heatmap */}
-        <ReviewHeatmapCard />
+        <Suspense fallback={<Card loading />}>
+          <ReviewHeatmapCard />
+        </Suspense>
+
         {/* Tip of the day */}
         <TipsCard />
       </Col>
 
-      <Col span={24} xl={6} xxl={6}><CriticalConditionCard /></Col>
+      <Col span={24} xl={6} xxl={6}>
+        {/* Critical condition items */}
+        <Suspense fallback={<Card loading />}>
+          <CriticalConditionCard />
+        </Suspense>
+      </Col>
+
       <Col span={24} xl={6} xxl={6}><ReviewForecastCard /></Col>
     </Row>
 
@@ -94,8 +114,19 @@ function DashboardPage(): JSX.Element {
       <Col span={24} lg={12} style={{ display: "flex", flexDirection: "column" }}>
         {/* Unlocked/burned items */}
         <Row gutter={16} className="mb-md">
-          <Col span={24} xl={12}><NewUnlocksCard dateField="unlocked_at" /></Col>
-          <Col span={24} xl={12}><NewUnlocksCard dateField="burned_at" /></Col>
+          {/* New unlocks in last 30d */}
+          <Col span={24} xl={12}>
+            <Suspense fallback={<Card loading />}>
+              <NewUnlocksCard dateField="unlocked_at" />
+            </Suspense>
+          </Col>
+
+          {/* Burned items in last 30d */}
+          <Col span={24} xl={12}>
+            <Suspense fallback={<Card loading />}>
+              <NewUnlocksCard dateField="burned_at" />
+            </Suspense>
+          </Col>
         </Row>
 
         {/* Review accuracy */}

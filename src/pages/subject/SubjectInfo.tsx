@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useCallback } from "react";
-import { Divider } from "antd";
+import { useState, useCallback, lazy, Suspense } from "react";
+import { Divider, Skeleton } from "antd";
 import classNames from "classnames";
 
 import {
@@ -20,7 +20,6 @@ import { SubjectInfoTopRow } from "./SubjectInfoTopRow";
 import { StudyMaterialNote } from "./StudyMaterialNote";
 import { StudyMaterialSynonyms } from "./StudyMaterialSynonyms";
 import { PartsOfSpeech } from "./PartsOfSpeech";
-import { ContextSentences } from "./ContextSentences";
 import { Jisho } from "./Jisho";
 import { YourProgression } from "./progression/YourProgression";
 import { SubjectInfoDebug } from "./debug/SubjectInfoDebug";
@@ -51,6 +50,8 @@ export interface SubjectInfoProps {
   subjectCharactersFontClass?: string;
   subjectCharactersImageClass?: string;
 }
+
+const ContextSentences = lazy(() => import("./ContextSentences"));
 
 export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   const {
@@ -263,7 +264,9 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {vocabularyLike && show("context_sentences") && <>
       <a id="context-sentences" />
       <Divider orientation="left">Context sentences</Divider>
-      <ContextSentences subject={vocabSubjectData} />
+      <Suspense fallback={<Skeleton />}>
+        <ContextSentences subject={vocabSubjectData} />
+      </Suspense>
     </>}
 
     {/* Assignment progression */}

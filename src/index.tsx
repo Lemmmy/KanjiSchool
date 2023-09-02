@@ -2,9 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import "@utils/setup/errors";
-import "@utils/setup/setup";
-import { criticalError } from "@utils/setup/errors";
+import "@utils/setup";
 
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
@@ -35,7 +33,7 @@ main().catch(err => {
   document.getElementById("wk-preloader")?.remove();
 
   debug("critical error in index.tsx");
-  criticalError(err);
+  console.error(err);
 
   notification.error({
     message: "Critical error",

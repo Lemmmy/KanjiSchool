@@ -20,7 +20,6 @@ import { SubjectComparator } from "@utils/comparator";
 
 import { sortBy, shuffle } from "lodash-es";
 
-import { criticalError } from "@utils";
 import Debug from "debug";
 const debug = Debug("kanjischool:session-pick");
 
@@ -47,7 +46,7 @@ export function pickSessionItems(
   } catch (e: any) {
     debug("error picking session items", e);
     debug("context:", type, options, candidateSubjectIds);
-    criticalError(e, { contexts: { session: {
+    console.error(e, { contexts: { session: {
       type,
       options: JSON.stringify(options)
     }}});

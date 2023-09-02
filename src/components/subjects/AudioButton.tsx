@@ -15,8 +15,6 @@ import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio, useUser
 import { sample } from "lodash-es";
 import { GlobalHotKeys } from "react-hotkeys";
 
-import { criticalError } from "@utils";
-
 import Debug from "debug";
 const debug = Debug("kanjischool:audio-button");
 
@@ -59,7 +57,7 @@ function playSound(
     setPlaying(true);
   } catch (e: any) {
     debug("error while playing audio", e);
-    criticalError(e);
+    console.error(e);
     setPlaying(false);
   }
 }
@@ -133,7 +131,7 @@ export function useVocabAudio(
         audioEl.remove();
         debug("canPlayType %s? %s", contentType, canPlay);
 
-        criticalError(e, { contexts: { audio: {
+        console.error(e, { contexts: { audio: {
           "subject_id": subjectId,
           "actor_id": actor,
           "content_type": contentType,

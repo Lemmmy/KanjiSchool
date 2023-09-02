@@ -13,7 +13,7 @@ import { setSupportedFonts } from "@actions/SettingsActions";
 
 import { useBooleanSetting } from "./settings";
 
-import { LRUCache } from "lru-cache";
+import { lru } from "tiny-lru";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:fonts");
@@ -143,7 +143,7 @@ export function reloadFontCache(newCustomFonts: string[]): Record<string, boolea
   return newSupportedFonts;
 }
 
-const randomFontsPicked = new LRUCache<string, string>({ max: 100 });
+const randomFontsPicked = lru<string>(100);
 
 export function useRandomFont(
   glyphs: string | null | undefined,

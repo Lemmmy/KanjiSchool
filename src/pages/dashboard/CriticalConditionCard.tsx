@@ -76,7 +76,7 @@ function getData(
   })), relevantStatistics.map(s => s[1].id)];
 }
 
-export function CriticalConditionCard(): JSX.Element {
+export default function CriticalConditionCard(): JSX.Element {
   const [showingAll, setShowingAll] = useState(false);
   const [data, setData] = useState<[ListItem[], number[]]>();
 
