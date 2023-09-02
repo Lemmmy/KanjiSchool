@@ -83,7 +83,7 @@ function SessionQuestionInput({
 
   // `.question-input-box` class is needed for `ourInputFocused` check below
   const classes = classNames("question-input-box text-xxl text-center bg-transparent", {
-    "animation-shake transform-[translateX(0)]": inputShake,
+    "animate-shake transform-[translateX(0)]": inputShake,
     "font-ja": questionType === "reading",
   });
 

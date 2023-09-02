@@ -101,11 +101,16 @@ export default {
           "20%, 80%":      { "transform": "translateX(6px)" },
           "30%, 50%, 70%": { "transform": "translateX(-8px)" },
           "40%, 60%":      { "transform": "translateX(8px)" }
+        },
+        "fade-in": {
+          "0%":   { "opacity": "0" },
+          "100%": { "opacity": "1" }
         }
       },
 
-      animations: {
-        "shake": "shake 750ms ease-in-out both"
+      animation: {
+        "shake": "shake 750ms ease-in-out both",
+        "fade-in": "fade-in 300ms ease-in-out both",
       },
 
       transitionProperty: {

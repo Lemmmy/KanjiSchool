@@ -116,7 +116,7 @@ export function SessionQuestionHeader({
     "w-full max-w-[768px] block text-center leading-none",
     {
       "hover:!font-ja": randomFontEnabled && randomFontHover && randomFont && hasCharacter,
-      "animation-shake transform-[translateX(0)]": incorrectAnswer !== undefined && shouldShakeIncorrect,
+      "animate-shake transform-[translateX(0)]": incorrectAnswer !== undefined && shouldShakeIncorrect,
     }
   );
 
