@@ -44,19 +44,19 @@ const questionTypeBaseClass = "block w-full p-xss my-sm rounded text-center text
 
 const questionTypeColorClass: Record<QuestionHeaderTypeColor, Record<QuestionType, string>> = {
   DEFAULT: {
-    meaning: "bg-question-meaning-light text-base dark:bg-question-meaning-dark dark:text-white",
-    reading: "bg-white text-base dark:bg-black dark:text-desc",
+    meaning: "bg-question-meaning-light text-basec dark:bg-question-meaning-dark dark:text-white",
+    reading: "bg-white text-basec dark:bg-black dark:text-desc",
   },
   DEFAULT_HIGH_CONTRAST: {
     meaning: "bg-question-meaning-light-hc text-black dark:bg-question-meaning-dark-hc dark:text-black",
-    reading: "bg-white text-base dark:bg-black dark:text-white",
+    reading: "bg-white text-basec dark:bg-black dark:text-white",
   },
   INVERTED: {
-    meaning: "bg-white text-base dark:bg-black dark:text-desc",
-    reading: "bg-question-meaning-light text-base dark:bg-question-meaning-dark dark:text-white",
+    meaning: "bg-white text-basec dark:bg-black dark:text-desc",
+    reading: "bg-question-meaning-light text-basec dark:bg-question-meaning-dark dark:text-white",
   },
   INVERTED_HIGH_CONTRAST: {
-    meaning: "bg-white text-base dark:bg-black dark:text-white",
+    meaning: "bg-white text-basec dark:bg-black dark:text-white",
     reading: "bg-question-meaning-light-hc text-black dark:bg-question-meaning-dark-hc dark:text-black",
   },
 };

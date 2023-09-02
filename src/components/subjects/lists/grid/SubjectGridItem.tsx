@@ -38,6 +38,7 @@ export type SubjectGridItemProps = Props;
 
 interface SizeClasses {
   base?: string;
+  bg?: string;
   extra?: string;
   extraSrsFont?: string;
   subjectCharacters?: string;
@@ -49,12 +50,14 @@ interface SizeClasses {
 const sizeClasses: Record<Size, SizeClasses> = {
   normal: {
     base: "w-[80px] mr-sm mb-sm py-xs px-sm rounded leading-none",
+    bg: "rounded bg-transparent hover:bg-white/10 transition-[background]",
     extra: "text-sm leading-[1.35]",
     subjectCharactersFont: "text-[56px] leading-[56px]",
     subjectCharactersImageSize: "w-[56px] h-[56px] text-[56px] m-0",
   },
   small: {
     base: "w-[68px] mr-[3px] mb-[3px] p-xss leading-none",
+    bg: "rounded-sm bg-transparent hover:bg-white/10 transition-[background]",
     extra: "text-xs leading-[1.3]",
     extraSrsFont: "text-xss",
     // These should be the defaults
@@ -137,8 +140,9 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
 
   const normType = normalizeVocabType(subject.object);
   const classes = classNames(
-    "inline-block box-content text-center transition group",
+    "inline-block box-content text-center transition group text-basec",
     sizeClassesObj.base,
+    sizeClassesObj.bg,
     sizeClassesObj.types?.[normType],
     bgClassName,
     className,
@@ -169,7 +173,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
 
       {size !== "tiny" && <div
         className={classNames(
-          "flex flex-col items-center mt-xs text-o-70 group-hover:text-text transition",
+          "flex flex-col items-center mt-xs text-base-c/70 group-hover:text-white transition",
           sizeClassesObj.extra
         )}
       >

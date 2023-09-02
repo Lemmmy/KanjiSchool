@@ -24,7 +24,7 @@ export function AppLayout(): JSX.Element {
 
         <SiteLayoutContext.Provider value={siteLayout}>
           <div
-            className="ant-layout z-10 mt-header h-[calc(100vh-64px)] overflow-auto text-base"
+            className="ant-layout z-10 mt-header h-[calc(100vh-64px)] overflow-auto text-basec"
             tabIndex={0}
             onKeyDown={noSpace}
             ref={setSiteLayout}

@@ -32,7 +32,7 @@ export function GridItemKanji({
     </span>}
 
     {/* Primary reading */}
-    {!hideReading && reading && <span className="text-xs leading-[1.3] font-ja text-base">
+    {!hideReading && reading && <span className="text-xs leading-[1.3] font-ja text-basec">
       {reading}
     </span>}
   </SubjectGridItem>;

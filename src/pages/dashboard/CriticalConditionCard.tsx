@@ -68,11 +68,7 @@ function getData(
   // Generate the list items and return all the subject IDs
   return [criticalConditionItems.map(([r, s]) => ({
     subject: s,
-    extra: (
-      <span className="critical-percentage">
-        {r.data.percentage_correct}%
-      </span>
-    )
+    extra: <span>{r.data.percentage_correct}%</span>
   })), relevantStatistics.map(s => s[1].id)];
 }
 

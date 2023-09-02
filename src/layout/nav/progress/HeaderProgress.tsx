@@ -23,9 +23,11 @@ export function HeaderProgress({
   const percent = Math.floor((count / total) * 100);
   const showSpinner = indeterminate || count < 0 || total <= 0;
 
-  return <div className="flex flex-col justify-center h-header px-lg border-0 border-solid border-l border-l-split">
-    <div className="text-desc flex-0 leading-none text-sm flex">
-      <span className="overflow-hidden overflow-ellipsis line-clamp-1">{title}</span>
+  return <div
+    className="flex flex-col justify-center h-header px-lg border-0 border-solid border-l border-l-split mt-1"
+  >
+    <div className="text-desc flex-0 leading-tight text-sm flex">
+      <span className="overflow-hidden text-ellipsis line-clamp-1">{title}</span>
 
       {/* Count or spinner */}
       {showSpinner
@@ -34,7 +36,7 @@ export function HeaderProgress({
             spin
             width={24}
             height={24}
-            className="text-base ml-sm"
+            className="text-basec ml-sm"
           />
         )
         : (

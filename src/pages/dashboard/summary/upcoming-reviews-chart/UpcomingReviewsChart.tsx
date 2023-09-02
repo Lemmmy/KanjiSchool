@@ -73,7 +73,7 @@ const dateFormat = timeFormat("%a %-d %b, %-I:%M %p");
 const ChartTooltip = forwardRef<HTMLDivElement, ChartTooltipProps>(function ChartTooltip({ datum }, ref): JSX.Element {
   return <div
     ref={ref}
-    className="absolute pointer-events-none bg-spotlight text-solid px-md py-sm rounded shadow-lg hidden
+    className="absolute pointer-events-none bg-spotlight text-solidc px-md py-sm rounded shadow-lg hidden
      whitespace-nowrap z-50"
   >
     {datum && <ChartTooltipInner datum={datum} />}
@@ -112,6 +112,6 @@ interface ChartTooltipRowProps {
 function ChartTooltipRow({ label, value, className }: ChartTooltipRowProps): JSX.Element {
   return <div className="flex items-center leading-none">
     <div className={classNames(className, "w-4 h-4 inline-block mr-sm rounded-sm")} />
-    <span className="text-base-c text-sm">{label}: <b>{value}</b></span>
+    <span className="text-basec text-sm">{label}: <b>{value}</b></span>
   </div>;
 }

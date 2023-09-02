@@ -60,7 +60,7 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
           imageSizeClassName="text-lg w-[16px]"
         />
 
-        {extra && <div className="extra text-base">{extra}</div>}
+        {extra && <div className="extra text-basec">{extra}</div>}
       </ConditionalLink>
     </List.Item>
   </Tooltip>;

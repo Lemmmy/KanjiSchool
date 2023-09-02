@@ -31,7 +31,7 @@ const SearchResult = React.memo(({
 
   const userLevel = useUserLevel();
 
-  const classes = classNames("text-base whitespace-normal", {
+  const classes = classNames("text-basec whitespace-normal", {
     "opacity-70": userLevel < level
   });
 

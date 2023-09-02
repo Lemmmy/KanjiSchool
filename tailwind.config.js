@@ -135,14 +135,14 @@ export default {
       "primary"   : "rgb(var(--antd-primary) / <alpha-value>)",
       "success"   : "rgb(var(--antd-success) / <alpha-value>)",
       "link"      : "rgb(var(--antd-link) / <alpha-value>)",
-      "base"      : "var(--antd-text)",
+      "basec"     : "var(--antd-text)",
       "base-c"    : "rgb(var(--antd-text-c) / <alpha-value>)",
       "o-70"      : "var(--antd-text-o-70)",
       "desc"      : "var(--antd-text-desc)",
       "desc-c"    : "rgb(var(--antd-text-desc-c) / <alpha-value>)",
       "disabled"  : "var(--antd-text-disabled)",
       "disabled-c": "rgb(var(--antd-text-disabled-c) / <alpha-value>)",
-      "solid"     : "rgb(var(--antd-text-solid) / <alpha-value>)",
+      "solidc"    : "rgb(var(--antd-text-solid) / <alpha-value>)",
       "split"     : "var(--antd-split)",
       "container" : "rgb(var(--antd-container) / <alpha-value>)",
       "spotlight" : "rgb(var(--antd-spotlight) / <alpha-value>)",
@@ -239,11 +239,11 @@ export default {
       ...generateAntColors(),
 
       // others
-      "question-meaning-dark": "#1f1f1f",
-      "question-meaning-dark-hc": "#bfbfbf",
-      "question-meaning-light": "#eeeeee", // TODO
+      "question-meaning-dark"    : "#1f1f1f",
+      "question-meaning-dark-hc" : "#bfbfbf",
+      "question-meaning-light"   : "#eeeeee", // TODO
       "question-meaning-light-hc": "#eeeeee", // TODO
-      "reviews-cumulative": "#095cb5",
+      "reviews-cumulative"       : "#095cb5",
 
       // misc missing values
       "transparent": "transparent",
