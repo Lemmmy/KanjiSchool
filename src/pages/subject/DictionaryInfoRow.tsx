@@ -2,6 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import { ReactNode } from "react";
 import { Row, Col, ColProps } from "antd";
 
 import { StoredSubject } from "@api";
@@ -13,7 +14,7 @@ interface Props {
   subject: StoredSubject;
 }
 
-export function Jisho({ subject }: Props): JSX.Element | null {
+export function DictionaryInfoRow({ subject }: Props): JSX.Element | null {
   // No data, return null
   const { jisho } = subject.data;
   if (!jisho) return null;
@@ -27,33 +28,35 @@ export function Jisho({ subject }: Props): JSX.Element | null {
 
   const colProps: ColProps = { flex: "auto" };
 
-  return <Row className="subject-info-jisho-row">
+  return <Row className="text-center mt-[32px]">
     {/* Stroke count */}
     {hasStroke && <Col {...colProps}>
-      <span className="jisho-header">Stroke count</span>
-      <span className="jisho-value">
-        {nts(stroke)}
-      </span>
+      <Header>Stroke count</Header>
+      <Value>{nts(stroke)}</Value>
     </Col>}
 
     {/* JLPT */}
     {hasJlpt && <Col {...colProps}>
-      <span className="jisho-header">JLPT level</span>
-      <span className="jisho-value">{JLPT_LEVEL_NAMES[jlpt]}</span>
+      <Header>JLPT level</Header>
+      <Value>{JLPT_LEVEL_NAMES[jlpt]}</Value>
     </Col>}
 
     {/* Jōyō */}
     {hasJoyo && <Col {...colProps}>
-      <span className="jisho-header">Jōyō grade</span>
-      <span className="jisho-value">{JOYO_GRADE_NAMES[joyo]}</span>
+      <Header>Jōyō grade</Header>
+      <Value>{JOYO_GRADE_NAMES[joyo]}</Value>
     </Col>}
 
     {/* Newspaper frequency */}
     {hasNfr && <Col {...colProps}>
-      <span className="jisho-header">Newspaper frequency</span>
-      <span className="jisho-value">
-        <OrdinalNumber value={nfr} />
-      </span>
+      <Header>Newspaper frequency</Header>
+      <Value><OrdinalNumber value={nfr} /></Value>
     </Col>}
   </Row>;
 }
+
+const Header = ({ children }: { children: ReactNode }): JSX.Element =>
+  <div className="text-sm text-desc">{children}</div>;
+
+const Value = ({ children }: { children: ReactNode }): JSX.Element =>
+  <div className="text-lg">{children}</div>;

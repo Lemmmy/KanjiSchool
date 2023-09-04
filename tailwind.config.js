@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import { presetPalettes } from "@ant-design/colors";
+import plugin from "tailwindcss/plugin";
+import clipPath from "tailwind-clip-path";
 
 function generateAntColors() {
   const out = {};
@@ -72,6 +74,10 @@ export default {
         xxl : "27px",
       },
 
+      lineHeight: {
+        normal: 1.5715,
+      },
+
       borderRadius: {
         xss    : "2px",
         xs     : "3px",
@@ -93,6 +99,10 @@ export default {
 
       cursor: {
         pen: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA5SURBVChTYyAE/gMBlIkfwBQS1ICuAKcGmAQ6jQHQJYa0QhAASYIAjA0WxAEYkRUwAgGUiQUwMAAAr3dXrhd5j3gAAAAASUVORK5CYII=") 0 10, auto`
+      },
+
+      clipPath: {
+        "arrow-b": "path('M 0 8 A 4 4 0 0 0 2.82842712474619 6.82842712474619 L 6.585786437626905 3.0710678118654755 A 2 2 0 0 1 9.414213562373096 3.0710678118654755 L 13.17157287525381 6.82842712474619 A 4 4 0 0 0 16 8 Z')"
       },
 
       keyframes: {
@@ -126,6 +136,13 @@ export default {
       },
 
       // END OF EXTEND
+    },
+
+    textShadow: {
+      none: "none",
+      sm: "0 1px 2px var(--tw-shadow-color)",
+      DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+      lg: "0 8px 16px var(--tw-shadow-color)",
     },
 
     colors: {
@@ -252,6 +269,16 @@ export default {
       "current"    : "currentColor"
     },
   },
-  plugins: [],
+  plugins: [
+    clipPath,
+
+    // text-shadow
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities(
+        { "text-shadow": v => ({ textShadow: v }) },
+        { values: theme("textShadow") }
+      );
+    }),
+  ],
 };
 

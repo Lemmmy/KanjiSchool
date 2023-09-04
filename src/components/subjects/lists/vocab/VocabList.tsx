@@ -5,7 +5,7 @@
 import React, { useMemo, useCallback } from "react";
 import classNames from "classnames";
 
-import { VocabListItem, Size } from "./VocabListItem";
+import { VocabListItem } from "./VocabListItem";
 import {
   ApiSubjectVocabulary, StoredAssignment,
   useSubjects, useAssignments, useSubjectAssignmentIds
@@ -14,6 +14,7 @@ import { SubjectRenderTooltipFn, useDefaultRenderTooltipFn } from "../tooltip/Su
 
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { Size } from "@comp/subjects/lists/vocab/sizes.ts";
 
 interface Props {
   subjectIds: number[];
@@ -77,8 +78,8 @@ export function VocabList({
   // the regular list.
   const isVirtual = items.length > 10;
 
-  const classes = classNames("vocab-list", {
-    "is-virtual": isVirtual
+  const classes = classNames({
+    "max-height-[320px] overflow-y-auto": isVirtual
   });
 
   if (isVirtual) {

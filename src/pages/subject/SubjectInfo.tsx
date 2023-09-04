@@ -2,16 +2,19 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useCallback, lazy, Suspense } from "react";
-import { Divider, Skeleton } from "antd";
+import { lazy, Suspense, useCallback, useState } from "react";
+import { Skeleton } from "antd";
 import classNames from "classnames";
 
 import {
-  StoredSubject, ApiSubjectKanjiInner, ApiSubjectRadicalInner,
-  ApiSubjectVocabularyInner, useAssignmentBySubjectId,
+  ApiSubjectKanjiInner,
+  ApiSubjectRadicalInner,
+  ApiSubjectVocabularyInner,
+  StoredSubject,
+  useAssignmentBySubjectId,
   useStudyMaterialBySubjectId
 } from "@api";
-import { SubjectHintStage, shouldShowObject } from "./hintStages";
+import { shouldShowObject, SubjectHintStage } from "./hintStages";
 
 import { AnchorList } from "./AnchorList";
 
@@ -20,7 +23,7 @@ import { SubjectInfoTopRow } from "./SubjectInfoTopRow";
 import { StudyMaterialNote } from "./StudyMaterialNote";
 import { StudyMaterialSynonyms } from "./StudyMaterialSynonyms";
 import { PartsOfSpeech } from "./PartsOfSpeech";
-import { Jisho } from "./Jisho";
+import { DictionaryInfoRow } from "./DictionaryInfoRow.tsx";
 import { YourProgression } from "./progression/YourProgression";
 import { SubjectInfoDebug } from "./debug/SubjectInfoDebug";
 
@@ -30,6 +33,8 @@ import { VocabList } from "@comp/subjects/lists/vocab";
 
 import { hasReadings, isVocabularyLike, normalizeVocabType, useBooleanSetting } from "@utils";
 import { clamp } from "lodash-es";
+import { SubjectInfoHint } from "@pages/subject/SubjectInfoHint.tsx";
+import { SubjectInfoDivider } from "@pages/subject/SubjectInfoDivider.tsx";
 
 export interface SubjectInfoProps {
   subject: StoredSubject;
@@ -144,7 +149,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {/* Kanji used radicals */}
     {objectType === "kanji" && show("used_radicals") && <>
       <a id="used-radicals" />
-      <Divider orientation="left">Used radicals</Divider>
+      <SubjectInfoDivider label="Used radicals" />
       <SubjectGrid subjectIds={kanjiSubjectData.component_subject_ids} />
     </>}
 
@@ -152,7 +157,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {/* Check subject.object (raw objectType) here */}
     {subject.object === "vocabulary" && show("used_kanji") && <>
       <a id="used-kanji" />
-      <Divider orientation="left">Used kanji</Divider>
+      <SubjectInfoDivider label="Used kanji" />
       <SubjectGrid
         subjectIds={vocabSubjectData.component_subject_ids}
         hideReading={!show("readings_in_kanji")}
@@ -163,53 +168,47 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {/* Meaning mnemonic, always present (except when it's not) */}
     {show("meaning_mnemonic") && <>
       <a id="meaning-mnemonic" />
-      <Divider orientation="left">Meaning mnemonic</Divider>
+      <SubjectInfoDivider label="Meaning mnemonic" />
       <SubjectMarkup className="subject-info-meaning-mnemonic">
         {meaning_mnemonic}
       </SubjectMarkup>
 
       {/* Kanji meaning hint */}
-      {objectType === "kanji" && kanjiSubjectData.meaning_hint && (
-        <div className="subject-info-hint subject-info-meaning-hint">
-          <span className="hint-title meaning-hint-title">Meaning hint</span>
-          <SubjectMarkup>
-            {kanjiSubjectData.meaning_hint}
-          </SubjectMarkup>
-        </div>
-      )}
+      {objectType === "kanji" && <SubjectInfoHint data={kanjiSubjectData} header="Meaning hint" />}
 
       {/* Study material meaning notes */}
       <StudyMaterialNote
-        subject={subject} studyMaterial={studyMaterial}
+        subject={subject}
+        studyMaterial={studyMaterial}
         type="meaning"
+        fallbackClassName="mt-lg"
       />
 
       {/* Study material meaning synonyms */}
-      <StudyMaterialSynonyms subject={subject} studyMaterial={studyMaterial} />
+      <StudyMaterialSynonyms
+        subject={subject}
+        studyMaterial={studyMaterial}
+        fallbackClassName="mt-xss"
+      />
     </>}
 
     {/* Reading mnemonic */}
     {hasReading && show("reading_mnemonic") && <>
       <a id="reading-mnemonic" />
-      <Divider orientation="left">Reading mnemonic</Divider>
+      <SubjectInfoDivider label="Reading mnemonic" />
       <SubjectMarkup className="subject-info-reading-mnemonic">
         {kanjiSubjectData.reading_mnemonic}
       </SubjectMarkup>
 
       {/* Kanji reading hint */}
-      {objectType === "kanji" && kanjiSubjectData.reading_hint && (
-        <div className="subject-info-hint subject-info-reading-hint">
-          <span className="hint-title reading-hint-title">Reading hint</span>
-          <SubjectMarkup>
-            {kanjiSubjectData.reading_hint}
-          </SubjectMarkup>
-        </div>
-      )}
+      {objectType === "kanji" && <SubjectInfoHint data={kanjiSubjectData} header="Reading hint" />}
 
       {/* Study material reading notes */}
       <StudyMaterialNote
-        subject={subject} studyMaterial={studyMaterial}
+        subject={subject}
+        studyMaterial={studyMaterial}
         type="reading"
+        fallbackClassName="mt-lg"
       />
     </>}
 
@@ -217,14 +216,14 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {objectType === "kanji" && !!subject.data.jisho &&
       show("kanji_jisho") && <>
       <a id="dictionary-info" />
-      <Divider orientation="left">Dictionary info</Divider>
-      <Jisho subject={subject} />
+      <SubjectInfoDivider label="Dictionary info" />
+      <DictionaryInfoRow subject={subject} />
     </>}
 
     {/* Radical used in kanji */}
     {objectType === "radical" && show("used_in_kanji") && <>
       <a id="used-in" />
-      <Divider orientation="left">Used in</Divider>
+      <SubjectInfoDivider label="Used in" />
       <SubjectGrid subjectIds={radicalSubjectData.amalgamation_subject_ids} />
     </>}
 
@@ -232,7 +231,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {objectType === "kanji" && show("visually_similar_kanji") &&
       kanjiSubjectData.visually_similar_subject_ids.length > 0 && <>
       <a id="visually-similar" />
-      <Divider orientation="left">Visually similar</Divider>
+      <SubjectInfoDivider label="Visually similar" />
       <SubjectGrid
         subjectIds={kanjiSubjectData.visually_similar_subject_ids}
         hideReading={!show("visually_similar_kanji_readings")}
@@ -242,7 +241,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {/* Kanji used in vocabulary */}
     {objectType === "kanji" && show("used_in_vocabulary") && <>
       <a id="used-in" />
-      <Divider orientation="left">Used in</Divider>
+      <SubjectInfoDivider label="Used in" />
       <VocabList
         subjectIds={kanjiSubjectData.amalgamation_subject_ids}
         hideReading={!show("readings_in_vocabulary")}
@@ -252,18 +251,18 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {/* Vocabulary part of speech */}
     {vocabularyLike && show("part_of_speech") && <>
       <a id="parts-of-speech" />
-      <Divider orientation="left">
-        {vocabSubjectData.parts_of_speech.length > 1
+      <SubjectInfoDivider
+        label={vocabSubjectData.parts_of_speech.length > 1
           ? "Parts of speech"
           : "Part of speech"}
-      </Divider>
+      />
       <PartsOfSpeech subject={vocabSubjectData} />
     </>}
 
     {/* Vocabulary context sentences */}
     {vocabularyLike && show("context_sentences") && <>
       <a id="context-sentences" />
-      <Divider orientation="left">Context sentences</Divider>
+      <SubjectInfoDivider label="Context sentences" />
       <Suspense fallback={<Skeleton />}>
         <ContextSentences subject={vocabSubjectData} />
       </Suspense>

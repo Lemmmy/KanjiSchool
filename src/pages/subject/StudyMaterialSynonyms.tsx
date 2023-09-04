@@ -5,6 +5,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Select } from "antd";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
+import classNames from "classnames";
 
 import {
   ApiSubject, ApiStudyMaterial, createStudyMaterial, StudyMaterialPartial,
@@ -12,15 +13,20 @@ import {
 } from "@api";
 
 import { shallowEqual } from "fast-equals";
+import { SubjectInfoHint } from "@pages/subject/SubjectInfoHint.tsx";
 
 interface Props {
   subject: ApiSubject;
   studyMaterial?: ApiStudyMaterial;
+  className?: string;
+  fallbackClassName?: string;
 }
 
 export function StudyMaterialSynonyms({
   subject,
-  studyMaterial
+  studyMaterial,
+  className,
+  fallbackClassName
 }: Props): JSX.Element {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -61,28 +67,33 @@ export function StudyMaterialSynonyms({
   }, [subject.id, studyMaterial]);
 
   if (!synonyms.length && !editing) {
-    return <div className="study-material-synonyms-add">
-      <a onClick={() => setEditing(true)}>
+    return <div className={classNames("text-sm", fallbackClassName)}>
+      <a
+        className="text-desc hover:text-white/70"
+        onClick={() => setEditing(true)}
+      >
         <PlusOutlined /> Add synonyms
-        {saving && <LoadingOutlined spin />}
+        {saving && <LoadingOutlined spin className="ml-xs" />}
       </a>
     </div>;
   }
 
-  return <div className="subject-info-hint subject-info-study-material-synonyms">
-    <span className="hint-title study-material-synonyms-title">
-      My synonyms
-      {saving && <LoadingOutlined spin />}
-    </span>
+  const header = <>
+    My synonyms
+    {saving && <LoadingOutlined spin className="ml-xs" />}
+  </>;
 
+  return <SubjectInfoHint header={header} className={className}>
     <Select
       placeholder="My synonyms"
       mode="tags"
       maxTagCount={5}
-      style={{ width: "100%" }}
-      notFoundContent="Press enter to add synonym"
+      className="w-full"
+      notFoundContent={<div className="text-desc px-sm py-xss">
+        Press enter to add synonym
+      </div>}
       value={synonyms}
       onChange={onChange}
     />
-  </div>;
+  </SubjectInfoHint>;
 }

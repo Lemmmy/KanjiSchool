@@ -15,9 +15,7 @@ import { SubjectRenderTooltipFn } from "../tooltip/SubjectTooltip";
 
 import { getOneMeaning, getOneReading, getSubjectUrl, hasReadings } from "@utils";
 import { useIsInStudyQueue } from "@session";
-
-// "tiny" is unsupported
-export type Size = "tiny" | "small" | "normal";
+import { Size, vocabListSizeClasses } from "@comp/subjects/lists/vocab/sizes.ts";
 
 interface Props {
   subject: ApiSubjectVocabulary;
@@ -51,17 +49,31 @@ export const VocabListItem = React.memo(function VocabListItem({
   const srsStage = assignment?.data.srs_stage;
   const locked = !assignment?.data.unlocked_at;
 
+  const sizeClasses = vocabListSizeClasses[size];
+
   const boundRenderTooltip = useMemo(() =>
     renderTooltip.bind(renderTooltip, subject, assignment),
   [renderTooltip, subject, assignment]);
 
   const classes = classNames(
-    "vocab-list-item",
-    "size-" + size,
+    "block w-full box-border rounded leading-none bg-transparent hover:bg-white/10 group",
+    "transition-[background-color,opacity]",
+    sizeClasses.base,
+    sizeClasses.height,
     {
-      locked,
-      "in-queue": inQueue
+      "opacity-[0.65] hover:opacity-100": locked,
+      "ring-inset ring-2 ring-white/75": inQueue,
     }
+  );
+
+  const linkClasses = classNames(
+    "flex flex-row items-center text-basec",
+    sizeClasses.height
+  );
+
+  const textClasses = classNames(
+    "line-clamp-1 text-ellipsis",
+    sizeClasses.text
   );
 
   return <Tooltip
@@ -70,23 +82,32 @@ export const VocabListItem = React.memo(function VocabListItem({
     destroyTooltipOnHide={true}
   >
     <Row className={classes} ref={divRef} style={style}>
-      <ConditionalLink to={url} matchTo>
+      <ConditionalLink to={url} matchTo className={linkClasses}>
         {/* Characters */}
-        <div className="left-col">
-          <SubjectCharacters subject={subject} textfit={false} />
+        <div className="flex-1">
+          <SubjectCharacters
+            subject={subject}
+            textfit={false}
+            className="align-middle text-center"
+            fontClassName={sizeClasses.charactersFontSize}
+            imageSizeClassName={sizeClasses.charactersImageSize}
+          />
         </div>
 
-        <div className="right-col">
+        <div className="flex flex-col items-end text-right transition-colors text-white/70 group-hover:text-basec">
           {/* Primary meaning */}
-          <div className="txt meaning vocab-meaning">{meaning}</div>
+          <div className={textClasses}>{meaning}</div>
 
           {/* Primary reading */}
-          {!hideReading && reading && <div className="txt reading vocab-reading ja">
+          {!hideReading && reading && <div className={classNames(textClasses, "font-ja !text-base")}>
             {reading}
           </div>}
 
           {/* SRS stage */}
-          {srsStage !== undefined && <SrsStageShort assignment={assignment!} />}
+          {srsStage !== undefined && <SrsStageShort
+            assignment={assignment!}
+            className={classNames(sizeClasses.srs, "text-desc")}
+          />}
         </div>
       </ConditionalLink>
     </Row>

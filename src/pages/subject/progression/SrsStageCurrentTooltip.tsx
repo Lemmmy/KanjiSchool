@@ -4,11 +4,13 @@
 
 import { ShortDuration } from "@comp/ShortDuration";
 import { stringifySrsStage } from "@utils";
+import classNames from "classnames";
+import { barTooltipColors, BarStageName } from "@pages/subject/progression/srsBarColors.ts";
 
 interface Props {
   progress: number;
   stage: number;
-  stageClass: string;
+  barStageName: BarStageName;
   availableNow: boolean;
   nextReview: string | null;
 }
@@ -16,36 +18,56 @@ interface Props {
 export function SrsStageCurrentTooltip({
   progress,
   stage,
-  stageClass,
+  barStageName,
   availableNow,
   nextReview
 }: Props): JSX.Element | null {
   return <div
-    className={"current-stage-tooltip " + stageClass}
-    style={{ left: (progress * 100) + "%" }}
+    className="absolute -bottom-[44px] select-none z-50"
+    style={{
+      left: stage === 9
+        ? "50%"
+        : (progress * 100) + "%"
+    }}
   >
-    {/* Fake ant tooltip contents */}
-    <div className="ant-tooltip ant-tooltip-placement-bottom">
-      <div className="ant-tooltip-content">
-        <div className="ant-tooltip-arrow">
-          <span className={"ant-tooltip-arrow-content " + stageClass} />
-        </div>
+    <div
+      className={classNames(
+        "relative -left-1/2 rounded whitespace-nowrap",
+        barTooltipColors[barStageName],
+        {
+          "min-w-[175px]": stage < 9,
+        }
+      )}
+    >
+      {/* Tooltip arrow */}
+      <div
+        className={classNames(
+          "absolute left-1/2 top-0 w-[16px] h-[8px] clip-path-arrow-b -translate-x-1/2 -translate-y-full",
+          barTooltipColors[barStageName]
+        )}
+      />
 
-        {/* Current stage name + time remaining */}
-        <div className={"ant-tooltip-inner " + stageClass} role="tooltip">
-          {/* Stage name */}
-          {stringifySrsStage(stage)}
+      {/* Current stage name + time remaining */}
+      <div className="text-sm text-center py-xss px-xs" role="tooltip">
+        {/* Stage name */}
+        {stringifySrsStage(stage)}
 
-          {/* Time remaining */}
-          {availableNow || nextReview ? " " : ""}
-          <span className={"time-remaining" + (availableNow ? " now" : "")}>
-            {availableNow
-              ? <>(due now)</>
-              : (nextReview
-                ? <>(<ShortDuration date={nextReview} /> left)</>
-                : null)}
-          </span>
-        </div>
+        {/* Time remaining */}
+        {availableNow || nextReview ? " " : ""}
+        <span
+          className={classNames(
+            "text-white/70",
+            {
+              "text-basec font-bold": availableNow,
+            }
+          )}
+        >
+          {availableNow
+            ? <>(due now)</>
+            : (nextReview
+              ? <>(<ShortDuration date={nextReview} /> left)</>
+              : null)}
+        </span>
       </div>
     </div>
   </div>;

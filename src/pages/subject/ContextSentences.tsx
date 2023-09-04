@@ -11,18 +11,23 @@ interface Props {
 }
 
 export default function ContextSentences({ subject }: Props): JSX.Element {
-  return <div className="subject-info-context-sentences">
+  return <div className="flex flex-col gap-md">
     {subject.context_sentences.map(s => (
-      <div className="context-sentence" key={s.ja}>
-        <p className="ja">
+      <div key={s.ja}>
+        {/* Japanese */}
+        <p className="font-ja my-0 text-lg">
           <Highlighter
             autoEscape
-            highlightClassName="ja-highlight"
+            highlightClassName="text-vocabulary bg-transparent p-0"
             searchWords={subject.characters ? [subject.characters] : []}
             textToHighlight={s.ja}
           />
         </p>
-        <p className="en">{s.en}</p>
+
+        {/* English */}
+        <p className="my-0 text-desc">
+          {s.en}
+        </p>
       </div>
     ))}
   </div>;

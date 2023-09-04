@@ -5,11 +5,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { Typography } from "antd";
 import { EditOutlined, LoadingOutlined } from "@ant-design/icons";
+import classNames from "classnames";
 
 import {
   ApiStudyMaterial, ApiSubject, createStudyMaterial, StudyMaterialPartial,
   updateStudyMaterial
 } from "@api";
+import { SubjectInfoHint } from "@pages/subject/SubjectInfoHint.tsx";
 
 const { Paragraph } = Typography;
 
@@ -17,6 +19,8 @@ interface Props {
   subject: ApiSubject;
   studyMaterial?: ApiStudyMaterial;
   type: "meaning" | "reading";
+  className?: string;
+  fallbackClassName?: string;
 }
 
 const bothTrigger: ("icon" | "text")[] = ["icon", "text"];
@@ -24,7 +28,9 @@ const bothTrigger: ("icon" | "text")[] = ["icon", "text"];
 export function StudyMaterialNote({
   subject,
   studyMaterial,
-  type
+  type,
+  className,
+  fallbackClassName
 }: Props): JSX.Element {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -66,31 +72,41 @@ export function StudyMaterialNote({
   }, [subject.id, studyMaterial, type, noteKey]);
 
   if (!note && !editing) {
-    return <div className="study-material-note-add">
-      <a onClick={() => setEditing(true)}>
+    return <div className={classNames("text-sm", fallbackClassName)}>
+      <a
+        className="text-desc hover:text-white/70"
+        onClick={() => setEditing(true)}
+      >
         <EditOutlined /> Add {type} notes
-        {saving && <LoadingOutlined spin />}
+        {saving && <LoadingOutlined spin className="ml-xs" />}
       </a>
     </div>;
   }
 
-  return <div className="subject-info-hint subject-info-study-material-note">
-    <span className="hint-title study-material-note-title">
-      My {type} notes
-      {saving && <LoadingOutlined spin />}
-    </span>
+  const header = <>
+    My {type} notes
+    {saving && <LoadingOutlined spin className="ml-xs" />}
+  </>;
 
-    <Paragraph editable={{
-      editing,
-      onStart: () => setEditing(true),
-      onChange,
-      onEnd: () => setEditing(false),
-      maxLength: 255,
-      autoSize: { maxRows: 5, minRows: 1 },
-      tooltip: "Click to edit",
-      triggerType: bothTrigger
-    }}>
+  return <SubjectInfoHint header={header} className={className}>
+    <Paragraph
+      editable={{
+        editing,
+        onStart: () => setEditing(true),
+        onChange,
+        onEnd: () => setEditing(false),
+        maxLength: 255,
+        autoSize: { maxRows: 5, minRows: 1 },
+        tooltip: "Click to edit",
+        triggerType: bothTrigger,
+      }}
+
+      className={classNames(
+        "!left-0 !my-0",
+        "[&_.ant-typography,&_.ant-typography_p]:mb-0"
+      )}
+    >
       {note}
     </Paragraph>
-  </div>;
+  </SubjectInfoHint>;
 }

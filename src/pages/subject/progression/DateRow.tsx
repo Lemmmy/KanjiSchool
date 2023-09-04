@@ -18,14 +18,16 @@ interface Props {
 }
 
 export function DateRow({ subject, assignment }: Props): JSX.Element {
-  return <div className="date-row">
-    <Row className="date-row-row" justify="center" gutter={[16, 16]}>
-      <DateCol name="Unlocked at" date={assignment.data.unlocked_at} />
-      <DateCol name="Started at" date={assignment.data.started_at} />
-      <DateCol name="Passed at" date={assignment.data.passed_at} />
-      <DateCol name="Next review" date={assignment.data.available_at} />
-      <DateCol name="Burned at" date={assignment.data.burned_at} />
-      <DateCol name="Resurrected at" date={assignment.data.resurrected_at} />
+  const { data } = assignment;
+
+  return <div className="py-md">
+    <Row justify="center" gutter={[16, 16]}>
+      <DateCol name="Unlocked at" date={data.unlocked_at} />
+      <DateCol name="Started at" date={data.started_at} />
+      <DateCol name="Passed at" date={data.passed_at} />
+      <DateCol name="Next review" date={data.available_at} />
+      <DateCol name="Burned at" date={data.burned_at} />
+      <DateCol name="Resurrected at" date={data.resurrected_at} />
       <DateCol name="Added to WaniKani" date={subject.data.created_at} short />
     </Row>
   </div>;
@@ -44,13 +46,17 @@ function DateCol({ name, date, short = false }: ColProps): JSX.Element | null {
   const past = isPast(parseISO(date));
   const availableNow = name === "Next review" && date && past;
 
-  const classes = classNames("date-col", { now: availableNow });
+  return <Col span={8} className="text-center">
+    <div className="border-0 border-solid border-b border-b-split pb-xss mb-xss font-bold">
+      {name}
+    </div>
 
-  return <Col span={8} className={classes}>
-    <span className="name">{name}</span>
-    <span className="date">{dayjs(date).format(short ? "ll" : "llll")}</span>
+    <span className="text-sm">{dayjs(date).format(short ? "ll" : "llll")}</span>
     {" "}
-    <span className="short">
+    <span className={classNames("text-sm", {
+      "text-green font-bold": availableNow,
+      "text-desc": !availableNow,
+    })}>
       ({availableNow
         ? "now"
         : <>

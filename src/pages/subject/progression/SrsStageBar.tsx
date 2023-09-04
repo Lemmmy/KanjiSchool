@@ -5,14 +5,10 @@
 import { Tooltip } from "antd";
 import classNames from "classnames";
 
-import { StoredSubject, StoredAssignment } from "@api";
+import { StoredAssignment, StoredSubject } from "@api";
 
 import { srsSystems } from "@data";
-import { getSrsStageBaseName, stringifySrsStage, stringifySrsStageDuration } from "@utils";
-import { isPast, parseISO } from "date-fns";
-
-import { SrsStageCurrentTooltip } from "./SrsStageCurrentTooltip";
-import { getSrsProgress } from "./srsProgress";
+import { SrsStageBarSegment } from "@pages/subject/progression/SrsStageBarSegment.tsx";
 
 interface Props {
   subject: StoredSubject;
@@ -32,16 +28,22 @@ export function SrsStageBar({
   const system = srsSystems[systemId];
   if (!system) return null;
 
-  return <div className="srs-stage-bar">
-    <span className="title">SRS stage</span>
+  return <div className={classNames(
+    "leading-[25.144px]", // Force the smaller system text to vertically align to the bottom
+    "mb-[64px]", // Tooltip size (40px) + margin (lg, 24px)
+  )}>
+    <b>SRS stage</b>
 
+    {/* SRS system used */}
     <Tooltip title={system.data.description}>
-      <span className="system">{system.data.name}</span>
+      <span className="float-right text-sm text-desc">
+        {system.data.name}
+      </span>
     </Tooltip>
 
     {/* Bar segments */}
-    <div className="bar-main">
-      {STAGES.map(i => <BarSegment
+    <div className="flex w-full h-[40px]">
+      {STAGES.map(i => <SrsStageBarSegment
         key={i} stage={i}
         unlocked={stage >= i}
         isCurrentStage={stage === i}
@@ -52,64 +54,3 @@ export function SrsStageBar({
   </div>;
 }
 
-interface BarSegmentProps {
-  stage: number;
-  unlocked: boolean;
-  isCurrentStage: boolean;
-  nextReview: string | null;
-  systemId: number;
-}
-
-function BarSegment({
-  stage, unlocked, isCurrentStage, nextReview, systemId
-}: BarSegmentProps): JSX.Element {
-  const availableNow = nextReview ? isPast(parseISO(nextReview)) : false;
-  const progress = isCurrentStage
-    ? getSrsProgress(systemId, stage, availableNow, nextReview)
-    : (unlocked ? 1 : 0);
-
-  const stageClass = "stage-" + getSrsStageBaseName(stage).toLowerCase();
-  const classes = classNames(
-    "bar-segment",
-    stageClass,
-    { unlocked }
-  );
-
-  // Bar segment and hover tooltip
-  return <Tooltip
-    title={<BarSegmentTooltip systemId={systemId} stage={stage} />}
-    placement="top"
-  >
-    {/* Bar segment */}
-    <div className={classes}>
-      {/* Inner segment (background) */}
-      <div className={"bar-segment-inner bar-segment-bg " + stageClass} />
-
-      {/* Inner segment (for progress) */}
-      {(unlocked || progress > 0) && <div
-        className={"bar-segment-inner bar-segment-progress " + stageClass}
-        style={{ width: (progress * 100) + "%" }}
-      />}
-
-      {/* If this is the current stage (nextReview is available, or burned is
-        * unlocked), then show the stage position tooltip too. */}
-      {isCurrentStage && <SrsStageCurrentTooltip
-        progress={progress} stage={stage} stageClass={stageClass}
-        availableNow={availableNow} nextReview={nextReview}
-      />}
-    </div>
-  </Tooltip>;
-}
-
-function BarSegmentTooltip(
-  { systemId, stage }: Pick<BarSegmentProps, "systemId" | "stage">
-): JSX.Element {
-  const stageDuration = stage !== 9
-    ? ` (${stringifySrsStageDuration(systemId, stage)})` : "";
-
-  return <div className="srs-stage-bar-segment-tooltip">
-    {stringifySrsStage(stage)}
-    {" "}
-    {stageDuration && <span className="stage-duration">{stageDuration}</span>}
-  </div>;
-}

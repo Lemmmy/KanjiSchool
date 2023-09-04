@@ -102,17 +102,16 @@ export function SubjectInfoTopRow({
 
   // Get the primary readings and convert on'yomi to katakana if desired. For
   // vocabulary, get all readings, and highlight the primary ones.
-  const readingsClass = "inline-block text-xxl";
   const primaryReadings = readings
     ?.filter(r => (objectType === "vocabulary" || r.primary) && r.type !== "nanori")
     .map(r => ({ ...r, reading: onyomiToKatakana(r, onyomiInKatakana) }));
   const primaryReadingsComp = useMemo(() =>
-    getReadingsComp(primaryReadings, readingsClass), [primaryReadings]);
+    getReadingsComp(primaryReadings, "inline-block text-xxl"), [primaryReadings]);
 
   const onyomiReadingsComp = useMemo(() =>
-    getReadingsComp(onyomiReadings, readingsClass), [onyomiReadings]);
+    getReadingsComp(onyomiReadings, "inline-block"), [onyomiReadings]);
   const kunyomiReadingsComp = useMemo(() =>
-    getReadingsComp(kunyomiReadings, readingsClass), [kunyomiReadings]);
+    getReadingsComp(kunyomiReadings, "inline-block"), [kunyomiReadings]);
 
   return hasSingleCharacter
     ? (

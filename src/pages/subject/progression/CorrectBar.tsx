@@ -32,29 +32,36 @@ export function CorrectBar({
   const showMaxStreak = maxStreak !== undefined && maxStreak > 1;
   const showStreakRow = showCurrentStreak || showMaxStreak;
 
-  return <div className="correct-bar">
-    <span className="title">{name}</span>
+  const tagClass = "mt-px ml-xss text-sm font-normal";
+
+  return <div className="mt-lg">
+    <span className="font-bold">
+      {name}
+    </span>
 
     {/* Streak row */}
-    {showStreakRow && <div className="streak-row">
+    {showStreakRow && <div className="mb-[3px] text-sm">
       {/* Current streak */}
-      {showCurrentStreak && <span className="streak">
+      {showCurrentStreak && <span>
         Current streak
-        <Tag className="streak-tag">{nts(currentStreak!)}</Tag>
+        <Tag className={tagClass}>{nts(currentStreak!)}</Tag>
       </span>}
 
       {/* Max streak */}
-      {showMaxStreak && <span className="streak">
+      {showMaxStreak && <span className="ml-sm">
         Longest streak
-        <Tag className="streak-tag">{nts(maxStreak!)}</Tag>
+        <Tag className={tagClass}>{nts(maxStreak!)}</Tag>
       </span>}
     </div>}
 
     {/* Bar */}
-    <div className="bar-main">
+    <div className="flex w-full h-[20px] bg-container rounded relative">
       {/* Bar inner */}
       <Tooltip title={`${nts(correct)} / ${nts(total)}`}>
-        <div className="bar-inner" style={{ width: percentage + "%" }} />
+        <div
+          className="h-[20px] bg-primary hover:bg-blue-4 rounded cursor-pointer transition-colors"
+          style={{ width: percentage + "%" }}
+        />
       </Tooltip>
 
       {/* Percentage tooltip */}
@@ -62,9 +69,9 @@ export function CorrectBar({
     </div>
 
     {/* Bar scale */}
-    <div className="bar-scale">
-      <span className="min">0</span>
-      <span className="max">{nts(total)}</span>
+    <div className="w-full text-sm text-desc">
+      <span>0</span>
+      <span className="float-right">{nts(total)}</span>
     </div>
   </div>;
 }

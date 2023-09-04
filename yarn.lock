@@ -5817,6 +5817,7 @@ __metadata:
     rimraf: ^5.0.1
     string-metric: ^0.3.3
     svg-inline-react: ^3.2.1
+    tailwind-clip-path: ^1.0.0
     tailwindcss: ^3.3.3
     tiny-lru: ^11.0.1
     typesafe-actions: ^5.1.0
@@ -8490,6 +8491,13 @@ __metadata:
   peerDependencies:
     react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17
   checksum: c0d72dc2800fee9f523be8b3597920ee9027785f3044a057240b879bd255b0d278bdc840791efc21b4abda4d8a4ba54469f4ff2792f3f27c3d93f59814ea02d3
+  languageName: node
+  linkType: hard
+
+"tailwind-clip-path@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "tailwind-clip-path@npm:1.0.0"
+  checksum: 119424d851770dfa297fab45d309bd3a31724e3e7ebfa96ff838384d0a5076d8f2ad13b88f96bfadfe2c99ffe3838fa3cb8d619eae8cf0fc72400f572ad8ca3a
   languageName: node
   linkType: hard
 

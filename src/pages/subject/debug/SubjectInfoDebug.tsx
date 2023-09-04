@@ -36,7 +36,7 @@ export function SubjectInfoDebug({
 
   return <>
     <Divider orientation="left">Debug info</Divider>
-    <div className="subject-info-debug">
+    <div className="text-sm">
       {/* General info */}
       <Descriptions
         title="General info"
@@ -86,26 +86,30 @@ export function SubjectInfoDebug({
       </Row>
 
       {/* Hint stage values */}
-      <Space wrap className="hs-row" style={{ marginBottom: 24 }}>
+      <Space wrap className="mb-lg">
         {HINT_STAGE_OBJECTS.map(hs => (
-          <span key={hs} className={show(hs) ? "hs" : "hs hs-hidden"}>{hs}</span>
+          <span key={hs} className={show(hs) ? "text-green" : "text-desc"}>{hs}</span>
         ))}
       </Space>
 
       {/* JSON dump tabs */}
       <h3>JSON dumps (internal representation)</h3>
-      <Tabs defaultActiveKey="1" type="card" className="debug-code-tabs">
+      <Tabs defaultActiveKey="1" type="card" className="[&_.ant-tabs-nav]:mb-0">
         {/* Subject */}
         <TabPane tab="Subject" key="1">
           <Paragraph copyable>
-            <pre>{JSON.stringify(subject, undefined, 2).trim()}</pre>
+            <pre className="!mt-0 !border-t-0 !rounded-t-none text-sm">
+              {JSON.stringify(subject, undefined, 2).trim()}
+            </pre>
           </Paragraph>
         </TabPane>
 
         {/* Assignment */}
         {assignment && <TabPane tab="Assignment" key="2">
           <Paragraph copyable>
-            <pre>{JSON.stringify(assignment, undefined, 2).trim()}</pre>
+            <pre className="!mt-0 !border-t-0 rounded-t-none text-sm">
+              {JSON.stringify(assignment, undefined, 2).trim()}
+            </pre>
           </Paragraph>
         </TabPane>}
       </Tabs>

@@ -25,7 +25,7 @@ export interface WkTheme {
 const BASE_THEME: Partial<ThemeConfig> = {
   token: {
     fontSize: 16,
-    fontSizeSM: 13
+    fontSizeSM: 13,
   },
 
   components: {
