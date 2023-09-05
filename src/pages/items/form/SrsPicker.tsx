@@ -46,7 +46,6 @@ export function SrsPicker({ showNotOnWk, ...props }: Props): JSX.Element {
       <Form.Item name="srsStages" label="SRS stage" className="mb-sm" {...props}>
         <ToggleButtonGroup
           items={showNotOnWk ? ITEMS_NOT_ON_WK : ITEMS}
-          size="small"
         />
       </Form.Item>
     </Col>

@@ -20,7 +20,6 @@ export function TypePicker(props: any): JSX.Element {
         <ToggleButtonGroup
           className="type-picker"
           items={ITEMS}
-          size="small"
         />
       </Form.Item>
     </Col>

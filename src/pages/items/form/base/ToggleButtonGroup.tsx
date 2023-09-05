@@ -28,7 +28,6 @@ interface Props<T extends string> {
   onChange?: (value: T[]) => void;
 
   className?: string;
-  size?: "small" | "middle";
 }
 
 const TOOLTIP = <>
@@ -41,23 +40,13 @@ export function ToggleButtonGroup<T extends string>({
   items,
   value,
   onChange,
-  className,
-  size = "middle"
+  className
 }: Props<T>): JSX.Element {
   const selectItem     = (item: T) => onChange?.(Array.from(new Set(value ?? []).add(item)));
   const deselectItem   = (item: T) => onChange?.((value ?? []).filter(v => v !== item));
   const deselectAllBut = (item: T) => onChange?.([item]);
   const selectAll      = () => onChange?.(items.map(i => i.value));
   const oneSelected = value && value.length === 1 ? value[0] : undefined;
-
-  // Part of the trick is pretending to be an ant radio group:
-  const classes = classNames(
-    "ant-radio-group",
-    "ant-radio-group-solid",
-    "ant-radio-group-" + size,
-    "select-none",
-    className
-  );
 
   return <Tooltip
     title={TOOLTIP}
@@ -66,7 +55,7 @@ export function ToggleButtonGroup<T extends string>({
     mouseEnterDelay={0.5}
     mouseLeaveDelay={0}
   >
-    <div className={classes}>
+    <div className={classNames("select-none", className)}>
       {items.map(item => <ToggleButtonGroupButton
         key={item.value}
         selected={value?.includes(item.value) ?? false}
@@ -104,8 +93,8 @@ function ToggleButtonGroupButton<T extends string>({
   }
 
   const classes = classNames(
-    "h-[28px] px-[8px] pb-[4px] first:rounded-l-sm last:rounded-r-sm relative cursor-pointer",
-    "border border-[#303030] border-solid border-b-[4px] border-split -ml-px", // TOOD: Light theme
+    "inline-block !h-[28px] px-[8px] pb-[4px] first:rounded-is last:rounded-ie relative cursor-pointer",
+    "border border-[#303030] border-solid border-b-[4px] border-split -ml-px whitespace-nowrap", // TODO: Light theme
     "hover:text-link transition-colors",
     className,
     { "border-primary bg-primary/20 z-20 hover:text-white": selected }
