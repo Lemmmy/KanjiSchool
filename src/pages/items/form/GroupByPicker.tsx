@@ -3,10 +3,11 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useMemo } from "react";
-import { Row, Col, Divider } from "antd";
+import { Row, Col } from "antd";
 
 import { ItemsBaseType, ItemsGroupBy } from "../types/types";
 import { EpicRadioGroup } from "./base/EpicRadioGroup";
+import { ItemsConfigFormDivider } from "./base/ItemsConfigFormDivider.tsx";
 
 export const ALLOWED_GROUP_BY: Record<ItemsBaseType, ItemsGroupBy[]> = {
   "wk": ["none", "level", "type", "srs"],
@@ -41,7 +42,7 @@ export function GroupByPicker({ type }: Props): JSX.Element {
   return <>
     {/* Header */}
     <Row gutter={16}>
-      <Col span={24}><Divider orientation="left">Group by</Divider></Col>
+      <Col span={24}><ItemsConfigFormDivider label="Group by" /></Col>
     </Row>
 
     <Row gutter={16} style={{ marginBottom: 16 }}>

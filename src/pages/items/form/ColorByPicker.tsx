@@ -2,19 +2,21 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Form, Radio, Row, Col, Divider } from "antd";
+import { Form, Radio, Row, Col } from "antd";
+
+import { ItemsConfigFormDivider } from "./base/ItemsConfigFormDivider.tsx";
 
 export function ColorByPicker(props: any): JSX.Element {
   return <>
     {/* Header */}
     <Row gutter={16}>
-      <Col span={24}><Divider orientation="left">Color by</Divider></Col>
+      <Col span={24}><ItemsConfigFormDivider label="Color by" /></Col>
     </Row>
 
     <Row gutter={16} style={{ marginBottom: 16 }}>
       <Col span={24}>
 
-        <Form.Item name="colorBy" label="Color by" {...props}>
+        <Form.Item name="colorBy" label="Color by" className="mb-sm" {...props}>
           <Radio.Group
             buttonStyle="solid"
             optionType="button"

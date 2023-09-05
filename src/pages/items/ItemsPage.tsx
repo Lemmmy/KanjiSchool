@@ -4,7 +4,6 @@
 
 import { Dispatch, SetStateAction, useCallback, useState, useMemo } from "react";
 import { Alert } from "antd";
-import classNames from "classnames";
 
 import { PageLayout } from "@layout/PageLayout";
 
@@ -61,8 +60,6 @@ export function ItemsPage({ type }: Props): JSX.Element {
     lookupDebounced(type, values, setResults);
   }, [hasSubjects, hasAssignments, hasSubjectAssignmentIdMap, type]);
 
-  const classes = classNames("items-page", "type-" + type);
-
   // Don't
   if (!hasSubjects || !hasAssignments || !hasSubjectAssignmentIdMap)
     return <b>Loading...</b>;
@@ -70,7 +67,6 @@ export function ItemsPage({ type }: Props): JSX.Element {
   return <PageLayout
     siteTitle={TYPE_TITLES[type]}
     title={TYPE_TITLES[type]}
-    className={classes}
   >
     <Alert type="info" message="This page is currently very sluggish, sorry."
       style={{ maxWidth: 1080, margin: "0 auto 16px auto" }} />
@@ -83,12 +79,13 @@ export function ItemsPage({ type }: Props): JSX.Element {
     />
 
     {/* Results */}
-    {(results?.length ?? 0) > 0 && <div className="items-page-results">
+    {(results?.length ?? 0) > 0 && <div className="pb-lg">
       {results.map(r => <ItemsResults
         key={r.group}
         colorBy={colorBy}
         hasVocabulary={hasVocabulary}
         renderTooltipFn={renderTooltipFn}
+        groupNumber={r.group}
         {...r}
       />)}
     </div>}

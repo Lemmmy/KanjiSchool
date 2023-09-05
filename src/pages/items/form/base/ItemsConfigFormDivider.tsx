@@ -11,7 +11,7 @@ interface Props {
   className?: string;
 }
 
-export function SubjectInfoDivider({
+export function ItemsConfigFormDivider({
   label,
   className
 }: Props): JSX.Element | null {
@@ -20,7 +20,7 @@ export function SubjectInfoDivider({
   return <Divider
     orientation="left"
     className={classNames(
-      "!mt-[32px] before:!w-[32px] before:shrink-0 after:w-full",
+      "!mb-md before:!w-[16px] before:shrink-0 after:w-full",
       "before:!translate-y-px after:!translate-y-px", // 50% y makes the divider 2px thick, yuck
       className
     )}

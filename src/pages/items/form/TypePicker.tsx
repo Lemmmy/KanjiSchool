@@ -8,19 +8,18 @@ import { NormalizedSubjectType } from "@api";
 import { ToggleButtonGroup, ToggleButtonGroupItem } from "./base/ToggleButtonGroup";
 
 const ITEMS: ToggleButtonGroupItem<NormalizedSubjectType>[] = [
-  { value: "radical",    label: "Radical",    className: "radical" },
-  { value: "kanji",      label: "Kanji",      className: "kanji" },
-  { value: "vocabulary", label: "Vocabulary", className: "vocabulary" },
+  { value: "radical",    label: "Radical",    className: "border-b-radical" },
+  { value: "kanji",      label: "Kanji",      className: "border-b-kanji" },
+  { value: "vocabulary", label: "Vocabulary", className: "border-b-vocabulary" },
 ];
 
 export function TypePicker(props: any): JSX.Element {
   return <Row gutter={16}>
     <Col span={24}>
-      <Form.Item name="types" label="Item type" {...props}>
+      <Form.Item name="types" label="Item type" className="mb-sm" {...props}>
         <ToggleButtonGroup
           className="type-picker"
           items={ITEMS}
-          hasBorderColors
           size="small"
         />
       </Form.Item>

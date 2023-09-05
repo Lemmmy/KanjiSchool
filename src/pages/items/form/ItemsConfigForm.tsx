@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { Form, Collapse, Row, Col, InputNumber, Divider, Button } from "antd";
+import { Form, Collapse, Row, Col, InputNumber, Button } from "antd";
 
 import { FormValues, ItemsBaseType, DEFAULT_PARAMS } from "../types";
 import { PerformLookupFn } from "../ItemsPage";
@@ -13,6 +13,7 @@ import { SortByPicker } from "./SortByPicker";
 import { ColorByPicker } from "./ColorByPicker";
 import { TypePicker } from "./TypePicker";
 import { SrsPicker } from "./SrsPicker";
+import { ItemsConfigFormDivider } from "./base/ItemsConfigFormDivider.tsx";
 
 import { lsGetObject, lsSetObject } from "@utils";
 
@@ -61,7 +62,7 @@ export function ItemsConfigForm({
   useEffect(() => {
     if (!form) return;
     form.setFieldsValue(initialValues);
-    valuesUpdated();
+    valuesUpdated().catch(console.error);
   }, [form, initialValues, valuesUpdated]);
 
   const onValuesChange = useCallback((
@@ -96,7 +97,7 @@ export function ItemsConfigForm({
 
   return <Form
     form={form}
-    className="items-config-form"
+    className="bg-container border border-solid border-split rounded max-w-[1080px] mx-auto mb-lg"
     initialValues={initialValues}
     onValuesChange={onValuesChange}
     onFinish={valuesUpdated}
@@ -108,12 +109,17 @@ export function ItemsConfigForm({
       defaultActiveKey={defaultCollapseKey}
       onChange={setCollapseKey}
     >
-      <Collapse.Panel key="1" header="Config" forceRender>
+      <Collapse.Panel
+        key="1"
+        header="Config"
+        className="[&_.ant-collapse-content-active]:![border-top:_1px_solid_var(--antd-split)]"
+        forceRender
+      >
         {/* Frequency group size */}
-        {type === "freq" && <Row gutter={24} style={{ marginBottom: 16 }}>
+        {type === "freq" && <Row gutter={24} className="mb-md">
           <Col span={24}>
-            <Divider orientation="left">Frequency grouping</Divider>
-            <Form.Item name="frequencyGroupSize" label="Group size">
+            <ItemsConfigFormDivider label="Frequency grouping" />
+            <Form.Item name="frequencyGroupSize" label="Group size" className="mb-sm">
               <InputNumber placeholder="Size" min={1} max={2500} />
             </Form.Item>
           </Col>
@@ -126,21 +132,21 @@ export function ItemsConfigForm({
 
         {/* Show/hide */}
         <Row gutter={16}>
-          <Col span={24}><Divider orientation="left">Show/hide</Divider></Col>
+          <Col span={24}><ItemsConfigFormDivider label="Show/hide" /></Col>
         </Row>
         {type === "wk" && <TypePicker />}
         <SrsPicker showNotOnWk={type !== "wk"} />
 
         {/* Button row */}
         <Row gutter={24}>
-          <Col span={24} style={{ textAlign: "right" }}>
+          <Col span={24} className="text-right flex justify-end gap-xs mb-xss">
             {/* Submit */}
             <Button type="primary" htmlType="submit">
               Save
             </Button>
 
             {/* Reset to default */}
-            <Button style={{ margin: "0 8px" }} onClick={onReset}>
+            <Button onClick={onReset}>
               Reset
             </Button>
           </Col>

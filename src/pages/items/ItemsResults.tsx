@@ -17,12 +17,16 @@ type Props = LookupResults & {
   colorBy: ItemsColorBy;
   hasVocabulary: boolean;
   renderTooltipFn: SubjectRenderTooltipFn;
+  groupNumber: number;
+  isSubgroup?: boolean;
 };
 
 export function ItemsResults({
   colorBy,
   hasVocabulary,
   renderTooltipFn,
+  groupNumber,
+  isSubgroup,
   ...r
 }: Props): JSX.Element {
   // If there are subgroups, the item count is the sum of all the subgroups'
@@ -32,15 +36,35 @@ export function ItemsResults({
     ? r.items.reduce((sum, subgroup) => sum + subgroup.items.length, 0)
     : r.items.length;
 
-  const classes = classNames("items-results-group", {
-    "with-subgroups": r.subgroups
-  });
+  const classes = classNames(
+    "max-w-[1080px] mx-auto",
+    {
+      "ml-lg": isSubgroup,
+    }
+  );
 
   return <div className={classes}>
     {/* Header */}
-    <Divider orientation="left" className="items-results-group-header">
-      <span className="header-title">{r.title}</span>
-      <span className="header-count">{pluralN(itemCount, "item")}</span>
+    <Divider
+      orientation="left"
+      className={classNames(
+        "before:!w-[32px] before:!translate-y-px after:!translate-y-px", // 50% y makes the divider 2px thick, yuck
+        {
+          "mb-xs": r.subgroups,
+          // TODO: Light theme
+          "font-normal !text-sm !border-bs-white/8 !border-be-white/8": isSubgroup
+        }
+      )}
+    >
+      {/* Title */}
+      <span className="mr-[1em]">
+        {r.title}
+      </span>
+
+      {/* Count */}
+      <span className="text-desc text-sm font-normal">
+        {pluralN(itemCount, "item")}
+      </span>
     </Divider>
 
     {/* Display a subgroup or the item listing depending */}
@@ -50,7 +74,9 @@ export function ItemsResults({
         colorBy={colorBy}
         hasVocabulary={hasVocabulary}
         renderTooltipFn={renderTooltipFn}
+        groupNumber={r2.group}
         {...r2}
+        isSubgroup
       />))
       : <SubjectGrid
         size="tiny"

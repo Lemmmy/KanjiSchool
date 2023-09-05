@@ -76,16 +76,18 @@ function EpicRadioGroupInner({
   /// Used to change sort order on radio button click
   setFieldsValue: (values: Partial<FormValues>) => void;
 }): JSX.Element {
+  const iconClass = "text-lg ml-[6px]";
+
   // Tooltip describing group/sort behavior on click
   return <Tooltip
     title={tooltip}
     placement="bottomLeft"
-    overlayClassName="epic-radio-group-tooltip"
+    overlayClassName="text-sm max-w-none"
     mouseEnterDelay={0.5}
     mouseLeaveDelay={0}
   >
     <Form.Item
-      className="epic-radio-group"
+      className="mb-sm select-none"
       name={name}
       label={label}
       {...props}
@@ -124,8 +126,8 @@ function EpicRadioGroupInner({
 
               {/* Sort icon (ascending/descending) */}
               {order === "desc"
-                ? <SortDescendingOutlined />
-                : <SortAscendingOutlined />}
+                ? <SortDescendingOutlined className={iconClass} />
+                : <SortAscendingOutlined className={iconClass} />}
             </>
             // Original label
             : o.label}

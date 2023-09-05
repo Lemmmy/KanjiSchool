@@ -2,6 +2,7 @@
 import { presetPalettes } from "@ant-design/colors";
 import plugin from "tailwindcss/plugin";
 import clipPath from "tailwind-clip-path";
+import logical from "tailwindcss-logical";
 
 function generateAntColors() {
   const out = {};
@@ -271,6 +272,7 @@ export default {
   },
   plugins: [
     clipPath,
+    logical,
 
     // text-shadow
     plugin(({ matchUtilities, theme }) => {

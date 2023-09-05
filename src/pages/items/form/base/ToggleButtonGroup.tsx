@@ -28,7 +28,6 @@ interface Props<T extends string> {
   onChange?: (value: T[]) => void;
 
   className?: string;
-  hasBorderColors?: boolean;
   size?: "small" | "middle";
 }
 
@@ -43,7 +42,6 @@ export function ToggleButtonGroup<T extends string>({
   value,
   onChange,
   className,
-  hasBorderColors,
   size = "middle"
 }: Props<T>): JSX.Element {
   const selectItem     = (item: T) => onChange?.(Array.from(new Set(value ?? []).add(item)));
@@ -57,15 +55,14 @@ export function ToggleButtonGroup<T extends string>({
     "ant-radio-group",
     "ant-radio-group-solid",
     "ant-radio-group-" + size,
-    "toggle-button-group",
-    className,
-    { "with-border-colors": hasBorderColors }
+    "select-none",
+    className
   );
 
   return <Tooltip
     title={TOOLTIP}
     placement="bottomLeft"
-    overlayClassName="toggle-button-group-tooltip"
+    overlayClassName="text-sm max-w-none"
     mouseEnterDelay={0.5}
     mouseLeaveDelay={0}
   >
@@ -107,24 +104,28 @@ function ToggleButtonGroupButton<T extends string>({
   }
 
   const classes = classNames(
-    "ant-radio-button-wrapper",
+    "h-[28px] px-[8px] pb-[4px] first:rounded-l-sm last:rounded-r-sm relative cursor-pointer",
+    "border border-[#303030] border-solid border-b-[4px] border-split -ml-px", // TOOD: Light theme
+    "hover:text-link transition-colors",
     className,
-    { "ant-radio-button-wrapper-checked": selected }
+    { "border-primary bg-primary/20 z-20 hover:text-white": selected }
   );
 
   return <label className={classes}>
     {/* Radio container */}
-    <span className="ant-radio-button">
-      <input
-        className="ant-radio-button-input"
-        type="radio"
-        value={value}
-        onClick={onClick}
-      />
-      <span className="ant-radio-button-inner" /> {/* Why? */}
-    </span>
+    <input
+      className={classNames(
+        "opacity-0 pointer-events-none absolute top-0 left-0 -z-10 w-full h-full",
+        "inline-flex items-center justify-center",
+      )}
+      type="radio"
+      value={value}
+      onClick={onClick}
+    />
 
     {/* Label */}
-    <span>{label}</span>
+    <span className="text-sm">
+      {label}
+    </span>
   </label>;
 }

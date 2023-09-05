@@ -3,10 +3,11 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useMemo } from "react";
-import { Row, Col, Divider } from "antd";
+import { Row, Col } from "antd";
 
 import { ItemsBaseType, ItemsSortBy } from "../types/types";
 import { EpicRadioGroup } from "./base/EpicRadioGroup";
+import { ItemsConfigFormDivider } from "./base/ItemsConfigFormDivider.tsx";
 
 export const ALLOWED_SORT_BY: Record<ItemsBaseType, ItemsSortBy[]> = {
   "wk": ["level", "type", "srs", "slug"],
@@ -41,7 +42,7 @@ export function SortByPicker({ type }: Props): JSX.Element {
   return <>
     {/* Header */}
     <Row gutter={16}>
-      <Col span={24}><Divider orientation="left">Sort by</Divider></Col>
+      <Col span={24}><ItemsConfigFormDivider label="Sort by" /></Col>
     </Row>
 
     <Row gutter={16} style={{ marginBottom: 16 }}>
