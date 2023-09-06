@@ -2,8 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React, { FC, ReactNode, useMemo } from "react";
-import { Tooltip } from "antd";
+import React, { FC, ReactNode } from "react";
 import classNames from "classnames";
 
 import { Link } from "react-router-dom";
@@ -12,12 +11,12 @@ import { StoredSubject, StoredAssignment, NormalizedSubjectType } from "@api";
 
 import { SubjectCharacters } from "../../SubjectCharacters";
 
-import { Size } from "./";
 import { SrsStageShort } from "../../SrsStageShort";
 import { SubjectRenderTooltipFn } from "../tooltip/SubjectTooltip";
 import { getSrsStageBaseName, getSubjectUrl, normalizeVocabType, SrsStageBaseName } from "@utils";
 import { useIsInStudyQueue } from "@session";
 import { ItemsColorBy } from "@pages/items/types";
+import { Size } from "@comp/subjects/lists/grid/style.ts";
 
 interface Props {
   subject: StoredSubject;
@@ -116,7 +115,6 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
   colorBy,
   isVirtual,
   width,
-  renderTooltip,
   children
 }): JSX.Element | null {
   const url = getSubjectUrl(subject);
@@ -128,10 +126,6 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
   const srsStage = hideSrs ? undefined : assignment?.data.srs_stage;
   const locked = !assignment?.data.unlocked_at;
 
-  const boundRenderTooltip = useMemo(() =>
-    renderTooltip.bind(renderTooltip, subject, assignment),
-  [renderTooltip, subject, assignment]);
-
   const sizeClassesObj = sizeClasses[size] ?? sizeClasses.normal;
 
   const bgClassName = size === "tiny" && colorBy
@@ -140,7 +134,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
 
   const normType = normalizeVocabType(subject.object);
   const classes = classNames(
-    "inline-block box-content text-center transition group text-basec",
+    "subject-grid-item inline-block box-content text-center transition group text-basec",
     sizeClassesObj.base,
     sizeClassesObj.bg,
     sizeClassesObj.types?.[normType],
@@ -153,39 +147,34 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
     }
   );
 
-  return <Tooltip
-    overlayClassName="subject-tooltip"
-    title={boundRenderTooltip}
-    destroyTooltipOnHide={true}
-    autoAdjustOverflow={false}
+  return <Link
+    to={url}
+    style={width ? { width } : undefined}
+    className={classes}
+    data-sid={subject.id}
+    data-aid={assignment?.id}
   >
-    <Link
-      to={url}
-      style={width ? { width } : undefined}
-      className={classes}
+    <SubjectCharacters
+      subject={subject}
+      textfit={false}
+      className={classNames("align-middle text-center", sizeClassesObj.subjectCharacters)}
+      fontClassName={sizeClassesObj.subjectCharactersFont}
+      imageSizeClassName={sizeClassesObj.subjectCharactersImageSize}
+    />
+
+    {size !== "tiny" && <div
+      className={classNames(
+        "flex flex-col items-center mt-xs text-base-c/70 group-hover:text-white transition",
+        sizeClassesObj.extra
+      )}
     >
-      <SubjectCharacters
-        subject={subject}
-        textfit={false}
-        className={classNames("align-middle text-center", sizeClassesObj.subjectCharacters)}
-        fontClassName={sizeClassesObj.subjectCharactersFont}
-        imageSizeClassName={sizeClassesObj.subjectCharactersImageSize}
-      />
+      {children}
 
-      {size !== "tiny" && <div
-        className={classNames(
-          "flex flex-col items-center mt-xs text-base-c/70 group-hover:text-white transition",
-          sizeClassesObj.extra
-        )}
-      >
-        {children}
-
-        {/* SRS stage, if available */}
-        {srsStage !== undefined && <SrsStageShort
-          assignment={assignment!}
-          fontClassName={sizeClassesObj.extraSrsFont}
-        />}
-      </div>}
-    </Link>
-  </Tooltip>;
+      {/* SRS stage, if available */}
+      {srsStage !== undefined && <SrsStageShort
+        assignment={assignment!}
+        fontClassName={sizeClassesObj.extraSrsFont}
+      />}
+    </div>}
+  </Link>;
 });

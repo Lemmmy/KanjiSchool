@@ -2,11 +2,12 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { FC, useEffect, useReducer, useRef, useMemo, useCallback } from "react";
+import { useEffect, useReducer, useRef, useMemo, useCallback, forwardRef, RefObject } from "react";
 import classNames from "classnames";
 
 import { clamp, range, throttle } from "lodash-es";
 import useResizeObserver from "use-resize-observer";
+import { UpdateTooltipFn, useGridTooltipEvents } from "@comp/subjects/lists/grid/gridTooltipHook.ts";
 
 export interface EpicVirtualListItemProps {
   index: number;
@@ -24,6 +25,10 @@ export interface EpicVirtualListProps {
 
   className?: string;
   rowClassName?: string;
+
+  updateTooltip?: UpdateTooltipFn;
+  mainRef: RefObject<HTMLDivElement>;
+  tooltipInnerRef: RefObject<HTMLDivElement>;
 
   // Render item function
   children: (props: EpicVirtualListItemProps) => JSX.Element | JSX.Element[] | null;
@@ -88,14 +93,20 @@ function scrollReducer(state: ScrollState, action: ScrollAction): ScrollState {
   }
 }
 
-export const EpicVirtualList: FC<EpicVirtualListProps> = ({
-  itemCount, itemHeight,
-  scrollElement, simpleWindowing,
+export const EpicVirtualList = forwardRef<HTMLDivElement, EpicVirtualListProps>(function EpicVirtualList({
+  itemCount,
+  itemHeight,
+  scrollElement,
+  simpleWindowing,
   throttleMs = 32,
   overscanCount = 0,
   children: renderItem,
-  className, rowClassName
-}) => {
+  className,
+  rowClassName,
+  updateTooltip,
+  mainRef,
+  tooltipInnerRef
+}, ref) {
   // List item cache, invalidated whenever the list might've changed
   const itemCache = useMemo(() => new Map(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,6 +114,9 @@ export const EpicVirtualList: FC<EpicVirtualListProps> = ({
 
   // Ref for the inner container used to measure where the list is on-screen
   const innerEl = useRef<HTMLDivElement>(null);
+
+  // Mouse event hooks to update the tooltip
+  useGridTooltipEvents(updateTooltip, mainRef, tooltipInnerRef);
 
   // ScrollState containing the scrollTop and scrollHeight
   const [scrollState, dispatchScroll] = useReducer(scrollReducer, {
@@ -198,8 +212,9 @@ export const EpicVirtualList: FC<EpicVirtualListProps> = ({
         position: "relative",
         height: `${itemCount * itemHeight}px`
       }}
+      ref={ref}
     >
       {items.map(renderWrappedItem)}
     </div>
   </div>;
-};
+});

@@ -16,6 +16,7 @@ interface Props extends ButtonProps {
   iconOnly?: boolean;
   useShortTitle?: boolean;
   noDanger?: boolean;
+  noTooltip?: boolean;
 }
 
 export function StudyQueueButton({
@@ -23,6 +24,7 @@ export function StudyQueueButton({
   iconOnly,
   useShortTitle,
   noDanger,
+  noTooltip,
   className,
   ...props
 }: Props): JSX.Element {
@@ -38,42 +40,45 @@ export function StudyQueueButton({
   // Bind the self-study hotkey to this button being mounted
   useEffect(() => {
     if (subjectIds) return; // Do nothing if this is a multiple-subject button
-    console.log("binding hotkey to subject", subjectId);
     hover(subjectId);
     return unhover;
   }, [subjectId, subjectIds, hover, unhover]);
 
-  // Tooltip (in case this is an icon-only button)
-  return <Tooltip
-    title={() => <>{longTitle} <b>(Q)</b></>}
-    destroyTooltipOnHide={true}
+  const button = <Button
+    className={classes}
+
+    icon={inQueue ? <MinusOutlined /> : <PlusOutlined />}
+    danger={!noDanger && inQueue}
+
+    onClick={e => {
+      e.stopPropagation();
+
+      if (subjectIds) {
+        // Add multiple subjects
+        addToStudyQueue(subjectIds);
+      } else if (subjectId !== undefined) {
+        // Add or remove a single subject
+        if (inQueue) removeFromStudyQueue(subjectId);
+        else addToStudyQueue(subjectId);
+      }
+
+      return false;
+    }}
+
+    // Any user-defined button props
+    {...props}
   >
-    {/* Add/remove to/from self-study queue button */}
-    <Button
-      className={classes}
+    {!iconOnly && (useShortTitle ? "Queue" : title)}
+  </Button>;
 
-      icon={inQueue ? <MinusOutlined /> : <PlusOutlined />}
-      danger={!noDanger && inQueue}
-
-      onClick={e => {
-        e.stopPropagation();
-
-        if (subjectIds) {
-          // Add multiple subjects
-          addToStudyQueue(subjectIds);
-        } else if (subjectId !== undefined) {
-          // Add or remove a single subject
-          if (inQueue) removeFromStudyQueue(subjectId);
-          else addToStudyQueue(subjectId);
-        }
-
-        return false;
-      }}
-
-      // Any user-defined button props
-      {...props}
-    >
-      {!iconOnly && (useShortTitle ? "Queue" : title)}
-    </Button>
-  </Tooltip>;
+  return noTooltip
+    ? button
+    : (
+      <Tooltip
+        title={() => <>{longTitle} <b>(Q)</b></>}
+        destroyTooltipOnHide={true}
+      >
+        {button}
+      </Tooltip>
+    );
 }

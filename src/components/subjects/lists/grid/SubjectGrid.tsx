@@ -2,63 +2,40 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React, { useMemo, ComponentType, useCallback, useContext, useState } from "react";
-import { Space } from "antd";
+import React, { ComponentType, useCallback, useContext, useMemo, useRef } from "react";
 import classNames from "classnames";
 
 import {
-  StoredSubject, StoredAssignment, SubjectType,
-  useSubjects, useAssignments, useSubjectAssignmentIds
+  StoredAssignment,
+  StoredSubject,
+  SubjectType,
+  useAssignments,
+  useSubjectAssignmentIds,
+  useSubjects
 } from "@api";
 
-import { Size } from "./";
 import { SubjectGridItemProps } from "./SubjectGridItem";
 import { SubjectRenderTooltipFn, useDefaultRenderTooltipFn } from "../tooltip/SubjectTooltip";
+import { useSubjectGridTooltip } from "./useSubjectGridTooltip.tsx";
+import { Size } from "./style.ts";
 
 import { GridItemRadical } from "./GridItemRadical";
 import { GridItemKanji } from "./GridItemKanji";
 import { GridItemVocab } from "./GridItemVocab";
+import { SubjectGridVirtualDynamic } from "./SubjectGridVirtualDynamic.tsx";
+import { SubjectGridVirtual } from "./SubjectGridVirtual.tsx";
+import { SubjectGridSpace } from "./SubjectGridSpace.tsx";
 
 import { SiteLayoutContext } from "@layout/AppLayout";
-import { EpicVirtualList, EpicVirtualListItemProps } from "@comp/EpicVirtualList";
-import useResizeObserver from "use-resize-observer";
 
 import { sortBy } from "lodash-es";
-import memoizee from "memoizee";
-import { isVocabularyLike } from "@utils";
-
-const SIZE_SPACING: Record<Size, number> = {
-  "tiny":   2,
-  "small":  4,
-  "normal": 16
-};
-
-const SIZE_WIDTHS: Record<Size, number> = {
-  "tiny":   36,
-  "small":  76,
-  "normal": 104
-};
-
-const SIZE_ROW_HEIGHTS: Record<Size, [number, number]> = {
-  "tiny":   [27, 27],
-  "small":  [88, 100],
-  "normal": [128, 140]
-};
-
-const TINY_VOCAB_PADDING = 16;
-const TINY_KANA_WIDTH = 20;
+import { SubjectGridTooltip } from "@comp/subjects/lists/grid/SubjectGridTooltip.tsx";
 
 const COMPONENT_TYPES: Record<SubjectType, GridItemComponentType> = {
   "radical":         GridItemRadical,
   "kanji":           GridItemKanji,
   "vocabulary":      GridItemVocab,
   "kana_vocabulary": GridItemVocab,
-};
-
-const rowPaddingClasses: Record<Size, string> = {
-  "tiny": "pt-0",
-  "small": "pt-sm",
-  "normal": "pt-sm"
 };
 
 // Props required to be implemented by a grid item component.
@@ -113,6 +90,10 @@ export function SubjectGrid({
   const subjectAssignmentIds = useSubjectAssignmentIds();
 
   const renderTooltipFn = useDefaultRenderTooltipFn(renderTooltip);
+
+  const mainRef = useRef<HTMLDivElement>(null);
+  const { showTooltip, tooltipRef, tooltipInnerRef, tooltipContents, updateTooltip } =
+    useSubjectGridTooltip(subjects, assignments, subjectAssignmentIds, renderTooltipFn);
 
   const siteLayoutRef = useContext(SiteLayoutContext);
   if (!containerRef) containerRef = siteLayoutRef;
@@ -170,187 +151,56 @@ export function SubjectGrid({
     }
   );
 
-  if (isVirtual) {
-    // If there are vocabulary, use the dynamic virtual list. Otherwise, use the
-    // fixed size one.
-    return React.createElement(
-      hasVocabulary && size === "tiny"
-        ? SubjectGridVirtualDynamic : SubjectGridVirtual,
-      {
-        classes,
-        items,
-        size,
-        hideSrs,
-        innerPadding,
-        renderItem,
-        containerRef,
-        simpleWindowing,
-        overscanCount
-      }
+  const gridEl = isVirtual
+    ? (
+      // If there are vocabulary, use the dynamic virtual list. Otherwise, use the
+      // fixed size one.
+      React.createElement(
+        hasVocabulary && size === "tiny"
+          ? SubjectGridVirtualDynamic
+          : SubjectGridVirtual,
+        {
+          classes,
+          items,
+          size,
+          hideSrs,
+          innerPadding,
+          renderItem,
+          containerRef,
+          simpleWindowing,
+          overscanCount,
+          updateTooltip,
+          mainRef,
+          tooltipInnerRef,
+          ref: mainRef,
+        }
+      )
+    )
+    : (
+      <SubjectGridSpace
+        size={size}
+        className={classes}
+        padding={innerPadding}
+        ref={mainRef}
+        items={items}
+        renderItem={renderItem}
+        updateTooltip={updateTooltip}
+        mainRef={mainRef}
+        tooltipInnerRef={tooltipInnerRef}
+      />
     );
-  } else {
-    return <Space
-      size={size !== "tiny" ? SIZE_SPACING[size] : 0}
-      wrap
-      className={classes}
-      style={{ padding: innerPadding }}
-    >
-      {items.map((_, i) => renderItem(i))}
-    </Space>;
-  }
+
+  return <>
+    {/* Subject grid */}
+    {gridEl}
+
+    {/* Tooltip */}
+    <SubjectGridTooltip
+      showTooltip={showTooltip}
+      ref={tooltipRef}
+      tooltipInnerRef={tooltipInnerRef}
+      tooltipContents={tooltipContents}
+    />
+  </>;
 }
 
-interface SubjectGridVirtualProps {
-  classes: string;
-  items: [StoredSubject, StoredAssignment | undefined][];
-  size: Size;
-  hideSrs?: boolean;
-  innerPadding: number;
-  renderItem: (i: number, width?: number) => JSX.Element;
-  containerRef: HTMLDivElement | null;
-  simpleWindowing?: boolean;
-  overscanCount?: number;
-}
-
-function SubjectGridVirtual({
-  classes,
-  items,
-  size,
-  hideSrs,
-  innerPadding,
-  renderItem,
-  containerRef,
-  simpleWindowing,
-  overscanCount = 2
-}: SubjectGridVirtualProps): JSX.Element {
-  const itemSpacing = SIZE_SPACING[size];
-  const itemWidth = SIZE_WIDTHS[size];
-
-  // Row height changes if srs is shown, get the correct row height for this
-  // size
-  const rowHeight = SIZE_ROW_HEIGHTS[size][hideSrs ? 0 : 1];
-
-  const [width, setWidth] = useState(0);
-  const { ref } = useResizeObserver<HTMLDivElement>({
-    onResize: ({ width }) => setWidth(width ?? 0)
-  });
-
-  const itemsPerRow = Math.floor((width - (innerPadding * 2)) / (itemWidth + itemSpacing));
-  const rowCount = Math.ceil(items.length / itemsPerRow);
-
-  const Row = ({ index }: EpicVirtualListItemProps) => {
-    // Calculate the starting and ending index of the items in this row
-    const els: JSX.Element[] = [];
-    const fromIndex = index * itemsPerRow;
-    const toIndex = Math.min(fromIndex + itemsPerRow, items.length);
-
-    // Add the items from this row
-    for (let i = fromIndex; i < toIndex; i++) {
-      els.push(renderItem(i));
-    }
-
-    return els;
-  };
-
-  return <div ref={ref} className="subject-grid-resize-observer">
-    <EpicVirtualList
-      className={classes}
-      rowClassName={rowPaddingClasses[size]}
-      itemCount={rowCount}
-      itemHeight={rowHeight}
-      overscanCount={overscanCount}
-      scrollElement={containerRef ?? undefined}
-      simpleWindowing={simpleWindowing}
-    >
-      {Row}
-    </EpicVirtualList>
-  </div>;
-}
-
-const calculateDynamicRowData = memoizee((
-  width: number,
-  items: [StoredSubject, StoredAssignment | undefined][],
-  innerPadding: number
-): [number, number][][] => {
-  const itemSpacing = SIZE_SPACING["tiny"];
-  const itemWidth = SIZE_WIDTHS["tiny"];
-
-  // Calculate the maximum width, based on the calculated width, removing the
-  // inner padding, and a fixed width of 18px to account for browser scrollbars.
-  // TODO: This scrollbar subtraction is a hack.
-  const maxWidth = width - (innerPadding * 2) - 18;
-  // debug("calculating dynamic row data with %d items in %d px width (really: %d px)",
-  //   items.length, width, maxWidth);
-
-  const rows: [number, number][][] = [];
-  let currentRow: [number, number][] = [];
-  let currentWidth = 0;
-
-  for (let i = 0; i < items.length; i++) {
-    const [s] = items[i];
-
-    // How much space this item takes up in a row (includes the spacing)
-    const thisItemWidth = isVocabularyLike(s)
-      ? (s.data.characters!.length * TINY_KANA_WIDTH) + TINY_VOCAB_PADDING + itemSpacing
-      : itemWidth + itemSpacing;
-
-    // Try to add it to the row
-    currentWidth += thisItemWidth;
-    if (currentWidth >= maxWidth && currentRow.length >= 1) {
-      // Doesn't fit, start a new row.
-      rows.push(currentRow);
-      currentWidth = thisItemWidth;
-      currentRow = [[i, thisItemWidth - itemSpacing]];
-    } else {
-      // Fits, add it to this row.
-      currentRow.push([i, thisItemWidth - itemSpacing]);
-    }
-  }
-
-  // Add the last row
-  if (currentRow.length > 0) rows.push(currentRow);
-
-  return rows;
-});
-
-function SubjectGridVirtualDynamic({
-  classes,
-  items,
-  innerPadding,
-  renderItem,
-  containerRef,
-  simpleWindowing,
-  overscanCount = 2
-}: SubjectGridVirtualProps): JSX.Element {
-  const rowHeight = SIZE_ROW_HEIGHTS["tiny"][0];
-
-  const [width, setWidth] = useState(0);
-  const { ref } = useResizeObserver<HTMLDivElement>({
-    onResize: ({ width }) => setWidth(width ?? 0)
-  });
-
-  // Because vocabulary can be any width, we need to calculate all the sizes
-  // in advance. Radicals and kanji will always use the standard itemWidth,
-  // but vocabulary will use (chars * kanaWidth) + spacing. Figure out how
-  // many items can fit per row based on this:
-  const rows = calculateDynamicRowData(width, items, innerPadding);
-
-  const Row = ({ index }: EpicVirtualListItemProps) => {
-    // Add the items from this row
-    return rows?.[index]?.map(([id, width]) => renderItem(id, width)) ?? [];
-  };
-
-  return <div ref={ref} className="subject-grid-resize-observer">
-    <EpicVirtualList
-      className={classes}
-      rowClassName="virtual-list-row dynamic"
-      itemCount={rows.length}
-      itemHeight={rowHeight}
-      overscanCount={overscanCount}
-      scrollElement={containerRef ?? undefined}
-      simpleWindowing={simpleWindowing}
-    >
-      {Row}
-    </EpicVirtualList>
-  </div>;
-}

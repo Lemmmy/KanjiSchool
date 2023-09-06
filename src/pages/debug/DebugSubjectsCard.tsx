@@ -8,8 +8,9 @@ import { Card, Button, Form, Radio, Checkbox, InputNumber, Space } from "antd";
 import { StoredSubject, StoredSubjectMap, SubjectType, useAssignments, useSubjects, useUserLevel } from "@api";
 import { lut } from "@utils";
 
-import { SubjectGrid, Size } from "@comp/subjects/lists/grid";
+import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { makeRenderTooltipFn, SubjectRenderTooltipFn } from "@comp/subjects/lists/tooltip/SubjectTooltip";
+import { Size } from "@comp/subjects/lists/grid/style.ts";
 
 interface Props {
   onAddSubject: (subject: StoredSubject) => void;

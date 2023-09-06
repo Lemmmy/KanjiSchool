@@ -35,7 +35,7 @@ export function CommaList({
           {/* Individual meaning/reading, bold if primary */}
           <span className={classes}>{node ?? value}</span>
           {/* Add a comma if this is not the last value */}
-          {id < arr.length - 1 && <>,&nbsp;</>}
+          {id < arr.length - 1 && <>, </>}
         </React.Fragment>;
       })}
     </div>

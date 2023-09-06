@@ -27,7 +27,7 @@ export function SubjectTooltipInner({
   showFreq,
   hideStudyQueueButton
 }: Props): JSX.Element {
-  return <div className="min-w-[200px] p-xs">
+  return <div className="p-xs">
     {/* Subject data - characters, level, meaning and readings */}
     <SubjectTooltipSubjectData subject={subject}/>
 
@@ -49,6 +49,7 @@ export function SubjectTooltipInner({
         type="primary"
         subjectId={subject.id}
         useShortTitle
+        noTooltip
       />
     </div>}
   </div>;
