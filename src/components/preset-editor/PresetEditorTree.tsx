@@ -8,6 +8,7 @@ import { Tree } from "antd";
 import { PresetType, Preset, getDefaultPresets, usePresets } from ".";
 import { movePreset } from "./move";
 import { DataNode } from "rc-tree/lib/interface";
+import classNames from "classnames";
 
 const TREE_TITLES: Record<PresetType, string> = {
   "lesson": "My lesson presets",
@@ -73,6 +74,12 @@ export function PresetEditorTree({
     selectable
     selectedKeys={selectedUuid ? [selectedUuid] : undefined}
     onSelect={([k]) => k ? setSelectedUuid(k.toString()) : undefined}
+
+    className={classNames(
+      "bg-transparent",
+      "[&_.ant-tree-indent-unit]:w-[12px] [&_.ant-tree-switcher]:w-[12px]",
+      "[&_.ant-tree-treenode]:whitespace-nowrap"
+    )}
 
     // Only allow dragging of user presets
     draggable={{

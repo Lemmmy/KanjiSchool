@@ -2,8 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button, Modal, Popconfirm } from "antd";
 import { useState } from "react";
+import { Button, Modal, Popconfirm } from "antd";
+import classNames from "classnames";
 
 import { deletePreset, newPreset, PresetType, savePreset } from ".";
 import { PresetEditorTree } from "./PresetEditorTree";
@@ -45,14 +46,18 @@ export default function PresetEditorModal({
   }
 
   return <Modal
-    className="preset-editor-modal"
     title={MODAL_TITLES[presetType] || "Preset editor"}
     open={visible}
     onCancel={closeFn}
 
-    width={800}
-    footer={<>
-      <div className="footer-left">
+    bodyStyle={{
+      display: "flex",
+      padding: 0
+    }}
+
+    width={900}
+    footer={<div className="flex">
+      <div className="flex w-[35%] max-w-preset-editor-sidebar mr-lg">
         {/* Delete */}
         <Popconfirm
           title="Are you sure you want to delete this preset?"
@@ -64,15 +69,17 @@ export default function PresetEditorModal({
           <Button danger disabled={isDefault}>Delete</Button>
         </Popconfirm>
 
-        <div className="spacer"></div>
+        <div className="flex-1" />
 
         {/* New */}
         <Button onClick={onClickNew}>New</Button>
       </div>
 
-      <div className="spacer"></div>
+      <div className="w-px -my-[20px] bg-split" />
 
-      <div className="footer-right">
+      <div className="flex-1" />
+
+      <div>
         {/* Close */}
         <Button onClick={closeFn}>Close</Button>
 
@@ -81,10 +88,10 @@ export default function PresetEditorModal({
           Save
         </Button>
       </div>
-    </>}
+    </div>}
   >
     {/* Sidebar/tree */}
-    <div className="preset-editor-sidebar">
+    <div className="w-[35%] max-w-preset-editor-sidebar max-h-preset-editor-height overflow-auto mt-md mr-lg">
       <PresetEditorTree
         presetType={presetType}
         selectedUuid={selectedUuid}
@@ -92,7 +99,9 @@ export default function PresetEditorModal({
       />
     </div>
 
-    <div className="preset-editor-main">
+    <div className="w-px -mt-[53px] mb-[8px] bg-split" />
+
+    <div className="flex-1 max-h-preset-editor-height ml-lg mb-md pt-md pl-md pr-lg overflow-y-auto">
       {/* Only render the form if this is a valid preset (i.e. not a tree
         * root node) */}
       {selectedUuid && !selectedUuid.startsWith("root-") && formEl}

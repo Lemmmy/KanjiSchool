@@ -53,12 +53,14 @@ export default {
         lg           : "24px",
 
         // component/layout sizes
-        "page-header": "56px",
-        "header"     : "64px",
-        "toc"        : "180px",
-        "toc-right"  : "-204px", // -toc - lg
-        "study-modal": "182px", // 150px + md * 2
-        "text"       : "0.3em",
+        "page-header"          : "56px",
+        "header"               : "64px",
+        "toc"                  : "180px",
+        "toc-right"            : "-204px", // -toc - lg
+        "study-modal"          : "182px", // 150px + md * 2
+        "text"                 : "0.3em",
+        "preset-editor-height" : "400px",
+        "preset-editor-sidebar": "260px",
       },
 
       fontFamily: {

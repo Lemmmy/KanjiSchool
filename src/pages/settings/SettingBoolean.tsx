@@ -7,6 +7,7 @@ import { Switch } from "antd";
 
 import { SettingName, setBooleanSetting, useBooleanSetting } from "@utils/settings";
 import { SettingDescription } from "./SettingDescription";
+import { menuItemSettingInner } from "./settingsStyles.ts";
 
 interface Props {
   setting: SettingName<boolean>;
@@ -26,7 +27,7 @@ export function SettingBoolean({
   }
 
   return <div
-    className="menu-item-setting menu-item-setting-switch"
+    className={menuItemSettingInner}
     onClick={() => onChange(!settingValue)}
   >
     <Switch

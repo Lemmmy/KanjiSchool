@@ -109,7 +109,6 @@ export function usePresetEditorForm(
 
   const formEl = useMemo(() => selectedUuid === undefined ? null : <Form
     form={form}
-    className="preset-editor-form"
     initialValues={initialValues}
     onValuesChange={onValuesChange}
     onFinish={onSubmit}

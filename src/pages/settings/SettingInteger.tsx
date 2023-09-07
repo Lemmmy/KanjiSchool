@@ -7,6 +7,7 @@ import { Input, InputNumber, Button } from "antd";
 
 import { SettingName, setIntegerSetting, useIntegerSetting, validateIntegerSetting } from "@utils/settings";
 import { SettingDescription } from "./SettingDescription";
+import { menuItemSettingInner } from "./settingsStyles.ts";
 
 interface Props {
   setting: SettingName<number>;
@@ -36,8 +37,8 @@ export function SettingInteger({
     setIntegerSetting(setting, numVal!);
   }, [isValid, numVal, setting]);
 
-  return <div className="menu-item-setting menu-item-setting-integer">
-    <Input.Group compact>
+  return <div className={menuItemSettingInner}>
+    <Input.Group compact className="inline-block w-auto mr-sm mb-xs">
       {/* Number input */}
       <InputNumber
         value={value}

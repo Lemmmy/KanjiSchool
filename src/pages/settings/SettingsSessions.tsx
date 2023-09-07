@@ -4,7 +4,7 @@
 
 import { BulbOutlined, AuditOutlined, ReadOutlined } from "@ant-design/icons";
 
-import { getSettingsGroup, booleanSetting, integerSetting, dropdownSetting } from "./SettingsGroup";
+import { settingsSubGroup, booleanSetting, integerSetting, dropdownSetting, MenuItem } from "./SettingsSubGroup.tsx";
 
 import { LESSON_ORDERS } from "@session/order/LessonOrder";
 import { REVIEW_ORDERS } from "@session/order/ReviewOrder";
@@ -17,8 +17,8 @@ const REVIEW_ORDER_ITEMS = Object.keys(REVIEW_ORDERS)
 const SESSION_PRIORITY_ITEMS = Object.keys(SESSION_PRIORITIES)
   .map(o => ({ value: o, label: (SESSION_PRIORITIES as any)[o].name }));
 
-export function getLessonSettingsGroup(): JSX.Element {
-  return getSettingsGroup(
+export function getLessonSettingsGroup(): MenuItem {
+  return settingsSubGroup(
     "Lesson settings",
     <BulbOutlined />,
     [
@@ -35,8 +35,8 @@ export function getLessonSettingsGroup(): JSX.Element {
   );
 }
 
-export function getReviewSettingsGroup(): JSX.Element {
-  return getSettingsGroup(
+export function getReviewSettingsGroup(): MenuItem {
+  return settingsSubGroup(
     "Review settings",
     <AuditOutlined />,
     [
@@ -54,8 +54,8 @@ export function getReviewSettingsGroup(): JSX.Element {
   );
 }
 
-export function getSelfStudySettingsGroup(): JSX.Element {
-  return getSettingsGroup(
+export function getSelfStudySettingsGroup(): MenuItem {
+  return settingsSubGroup(
     "Self-study settings",
     <ReadOutlined />,
     [

@@ -7,6 +7,7 @@ import { Select } from "antd";
 
 import { SettingName, setStringSetting, useStringSetting } from "@utils/settings";
 import { SettingDescription } from "./SettingDescription";
+import { menuItemSettingInner } from "./settingsStyles.ts";
 
 interface Props<T extends string> {
   setting: SettingName<T>;
@@ -27,13 +28,14 @@ export function SettingDropdown<T extends string>({
     setStringSetting(setting, value);
   }
 
-  return <div className="menu-item-setting menu-item-setting-dropdown">
+  return <div className={menuItemSettingInner}>
     {title}
     <Select
       value={settingValue}
       options={options}
       onChange={onChange}
-      dropdownMatchSelectWidth={false}
+      className="ml-sm"
+      popupMatchSelectWidth={false}
     />
 
     <SettingDescription description={description} />

@@ -41,7 +41,7 @@ export const DEFAULT_PRESETS: Omit<Preset, "uuid">[] = [
   },
   {
     name: "Current-level radicals and kanji first",
-    nameNode: <>Current-level <span className="color-radical">radicals</span> and <span className="color-kanji">kanji</span> first</>,
+    nameNode: <>Current-level <span className="text-radical">radicals</span> and <span className="text-kanji">kanji</span> first</>,
     types: ["lesson", "review"],
     opts: {
       order: "SHUFFLE",
@@ -52,7 +52,7 @@ export const DEFAULT_PRESETS: Omit<Preset, "uuid">[] = [
   },
   {
     name: "Radicals, then kanji, then vocabulary",
-    nameNode: <><span className="color-radical">Radicals</span>, then <span className="color-kanji">kanji</span>, then <span className="color-vocabulary">vocabulary</span></>,
+    nameNode: <><span className="text-radical">Radicals</span>, then <span className="text-kanji">kanji</span>, then <span className="text-vocabulary">vocabulary</span></>,
     types: ["lesson", "review"],
     opts: {
       order: "TYPE",
@@ -62,7 +62,7 @@ export const DEFAULT_PRESETS: Omit<Preset, "uuid">[] = [
   },
   {
     name: "Radicals first",
-    nameNode: <><span className="color-radical">Radicals</span> first</>,
+    nameNode: <><span className="text-radical">Radicals</span> first</>,
     types: ["lesson", "review"],
     opts: {
       order: "SHUFFLE",
@@ -73,7 +73,7 @@ export const DEFAULT_PRESETS: Omit<Preset, "uuid">[] = [
   },
   {
     name: "Kanji first",
-    nameNode: <><span className="color-kanji">Kanji</span> first</>,
+    nameNode: <><span className="text-kanji">Kanji</span> first</>,
     types: ["lesson", "review"],
     opts: {
       order: "SHUFFLE",
@@ -84,7 +84,7 @@ export const DEFAULT_PRESETS: Omit<Preset, "uuid">[] = [
   },
   {
     name: "Vocabulary first",
-    nameNode: <><span className="color-vocabulary">Vocabulary</span> first</>,
+    nameNode: <><span className="text-vocabulary">Vocabulary</span> first</>,
     types: ["lesson", "review"],
     opts: {
       order: "SHUFFLE",

@@ -12,13 +12,13 @@ import { RootState } from "@store";
 import { useSelector, useDispatch } from "react-redux";
 import { setCustomFonts } from "@actions/SettingsActions";
 
-import { booleanSetting, getSettingsGroup } from "./SettingsGroup";
+import { booleanSetting, MenuItem, settingsSubGroup } from "./SettingsSubGroup.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:settings-fonts");
 
-export function getFontSettingsGroup(): JSX.Element {
-  return getSettingsGroup(
+export function getFontSettingsGroup(): MenuItem {
+  return settingsSubGroup(
     "Font settings",
     <FontSizeOutlined />,
     [
@@ -37,7 +37,10 @@ export function getFontSettingsGroup(): JSX.Element {
       booleanSetting("randomFontShowName", "Show the random font name", <>
         When a random font is used, the name of the font will be shown in the top right corner of the question.
       </>),
-      <RandomFontList key="random-font-list" />
+      {
+        key: "randomFontList",
+        label: <RandomFontList />
+      }
     ]
   );
 }
