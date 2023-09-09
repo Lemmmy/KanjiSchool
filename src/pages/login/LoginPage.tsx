@@ -46,13 +46,9 @@ export function LoginPage(): JSX.Element {
     }
   }
 
-  // Show a pre-loader or an error if we're already logged in
+  // Logging in screen preloader
   if (loggingIn) {
-    // Logging in screen
-    return <AppLoading
-      title="Logging in..."
-      className="mt-[64px]"
-    />;
+    return <AppLoading title="Logging in..." />;
   }
 
   // Actually show the login page
@@ -68,12 +64,12 @@ export function LoginPage(): JSX.Element {
       <Row>
         {/* Lead text */}
         <Col flex="1">
-          <p className="mt-0">
+          <p className="mt-0 text-justify">
             Welcome to KanjiSchool, a client for <ExtLink href="https://www.wanikani.com">WaniKani</ExtLink>, an SRS
             kanji learning app created by <ExtLink href="https://www.tofugu.com">Tofugu</ExtLink>.
           </p>
 
-          <p>
+          <p className="mb-0 text-justify">
             The client is fully-featured and supports additional
             functionality such as self-study reviews, mobile support, and
             offline mode.
@@ -89,7 +85,7 @@ export function LoginPage(): JSX.Element {
       <Divider />
 
       {/* Onboarding */}
-      <p>
+      <p className="text-justify">
         To get started, enter your <ExtLink href="https://www.wanikani.com/settings/personal_access_tokens">WaniKani
         API v2 key</ExtLink>.
         Permissions required:
@@ -102,8 +98,8 @@ export function LoginPage(): JSX.Element {
         <li><code>study_materials:update</code></li>
       </ul>
 
-      <p className="text-desc">
-        If you don&apos;t yet have a WaniKani account, create
+      <p className="text-desc text-justify">
+        If you don&apos;t have a WaniKani account yet, create
         one <ExtLink href="https://www.wanikani.com">here</ExtLink>.
       </p>
 

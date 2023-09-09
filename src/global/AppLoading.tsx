@@ -3,14 +3,16 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { HTMLProps, ReactNode } from "react";
+import classNames from "classnames";
 
 interface Props extends Omit<HTMLProps<HTMLDivElement>, "title"> {
   title?: ReactNode;
   extra?: ReactNode;
+  className?: string;
 }
 
-export function AppLoading({ title, extra, ...props }: Props): JSX.Element {
-  return <div className="wk-preloader" {...props}>
+export function AppLoading({ title, extra, className }: Props): JSX.Element {
+  return <div className={classNames("wk-preloader", className)}>
     {/* Spinner */}
     <div className="wk-preloader-spinner" />
 
