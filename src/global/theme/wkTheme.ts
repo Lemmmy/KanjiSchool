@@ -29,6 +29,9 @@ const BASE_THEME: Partial<ThemeConfig> = {
   },
 
   components: {
+    Button: {
+      contentFontSizeSM: 13
+    },
     Menu: {
       activeBarBorderWidth: 0,
       itemMarginBlock: 0

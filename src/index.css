@@ -75,9 +75,3 @@ code {
     padding: 8px 16px;
   }
 }
-
-/* TODO: Temporary workaround until
-         https://github.com/ant-design/ant-design/commit/27e54c9 is released in a feature update. */
-.ant-btn.ant-btn-sm {
-  font-size: 13px;
-}
