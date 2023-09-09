@@ -10,7 +10,7 @@ export function LoginFooter(): JSX.Element {
   return <Space
     align="center"
     wrap
-    className="min-w-[320px] w-full max-w-sm my-lg justify-center text-desc-c/75"
+    className="min-w-[320px] w-full max-w-sm mt-lg mb-md md:mb-0 justify-center text-desc-c/75"
   >
     <ExtLink href="https://github.com/Lemmmy/KanjiSchool" className="text-desc">
       GitHub

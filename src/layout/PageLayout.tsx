@@ -48,7 +48,7 @@ export function PageLayout({
       : "max-w-[768px] mx-auto"
     : "",
   verticallyCenteredClassName = verticallyCentered
-    ? "flex flex-col justify-center"
+    ? "flex flex-col justify-center items-center"
     : "",
   onBack,
   backLink,
