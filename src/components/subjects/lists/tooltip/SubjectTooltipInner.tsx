@@ -7,6 +7,7 @@ import { SubjectTooltipSubjectData } from "./SubjectData.tsx";
 import { SubjectTooltipAssignmentData } from "./AssignmentData.tsx";
 import { SubjectTooltipExtraData } from "./ExtraData.tsx";
 import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton.tsx";
+import { SubjectTooltipSeparator } from "@comp/subjects/lists/tooltip/SubjectTooltipSeparator.tsx";
 
 interface Props {
   subject: StoredSubject;
@@ -27,12 +28,12 @@ export function SubjectTooltipInner({
   showFreq,
   hideStudyQueueButton
 }: Props): JSX.Element {
-  return <div className="p-xs">
+  return <div className="p-xs text-basec">
     {/* Subject data - characters, level, meaning and readings */}
     <SubjectTooltipSubjectData subject={subject}/>
 
     {/* Separator */}
-    <div className="w-full mt-[6px] mb-[4px] border-0 border-solid border-b border-b-white/15"/>
+    <SubjectTooltipSeparator />
 
     {/* Assignment data - SRS stage, next review */}
     <SubjectTooltipAssignmentData assignment={assignment}/>

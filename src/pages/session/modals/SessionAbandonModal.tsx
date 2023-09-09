@@ -2,7 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 import { store } from "@app";
@@ -10,11 +9,13 @@ import { abandonSession, isItemFinished, isItemStarted, SessionState } from "@se
 
 import { nts } from "@utils";
 
+import { globalModal } from "@global/AntInterface.tsx";
+
 export function showSessionAbandonModal(): void {
   const state = store.getState().session.sessionState;
   if (!state) return;
 
-  Modal.confirm({
+  globalModal.confirm({
     title: "Abandon session?",
     icon: <ExclamationCircleOutlined />,
     content: <SessionAbandonModalContents state={state} />,

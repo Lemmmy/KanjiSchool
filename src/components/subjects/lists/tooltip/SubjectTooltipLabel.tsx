@@ -9,4 +9,4 @@ interface Props {
 }
 
 export const SubjectTooltipLabel = ({ children }: Props): JSX.Element => <span
-  className="text-desc mr-text">{children}</span>;
+  className="text-desc text-sm mr-text">{children}</span>;

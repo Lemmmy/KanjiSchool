@@ -19,6 +19,9 @@ import { makeRenderTooltipFn } from "@comp/subjects/lists/tooltip/SubjectTooltip
 
 import { debounce } from "lodash-es";
 
+import Debug from "debug";
+const debug = Debug("kanjischool:items");
+
 interface Props {
   type: ItemsBaseType;
 }
@@ -55,6 +58,8 @@ export function ItemsPage({ type }: Props): JSX.Element {
   const performLookup: PerformLookupFn = useCallback(values => {
     if (!hasSubjects || !hasAssignments || !hasSubjectAssignmentIdMap) return;
 
+    debug("performing lookup", values);
+
     setColorBy(values.colorBy);
     setHasVocabulary(type === "wk" && values.types?.includes("vocabulary"));
     lookupDebounced(type, values, setResults);
@@ -68,9 +73,6 @@ export function ItemsPage({ type }: Props): JSX.Element {
     siteTitle={TYPE_TITLES[type]}
     title={TYPE_TITLES[type]}
   >
-    <Alert type="info" message="This page is currently very sluggish, sorry."
-      style={{ maxWidth: 1080, margin: "0 auto 16px auto" }} />
-
     {/* Listing config form */}
     <ItemsConfigForm
       type={type}

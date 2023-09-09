@@ -72,9 +72,9 @@ export function renderChart(
       .tickValues(xTicks)
       .tickFormat(formatTick));
   xAxis.selectAll("path, line")
-    .classed("stroke-[#404040]", true); // TODO: Light theme
+    .classed("stroke-[#404040] light:stroke-[#d9d9d9]", true);
   xAxis.selectAll("text")
-    .classed("text-desc", true);
+    .classed("text-desc light:text-black/75", true);
 
   // X gridlines
   const xGridTicks = timeDay.every(1)!.range(start, end)
@@ -86,7 +86,7 @@ export function renderChart(
       .tickSize(-height)
       .tickFormat(() => ""));
   xGrid.selectAll("path, line")
-    .classed("stroke-[#313131]", true); // TODO: Light theme
+    .classed("stroke-[#313131] light:stroke-split", true);
   xGrid.selectAll("text")
     .remove();
 
@@ -97,9 +97,9 @@ export function renderChart(
   const yAxis = group.append("g")
     .call(axisLeft(y));
   yAxis.selectAll("path, line")
-    .classed("stroke-[#404040]", true); // TODO: Light theme
+    .classed("stroke-[#404040] light:stroke-[#d9d9d9]", true);
   yAxis.selectAll("text")
-    .classed("text-desc", true);
+    .classed("text-desc light:text-black/75", true);
 
   // Y gridlines
   const yGrid = group.append("g")
@@ -107,7 +107,7 @@ export function renderChart(
       .tickSize(-width)
       .tickFormat(() => ""));
   yGrid.selectAll("path, line")
-    .classed("stroke-[#313131]", true); // TODO: Light theme
+    .classed("stroke-[#313131] light:stroke-split", true);
   yGrid.selectAll("text")
     .remove();
 

@@ -18,8 +18,8 @@ const dateFormat = timeFormat("%a %-d %b, %-I:%M %p");
 export const ChartTooltip = forwardRef<HTMLDivElement, Props>(function ChartTooltip({ datum }, ref): JSX.Element {
   return <div
     ref={ref}
-    className="absolute pointer-events-none bg-spotlight text-solidc px-md py-sm rounded shadow-lg hidden
-      whitespace-nowrap z-50"
+    className="absolute pointer-events-none bg-spotlight text-solidc light:text-basec px-md py-sm rounded shadow-lg
+       hidden whitespace-nowrap z-50"
   >
     {datum && <TooltipInner datum={datum} />}
   </div>;
@@ -31,7 +31,9 @@ function TooltipInner({ datum: d }: DeepNonNullable<Props>): JSX.Element | null 
 
   return <>
     <div className="text-md font-bold">{dateFormat(date)}</div>
-    <div className="text-sm text-green-4 text-center mt-xss mb-xs">{pluralN(total, "new review")}</div>
+    <div className="text-sm text-green-4 light:text-green-5 text-center mt-xss mb-xs">
+      {pluralN(total, "new review")}
+    </div>
 
     <div className="flex flex-col gap-xs">
       <TooltipRow label="Cumulative" value={d.cumulative}

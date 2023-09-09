@@ -23,9 +23,10 @@ export const barHoverColors: Record<BarStageName, string> = {
 };
 
 export const barTooltipColors: Record<BarStageName, string> = {
-  apprentice: "bg-srs-apprentice-dark",
-  guru: "bg-srs-guru-dark",
-  master: "bg-srs-master-dark text-shadow-sm shadow-black/60",
-  enlightened: "bg-srs-enlightened-dark",
-  burned: "bg-srs-burned-dark",
+  apprentice: "bg-srs-apprentice-dark light:bg-srs-apprentice light:text-white",
+  guru: "bg-srs-guru-dark light:bg-srs-guru",
+  master: "bg-srs-master-dark text-shadow-sm shadow-black/60 " +
+    "light:bg-srs-master light:text-shadow-none",
+  enlightened: "bg-srs-enlightened-dark light:bg-srs-enlightened light:text-white",
+  burned: "bg-srs-burned-dark light:text-white",
 };

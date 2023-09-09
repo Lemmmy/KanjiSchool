@@ -2,11 +2,11 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
+import axios, { Method, AxiosRequestConfig } from "axios";
 
 import { store } from "@app";
 
-import axios, { Method, AxiosRequestConfig } from "axios";
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:api");
@@ -77,8 +77,9 @@ export async function request<T>(
     console.error(err);
 
     // Print a message specifically for timeouts
-    if (err.code === "ECONNABORTED" || (err?.message || "").match(/timeout/gi))
-      notification.error({ message: "Request timed out. Server having trouble? "});
+    if (err.code === "ECONNABORTED" || (err?.message || "").match(/timeout/gi)) {
+      globalNotification.error({ message: "Request timed out. Server having trouble? " });
+    }
 
     if (err?.response?.data?.error) {
       throw new ApiError(err.response.data.error || "unknown_error", err.response.code);

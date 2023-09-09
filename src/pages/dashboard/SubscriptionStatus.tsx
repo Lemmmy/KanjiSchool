@@ -21,6 +21,6 @@ export function SubscriptionStatus(): JSX.Element | null {
     message={<>
       You have reached the last free level! Please visit <ExtLink href="https://www.wanikani.com">wanikani.com</ExtLink> for more information.
     </>}
-    style={{ marginBottom: 24 }}
+    className="mb-lg"
   />;
 }

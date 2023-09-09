@@ -2,11 +2,12 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Alert, Modal, Typography } from "antd";
+import { Alert, Typography } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { red, green } from "@ant-design/colors";
 
 import { DigraphMatch } from "@utils";
+
+import { globalModal } from "@global/AntInterface.tsx";
 
 const { Text } = Typography;
 
@@ -27,13 +28,13 @@ export function DigraphAlert({ digraphMatch }: Props): JSX.Element {
       Click here for more information about the difference between small and
       regular kana.
     </>}
-    style={{ marginBottom: 16, cursor: "pointer" }}
+    className="mb-md cursor-pointer"
     onClick={showDigraphHelp}
   />;
 }
 
 export function showDigraphHelp(): void {
-  Modal.info({
+  globalModal.info({
     title: "Digraph information",
     content: <DigraphHelp />,
     width: 768
@@ -96,17 +97,17 @@ function DigraphHelp(): JSX.Element {
 }
 
 const Ack = (): JSX.Element =>
-  <CheckCircleOutlined style={{ color: green.primary }} />;
+  <CheckCircleOutlined className="text-green" />;
 const Nack = (): JSX.Element =>
-  <CloseCircleOutlined style={{ color: red.primary }} />;
+  <CloseCircleOutlined className="text-red" />;
 
 function DigraphExamplesTable(): JSX.Element {
-  return <table style={{ width: "100%", maxWidth: 300, marginBottom: 16 }}>
+  return <table className="w-full max-w-[300px] mb-md">
     <thead>
       <tr>
-        <th style={{ textAlign: "left" }}>Subject</th>
-        <th style={{ textAlign: "left" }}>Reading</th>
-        <th style={{ textAlign: "left" }}>Typed as</th>
+        <th className="text-left">Subject</th>
+        <th className="text-left">Reading</th>
+        <th className="text-left">Typed as</th>
         <th></th>
       </tr>
     </thead>

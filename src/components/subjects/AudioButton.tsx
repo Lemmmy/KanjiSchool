@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
-import { Button, notification, Tooltip } from "antd";
+import { Button, Tooltip } from "antd";
 import { SoundOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
@@ -11,6 +11,8 @@ import { RootState } from "@store";
 import { useSelector } from "react-redux";
 
 import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio, useUserLevel } from "@api";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import { sample } from "lodash-es";
 import { GlobalHotKeys } from "react-hotkeys";
@@ -110,7 +112,7 @@ export function useVocabAudio(
       if (!storedAudio) {
         debug("useVocabAudio.play: missing audio for subject id %o, actor %o, pronunciation %s",
           subjectId, actor, pronunciation);
-        notification.error({ message: "Missing audio, see console for details." });
+        globalNotification.error({ message: "Missing audio, see console for details." });
         setDisabled(true);
         return;
       }
@@ -138,7 +140,7 @@ export function useVocabAudio(
           "can_play": canPlay
         }}});
 
-        // notification.error({ message: "Failed to decode audio, see console for details." });
+        // globalNotification.error({ message: "Failed to decode audio, see console for details." });
         setDisabled(true);
         return;
       }

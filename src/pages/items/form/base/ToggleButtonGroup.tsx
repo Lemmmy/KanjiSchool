@@ -94,10 +94,14 @@ function ToggleButtonGroupButton<T extends string>({
 
   const classes = classNames(
     "inline-block !h-[28px] px-[8px] pb-[4px] first:rounded-is last:rounded-ie relative cursor-pointer",
-    "border border-[#303030] border-solid border-b-[4px] border-split -ml-px whitespace-nowrap", // TODO: Light theme
+    "border border-[#303030] border-solid border-b-[4px] border-split -ml-px whitespace-nowrap",
+    "light:border-t-[#d9d9d9] light:border-l-[#d9d9d9] light:border-r-[#d9d9d9]",
     "hover:text-link transition-colors",
     className,
-    { "border-primary bg-primary/20 z-20 hover:text-white": selected }
+    {
+      ["border-primary bg-primary/20 z-20 hover:text-white " +
+        "light:border-t-blue-2 light:border-l-blue-2 light:border-r-blue-2"]: selected
+    }
   );
 
   return <label className={classes}>

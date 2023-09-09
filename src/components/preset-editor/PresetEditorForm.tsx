@@ -3,12 +3,14 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useCallback, useEffect, useMemo } from "react";
-import { Col, Form, Input, Row, message } from "antd";
+import { Col, Form, Input, Row } from "antd";
 
 import { Preset, PresetType, usePreset } from ".";
 import { PresetCheckboxSetting, PresetDropdownSetting, PresetNumberSetting, PresetSettingProps } from "./FormSettings";
 
 import { LessonOpts, ReviewOpts } from "@session/order/options";
+
+import { globalMessage } from "@global/AntInterface.tsx";
 
 import { LESSON_ORDERS } from "@session/order/LessonOrder";
 import { REVIEW_ORDERS } from "@session/order/ReviewOrder";
@@ -104,7 +106,7 @@ export function usePresetEditorForm(
     }
 
     savePreset(presetType, newPreset);
-    message.success("Preset saved.");
+    globalMessage.success("Preset saved.");
   }, [form, presetType, preset, isDefault]);
 
   const formEl = useMemo(() => selectedUuid === undefined ? null : <Form

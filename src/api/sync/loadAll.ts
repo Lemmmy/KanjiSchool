@@ -2,12 +2,12 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { initDatabase } from "@db";
 import * as api from "@api";
 
 import { lsGetBoolean, lsGetString, getOnlineStatus } from "@utils";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:api-load-all");
@@ -63,7 +63,7 @@ export async function initDbAndLoadAll(): Promise<void> {
     // Must be online for the app to work now, bail out if we're offline
     if (!getOnlineStatus()) {
       debug("init - not online for user fetch");
-      notification.error({ message: "Please go online to sync user information. "});
+      globalNotification.error({ message: "Please go online to sync user information. "});
       return;
     }
 

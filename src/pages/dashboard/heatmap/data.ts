@@ -10,7 +10,8 @@ import { timeYear, timeDay } from "d3-time";
 import { rollup, sort, union, map, group, index, extent } from "d3-array";
 import { scaleQuantize } from "d3-scale";
 
-import { COLORS, COLORS_FUTURE } from "./renderHeatmap";
+import { COLORS, COLORS_FUTURE, COLORS_FUTURE_LIGHT, COLORS_LIGHT } from "./renderHeatmap";
+import { ThemeName } from "@global/theme";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:heatmap-data");
@@ -40,7 +41,8 @@ export interface HeatmapDatum {
 
 export async function generateHeatmapData(
   currentYearOnly: boolean,
-  includeFuture: boolean
+  includeFuture: boolean,
+  theme: ThemeName = "dark"
 ): Promise<HeatmapDatum[]> {
   const now = new Date();
   const today = +timeDay.floor(now);
@@ -121,8 +123,10 @@ export async function generateHeatmapData(
     // Generate the color scales
     const baseScale = () => scaleQuantize<string>()
       .domain([min ?? 0, max ?? 1]);
-    const colorScale = baseScale().range(COLORS);
-    const colorScaleFuture = baseScale().range(COLORS_FUTURE);
+    const colorScale = baseScale()
+      .range(theme === "light" ? COLORS_LIGHT : COLORS);
+    const colorScaleFuture = baseScale()
+      .range(theme === "light" ? COLORS_FUTURE_LIGHT : COLORS_FUTURE);
 
     return {
       year,

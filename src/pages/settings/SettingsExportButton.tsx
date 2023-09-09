@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button, notification } from "antd";
+import { Button } from "antd";
 import { ExportOutlined } from "@ant-design/icons";
 
 import { SettingsExportFile } from "./ImportExport";
@@ -11,6 +11,8 @@ import dayjs from "dayjs";
 import { saveAs } from "file-saver";
 
 import { DEFAULT_SETTINGS, AnySettingName, getSettingKey } from "@utils";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 
@@ -48,5 +50,5 @@ export function exportSettings(): void {
   const blob = new Blob([outData], { type: "application/json;charset=utf-8" });
   saveAs(blob, filename);
 
-  notification.success({ message: `Exported ${count} settings.` });
+  globalNotification.success({ message: `Exported ${count} settings.` });
 }

@@ -51,8 +51,8 @@ export function ItemsResults({
         "before:!w-[32px] before:!translate-y-px after:!translate-y-px", // 50% y makes the divider 2px thick, yuck
         {
           "mb-xs": r.subgroups,
-          // TODO: Light theme
-          "font-normal !text-sm !border-bs-white/8 !border-be-white/8": isSubgroup
+          ["font-normal !text-sm !border-bs-white/8 !border-be-white/8 " +
+            "light:!border-bs-black/10 light:!border-be-black/10"]: isSubgroup
         }
       )}
     >
@@ -81,7 +81,7 @@ export function ItemsResults({
       : <SubjectGrid
         size="tiny"
         subjectIds={r.itemIds}
-        colorBy="type"
+        colorBy={colorBy}
         hasVocabulary={hasVocabulary}
         renderTooltip={renderTooltipFn}
         forceVirtual

@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { store } from "@app";
 import * as actions from "@actions/SessionActions";
 
@@ -12,6 +10,8 @@ import { SessionState } from "./types";
 import { reloadAssignments } from "@api";
 import { lsSetString, lsSetBoolean } from "@utils";
 import { NavigateFunction } from "react-router-dom";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 export function gotoSession(
   navigate: NavigateFunction,
@@ -39,7 +39,7 @@ export function abandonSession(): void {
   // And trigger a reload of the assignments/review forecast in the background
   reloadAssignments();
 
-  notification.success({ message: "Session abandoned." });
+  globalNotification.success({ message: "Session abandoned." });
 }
 
 /** Wraps up the session, removing any unstarted items, leaving only the
@@ -56,11 +56,11 @@ export function wrapUpSession(): void {
     // And trigger a reload of the assignments/review forecast in the background
     reloadAssignments();
 
-    notification.success({ message: "Session wrapped up." });
+    globalNotification.success({ message: "Session wrapped up." });
   } else {
     // The localStorage key removal and assignment reloading will be triggered
     // by submitAnswer -> saveSession when the final answer is submitted.
-    notification.success({ message: "Session now wrapping up." });
+    globalNotification.success({ message: "Session now wrapping up." });
   }
 }
 

@@ -29,7 +29,7 @@ export function SrsStageShort({
     className,
     fontClassName,
     {
-      "text-green": availableNow,
+      "text-green light:text-green-6": availableNow,
       "text-desc": !availableNow
     }
   );

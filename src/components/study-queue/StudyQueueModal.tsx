@@ -22,6 +22,8 @@ import { PresetDropdownBtn, PresetStartSessionFn } from "@comp/preset-editor";
 import { GlobalHotKeys } from "react-hotkeys";
 import { pluralN, setBooleanSetting, useBooleanSetting } from "@utils";
 
+import { globalModal } from "@global/AntInterface.tsx";
+
 const KEY_MAP = {
   TOGGLE_COLLAPSE: ["shift+q"]
 };
@@ -216,7 +218,7 @@ function ModalFooter({ items }: FooterProps): JSX.Element {
 }
 
 function promptClear() {
-  Modal.confirm({
+  globalModal.confirm({
     title: "Clear self-study queue?",
     icon: <QuestionCircleOutlined />,
     content: "The items currently in the self-study queue will be cleared.",

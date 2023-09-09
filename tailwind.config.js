@@ -12,6 +12,7 @@ function generateAntColors() {
     const colorOut = {};
 
     for (const shade in palette) {
+      if (shade === "grey") continue;
       const name = shade === "primary" ? "DEFAULT" : shade.toString();
       colorOut[name] = `rgb(var(--antd-${colorName}-${shade}) / <alpha-value>)`;
     }
@@ -93,6 +94,7 @@ export default {
       },
 
       opacity: {
+        "2" : ".02",
         "4" : ".04",
         "8" : ".08",
         "15": ".15",
@@ -261,8 +263,10 @@ export default {
       // others
       "question-meaning-dark"    : "#1f1f1f",
       "question-meaning-dark-hc" : "#bfbfbf",
-      "question-meaning-light"   : "#eeeeee", // TODO
-      "question-meaning-light-hc": "#eeeeee", // TODO
+      "question-meaning-light"   : "#d9d9d9",
+      "question-meaning-light-hc": "#ffffff",
+      "question-reading-light"   : "#808080",
+      "question-reading-light-hc": "#434343",
       "reviews-cumulative"       : "#095cb5",
 
       // misc missing values
@@ -283,6 +287,9 @@ export default {
         { values: theme("textShadow") }
       );
     }),
+
+    // light mode variants
+    plugin(({ addVariant }) => addVariant("light", ":is(.light &)"))
   ],
 };
 

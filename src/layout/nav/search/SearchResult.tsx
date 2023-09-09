@@ -32,7 +32,7 @@ const SearchResult = React.memo(({
   const userLevel = useUserLevel();
 
   const classes = classNames("text-basec whitespace-normal", {
-    "opacity-70": userLevel < level
+    "opacity-70 light:opacity-50": userLevel < level
   });
 
   const highlightClass = "!bg-transparent p-0 text-inherit font-bold";
@@ -43,7 +43,7 @@ const SearchResult = React.memo(({
   const contents = <div className={classes}>
     {/* Subject level */}
     <span
-      className={classNames("float-right font-sm text-desc", {
+      className={classNames("float-right font-sm text-desc light:text-basec", {
         "text-red": userLevel < level
       })}
     >

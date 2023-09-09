@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { store } from "@app";
 import * as syncActions from "@actions/SyncActions";
 import * as sessionActions from "@actions/SessionActions";
@@ -14,6 +12,8 @@ import { db } from "@db";
 
 import dayjs from "dayjs";
 import { getOnlineStatus, sleep } from "@utils";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:api-submission-queue");
@@ -191,7 +191,7 @@ export async function processQueue(): Promise<void> {
       ]);
     } catch (err) {
       debug("couldn't sync assignments during queue submission!!");
-      notification.error({
+      globalNotification.error({
         message: "Syncing assignments failed.",
         description: "Please try to manually refresh them, or reload the app."
       });
@@ -255,7 +255,7 @@ async function markQueueItemFailed(item: StoredQueueItem): Promise<boolean> {
   if (attempts >= 3) {
     // Failed too many times, remove it from the database
     debug("queue item failed too many times, removing from queue");
-    notification.error({
+    globalNotification.error({
       message: "Assignment submission failed!",
       description: "Failed after 3 attempts. See console for details."
     });

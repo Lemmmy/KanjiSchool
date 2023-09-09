@@ -77,7 +77,7 @@ function LevelProgressBar({
 
   // Title for hovering over the bar type
   const mainTitle = useMemo(() => <>
-    <div className="w-full pb-[2px] border-0 border-solid border-b border-b-white/15">
+    <div className="w-full pb-[2px] border-0 border-solid border-b border-b-white/15 light:border-b-black/15">
       Level {level} {type}
     </div>
 

@@ -73,7 +73,5 @@ export function generateChart(
   transposeBucket(data, "enlightened", enlightened, sortedDates, maxDate);
   transposeBucket(data, "cumulative", cumulativeBucket, sortedDates, maxDate);
 
-  console.log(data);
-
   return Object.values(data);
 }

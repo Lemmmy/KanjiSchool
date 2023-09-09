@@ -7,11 +7,13 @@ import { theme } from "antd";
 import { presetPalettes } from "@ant-design/colors";
 import { TinyColor } from "@ctrl/tinycolor";
 import { colorToRgbOnly, fadeColor } from "@global/theme/themeUtil.ts";
+import { useThemeContext } from "@global/theme/ThemeContext.tsx";
 
 const { useToken } = theme;
 
 export function ApplyAntThemeVariables(): JSX.Element | null {
   const { token } = useToken();
+  const themeName = useThemeContext().theme;
 
   useEffect(() => {
     const properties: Record<string, string> = {
@@ -25,8 +27,8 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
       "--antd-text-solid"   : token.colorTextLightSolid,
       "--antd-split"        : token.colorSplit,
       "--antd-container"    : token.colorBgContainer,
-      "--antd-spotlight"    : token.colorBgSpotlight,
-      "--antd-header"       : "#101010", // TODO: light theme
+      "--antd-spotlight"    : themeName === "light" ? "#f0f0f0" : token.colorBgSpotlight,
+      "--antd-header"       : themeName === "light" ? "#f0f0f0" : "#101010",
     };
 
     const propertiesWithAlpha: Record<string, boolean> = {
@@ -41,6 +43,7 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
       const palette = presetPalettes[colorName];
 
       for (const shade in palette) {
+        if (shade === "grey") continue;
         properties[`--antd-${colorName}-${shade}`] = palette[shade];
       }
     }

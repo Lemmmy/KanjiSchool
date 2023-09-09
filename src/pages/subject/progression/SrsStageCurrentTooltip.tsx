@@ -59,6 +59,7 @@ export function SrsStageCurrentTooltip({
             "text-white/70",
             {
               "text-basec font-bold": availableNow,
+              "light:text-black": stage === 7,
             }
           )}
         >

@@ -53,8 +53,6 @@ For more information, check out [WaniKani](https://www.wanikani.com) and their
 * Vocabulary pitch accent diagrams
 * Better leech tracking
 * Level-up time chart, show estimated 'level-up in' and 'typical level-up' times
-* Light theme
-* Official release!
 
 ## Contributing
 

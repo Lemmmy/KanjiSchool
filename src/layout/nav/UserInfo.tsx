@@ -29,7 +29,7 @@ export function MenuUserInfo(): JSX.Element | null {
   const level = Math.min(user.data.level, sub.max_level_granted);
   const isFree = sub.type === "free" || sub.type === "unknown";
 
-  return <div className="flex mt-[-4px] px-md py-xs text-base bg-black/25">
+  return <div className="flex mt-[-4px] px-md py-xs text-base bg-black/25 light:bg-black/8 rounded">
     <span className="flex-1 font-bold">{user.data.username}</span>
     <span>Level {level}</span>
     {isFree && <span>Free</span>}

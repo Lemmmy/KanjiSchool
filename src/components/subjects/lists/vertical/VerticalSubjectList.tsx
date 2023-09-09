@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode, useCallback } from "react";
-import { List, Button } from "antd";
+import { List } from "antd";
 import classNames from "classnames";
 
 import { StoredSubject, useAssignments, useSubjectAssignmentIds } from "@api";
@@ -13,6 +13,7 @@ import { SubjectRenderTooltipFn, useDefaultRenderTooltipFn } from "../tooltip/Su
 
 import { FixedSizeList as VList, ListChildComponentProps } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import ListShowAllButton from "@comp/subjects/lists/vertical/ListShowAllButton.tsx";
 
 export interface ListItem {
   subject: StoredSubject;
@@ -68,13 +69,7 @@ export function VerticalSubjectList({
     size="small"
     className={classes}
     dataSource={items ?? []}
-    loadMore={onShowAll && <div className="flex justify-center mt-md">
-      <Button type="link" className="w-full text-sm group" onClick={onShowAll}>
-        <span className="text-desc group-hover:text-white/80 transition-colors">
-          Show all...
-        </span>
-      </Button>
-    </div>}
+    loadMore={onShowAll && <ListShowAllButton onClick={onShowAll} />}
   >
     <AutoSizer disableHeight>
       {({ width }) => (

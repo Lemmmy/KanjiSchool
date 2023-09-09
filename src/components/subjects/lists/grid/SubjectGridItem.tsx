@@ -49,14 +49,14 @@ interface SizeClasses {
 const sizeClasses: Record<Size, SizeClasses> = {
   normal: {
     base: "w-[80px] mr-sm mb-sm py-xs px-sm rounded leading-none",
-    bg: "rounded bg-transparent hover:bg-white/10 transition-[background]",
+    bg: "rounded bg-transparent hover:bg-white/10 light:hover:bg-black/5 transition-[background]",
     extra: "text-sm leading-[1.35]",
     subjectCharactersFont: "text-[56px] leading-[56px]",
     subjectCharactersImageSize: "w-[56px] h-[56px] text-[56px] m-0",
   },
   small: {
     base: "w-[68px] mr-[3px] mb-[3px] p-xss leading-none",
-    bg: "rounded-sm bg-transparent hover:bg-white/10 transition-[background]",
+    bg: "rounded-sm bg-transparent hover:bg-white/10 light:hover:bg-black/5 transition-[background]",
     extra: "text-xs leading-[1.3]",
     extraSrsFont: "text-xss",
     // These should be the defaults
@@ -87,7 +87,7 @@ const colorBySrsStageClasses: Record<Lowercase<SrsStageBaseName>, string> = {
   master     : "bg-srs-master hover:bg-srs-master-lighter",
   enlightened: "bg-srs-enlightened hover:bg-srs-enlightened-lighter",
   burned     : "bg-srs-burned hover:bg-srs-burned-lighter",
-  locked     : "bg-srs-locked hover:bg-srs-locked-lighter",
+  locked     : "bg-srs-locked hover:bg-srs-locked-lighter light:opacity-35",
 };
 
 function getBgColorClass(
@@ -141,8 +141,8 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
     bgClassName,
     className,
     {
-      "opacity-65 hover:opacity-100": locked,
-      "ring-inset ring-2 ring-white/75": inQueue,
+      "opacity-65 light:opacity-40 hover:!opacity-100": locked,
+      "ring-inset ring-2 ring-white/75 light:ring-primary/75": inQueue,
       "px-2": size === "tiny" && normType === "vocabulary" && !isVirtual
     }
   );
@@ -164,7 +164,9 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
 
     {size !== "tiny" && <div
       className={classNames(
-        "flex flex-col items-center mt-xs text-base-c/70 group-hover:text-white transition",
+        "flex flex-col items-center mt-xs text-base-c/70 group-hover:text-white",
+        "light:text-black light:group-hover:text-black",
+        "transition",
         sizeClassesObj.extra
       )}
     >

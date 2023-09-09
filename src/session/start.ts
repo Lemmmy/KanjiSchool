@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { store } from "@app";
 import * as actions from "@actions/SessionActions";
 
@@ -16,6 +14,8 @@ import { saveSession } from "./storage";
 import { pickSessionItems } from "./pick";
 import { LessonOpts, ReviewOpts, SessionOpts } from "./order/options";
 import { shuffleComparator, SubjectComparator } from "@utils/comparator";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -31,13 +31,13 @@ export function startSession(
   // Pick the items for this session, prepare the comparator, and sort them.
   const pick = pickSessionItems(type, options, subjectIds);
   if (!pick) {
-    notification.error({ message: "No subjects found to start a session." });
+    globalNotification.error({ message: "No subjects found to start a session." });
     return;
   }
 
   const [subjects, opts, comparator] = pick;
   if (!subjects || !subjects.length) {
-    notification.error({ message: "No subjects found to start a session." });
+    globalNotification.error({ message: "No subjects found to start a session." });
     return;
   }
 

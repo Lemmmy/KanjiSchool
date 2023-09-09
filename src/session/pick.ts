@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { store } from "@app";
 
 import { SubjectWithAssignment } from "@api";
@@ -17,6 +15,8 @@ import { LESSON_ORDERS } from "./order/LessonOrder";
 import { buildSessionComparator } from "./order/sessionOrder";
 
 import { SubjectComparator } from "@utils/comparator";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import { sortBy, shuffle } from "lodash-es";
 
@@ -50,7 +50,7 @@ export function pickSessionItems(
       type,
       options: JSON.stringify(options)
     }}});
-    notification.error({ message: "There was an error picking subject items. See console for details." });
+    globalNotification.error({ message: "There was an error picking subject items. See console for details." });
     return false;
   }
 }

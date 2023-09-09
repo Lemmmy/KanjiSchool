@@ -46,133 +46,125 @@ export function LoginPage(): JSX.Element {
     }
   }
 
-  // Show a pre-loader or an error if we're already logged in
+  // Logging in screen preloader
   if (loggingIn) {
-    // Logging in screen
-    return <AppLoading
-      title="Logging in..."
-
-      // 64px margin because this is wrapped in AppLayout, so we need to push
-      // the preloader down a bit to accommodate for the missing nav bar
-      style={{ marginTop: 64 }}
-    />;
+    return <AppLoading title="Logging in..." />;
   }
 
   // Actually show the login page
-  return <PageLayout siteTitle="Log in" noHeader verticallyCentered>
-    <Row justify="center" align="middle">
-      <Col>
-        <Card title="KanjiSchool" className="min-w-[320px] w-full max-w-[720px]">
-          {/* Top section - lead text and carousel */}
-          <Row>
-            {/* Lead text */}
-            <Col flex="1">
-              <p className="mt-0">
-                Welcome to KanjiSchool, a client for <ExtLink href="https://www.wanikani.com">WaniKani</ExtLink>, an SRS
-                kanji learning app created by <ExtLink href="https://www.tofugu.com">Tofugu</ExtLink>.
-              </p>
-
-              <p>
-                The client is fully-featured and supports additional
-                functionality such as self-study reviews, mobile support, and
-                offline mode.
-              </p>
-            </Col>
-
-            {/* Carousel on widescreen */}
-            {md && <Col flex="200px">
-              <DemoCarousel />
-            </Col>}
-          </Row>
-
-          <Divider />
-
-          {/* Onboarding */}
-          <p>
-            To get started, enter your <ExtLink href="https://www.wanikani.com/settings/personal_access_tokens">WaniKani
-            API v2 key</ExtLink>.
-            Permissions required:
+  return <PageLayout
+    siteTitle="Log in"
+    noHeader
+    verticallyCentered
+    className="!h-screen overflow-y-auto overflow-x-hidden"
+    contentsHeightClassName="h-auto min-h-screen"
+  >
+    <Card title="KanjiSchool" className="min-w-[300px] w-full max-w-[720px] box-border">
+      {/* Top section - lead text and carousel */}
+      <Row>
+        {/* Lead text */}
+        <Col flex="1">
+          <p className="mt-0 text-justify">
+            Welcome to KanjiSchool, a client for <ExtLink href="https://www.wanikani.com">WaniKani</ExtLink>, an SRS
+            kanji learning app created by <ExtLink href="https://www.tofugu.com">Tofugu</ExtLink>.
           </p>
 
-          <ul className="mt-0 grid grid-cols-2 gap-xs">
-            <li><code>assignments:start</code></li>
-            <li><code>reviews:create</code></li>
-            <li><code>study_materials:create</code></li>
-            <li><code>study_materials:update</code></li>
-          </ul>
-
-          <p className="text-desc">
-            If you don&apos;t yet have a WaniKani account, create
-            one <ExtLink href="https://www.wanikani.com">here</ExtLink>.
+          <p className="mb-0 text-justify">
+            The client is fully-featured and supports additional
+            functionality such as self-study reviews, mobile support, and
+            offline mode.
           </p>
+        </Col>
 
-          <Form
-            form={form}
-            layout="inline"
-            initialValues={{ apiKey: "" }}
-            onFinish={onSubmit}
-            className="login-form"
-            style={{ width:"100%" }}
-          >
-            {/* Fake username for autofill */}
-            <Input
-              type="username"
-              id="username" name="username"
-              value="WaniKani API Key"
-              style={{ position: "absolute", pointerEvents: "none", opacity: 0 }}
-            />
+        {/* Carousel on widescreen */}
+        {md && <Col flex="200px">
+          <DemoCarousel />
+        </Col>}
+      </Row>
 
-            {/* API key */}
-            <Form.Item
-              name="apiKey"
-              label="API Key"
-              required
-              rules={[{
-                pattern: UUID_RE,
-                message: "Must be a valid API key"
-              }]}
+      <Divider />
 
-              // Show an error if the login failed
-              validateStatus={loginFailed ? "error" : undefined}
-              help={loginFailed
-                ? "Login failed, incorrect API key?"
-                : undefined}
+      {/* Onboarding */}
+      <p className="text-justify">
+        To get started, enter your <ExtLink href="https://www.wanikani.com/settings/personal_access_tokens">WaniKani
+        API v2 key</ExtLink>.
+        Permissions required:
+      </p>
 
-              className="login-api-key"
-              style={{ flex: 1 }}
-            >
-              <Input
-                type="password"
-                name="apiKey"
-                placeholder="API Key"
-                autoComplete="current-password"
-              />
-            </Form.Item>
+      <ul className="mt-0 grid grid-cols-1 md:grid-cols-2 gap-0.5 md:gap-xs">
+        <li><code>assignments:start</code></li>
+        <li><code>reviews:create</code></li>
+        <li><code>study_materials:create</code></li>
+        <li><code>study_materials:update</code></li>
+      </ul>
 
-            {/* Submit button */}
-            <Button
-              type="primary"
-              onClick={onSubmit}
-              className="login-submit"
-            >
-              Log in
-            </Button>
-          </Form>
+      <p className="text-desc text-justify">
+        If you don&apos;t have a WaniKani account yet, create
+        one <ExtLink href="https://www.wanikani.com">here</ExtLink>.
+      </p>
 
-          {/* Carousel on mobile */}
-          {!md && <>
-            <Divider />
-            <Row className="mt-lg justify-center">
-              <Col><DemoCarousel /></Col>
-            </Row>
-          </>}
-        </Card>
-      </Col>
-    </Row>
+      <Form
+        form={form}
+        layout="inline"
+        initialValues={{ apiKey: "" }}
+        onFinish={onSubmit}
+        className="w-full"
+      >
+        {/* Fake username for autofill */}
+        <Input
+          type="username"
+          id="username" name="username"
+          value="WaniKani API Key"
+          className="absolute pointer-events-none opacity-0"
+        />
+
+        {/* API key */}
+        <Form.Item
+          name="apiKey"
+          label="API Key"
+          required
+          rules={[{
+            pattern: UUID_RE,
+            message: "Must be a valid API key"
+          }]}
+
+          // Show an error if the login failed
+          validateStatus={loginFailed ? "error" : undefined}
+          help={loginFailed
+            ? "Login failed, incorrect API key?"
+            : undefined}
+
+          className="!flex-1 !mie-0 md:!mie-md basis-full md:basis-auto
+            [&_.ant-form-item-label]:hidden md:[&_.ant-form-item-label]:block"
+        >
+          <Input
+            type="password"
+            name="apiKey"
+            placeholder="API Key"
+            autoComplete="current-password"
+          />
+        </Form.Item>
+
+        {/* Submit button */}
+        <Button
+          type="primary"
+          onClick={onSubmit}
+          className="basis-full mt-sm md:basis-auto md:mt-0"
+        >
+          Log in
+        </Button>
+      </Form>
+
+      {/* Carousel on mobile */}
+      {!md && <>
+        <Divider />
+        <Row className="mt-lg justify-center">
+          <Col><DemoCarousel /></Col>
+        </Row>
+      </>}
+    </Card>
 
     {/* Footer */}
-    <Row justify="center" align="middle">
-      <Col><LoginFooter /></Col>
-    </Row>
+    <LoginFooter />
   </PageLayout>;
 }

@@ -16,13 +16,14 @@ import { Search } from "./search/Search";
 import { UserInfo } from "./UserInfo";
 import { TopMenu } from "./TopMenu";
 import classNames from "classnames";
+import { DebugToggleTheme } from "@global/theme/DebugToggleTheme.tsx";
 
 const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 
 export const headerElementClass = classNames(
   "flex-0 h-header py-0 px-[20px] flex items-center justify-center",
-  "border-0 border-l border-solid border-l-white/10",
-  "bg-transparent transition-colors hover:bg-white/5 cursor-pointer"
+  "border-0 border-l border-solid border-l-white/10 light:border-l-split",
+  "bg-transparent transition-colors hover:bg-white/5 light:hover:bg-black/5 cursor-pointer"
 );
 
 export const dropdownOverlayClass = classNames(
@@ -37,10 +38,13 @@ export function AppHeader(): JSX.Element | null {
 
   if (!api.useIsLoggedIn()) return null;
 
-  return <Layout.Header className="bg-header fixed inset-x-0 top-0 flex p-0 z-20">
+  return <Layout.Header
+    className="bg-header fixed inset-x-0 top-0 flex p-0 z-20
+       light:shadow-lg light:shadow-black/8"
+  >
     <ConditionalLink to="/" matchTo matchExact>
       <div className="mx-lg select-none whitespace-nowrap">
-        <span className="text-[22.5px] text-white">
+        <span className="text-[22.5px] text-white light:text-black">
           KanjiSchool
         </span>
         <span className="text-[11px] block h-auto leading-none relative left-0 bottom-[2em] text-desc">
@@ -54,6 +58,8 @@ export function AppHeader(): JSX.Element | null {
     {/* Various sync progresses */}
     <SyncProgressBars />
 
+    <DebugToggleTheme />
+
     {/* Spacer */}
     {md && <div className="lg:flex-1" />}
 
@@ -61,7 +67,7 @@ export function AppHeader(): JSX.Element | null {
     {sm && <>
       {/* Items dropdown */}
       <ItemsDropdown />
-      <div className="h-header mr-md border-0 border-solid border-r border-r-white/10" />
+      <div className="h-header mr-md border-0 border-solid border-r border-r-white/10 light:border-r-split" />
 
       {/* Search box */}
       <Search />

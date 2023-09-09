@@ -4,9 +4,9 @@
 
 import "@global/js-api";
 
-import { notification } from "antd";
-
 import Debug from "debug";
+
+import { configureDefaultAntInterface } from "@global/AntInterface.tsx";
 
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
@@ -21,8 +21,4 @@ dayjs.extend(isBetween);
 Debug.enable("kanjischool:*");
 localStorage.setItem("debug", "kanjischool:*");
 
-notification.config({
-  placement: "topRight",
-  top: 88, // Top nav height (64px) + default margin (24px)
-  duration: 3
-});
+configureDefaultAntInterface();

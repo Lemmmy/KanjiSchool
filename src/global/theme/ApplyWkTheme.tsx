@@ -20,6 +20,10 @@ export function ApplyWkTheme(): JSX.Element | null {
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(theme);
 
+    document.querySelector("meta[name=theme-color]")
+      ?.setAttribute("content", theme === "light" ? "#f0f0f0" : "#101010");
+
+
     // Apply the theme CSS variables (dark mode, etc.)
     for (const key in themeStyles) {
       document.documentElement.style.setProperty(key, (themeStyles as any)[key]);

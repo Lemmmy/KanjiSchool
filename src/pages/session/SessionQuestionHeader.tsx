@@ -39,31 +39,30 @@ interface Props {
   onSkip?: OnSkipFn;
 }
 
-// TODO: light theme
 const questionTypeBaseClass = "block w-full p-xss my-sm rounded text-center text-lg font-bold";
 
 const questionTypeColorClass: Record<QuestionHeaderTypeColor, Record<QuestionType, string>> = {
   DEFAULT: {
-    meaning: "bg-question-meaning-light text-basec dark:bg-question-meaning-dark dark:text-white",
-    reading: "bg-white text-basec dark:bg-black dark:text-desc",
+    meaning: "light:bg-question-meaning-light light:text-basec bg-question-meaning-dark text-white",
+    reading: "light:bg-question-reading-light light:text-white bg-black text-desc",
   },
   DEFAULT_HIGH_CONTRAST: {
-    meaning: "bg-question-meaning-light-hc text-black dark:bg-question-meaning-dark-hc dark:text-black",
-    reading: "bg-white text-basec dark:bg-black dark:text-white",
+    meaning: "light:bg-question-meaning-light-hc light:text-black bg-question-meaning-dark-hc text-black",
+    reading: "light:bg-question-reading-light-hc light:text-white bg-black text-white",
   },
   INVERTED: {
-    meaning: "bg-white text-basec dark:bg-black dark:text-desc",
-    reading: "bg-question-meaning-light text-basec dark:bg-question-meaning-dark dark:text-white",
+    meaning: "light:bg-question-reading-light light:text-white bg-black text-desc",
+    reading: "light:bg-question-meaning-light light:text-basec bg-question-meaning-dark text-white",
   },
   INVERTED_HIGH_CONTRAST: {
-    meaning: "bg-white text-basec dark:bg-black dark:text-white",
-    reading: "bg-question-meaning-light-hc text-black dark:bg-question-meaning-dark-hc dark:text-black",
+    meaning: "light:bg-question-reading-light-hc light:text-white bg-black text-white",
+    reading: "light:bg-question-meaning-light-hc light:text-black bg-question-meaning-dark-hc text-black",
   },
 };
 
 const incorrectAnswerClass = classNames(
   questionTypeBaseClass,
-  "-mt-sm mb-md bg-red-8 text-white rounded-t-none !text-xxl !font-normal"
+  "-mt-sm mb-md bg-red-8 light:bg-red-5 text-white rounded-t-none !text-xxl !font-normal"
 );
 
 export function SessionQuestionHeader({

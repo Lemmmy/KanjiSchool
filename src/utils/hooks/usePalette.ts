@@ -7,11 +7,16 @@ import { CSSProperties, useMemo } from "react";
 import { PaletteName, ColorPalette, PALETTES, buildPaletteStyles } from "@global/theme";
 
 import { useStringSetting } from "@utils";
+import { useThemeContext } from "@global/theme/ThemeContext.tsx";
 
 export const usePaletteName = (): PaletteName =>
   useStringSetting<PaletteName>("sitePalette");
 
-export const usePalette = (): ColorPalette => PALETTES[usePaletteName()];
+export function usePalette(): ColorPalette {
+  const { theme } = useThemeContext();
+  const paletteName = usePaletteName();
+  return PALETTES[paletteName][theme] || PALETTES[paletteName]["dark"];
+}
 
 export function usePaletteStyles(): CSSProperties {
   const palette = usePalette();

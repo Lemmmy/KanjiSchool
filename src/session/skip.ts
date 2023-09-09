@@ -3,7 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode } from "react";
-import { message } from "antd";
 
 import { store } from "@app";
 import * as actions from "@actions/SessionActions";
@@ -11,6 +10,8 @@ import { SkipQuestionPayload } from "@actions/SessionActions";
 import { PayloadActionCreator } from "typesafe-actions";
 
 import { saveSession } from "@session";
+
+import { globalMessage } from "@global/AntInterface.tsx";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -83,9 +84,9 @@ export function showSkipNotification(
 ): void {
   // Only allow one skip notification
   const key = uuidv4();
-  if (prevSkipNotification) message.destroy(prevSkipNotification);
+  if (prevSkipNotification) globalMessage.destroy(prevSkipNotification);
 
-  message.info({
+  globalMessage.info({
     content: type === "complete"
       ? "Last subject skipped, wrapping up session."
       : SKIP_NOTIFICATIONS[type],

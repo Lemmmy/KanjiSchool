@@ -60,7 +60,8 @@ export function LevelInfoRow(): JSX.Element {
     [user, subjects, levelProgressions]);
 
   return <div
-    className="bg-[#303030] border-0 border-solid border-y border-y-[#303030] flex flex-row gap-px flex-wrap"
+    className="bg-[#303030] border-0 border-solid border-y border-y-[#303030] flex flex-row gap-px flex-wrap
+      light:bg-[#e0e0e0] light:border-y-[#e0e0e0]"
   >
     {user !== undefined && (
       <LevelInfoRowPart label="Current level">

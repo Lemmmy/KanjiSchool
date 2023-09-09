@@ -3,13 +3,14 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Button, Card, Empty } from "antd";
+import { Card, Empty } from "antd";
 import classNames from "classnames";
 
 import { StoredAssignmentMap, StoredSubjectMap, useSubjects, useAssignments } from "@api";
 import { SubjectGrid } from "@comp/subjects/lists/grid";
 
 import dayjs from "dayjs";
+import ListShowAllButton from "@comp/subjects/lists/vertical/ListShowAllButton.tsx";
 
 // Find the first 10 subjects unlocked/burned in the last 30 days
 function getData(
@@ -110,13 +111,7 @@ export default function NewUnlocksCard({ dateField }: Props): JSX.Element {
             overscanCount={3}
           />
 
-          {!showingAll && <div className="flex justify-center mt-md">
-            <Button type="link" className="w-full text-sm group" onClick={onShowAll}>
-              <span className="text-desc group-hover:text-white/80 transition-colors">
-                Show all...
-              </span>
-            </Button>
-          </div>}
+          {!showingAll && <ListShowAllButton onClick={onShowAll} />}
         </div>
       )
       : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />)}
