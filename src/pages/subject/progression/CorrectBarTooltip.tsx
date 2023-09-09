@@ -9,9 +9,9 @@ interface Props {
 }
 
 function getColorClass(percentage: number): string {
-  if (percentage >= 90) return "bg-green-6";
-  else if (percentage >= 70) return "bg-yellow-6";
-  else if (percentage >= 40) return "bg-orange-6";
+  if (percentage >= 90) return "bg-green-6 light:bg-green-4";
+  else if (percentage >= 70) return "bg-yellow-6 light:bg-yellow-5";
+  else if (percentage >= 40) return "bg-orange-6 light:bg-orange-5";
   else return "bg-red-6";
 }
 

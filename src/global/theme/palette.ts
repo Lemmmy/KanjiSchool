@@ -7,6 +7,7 @@ import { TinyColor } from "@ctrl/tinycolor";
 import { convertKeyName } from "@global/theme/themeUtil.ts";
 
 import Debug from "debug";
+import { ThemeName } from "@global/theme/wkTheme.ts";
 const debug = Debug("kanjischool:colors");
 
 export interface ColorPalette {
@@ -63,6 +64,25 @@ export const PALETTE_KANJI_SCHOOL: ColorPalette = {
   srsBurned     : "#E84749", // @red-7
   srsLocked     : "#373737", // fade(@white, 15%) (converted to hex)
   srsNotOnWk    : "#531dab", // @purple-7
+};
+
+export const PALETTE_KANJI_SCHOOL_LIGHT: ColorPalette = {
+  ...PALETTE_KANJI_SCHOOL,
+
+  radical:    "#1677ff", // blue-6 in antd 5
+  kanji:      "#fa8c16", // orange-6 in antd 5
+  vocabulary: "#52c41a", // green-6 in antd 5
+
+  radicalDark:    "#0958d9", // blue-7 in antd 5
+  kanjiDark:      "#d46b08", // orange-7 in antd 5
+  vocabularyDark: "#389e0d", // green-7 in antd 5
+
+  vocabularyHiragana: "#95de64", // green-4 in antd 5
+  vocabularyKatakana: "#389e0d", // green-7 in antd 5
+
+  srsLesson: "#cacaca",
+  srsPassed: "#003eb3", // blue-8 in antd 5
+  srsLocked: "#959595",
 };
 
 /**
@@ -166,11 +186,19 @@ export const SRS_STAGE_TO_PALETTE: Record<number, keyof ColorPalette> = {
   10: "srsLocked",
 };
 
+export type ColorPaletteMapping = Partial<Record<ThemeName, ColorPalette>> & { dark: ColorPalette };
 export type PaletteName = "kanjiSchool" | "fdLight" | "fdDark";
-export const PALETTES: Record<PaletteName, ColorPalette> = {
-  kanjiSchool: PALETTE_KANJI_SCHOOL,
-  fdLight: PALETTE_FD_LIGHT,
-  fdDark: PALETTE_FD_DARK
+export const PALETTES: Record<PaletteName, ColorPaletteMapping> = {
+  kanjiSchool: {
+    dark: PALETTE_KANJI_SCHOOL,
+    light: PALETTE_KANJI_SCHOOL_LIGHT
+  },
+  fdLight: {
+    dark: PALETTE_FD_LIGHT
+  },
+  fdDark: {
+    dark: PALETTE_FD_DARK
+  }
 };
 
 export function buildPaletteStyles(palette: ColorPalette): CSSProperties {

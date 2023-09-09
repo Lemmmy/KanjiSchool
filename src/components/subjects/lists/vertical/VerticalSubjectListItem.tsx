@@ -39,7 +39,7 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
   [renderTooltip, subject, assignment]);
 
   const classes = classNames("!p-0", {
-    "ring-inset ring-2 ring-white/75": inQueue,
+    "ring-inset ring-2 ring-white/75 light:ring-primary/75": inQueue,
   });
 
   return <Tooltip

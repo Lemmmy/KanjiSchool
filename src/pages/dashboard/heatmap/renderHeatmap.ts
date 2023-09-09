@@ -11,6 +11,7 @@ import { range, index } from "d3-array";
 import { isToday } from "date-fns";
 
 import Debug from "debug";
+import { ThemeName } from "@global/theme";
 const debug = Debug("kanjischool:heatmap-render");
 
 const CELL_SIZE = 10;
@@ -34,9 +35,12 @@ const FORMAT_MONTHS_JP = ["1月", "2月", "3月", "4月", "5月", "6月", "7月"
 const formatMonth = (d: Date, jp: boolean) =>
   (jp ? FORMAT_MONTHS_JP : FORMAT_MONTHS_EN)[d.getMonth()];
 
-export const COLOR_BLANK = "#262626";
-export const COLORS = ["#2b4051", "#305a7d", "#3675a8", "#3b8fd4", "#40a9ff"];
-export const COLORS_FUTURE = ["#35482b", "#456a2f", "#548d34", "#64af38", "#73d13d"];
+export const COLOR_BLANK         = "#262626";
+export const COLOR_BLANK_LIGHT   = "#e8e8e8";
+export const COLORS              = ["#2b4051", "#305a7d", "#3675a8", "#3b8fd4", "#40a9ff"];
+export const COLORS_LIGHT        = ["#a0cdf2", "#88c4f5", "#70bbf8", "#58b2fc", "#40a9ff"];
+export const COLORS_FUTURE       = ["#35482b", "#456a2f", "#548d34", "#64af38", "#73d13d"];
+export const COLORS_FUTURE_LIGHT = ["#c4ebae", "#b4e897", "#9ee079", "#84d455", "#73d13d"];
 
 interface DayDatum {
   d: Date;
@@ -49,7 +53,8 @@ export function renderHeatmap(
   data: HeatmapDatum[],
   jp: boolean,
   monthSep: boolean,
-  setHoverDay?: (d?: HeatmapDay) => void
+  theme: ThemeName = "dark",
+  setHoverDay?: (d?: HeatmapDay) => void,
 ): void {
   debug("rendering heatmap with %d years", data.length);
 
@@ -66,13 +71,16 @@ export function renderHeatmap(
 
   // Year label
   year.append("text")
-    .classed("fill-desc [text-anchor:middle] text-sm font-bold [writing-mode:vertical-lr] font-ja", true)
+    .classed(
+      "fill-desc light:fill-black/75 [text-anchor:middle] text-sm font-bold [writing-mode:vertical-lr] font-ja",
+      true
+    )
     .attr("transform", `translate(-32, ${(YEAR_HEIGHT - 6) / 2}) rotate(180)`)
     .text(d => d.year);
 
   // Month label
   year.append("g")
-    .classed("fill-desc", true)
+    .classed("fill-desc light:fill-black/75", true)
     .selectAll("text")
     .data(y => range(12).map(i => new Date(y.year, i, 1)))
     .join("text")
@@ -85,7 +93,7 @@ export function renderHeatmap(
 
   // Day label
   year.append("g")
-    .classed("fill-desc", true)
+    .classed("fill-desc light:fill-black/75", true)
     .selectAll("text")
     .data(y => range(7).map(i => new Date(y.year, 0, i)))
     .join("text")
@@ -106,7 +114,7 @@ export function renderHeatmap(
       return { d, year, day };
     }))
     .join("rect")
-    .classed("cursor-pointer hover:brightness-150", true)
+    .classed("cursor-pointer hover:brightness-150 light:hover:brightness-90", true)
     .attr("width", CELL_SIZE).attr("height", CELL_SIZE)
     .attr("rx", CELL_ROUNDING).attr("ry", CELL_ROUNDING)
     .attr("x", ({ d }) =>
@@ -114,18 +122,18 @@ export function renderHeatmap(
     .attr("y", ({ d }) =>
       d.getDay() * (CELL_SIZE + CELL_SPACING))
     .attr("fill", ({ year, day }) => {
-      if (!year || !day) return COLOR_BLANK;
+      if (!year || !day) return theme === "light" ? COLOR_BLANK_LIGHT : COLOR_BLANK;
       const scale = day.isFuture ? year.colorScaleFuture : year.colorScale;
       return scale(day.total);
     })
-    .classed("stroke-green stroke-2", ({ d }) => isToday(d))
+    .classed("stroke-green stroke-2 light:stroke-green-7", ({ d }) => isToday(d))
     .on("mouseover", onDayMouseOver)
     .on("mouseout", onDayMouseOut);
 
   // Month paths
   if (monthSep) {
     year.append("g")
-      .classed("stroke-[#565656] fill-none [translate:-1px_-1px]", true)
+      .classed("stroke-[#565656] light:stroke-[#8c8c8c] fill-none [translate:-1px_-1px]", true)
       .selectAll("path")
       // Don't draw one for December
       .data(y => range(11).map(i => new Date(y.year, i, 1)))

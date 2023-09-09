@@ -11,6 +11,7 @@ import { renderHeatmap } from "./renderHeatmap";
 import { useAssignments, useLastReview } from "@api";
 
 import { useBooleanSetting } from "@utils";
+import { useThemeContext } from "@global/theme/ThemeContext.tsx";
 
 interface Props extends SVGProps<SVGSVGElement> {
   currentYearOnly?: boolean;
@@ -32,12 +33,14 @@ export function Heatmap({
   const monthSep = useBooleanSetting("reviewHeatmapMonthSep");
   const includeFuture = useBooleanSetting("reviewHeatmapIncludeFuture");
 
+  const { theme } = useThemeContext();
+
   // Load the data asynchronously. Reload if assignments or lastReview change
   const [data, setData] = useState<HeatmapDatum[]>();
   useEffect(() => {
-    generateHeatmapData(currentYearOnly, includeFuture)
+    generateHeatmapData(currentYearOnly, includeFuture, theme)
       .then(setData);
-  }, [currentYearOnly, includeFuture, assignments, lastReview]);
+  }, [currentYearOnly, includeFuture, assignments, theme, lastReview]);
 
   const el = useMemo(() => <HeatmapInner
     {...props}
@@ -48,8 +51,8 @@ export function Heatmap({
   useEffect(() => {
     if (!data || !d3Ref.current) return;
     const svg = select<SVGSVGElement, HeatmapDatum>(d3Ref.current);
-    renderHeatmap(svg, data, jp, monthSep, setHoverDay);
-  }, [data, jp, monthSep, setHoverDay]);
+    renderHeatmap(svg, data, jp, monthSep, theme, setHoverDay);
+  }, [data, jp, monthSep, theme, setHoverDay]);
 
   return el;
 }

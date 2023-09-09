@@ -42,7 +42,7 @@ export function SessionProgress({
     [totalItems]);
 
   const classes = classNames(
-    "flex flex-1 mb-lg bg-white/4 rounded-2xl overflow-hidden",
+    "flex flex-1 mb-lg bg-white/4 light:bg-black/8 rounded-2xl overflow-hidden",
     heightClassName,
     className
   );
@@ -65,13 +65,13 @@ export function SessionProgress({
 
     {/* Started items */}
     {showStarted && <div
-      className={classNames(barClasses, "bg-primary/50")}
+      className={classNames(barClasses, "bg-primary/50 light:bg-blue-2")}
       style={{ width: perc(startedItems) }}
     />}
 
     {/* Skipped items */}
     {showSkipped && <div
-      className={classNames(barClasses, "bg-orange/25")}
+      className={classNames(barClasses, "bg-orange/25 light:bg-orange-2")}
       style={{ width: perc(skippedItems) }}
     />}
   </div>;

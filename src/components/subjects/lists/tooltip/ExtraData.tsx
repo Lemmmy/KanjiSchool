@@ -5,6 +5,8 @@
 import { StoredSubject } from "@api";
 import { OrdinalNumber } from "@comp/OrdinalNumber";
 import { JLPT_LEVEL_NAMES, JOYO_GRADE_NAMES } from "@utils";
+import { SubjectTooltipSeparator } from "@comp/subjects/lists/tooltip/SubjectTooltipSeparator.tsx";
+import { SubjectTooltipLabel } from "@comp/subjects/lists/tooltip/SubjectTooltipLabel.tsx";
 
 interface Props {
   subject: StoredSubject;
@@ -16,7 +18,9 @@ interface Props {
 /** The tooltip extra info - JLPT, Jōyō and newspaper frequency */
 export function SubjectTooltipExtraData({
   subject,
-  showJlpt, showJoyo, showFreq
+  showJlpt,
+  showJoyo,
+  showFreq
 }: Props): JSX.Element | null {
   const jisho = subject.data.jisho;
   if (!jisho) return null;
@@ -27,23 +31,23 @@ export function SubjectTooltipExtraData({
   if (!hasJlpt && !hasJoyo && !hasFreq) return null;
 
   return <>
-    <div className="sep" />
+    <SubjectTooltipSeparator />
 
     {/* JLPT */}
-    {hasJlpt && <div className="row jlpt-row">
-      <span className="label">JLPT Level:</span>
+    {hasJlpt && <div>
+      <SubjectTooltipLabel>JLPT Level:</SubjectTooltipLabel>
       {JLPT_LEVEL_NAMES[jisho.jlpt]}
     </div>}
 
     {/* Jōyō */}
-    {hasJoyo && <div className="row joyo-row">
-      <span className="label">Jōyō grade:</span>
+    {hasJoyo && <div>
+      <SubjectTooltipLabel>Jōyō grade:</SubjectTooltipLabel>
       {JOYO_GRADE_NAMES[jisho.joyo]}
     </div>}
 
     {/* Newspaper frequency */}
-    {hasFreq && <div className="row freq-row">
-      <span className="label">Newspaper frequency:</span>
+    {hasFreq && <div>
+      <SubjectTooltipLabel>Newspaper frequency:</SubjectTooltipLabel>
       <OrdinalNumber value={jisho.nfr} />
     </div>}
   </>;

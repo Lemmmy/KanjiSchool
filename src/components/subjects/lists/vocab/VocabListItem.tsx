@@ -56,13 +56,13 @@ export const VocabListItem = React.memo(function VocabListItem({
   [renderTooltip, subject, assignment]);
 
   const classes = classNames(
-    "block w-full box-border rounded leading-none bg-transparent hover:bg-white/10 group",
+    "block w-full box-border rounded leading-none bg-transparent hover:bg-white/10 light:hover:bg-black/10 group",
     "transition-[background-color,opacity]",
     sizeClasses.base,
     sizeClasses.height,
     {
-      "opacity-[0.65] hover:opacity-100": locked,
-      "ring-inset ring-2 ring-white/75": inQueue,
+      "opacity-65 light:opacity-40 hover:!opacity-100": locked,
+      "ring-inset ring-2 ring-white/75 light:ring-primary/75": inQueue,
     }
   );
 
@@ -94,7 +94,8 @@ export const VocabListItem = React.memo(function VocabListItem({
           />
         </div>
 
-        <div className="flex flex-col items-end text-right transition-colors text-white/70 group-hover:text-basec">
+        <div className="flex flex-col items-end text-right transition-colors
+          text-white/70 group-hover:!text-basec light:text-black/70">
           {/* Primary meaning */}
           <div className={textClasses}>{meaning}</div>
 

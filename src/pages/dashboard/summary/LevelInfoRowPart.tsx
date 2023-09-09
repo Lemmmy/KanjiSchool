@@ -11,7 +11,8 @@ interface LevelInfoPartProps {
 
 export function LevelInfoRowPart({ label, children }: LevelInfoPartProps): JSX.Element {
   return <div
-    className="inline-block bg-[#1d1d1d] md:text-base md:py-sm md:px-lg text-sm py-xs px-sm flex-grow text-center"
+    className="inline-block bg-[#1d1d1d] md:text-base md:py-sm md:px-lg text-sm py-xs px-sm flex-grow text-center
+      light:bg-[#fafafa]"
   >
     <span className="inline-block mr-xs text-desc">{label}: </span>
     {children}

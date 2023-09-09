@@ -14,6 +14,9 @@ const debug = Debug("kanjischool:colors");
 export type ThemeName = "dark" | "light";
 export const validThemeNames: ThemeName[] = ["dark", "light"];
 
+const { getDesignToken } = AntTheme;
+const globalToken = getDesignToken();
+
 export interface WkTheme {
   antTheme: Partial<ThemeConfig>;
 
@@ -39,12 +42,33 @@ const BASE_THEME: Partial<ThemeConfig> = {
 const THEME_LIGHT: WkTheme = {
   antTheme: {
     ...BASE_THEME,
-    algorithm: AntTheme.defaultAlgorithm
+    algorithm: AntTheme.defaultAlgorithm,
+
+    token: {
+      ...BASE_THEME.token,
+      colorSplit: "rgba(0, 0, 0, 0.12)",
+    },
+
+    components: {
+      ...BASE_THEME.components,
+      Tooltip: {
+        colorBgSpotlight: "#f0f0f0",
+        colorTextLightSolid: globalToken.colorText
+      },
+
+      Divider: {
+        colorSplit: "rgba(0, 0, 0, 0.15)"
+      },
+
+      Card: {
+        colorBorderSecondary: "#e0e0e0"
+      }
+    }
   },
 
-  scrollbarThumbColor     : "rgba(0, 0, 0, 0.2)",
-  scrollbarThumbHoverColor: "rgba(0, 0, 0, 0.3)",
-  scrollbarTrackColor     : "rgba(0, 0, 0, 0.1)"
+  scrollbarThumbColor     : "rgba(0, 0, 0, 0.13)",
+  scrollbarThumbHoverColor: "rgba(0, 0, 0, 0.24)",
+  scrollbarTrackColor     : "rgba(0, 0, 0, 0.1)",
 };
 
 const THEME_DARK: WkTheme = {
@@ -53,7 +77,7 @@ const THEME_DARK: WkTheme = {
     algorithm: AntTheme.darkAlgorithm
   },
 
-  scrollbarThumbColor     : "rgba(255, 255, 255, 0.15)",
+  scrollbarThumbColor     : "rgba(255, 255, 255, 0.17)",
   scrollbarThumbHoverColor: "rgba(255, 255, 255, 0.3)",
   scrollbarTrackColor     : "rgba(0, 0, 0, 0.1)"
 };

@@ -162,6 +162,8 @@ export function ReviewAccuracyCard(): JSX.Element {
     </CardTableRow>;
   }, [col1, col2, col3]);
 
+  const bottomRowClass = "bg-black/8 light:bg-black/2";
+
   return <Card
     title="Review accuracy"
     className="h-auto [&>.ant-card-body]:p-0 [&>.ant-card-body]:overflow-hidden"
@@ -172,9 +174,9 @@ export function ReviewAccuracyCard(): JSX.Element {
       {row("correct", "Correct")}
       {row("incorrect", "Incorrect")}
       {row("accuracyPercent", "Accuracy")}
-      {row("radical", "Radicals", "bg-black/8")}
-      {row("kanji", "Kanji", "bg-black/8")}
-      {row("vocabulary", "Vocabulary", "bg-black/8")}
+      {row("radical", "Radicals", bottomRowClass)}
+      {row("kanji", "Kanji", bottomRowClass)}
+      {row("vocabulary", "Vocabulary", bottomRowClass)}
     </CardTable>
   </Card>;
 }

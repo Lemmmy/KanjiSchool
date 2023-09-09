@@ -74,7 +74,7 @@ export function StudyMaterialNote({
   if (!note && !editing) {
     return <div className={classNames("text-sm", fallbackClassName)}>
       <a
-        className="text-desc hover:text-white/70"
+        className="text-desc hover:text-white/70 light:hover:text-black/80"
         onClick={() => setEditing(true)}
       >
         <EditOutlined /> Add {type} notes

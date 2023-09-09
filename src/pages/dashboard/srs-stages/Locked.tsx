@@ -31,7 +31,7 @@ export function LockedSubjects({ level, count }: LockedProps): JSX.Element {
     }, true, true);
   }
 
-  const classes = classNames(baseStageClasses, "text-white bg-srs-locked hover:bg-srs-locked-lighter");
+  const classes = classNames(baseStageClasses, "text-white light:text-black bg-srs-locked hover:bg-srs-locked-lighter");
 
   return <div className={classes} onClick={onClick}>
     <div>Locked {sm && <>(lvl {level})</>}</div>

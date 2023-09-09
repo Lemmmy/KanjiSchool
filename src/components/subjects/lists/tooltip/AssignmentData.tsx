@@ -31,7 +31,7 @@ export function SubjectTooltipAssignmentData({
     {/* Next review */}
     {nextReview && <div>
       <SubjectTooltipLabel>Next review:</SubjectTooltipLabel>
-      <span className={availableNow ? "text-green" : undefined}>
+      <span className={availableNow ? "text-green light:text-green-6" : undefined}>
         {dayjs(nextReview).format("llll")}
       </span>
     </div>}

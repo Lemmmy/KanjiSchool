@@ -31,12 +31,12 @@ export function HourEl({
   const classes = classNames(
     "flex items-center",
     {
-      "bg-green-9 text-green": isNow
+      "bg-green-9 text-green light:bg-green-2/50 light:text-green-6": isNow
     }
   );
 
   const hourClasses = classNames(
-    "inline-block py-xs px-md border-0 border-solid border-r border-r-white/20",
+    "inline-block py-xs px-md border-0 border-solid border-r border-r-white/20 light:border-r-black/10",
     {
       "font-bold": isNow,
       "w-[6.5em]": hours12h,
