@@ -51,10 +51,7 @@ export function LoginPage(): JSX.Element {
     // Logging in screen
     return <AppLoading
       title="Logging in..."
-
-      // 64px margin because this is wrapped in AppLayout, so we need to push
-      // the preloader down a bit to accommodate for the missing nav bar
-      style={{ marginTop: 64 }}
+      className="mt-[64px]"
     />;
   }
 
@@ -63,10 +60,10 @@ export function LoginPage(): JSX.Element {
     siteTitle="Log in"
     noHeader
     verticallyCentered
-    className="!h-screen overflow-y-auto"
+    className="!h-screen overflow-y-auto overflow-x-hidden"
     contentsHeightClassName="h-auto min-h-screen"
   >
-    <Card title="KanjiSchool" className="min-w-[320px] w-full max-w-[720px]">
+    <Card title="KanjiSchool" className="min-w-[300px] w-full max-w-[720px] box-border">
       {/* Top section - lead text and carousel */}
       <Row>
         {/* Lead text */}
