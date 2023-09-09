@@ -87,7 +87,7 @@ const colorBySrsStageClasses: Record<Lowercase<SrsStageBaseName>, string> = {
   master     : "bg-srs-master hover:bg-srs-master-lighter",
   enlightened: "bg-srs-enlightened hover:bg-srs-enlightened-lighter",
   burned     : "bg-srs-burned hover:bg-srs-burned-lighter",
-  locked     : "bg-srs-locked hover:bg-srs-locked-lighter",
+  locked     : "bg-srs-locked hover:bg-srs-locked-lighter light:opacity-35",
 };
 
 function getBgColorClass(

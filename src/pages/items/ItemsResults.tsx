@@ -81,7 +81,7 @@ export function ItemsResults({
       : <SubjectGrid
         size="tiny"
         subjectIds={r.itemIds}
-        colorBy="type"
+        colorBy={colorBy}
         hasVocabulary={hasVocabulary}
         renderTooltip={renderTooltipFn}
         forceVirtual
