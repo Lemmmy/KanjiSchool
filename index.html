@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#101010" />
     <meta
       name="description"
       content="KanjiSchool"
@@ -95,8 +95,11 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <script>
-      var theme = localStorage.getItem("kanjiSchoolSettings.siteTheme");
+      const theme = localStorage.getItem("kanjiSchoolSettings.siteTheme");
       document.documentElement.classList.add(theme || "dark");
+
+      document.querySelector("meta[name=theme-color]")
+        ?.setAttribute("content", theme === "light" ? "#f0f0f0" : "#101010");
     </script>
 
     <div id="root">
@@ -107,12 +110,12 @@
     </div>
 
     <script>
-      var msg = "Your web browser is not supported by this application. " +
+      const msg = "Your web browser is not supported by this application. " +
         "Please install a recent version of Google Chrome or Mozilla Firefox."
 
-      var isIE = navigator.userAgent.indexOf("MSIE ") !== -1
+      const isIE = navigator.userAgent.indexOf("MSIE ") !== -1
         || navigator.appVersion.indexOf("Trident/") > 0;
-      var isLocalhost = window.location.hostname === "localhost"
+      const isLocalhost = window.location.hostname === "localhost"
         || window.location.hostname === "[::1]";
 
       if (isIE && !isLocalhost) {
