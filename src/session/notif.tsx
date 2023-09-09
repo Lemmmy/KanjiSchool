@@ -2,9 +2,10 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { message } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined, CheckOutlined } from "@ant-design/icons";
 import classNames from "classnames";
+
+import { globalMessage } from "@global/AntInterface.tsx";
 
 import { stringifySrsStage } from "@utils";
 import { v4 as uuidv4 } from "uuid";
@@ -22,9 +23,9 @@ export function showSrsNotification(
 
   // Only allow one SRS notification
   const key = uuidv4();
-  if (prevSrsNotification) message.destroy(prevSrsNotification);
+  if (prevSrsNotification) globalMessage.destroy(prevSrsNotification);
 
-  message.info({
+  globalMessage.info({
     content: stringifySrsStage(newSrsStage),
     icon: down ? <ArrowDownOutlined /> : <ArrowUpOutlined />,
     duration: 1,
@@ -41,9 +42,9 @@ export function showNearMatchNotification(
 ): void {
   // Only allow one near match notification
   const key = uuidv4();
-  if (prevNearMatchNotification) message.destroy(prevNearMatchNotification);
+  if (prevNearMatchNotification) globalMessage.destroy(prevNearMatchNotification);
 
-  message.info({
+  globalMessage.info({
     content: <>
       Your answer (&lsquo;<b>{givenAnswer}</b>&rsquo;) was slightly wrong, the
       nearest correct answer was &lsquo;<b>{matchedAnswer}</b>&rsquo;.

@@ -2,10 +2,11 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button, Modal } from "antd";
+import { Button } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 
 import { logOut } from "@api";
+import { globalModal } from "@global/AntInterface.tsx";
 
 export function LogOutButton(): JSX.Element {
   return <Button
@@ -19,7 +20,7 @@ export function LogOutButton(): JSX.Element {
 }
 
 function logOutModal() {
-  const modal = Modal.confirm({
+  const modal = globalModal.confirm({
     title: "Log out",
     icon: <LogoutOutlined />,
     content: <>

@@ -2,11 +2,11 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { insertQueueItem, StoredAssignment } from "@api";
 import { SessionState } from "../";
 import { fakeSubmission } from "./fakeSubmission";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:session-submission");
@@ -28,6 +28,6 @@ export async function submitAssignmentLesson(
     debug("assignment %d added to queue", assignment.id);
   } catch (err) {
     console.error(err);
-    notification.error({ message: "Starting assignment failed. See console for details." });
+    globalNotification.error({ message: "Starting assignment failed. See console for details." });
   }
 }

@@ -3,12 +3,13 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import React from "react";
-import { notification } from "antd";
 import { ImportOutlined } from "@ant-design/icons";
 
 import { SettingsExportFile } from "./ImportExport";
 
 import { AnySettingName, DEFAULT_SETTINGS, getSettingKey } from "@utils";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 export function SettingsImportButton(): JSX.Element {
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -19,7 +20,7 @@ export function SettingsImportButton(): JSX.Element {
 
     // Disallow non-plaintext files
     if (file.type !== "text/plain" && file.type !== "application/json") {
-      notification.error({ message: "Invalid file type. " });
+      globalNotification.error({ message: "Invalid file type. " });
       return;
     }
 
@@ -68,11 +69,11 @@ export function importSettings(contents: string): void {
       }
     }
 
-    notification.success({ message: `Import ${count} settings. Site will refresh.` });
+    globalNotification.success({ message: `Import ${count} settings. Site will refresh.` });
     setTimeout(() => { location.reload(); }, 2000);
   } catch (e) {
     console.error(e);
-    notification.error({
+    globalNotification.error({
       message: "Could not import settings, see console for details."
     });
   }

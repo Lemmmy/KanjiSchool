@@ -2,9 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import * as api from "@api";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:api-sync-all");
@@ -15,7 +15,7 @@ export async function syncAll(full?: boolean): Promise<void> {
   const user = await api.syncUser();
   if (!user?.data?.id) {
     debug("login response: %o", user);
-    notification.error({ message: "Login failed" });
+    globalNotification.error({ message: "Login failed" });
     throw new Error("Login failed: no user ID");
   }
 
@@ -43,7 +43,7 @@ export async function syncRefresh(full?: boolean): Promise<void[]> {
   const user = await api.syncUser();
   if (!user?.data?.id) {
     debug("login response: %o", user);
-    notification.error({ message: "Login failed" });
+    globalNotification.error({ message: "Login failed" });
     throw new Error("Login failed: no user ID");
   }
 
@@ -66,7 +66,7 @@ export async function syncPartial(): Promise<void> {
   const user = await api.syncUser();
   if (!user?.data?.id) {
     debug("login response: %o", user);
-    notification.error({ message: "Login failed" });
+    globalNotification.error({ message: "Login failed" });
     throw new Error("Login failed: no user ID");
   }
 

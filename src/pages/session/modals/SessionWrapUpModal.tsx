@@ -2,7 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Modal } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 import { store } from "@app";
@@ -10,12 +9,14 @@ import { wrapUpSession, isItemFinished, isItemStarted, SessionState } from "@ses
 
 import { nts } from "@utils";
 
+import { globalModal } from "@global/AntInterface.tsx";
+
 export function showSessionWrapUpModal(): void {
   const state = store.getState().session.sessionState;
   const doingLessons = store.getState().session.doingLessons;
   if (!state || doingLessons) return;
 
-  Modal.confirm({
+  globalModal.confirm({
     title: "Wrap up session?",
     icon: <QuestionCircleOutlined />,
     content: <SessionWrapUpModalContents state={state} />,

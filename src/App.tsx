@@ -15,7 +15,7 @@ import { PresetModalProvider } from "@comp/preset-editor/PresetModalContext";
 
 import { initDbAndLoadAll, useHasSubjects, useIsLoggedIn } from "@api";
 
-import { ConfigProvider, notification } from "antd";
+import { App as AntApp, ConfigProvider } from "antd";
 import { AppLoading } from "@global/AppLoading";
 import { LoginPage } from "@pages/login/LoginPage";
 import { SyncPage } from "@pages/login/SyncPage";
@@ -23,6 +23,7 @@ import { SyncPage } from "@pages/login/SyncPage";
 import { WkErrorBoundary } from "@comp/ErrorBoundary";
 
 import { getTheme } from "@global/theme";
+import AntInterface, { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 import { ThemeProvider } from "@global/theme/ThemeContext.tsx";
@@ -38,21 +39,26 @@ export default function App(): JSX.Element {
   return <>
     <ThemeProvider>
       {(themeName) => <ConfigProvider theme={getTheme(themeName).antTheme}>
-        {/* Have the update checker run at the highest level possible, as it is
-        * responsible for registering the service worker. */}
-        <UpdateCheck />
+        <AntApp>
+          {/* Provide the globals for message, modal, and notification. */}
+          <AntInterface />
 
-        <Provider store={store}>
-          {/* Highest level error boundary underneath the Redux store, to prevent
-          * nuking the data if something goes SUPER wrong. If the Redux store gets
-          * re-initialized due to the uppermost App component re-rendering, it
-          * will trigger further errors and probably cause confusion while
-          * debugging. */}
-          <WkErrorBoundary name="app-top-level">
-            <AppServices />
-            <AppInner />
-          </WkErrorBoundary>
-        </Provider>
+          {/* Have the update checker run at the highest level possible, as it is
+          * responsible for registering the service worker. */}
+          <UpdateCheck />
+
+          <Provider store={store}>
+            {/* Highest level error boundary underneath the Redux store, to prevent
+            * nuking the data if something goes SUPER wrong. If the Redux store gets
+            * re-initialized due to the uppermost App component re-rendering, it
+            * will trigger further errors and probably cause confusion while
+            * debugging. */}
+            <WkErrorBoundary name="app-top-level">
+              <AppServices />
+              <AppInner />
+            </WkErrorBoundary>
+          </Provider>
+        </AntApp>
       </ConfigProvider>}
     </ThemeProvider>
   </>;
@@ -80,7 +86,7 @@ function AppInner(): JSX.Element {
       .then(() => setDbInit(true))
       .catch(err => {
         console.error(err);
-        notification.error({ message: "Error loading database. "});
+        globalNotification.error({ message: "Error loading database. "});
       });
   }, [dbInit]);
 

@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useCallback } from "react";
-import { notification, Button } from "antd";
+import { Button } from "antd";
 
 import { RootState } from "@store";
 import { useSelector } from "react-redux";
@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { useUser, syncRefresh } from "@api";
 
 import { useOnlineStatus } from "@utils";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:summary-refresh");
@@ -36,7 +38,7 @@ export function RefreshButton({ className }: Props): JSX.Element {
     syncRefresh(true)
       .catch(err => {
         console.error(err);
-        notification.error({ message: "Could not refresh assignments." });
+        globalNotification.error({ message: "Could not refresh assignments." });
       });
   }, [user?.data.id, canRefresh]);
 

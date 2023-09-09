@@ -2,21 +2,21 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { store } from "@app";
 import * as actions from "@actions/SyncActions";
 
 import {
   AudioContentType, getStoredAudioMap, StoredAudio, StoredSubject
 } from "@api";
-
-import { asc, map as cmpMap } from "@utils/comparator";
-import { groupBy, mapValues } from "lodash-es";
 import { db } from "@db";
 
-import PQueue from "p-queue";
 import { getIntegerSetting, lsGetNumber, lsSetNumber } from "@utils";
+import { asc, map as cmpMap } from "@utils/comparator";
+
+import { globalNotification } from "@global/AntInterface.tsx";
+
+import { groupBy, mapValues } from "lodash-es";
+import PQueue from "p-queue";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:api-audio-fetch");
@@ -135,9 +135,7 @@ async function performAudioFetch({
     return audio;
   } catch (err) {
     console.error(err);
-    notification.error({
-      message: "Could not fetch audio, see console for details."
-    });
+    globalNotification.error({ message: "Could not fetch audio, see console for details." });
     throw err;
   } finally {
     // TODO: Get redux-debounced working

@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { message } from "antd";
+import { globalMessage } from "@global/AntInterface.tsx";
 
 import { store } from "@app";
 import * as actions from "@actions/SettingsActions";
@@ -13,7 +13,7 @@ import Debug from "debug";
 const debug = Debug("kanjischool:settings-set");
 
 function notifySettingChange(): void {
-  message.success("Setting changed successfully!");
+  globalMessage.success("Setting changed successfully!");
 }
 
 export function setBooleanSetting(

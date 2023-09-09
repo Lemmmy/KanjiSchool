@@ -3,11 +3,12 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect, useState } from "react";
-import { notification } from "antd";
 
 import { useOnlineStatus } from "@utils";
 
 import { syncPartial } from "@api";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:sync-when-online-global");
@@ -29,7 +30,7 @@ export function SyncWhenOnline(): JSX.Element | null {
       // sync.
       if (lastOnline === false) {
         debug("online status false --> true; syncing partial");
-        notification.success({
+        globalNotification.success({
           message: "Network connection restored",
           description: "Now syncing assignments."
         });

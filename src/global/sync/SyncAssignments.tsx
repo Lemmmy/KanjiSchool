@@ -3,11 +3,12 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useCallback, useEffect } from "react";
-import { notification } from "antd";
 
 import { useInterval, useOnlineStatus } from "@utils/hooks";
 
 import * as api from "@api";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:assignment-sync-service");
@@ -33,7 +34,7 @@ export function SyncAssignments(): JSX.Element | null {
     api.syncRefresh()
       .catch(err => {
         console.error(err);
-        notification.error({ message: "Could not automatically sync assignments." });
+        globalNotification.error({ message: "Could not automatically sync assignments." });
       });
   }, [user?.data.id]);
 

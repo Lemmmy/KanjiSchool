@@ -2,13 +2,13 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { notification } from "antd";
-
 import { store } from "@app";
 import * as actions from "@actions/SyncActions";
 
 import { ApiCharacterImage } from "@api";
 import { db } from "@db";
+
+import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:api-sync-images");
@@ -82,7 +82,7 @@ export async function syncImages(): Promise<void> {
         });
       } catch (err) {
         console.error(err);
-        notification.error({ message: "Could not fetch subject image, see console for details." });
+        globalNotification.error({ message: "Could not fetch subject image, see console for details." });
       }
     }
 
