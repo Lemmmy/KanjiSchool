@@ -17,13 +17,13 @@
     <link rel="preconnect" crossorigin="anonymous" href="https://fonts.googleapis.com">
     <link rel="preconnect" crossorigin="anonymous" href="https://fonts.gstatic.com">
     <link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese">
-    
+
     <title>KanjiSchool</title>
-    
+
     <style>
       /* Provided to prevent flash-bang on page load */
-      html, body { 
-        background: #000000; 
+      html, body {
+        background: #000000;
         margin: 0;
       }
 
@@ -68,6 +68,23 @@
         color: rgba(255, 255, 255, 0.45);
       }
 
+      /* Preloader light theme */
+      html.light, html.light body {
+        background: #ffffff;
+      }
+
+      html.light .wk-preloader {
+        color: rgba(0, 0, 0, 0.85);
+      }
+
+      html.light .wk-preloader .wk-preloader-spinner {
+        border-bottom-color: rgba(0, 0, 0, 0.15);
+      }
+
+      html.light .wk-preloader-extra {
+        color: rgba(0, 0, 0, 0.45);
+      }
+
       @keyframes wk-preloader-spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
@@ -76,6 +93,11 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <script>
+      var theme = localStorage.getItem("kanjiSchoolSettings.siteTheme");
+      document.documentElement.classList.add(theme || "dark");
+    </script>
 
     <div id="root">
       <div class="wk-preloader" id="wk-preloader">
@@ -88,7 +110,7 @@
       var msg = "Your web browser is not supported by this application. " +
         "Please install a recent version of Google Chrome or Mozilla Firefox."
 
-      var isIE = navigator.userAgent.indexOf("MSIE ") !== -1 
+      var isIE = navigator.userAgent.indexOf("MSIE ") !== -1
         || navigator.appVersion.indexOf("Trident/") > 0;
       var isLocalhost = window.location.hostname === "localhost"
         || window.location.hostname === "[::1]";
