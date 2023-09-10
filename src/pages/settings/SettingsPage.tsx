@@ -20,6 +20,7 @@ import { getFontSettingsGroup } from "./fonts/SettingsFonts.tsx";
 
 import { SettingsButtonRow } from "./ButtonRow";
 import { StorageUsageCard } from "./StorageUsageCard";
+import { SettingsUserInfo } from "@pages/settings/SettingsUserInfo.tsx";
 
 const themeNames = [
   { value: "dark", label: "Dark (default)" },
@@ -157,10 +158,14 @@ const menuItems: MenuProps["items"] = [
 
 function SettingsPage(): JSX.Element {
   return <PageLayout
-    contentsClassName="max-w-[960px] mx-auto"
+    contentsClassName="max-w-[960px] mx-auto md:pt-md"
+    headerClassName="max-w-[960px] mx-auto"
     siteTitle="Settings"
     title="Settings"
   >
+    {/* User info */}
+    <SettingsUserInfo />
+
     <Menu
       mode="inline"
       className={menuClass}

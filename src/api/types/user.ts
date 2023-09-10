@@ -26,6 +26,9 @@ export interface ApiUserInner {
   /** The signup date for the user. */
   started_at: string | null;
 
+  /** The URL to the user's public facing profile page. */
+  profile_url: string;
+
   /** Details about the user's subscription state. */
   subscription: ApiSubscription;
 }

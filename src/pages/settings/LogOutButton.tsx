@@ -10,10 +10,10 @@ import { globalModal } from "@global/AntInterface.tsx";
 
 export function LogOutButton(): JSX.Element {
   return <Button
-    type="primary"
+    type="link"
     danger
-    icon={<LogoutOutlined />}
     onClick={logOutModal}
+    className="float-right -my-[3px] -mx-[15px] !leading-none !h-auto"
   >
     Log out
   </Button>;
@@ -22,7 +22,7 @@ export function LogOutButton(): JSX.Element {
 function logOutModal() {
   const modal = globalModal.confirm({
     title: "Log out",
-    icon: <LogoutOutlined />,
+    icon: <LogoutOutlined className="!text-red" />,
     content: <>
       <p>
         Are you sure you want to log out? The following data will be cleared

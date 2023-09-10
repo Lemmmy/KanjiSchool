@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect, useMemo } from "react";
-import { Row, Col, Card, Progress, Button, Descriptions } from "antd";
+import { Row, Col, Card, Button, Descriptions } from "antd";
 
 import { AudioUsage, checkSupportedAudioTypes, clearAudio, getAudioUsage } from "@api";
 
@@ -30,23 +30,10 @@ function StorageEstimateRow(): JSX.Element | null {
     return <b>Storage estimates are not available for your device. This may be due to privacy settings.</b>;
   }
 
-  return <Row gutter={24}>
-    {/* Progress circle */}
-    <Col>
-      <Progress
-        type="circle"
-        percent={Math.round(((estimate.usage ?? 0) / (estimate.quota ?? 1)) * 100)}
-      />
-    </Col>
-
-    {/* Raw numbers */}
-    <Col>
-      <Descriptions title="Browser storage" bordered size="small" column={1}>
-        <Item label="Storage used">{stringifyBytes(estimate.usage)}</Item>
-        <Item label="Storage quota">{stringifyBytes(estimate.quota)}</Item>
-      </Descriptions>
-    </Col>
-  </Row>;
+  return <Descriptions title="Browser storage" bordered size="small" column={1}>
+    <Item label="Storage used">{stringifyBytes(estimate.usage)}</Item>
+    <Item label="Storage quota">{stringifyBytes(estimate.quota)}</Item>
+  </Descriptions>;
 }
 
 function AudioUsageRow(): JSX.Element | null {
@@ -59,7 +46,7 @@ function AudioUsageRow(): JSX.Element | null {
 
   if (!audioUsage) return null;
   return <Row gutter={24} className="mt-lg">
-    <Col>
+    <Col md={12} span={24}>
       <Descriptions title="Vocabulary audio" bordered size="small" column={1}>
         <Item label="Subjects">{nts(audioUsage.subjectCount)}</Item>
         <Item label="Audio clips">{nts(audioUsage.count)}</Item>
@@ -70,14 +57,14 @@ function AudioUsageRow(): JSX.Element | null {
       <Button
         type="primary" danger
         onClick={() => clearAudio().then(getAudioUsage).then(setAudioUsage)}
-        className="mt-md"
+        className="mt-md md:mb-0 mb-md"
       >
         Clear audio cache
       </Button>
     </Col>
 
     {/* Supported audio formats */}
-    <Col>
+    <Col md={12} span={24}>
       <Descriptions title="Supported audio formats" bordered size="small" column={1}>
         {Object.entries(supportedTypes).map(([type, supported]) =>
           <Item key={type} label={type}>{supported}</Item>)}

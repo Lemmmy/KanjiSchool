@@ -25,7 +25,6 @@ import { useOnlineStatus } from "@utils/hooks";
 import { isLocalhost } from "@utils";
 
 import Debug from "debug";
-import classNames from "classnames";
 const debug = Debug("kanjischool:top-menu");
 
 export type Opts = MenuProps["items"] | undefined;

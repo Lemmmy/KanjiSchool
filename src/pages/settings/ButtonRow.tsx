@@ -2,19 +2,16 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Row, Col, Space } from "antd";
 import { SettingsExportButton } from "./SettingsExportButton";
 import { SettingsImportButton } from "./SettingsImportButton";
-import { LogOutButton } from "./LogOutButton";
 
 export function SettingsButtonRow(): JSX.Element {
-  return <Row gutter={24} className="my-lg">
-    <Col>
-      <Space wrap>
-        <SettingsExportButton />
-        <SettingsImportButton />
-        <LogOutButton />
-      </Space>
-    </Col>
-  </Row>;
+  return <div className="mx-md my-lg flex gap-md items-center">
+    <p className="text-desc text-sm my-0 flex-1">
+      Export a copy of your settings to back them up, or import them on another device.
+    </p>
+
+    <SettingsExportButton />
+    <SettingsImportButton />
+  </div>;
 }

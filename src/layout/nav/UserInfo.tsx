@@ -2,10 +2,10 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import * as api from "@api";
+import { useUser } from "@api";
 
 export function UserInfo(): JSX.Element | null {
-  const user = api.useUser();
+  const user = useUser();
   if (!user) return null;
 
   const sub = user.data.subscription;
@@ -22,7 +22,7 @@ export function UserInfo(): JSX.Element | null {
 }
 
 export function MenuUserInfo(): JSX.Element | null {
-  const user = api.useUser();
+  const user = useUser();
   if (!user) return null;
 
   const sub = user.data.subscription;
