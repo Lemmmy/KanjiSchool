@@ -16,9 +16,14 @@ export function showSrsNotification(
   newSrsStage: number
 ): void {
   const down = oldSrsStage >= newSrsStage;
-  const classes = classNames("srs-notif", {
-    "srs-down": down,
-    "srs-up": !down
+  const classes = classNames("text-white light:text-black", {
+    // SRS stage down
+    "[&_.ant-message-notice-content]:!bg-red-9": down,
+    "[.light_&_.ant-message-notice-content]:!bg-red-4 light:text-white": down,
+
+    // SRS stage up
+    "[&_.ant-message-notice-content]:!bg-green-9": !down,
+    "[.light_&_.ant-message-notice-content]:!bg-green-4": !down
   });
 
   // Only allow one SRS notification
@@ -27,7 +32,9 @@ export function showSrsNotification(
 
   globalMessage.info({
     content: stringifySrsStage(newSrsStage),
-    icon: down ? <ArrowDownOutlined /> : <ArrowUpOutlined />,
+    icon: down
+      ? <ArrowDownOutlined className="!text-red light:!text-red-1" />
+      : <ArrowUpOutlined className="!text-green light:!text-green-8" />,
     duration: 1,
     className: classes,
     key
@@ -49,9 +56,13 @@ export function showNearMatchNotification(
       Your answer (&lsquo;<b>{givenAnswer}</b>&rsquo;) was slightly wrong, the
       nearest correct answer was &lsquo;<b>{matchedAnswer}</b>&rsquo;.
     </>,
-    icon: <CheckOutlined />,
+    icon: <CheckOutlined className="!text-yellow light:!text-orange" />,
     duration: 3,
-    className: "near-match-notif",
+    className: classNames(
+      "text-white light:text-black",
+      "[&_.ant-message-notice-content]:!bg-yellow-9",
+      "[.light_&_.ant-message-notice-content]:!bg-yellow-2",
+    ),
     key
   });
   prevNearMatchNotification = key;
