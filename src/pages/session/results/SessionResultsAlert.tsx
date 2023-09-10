@@ -2,8 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useEffect, useState } from "react";
-import { Collapse } from "antd";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Collapse, CollapseProps } from "antd";
+import classNames from "classnames";
 
 import { RootState } from "@store";
 import { useSelector, useDispatch } from "react-redux";
@@ -49,37 +50,46 @@ export function SessionResultsAlert(): JSX.Element | null {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function onChange(key: string | string[]) {
+  const onChange = useCallback((key: string | string[]) => {
     const newShowing = key.includes("1");
     debug("newShowing: %o", newShowing);
     setShowing(newShowing);
-  }
-
-  // If there are no results, don't show anything
-  if (!lastResults || (correct.length === 0 && incorrect.length === 0))
-    return null;
+  }, []);
 
   const total = correct.length + incorrect.length;
 
+  const rootItems: CollapseProps["items"] = useMemo(() => {
+    // If there are no results, don't show anything
+    if (!lastResults || total === 0) return [];
+
+    const subItems: CollapseProps["items"] = [
+      correctAnswersPanel,
+      incorrectAnswersPanel
+    ].filter(p => p !== null) as CollapseProps["items"];
+
+    return [{
+      key: "1",
+      className: "rounded-none [&>.ant-collapse-header]:!rounded-none",
+      label: <HeaderTitle {...lastResults} total={total} />,
+      children: <>
+        <Summary results={lastResults} />
+
+        <Collapse
+          className="mt-lg"
+          defaultActiveKey={expand ? DEFAULT_EXPAND : DEFAULT_COLLAPSE}
+          items={subItems}
+        />
+      </>
+    }];
+  }, [lastResults, total, correctAnswersPanel, incorrectAnswersPanel, expand]);
+
+  if (!rootItems.length) return null;
+
   return <Collapse
-    className="session-results-alert"
+    className="[&_.ant-collapse-item]:bg-container [.light_&_.ant-collapse-item]:bg-[#e9e9e9]"
     activeKey={showing ? ["1"] : []}
     ghost
     onChange={onChange}
-  >
-    <Collapse.Panel
-      key="1"
-      header={<HeaderTitle {...lastResults} total={total} />}
-    >
-      <Summary results={lastResults} />
-
-      <Collapse
-        className="session-results-answers"
-        defaultActiveKey={expand ? DEFAULT_EXPAND : DEFAULT_COLLAPSE}
-      >
-        {incorrectAnswersPanel}
-        {correctAnswersPanel}
-      </Collapse>
-    </Collapse.Panel>
-  </Collapse>;
+    items={rootItems}
+  />;
 }

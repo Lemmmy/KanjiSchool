@@ -24,7 +24,7 @@ export function Streak(): JSX.Element | null {
     ? "text-red"
     : todayInStreak
       ? "text-green"
-      : "text-yellow";
+      : "text-yellow light:text-orange-6";
 
   return <LevelInfoRowPart label="Streak">
     <Tooltip title="Current streak">

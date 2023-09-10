@@ -6,7 +6,7 @@ import React, { useMemo } from "react";
 import { Row, Col } from "antd";
 import classNames from "classnames";
 
-import { NormalizedSubjectType, StoredSubjectMap, SubjectType, useSubjects } from "@api";
+import { NormalizedSubjectType, StoredSubjectMap, useSubjects } from "@api";
 import { SessionResults } from "@session";
 
 import { normalizeVocabType, nts } from "@utils";
@@ -14,6 +14,14 @@ import { normalizeVocabType, nts } from "@utils";
 interface Props {
   results: SessionResults;
 }
+
+const typeBackgroundClasses: Record<NormalizedSubjectType, string> = {
+  "radical": "bg-radical",
+  "kanji": "bg-kanji",
+  "vocabulary": "bg-vocabulary"
+};
+
+const colClasses = "flex flex-col justify-center items-center text-center rounded mx-xss p-md first:ml-0 last:mr-0";
 
 function num(n: number | undefined): JSX.Element | null {
   if (n === undefined || isNaN(n)) return null;
@@ -71,14 +79,18 @@ export const Summary = React.memo(({ results }: Props): JSX.Element | null => {
 
   if (!subjects || !data) return null;
 
-  return <Row className="results-summary">
+  return <Row>
     {/* Percentage correct */}
-    <Col flex="1" className="results-summary-col col-correct">
+    <Col flex="1" className={classNames(colClasses, "mr-sm relative bg-srs-locked light:bg-[#d9d9d9]")}>
+      {/* Arrow */}
+      <div className="absolute -right-[32px] z-20 border-0 border-solid border-y-[24px] border-y-transparent
+        border-l-[32px] border-l-srs-locked light:border-l-[#d9d9d9]" />
+
       <div>
-        <span className="value">{perc(correct.length, total)}</span>
-        <span className="extra">%</span>
+        <span className="font-medium text-[36px]">{perc(correct.length, total)}</span>
+        <span className="text-desc text-[24px]">%</span>
       </div>
-      <span className="label">Answered correctly</span>
+      <div className="text-desc">Answered correctly</div>
     </Col>
 
     {/* Radicals/kanji/vocabulary correct */}
@@ -106,16 +118,16 @@ function CorrectEl({
   if (total === 0) return null;
 
   const classes = classNames(
-    "results-summary-col",
-    "col-rkv",
-    "col-" + type
+    colClasses,
+    "text-black",
+    typeBackgroundClasses[type]
   );
 
   return <Col flex="1" className={classes}>
     <div>
-      <span className="value">{num(correct)}</span>
-      <span className="extra">&nbsp;/&nbsp;{num(total)}</span>
+      <span className="font-medium text-[36px]">{num(correct)}</span>
+      <span className="text-[24px]">&nbsp;/&nbsp;{num(total)}</span>
     </div>
-    <span className="label">{SUBJECT_TYPE_LABELS[type]}</span>
+    <div className="text-black">{SUBJECT_TYPE_LABELS[type]}</div>
   </Col>;
 }

@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Fragment, useMemo } from "react";
-import { Collapse, Divider, Tag } from "antd";
+import { Collapse, CollapseProps, Divider, Tag } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
@@ -61,7 +61,7 @@ function groupByStage(
 export function useAnswersPanel(
   type: "correct" | "incorrect",
   subjectIds: number[]
-): JSX.Element | null {
+): NonNullable<CollapseProps["items"]>[number] | null {
   const subjects = useSubjects();
   const assignments = useAssignments();
   const subjectAssignmentIds = useSubjectAssignmentIds();
@@ -69,52 +69,71 @@ export function useAnswersPanel(
   const data = useMemo(() => groupByStage(subjects, assignments, subjectAssignmentIds, subjectIds),
     [subjects, assignments, subjectAssignmentIds, subjectIds]);
 
-  if (!data || subjectIds.length === 0) return null;
+  return useMemo(() => {
+    if (!data || subjectIds.length === 0) return null;
 
-  const classes = classNames("results-answer-panel", type);
+    return ({
+      key: type,
+      showArrow: false,
+      className: classNames(
+        "[&>.ant-collapse-header]:items-center [&:first-child>.ant-collapse-header]:rounded-t",
+        {
+          "[&>.ant-collapse-header]:bg-green-9 [&>.ant-collapse-header:hover]:bg-green-8":
+            type === "correct",
+          "[.light_&>.ant-collapse-header]:bg-green-5 [.light_&>.ant-collapse-header:hover]:bg-green-4":
+            type === "correct",
 
-  return <Collapse.Panel
-    className={classes}
-    key={type}
+          "[&>.ant-collapse-header]:bg-red-9 [&>.ant-collapse-header:hover]:bg-red-8":
+            type === "incorrect",
+          "[.light_&>.ant-collapse-header]:bg-red-5 [.light_&>.ant-collapse-header:hover]:bg-red-4":
+            type === "incorrect",
+          "[.light_&>.ant-collapse-header]:text-white":
+            type === "incorrect",
+          "[&.ant-collapse-item-active>.ant-collapse-header]:!rounded-b-none":
+            type === "incorrect",
+        }
+      ),
 
-    // Header
-    header={<>
-      {/* Icon */}
-      {type === "correct" ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
+      label: <>
+        {/* Icon */}
+        {type === "correct" ?
+          <CheckCircleOutlined className="mr-sm ml-[4px] text-green light:text-green-8" /> :
+          <CloseCircleOutlined className="mr-sm ml-[4px] text-red light:text-red-1" />}
 
-      {/* N answered (in)correctly */}
-      <span><b>{nts(subjectIds.length)}</b> answered {type}ly</span>
-    </>}
+        {/* N answered (in)correctly */}
+        <span><b>{nts(subjectIds.length)}</b> answered {type}ly</span>
+      </>,
 
-    // Add to self-study queue button
-    extra={<StudyQueueButton
-      type="primary"
-      size="small"
-      subjectIds={subjectIds}
-    />}
+      // Add to self-study queue button
+      extra: <StudyQueueButton
+        type="primary"
+        size="small"
+        subjectIds={subjectIds}
+      />,
 
-    showArrow={false}
-  >
-    {/* Create a section for each SRS stage group, in order */}
-    {GROUPS.map(g => {
-      // Skip empty groups
-      const [ids, hasVocabulary] = data[g];
-      if (ids.length === 0) return null;
+      // Create a section for each SRS stage group, in order
+      children: GROUPS.map(g => {
+        // Skip empty groups
+        const [ids, hasVocabulary] = data[g];
+        if (ids.length === 0) return null;
 
-      return <Fragment key={g}>
-        <Divider orientation="left">
-          {/* Count */}
-          <Tag className="count-tag">{nts(ids.length)}</Tag>
-          {g}
-        </Divider>
+        return <Fragment key={g}>
+          <Divider orientation="left" className="mt-sm mb-xss before:!w-[32px] before:shrink-0 after:w-full first:mt-0">
+            {/* Count */}
+            <Tag className="relative -top-[2px] mr-sm text-sm font-normal">
+              {nts(ids.length)}
+            </Tag>
+            {g}
+          </Divider>
 
-        <SubjectGrid
-          colorBy="type"
-          size="tiny"
-          subjectIds={ids}
-          hasVocabulary={hasVocabulary}
-        />
-      </Fragment>;
-    })}
-  </Collapse.Panel>;
+          <SubjectGrid
+            colorBy="type"
+            size="tiny"
+            subjectIds={ids}
+            hasVocabulary={hasVocabulary}
+          />
+        </Fragment>;
+      })
+    });
+  }, [data, subjectIds, type]);
 }
