@@ -4,11 +4,10 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Collapse, CollapseProps } from "antd";
-import classNames from "classnames";
 
-import { RootState } from "@store";
-import { useSelector, useDispatch } from "react-redux";
-import * as actions from "@actions/SessionActions";
+import { useAppSelector } from "@store";
+import { useDispatch } from "react-redux";
+import { setResultsViewed } from "@store/sessionSlice.ts";
 
 import { HeaderTitle } from "./HeaderTitle";
 import { Summary } from "./Summary";
@@ -27,8 +26,8 @@ export function SessionResultsAlert(): JSX.Element | null {
 
   const [showing, setShowing] = useState(false);
 
-  const lastResults = useSelector((s: RootState) => s.session.lastResults);
-  const lastResultsViewed = useSelector((s: RootState) => s.session.lastResultsViewed);
+  const lastResults = useAppSelector(s => s.session.lastResults);
+  const lastResultsViewed = useAppSelector(s => s.session.lastResultsViewed);
 
   const correct = lastResults?.correctSubjectIds || [];
   const incorrect = lastResults?.incorrectSubjectIds || [];
@@ -43,7 +42,7 @@ export function SessionResultsAlert(): JSX.Element | null {
     debug("initial mount, not viewed, showing now and setting resultsViewed to true");
 
     setShowing(true);
-    dispatch(actions.setResultsViewed(true));
+    dispatch(setResultsViewed(true));
 
     // Sync to local storage too
     lsSetBoolean("sessionLastResultsViewed", true);

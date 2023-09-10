@@ -4,8 +4,8 @@
 
 import { Tooltip } from "antd";
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { LevelInfoRowPart } from "@pages/dashboard/summary/LevelInfoRowPart.tsx";
 import { nts, useBooleanSetting } from "@utils";
@@ -14,7 +14,7 @@ export function Streak(): JSX.Element | null {
   const showStreak = useBooleanSetting("dashboardCurrentStreak");
 
   const { currentStreak, maxStreak, todayInStreak } =
-    useSelector((s: RootState) => s.sync.streak, shallowEqual);
+    useAppSelector(s => s.sync.streak, shallowEqual);
 
   // Don't clutter if nothing useful to say
   if (!showStreak) return null;

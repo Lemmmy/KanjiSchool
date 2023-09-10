@@ -6,8 +6,7 @@ import React, { useMemo } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import InlineSVG from "svg-inline-react";
 
@@ -24,7 +23,7 @@ export const CharacterImage = React.memo(({
   className,
   sizeClassName = "w-[32px] h-[32px] text-[32px]"
 }: Props) => {
-  const image = useSelector((s: RootState) => s.sync.images?.[subjectId]?.svg);
+  const image = useAppSelector(s => s.sync.images?.[subjectId]?.svg);
 
   const memoImg: JSX.Element | undefined = useMemo(() => {
     if (!image) return;

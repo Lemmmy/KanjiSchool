@@ -5,8 +5,7 @@
 import { useMemo } from "react";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
+import { useAppSelector } from "@store";
 
 import * as api from "@api";
 import { StoredSubjectMap, StoredAssignmentMap } from "@api";
@@ -94,7 +93,7 @@ export function useAvailableAssignments(): FullAvailableAssignments | undefined 
 
   const assignments = api.useAssignments();
   const subjects = api.useSubjects();
-  const checkTime = useSelector((s: RootState) => s.sync.nextReviewsAvailable.checkTime);
+  const checkTime = useAppSelector(s => s.sync.nextReviewsAvailable.checkTime);
 
   return useMemo(() => getData(level, maxLevel, assignments, subjects, checkTime),
     [level, maxLevel, assignments, subjects, checkTime]);

@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { updateStudyMaterial as updateStudyMaterialAction } from "@store/syncSlice.ts";
 
 import * as api from "@api";
 import { ApiStudyMaterial } from "@api";
@@ -43,7 +43,7 @@ async function _createStudyMaterial(
 
   // Add the study material to the database and Redux store
   db.studyMaterials.put(res);
-  store.dispatch(actions.updateStudyMaterial(res));
+  store.dispatch(updateStudyMaterialAction(res));
 
   return res;
 }
@@ -70,7 +70,7 @@ async function _updateStudyMaterial(
 
   // Update the study material in the database and Redux store
   db.studyMaterials.put(res);
-  store.dispatch(actions.updateStudyMaterial(res));
+  store.dispatch(updateStudyMaterialAction(res));
 
   return res;
 }

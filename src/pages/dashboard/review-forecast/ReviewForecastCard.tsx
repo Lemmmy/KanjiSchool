@@ -6,8 +6,8 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import { Card, Collapse, CollapseProps, Empty } from "antd";
 import classNames from "classnames";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "@store";
+import { shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { analyzeData, AnalyzedReviewForecast, DayData } from "./analyze";
 import { HourEl } from "./HourEl";
@@ -23,7 +23,7 @@ export function ReviewForecastCard(): JSX.Element {
   const grouping = useStringSetting<ReviewForecastGrouping>("dashboardReviewForecastGrouping");
   const hours12h = useBooleanSetting("dashboardReviewForecast12h");
 
-  const forecast = useSelector((s: RootState) => s.sync.reviewForecast, shallowEqual);
+  const forecast = useAppSelector(s => s.sync.reviewForecast, shallowEqual);
   const data = useMemo(() => analyzeData(forecast, hours12h),
     [forecast, hours12h]);
   const items = useMemo(() => generateCollapseItems(data, grouping, hours12h, activeKeys),

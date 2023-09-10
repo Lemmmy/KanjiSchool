@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SessionActions";
+import { store } from "@store";
+import { endSession, wrapUpSession as wrapUpSessionAction } from "@store/sessionSlice.ts";
 
 import { SessionState } from "./types";
 
@@ -30,7 +30,7 @@ export function abandonSession(): void {
   const ongoing = store.getState().session.ongoing;
   if (!ongoing) return;
 
-  store.dispatch(actions.endSession());
+  store.dispatch(endSession());
 
   // Remove the session's local storage keys
   lsSetBoolean("sessionOngoing2", false);
@@ -45,7 +45,7 @@ export function abandonSession(): void {
 /** Wraps up the session, removing any unstarted items, leaving only the
  * in-progress items. */
 export function wrapUpSession(): void {
-  store.dispatch(actions.wrapUpSession());
+  store.dispatch(wrapUpSessionAction());
 
   const stillOngoing = store.getState().session.ongoing;
   if (!stillOngoing) {

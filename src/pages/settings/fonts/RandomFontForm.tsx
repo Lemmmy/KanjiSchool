@@ -6,10 +6,10 @@ import { useCallback, useEffect, useState } from "react";
 import { Button, Form, Input, Popconfirm, Space, Switch } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@store";
+import { setCustomFonts } from "@store/settingsSlice.ts";
 
-import { setCustomFonts } from "@actions/SettingsActions.ts";
 import { FontFormItem } from "./FontFormItem.tsx";
 import { defaultFonts, lsSetObject, reloadFontCache } from "@utils";
 
@@ -22,7 +22,7 @@ interface FormValues {
 
 export function RandomFontForm(): JSX.Element {
   const [form] = Form.useForm<FormValues>();
-  const customFonts = useSelector((state: RootState) => state.settings.customFonts);
+  const customFonts = useAppSelector(state => state.settings.customFonts);
   const [sampleText, setSampleText] = useState("あいうえお");
   const [showUnsupported, setShowUnsupported] = useState(false);
 

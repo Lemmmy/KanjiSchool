@@ -6,13 +6,13 @@ import { useCallback, useMemo } from "react";
 import { Form, Select, Tag } from "antd";
 import { CustomTagProps } from "rc-select/lib/BaseSelect";
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { slugifyPartOfSpeech } from "@utils";
 
 export function PartsOfSpeechPicker({ ...props }: any): JSX.Element {
-  const partsOfSpeech = useSelector((s: RootState) => s.sync.partsOfSpeechCache, shallowEqual);
+  const partsOfSpeech = useAppSelector(s => s.sync.partsOfSpeechCache, shallowEqual);
   const options = useMemo(() => {
     const values = Object.keys(partsOfSpeech || {});
     values.sort((a, b) => a.localeCompare(b, undefined, { ignorePunctuation: true }));

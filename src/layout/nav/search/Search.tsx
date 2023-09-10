@@ -9,8 +9,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import classNames from "classnames";
 
 import { useNavigate, useMatch } from "react-router-dom";
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { GlobalHotKeys } from "react-hotkeys";
 import { ctrl, getSubjectUrl, useBooleanSetting } from "@utils";
@@ -76,7 +75,7 @@ export function Search(): JSX.Element {
   const throttledAutocomplete = useMemo(() => throttle(performAutocomplete, SEARCH_THROTTLE), []);
 
   const disableInSession = useBooleanSetting("sessionDisableSearch");
-  const inSession = useSelector((s: RootState) => s.session.ongoing);
+  const inSession = useAppSelector(s => s.session.ongoing);
   const inSessionRoute = useMatch("/(.*)/session");
   const disabled = disableInSession && inSession && !!inSessionRoute;
 

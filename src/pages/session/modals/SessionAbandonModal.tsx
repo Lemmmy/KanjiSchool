@@ -4,7 +4,7 @@
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
-import { store } from "@app";
+import { store } from "@store";
 import { abandonSession, isItemFinished, isItemStarted, SessionState } from "@session";
 
 import { nts } from "@utils";

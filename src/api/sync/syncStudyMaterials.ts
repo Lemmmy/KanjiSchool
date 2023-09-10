@@ -2,9 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { initStudyMaterials, setStudyMaterialsLastSynced, setSyncingStudyMaterials } from "@store/syncSlice";
 
 import { ApiStudyMaterial, ApiStudyMaterialMap } from "@api";
 import * as api from "@api";
@@ -34,7 +33,7 @@ async function _syncStudyMaterials(fullSync?: boolean): Promise<void> {
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? store.getState().sync.studyMaterialsLastSynced
     : undefined;
-  store.dispatch(actions.setSyncingStudyMaterials(true));
+  store.dispatch(setSyncingStudyMaterials(true));
   debug("beginning study materials sync since %s (ver %d -> %d)", lastSynced, syncLastVersion, syncCurrentVersion);
 
   await api.paginateCollection<ApiStudyMaterial>("/study_materials", lastSynced, async ({ data }) => {
@@ -47,12 +46,12 @@ async function _syncStudyMaterials(fullSync?: boolean): Promise<void> {
   await loadStudyMaterials();
 
   // We're now done syncing
-  store.dispatch(actions.setSyncingStudyMaterials(false));
+  store.dispatch(setSyncingStudyMaterials(false));
 
   const lastSyncedNow = new Date().toISOString();
   lsSetString("studyMaterialsLastSynced", lastSyncedNow);
   lsSetNumber("syncStudyMaterialsLastVersion", syncCurrentVersion);
-  store.dispatch(actions.setStudyMaterialsLastSynced(lastSyncedNow));
+  store.dispatch(setStudyMaterialsLastSynced(lastSyncedNow));
 }
 
 /** Load all the study materials from the database into the Redux store. */
@@ -62,7 +61,7 @@ export async function loadStudyMaterials(): Promise<void> {
   // If there are no study materials, then return immediately
   if (await db.studyMaterials.count() === 0) {
     debug("no study materials in the database, not loading anything");
-    store.dispatch(actions.initStudyMaterials({}));
+    store.dispatch(initStudyMaterials({}));
     return;
   }
 
@@ -70,5 +69,5 @@ export async function loadStudyMaterials(): Promise<void> {
   const studyMaterialMap: ApiStudyMaterialMap = {};
   for (const r of studyMaterials) { studyMaterialMap[r.id] = r; }
 
-  store.dispatch(actions.initStudyMaterials(studyMaterialMap));
+  store.dispatch(initStudyMaterials(studyMaterialMap));
 }

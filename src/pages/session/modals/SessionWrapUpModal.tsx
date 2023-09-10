@@ -4,7 +4,7 @@
 
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
-import { store } from "@app";
+import { store } from "@store";
 import { wrapUpSession, isItemFinished, isItemStarted, SessionState } from "@session";
 
 import { nts } from "@utils";

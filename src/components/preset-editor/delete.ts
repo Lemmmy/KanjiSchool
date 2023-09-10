@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SettingsActions";
+import { store } from "@store";
+import { setPresets } from "@store/settingsSlice.ts";
 
 import { PresetType } from ".";
 
@@ -21,5 +21,5 @@ export function deletePreset(presetType: PresetType, uuid: string): void {
   debug("saving to localStorage");
   lsSetObject(presetType + "Presets", presets);
   debug("dispatching save to redux");
-  store.dispatch(actions.setPresets({ presetType, presets }));
+  store.dispatch(setPresets({ presetType, presets }));
 }

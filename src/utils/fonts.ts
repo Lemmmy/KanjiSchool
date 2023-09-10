@@ -6,10 +6,10 @@ import { useEffect, useMemo } from "react";
 import memoize from "memoizee";
 import { sample } from "lodash-es";
 
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@store";
-import { store } from "@app";
-import { setSupportedFonts } from "@actions/SettingsActions";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@store";
+import { store } from "@store";
+import { setSupportedFonts } from "@store/settingsSlice";
 
 import { useBooleanSetting } from "./settings";
 
@@ -156,8 +156,8 @@ export function useRandomFont(
 ): string | undefined {
   const enabled = useBooleanSetting("randomFontEnabled");
   const separateReadingMeaning = useBooleanSetting("randomFontSeparateReadingMeaning");
-  const customFonts = useSelector((state: RootState) => state.settings.customFonts);
-  const supportedFonts = useSelector((state: RootState) => state.settings.supportedFonts);
+  const customFonts = useAppSelector(state => state.settings.customFonts);
+  const supportedFonts = useAppSelector(state => state.settings.supportedFonts);
   const dispatch = useDispatch();
 
   useEffect(() => {

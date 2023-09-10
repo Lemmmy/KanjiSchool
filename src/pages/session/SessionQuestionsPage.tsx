@@ -6,9 +6,9 @@ import { useCallback, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { RootState } from "@store";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "@actions/SessionActions";
+import { useAppSelector } from "@store";
+import { shallowEqual, useDispatch } from "react-redux";
+import { setIncorrectAnswer } from "@store/sessionSlice.ts";
 
 import {
   chooseQuestion,
@@ -55,10 +55,10 @@ export function SessionQuestionsPage(): JSX.Element {
 
   // Fetch all the required information from the Redux store.
   const subjects = api.useSubjects();
-  const items = useSelector((s: RootState) => s.session.sessionState?.items, shallowEqual);
-  const questions = useSelector((s: RootState) => s.session.sessionState?.questions, shallowEqual);
-  const currentQuestion = useSelector((s: RootState) => s.session.currentQuestion);
-  const incorrectAnswer = useSelector((s: RootState) => s.session.incorrectAnswer);
+  const items = useAppSelector(s => s.session.sessionState?.items, shallowEqual);
+  const questions = useAppSelector(s => s.session.sessionState?.questions, shallowEqual);
+  const currentQuestion = useAppSelector(s => s.session.currentQuestion);
+  const incorrectAnswer = useAppSelector(s => s.session.incorrectAnswer);
 
   // Get the subject for a given SessionItem.
   const getItemSubject = useCallback((item?: SessionItem): StoredSubject | undefined => {
@@ -116,7 +116,7 @@ export function SessionQuestionsPage(): JSX.Element {
 
     if (!ok) {
       // If the answer was rejected, show the lesson screen
-      dispatch(actions.setIncorrectAnswer({
+      dispatch(setIncorrectAnswer({
         answer: givenAnswer,
         digraphMatch
       }));
@@ -172,7 +172,7 @@ export function SessionQuestionsPage(): JSX.Element {
   const onIncorrectUndo = useCallback(() => {
     if (undoEnabled !== "ENABLED") return;
     // Remove the incorrect answer and try the question again
-    dispatch(actions.setIncorrectAnswer(undefined));
+    dispatch(setIncorrectAnswer(undefined));
   }, [dispatch, undoEnabled]);
 
   const onIncorrectNext = useCallback(() => {

@@ -12,8 +12,8 @@ import { MenuHotkey } from "@comp/MenuHotkey";
 
 import { useNavigate } from "react-router-dom";
 
-import { RootState } from "@store";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { useDispatch, shallowEqual } from "react-redux";
 
 import { SessionProgress } from "./SessionProgress";
 import { SessionLessonsPage } from "./SessionLessonsPage";
@@ -38,9 +38,9 @@ function SessionPage(): JSX.Element {
   const navigate = useNavigate();
 
   const subjects = useSubjects();
-  const ongoing = useSelector((s: RootState) => s.session.ongoing);
-  const doingLessons = useSelector((s: RootState) => s.session.doingLessons);
-  const sessionState = useSelector((s: RootState) => s.session.sessionState, shallowEqual);
+  const ongoing = useAppSelector(s => s.session.ongoing);
+  const doingLessons = useAppSelector(s => s.session.doingLessons);
+  const sessionState = useAppSelector(s => s.session.sessionState, shallowEqual);
 
   const showProgress = useBooleanSetting("sessionProgressBar");
   const debugInfo = useBooleanSetting("sessionInfoDebug");

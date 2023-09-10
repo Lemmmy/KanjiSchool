@@ -2,9 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as syncActions from "@actions/SyncActions";
-import * as sessionActions from "@actions/SessionActions";
+import { store } from "@store";
+import * as syncActions from "@store/syncSlice.ts";
+import { submitAssignment } from "@store/sessionSlice.ts";
 
 import * as api from "@api";
 import { ApiUser } from "@api";
@@ -242,7 +242,7 @@ async function submitQueueReview(
 function dispatchAssignmentSubmission(item: StoredQueueItem) {
   const nowSession = store.getState().session.sessionState;
   if (nowSession?.uuid === item.sessionUuid) {
-    store.dispatch(sessionActions.submitAssignment(item.sessionItemId));
+    store.dispatch(submitAssignment(item.sessionItemId));
   } else {
     debug("didn't mark assignment %d as submitted because the session changed", item.assignmentId);
   }

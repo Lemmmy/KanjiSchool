@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 import { Tooltip } from "antd";
 import classNames from "classnames";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { CloudDisconnectedOutlined } from "@comp/icons/CloudDisconnectedOutlined";
 import { headerElementClass } from "@layout/nav/AppHeader.tsx";
@@ -53,12 +52,12 @@ function OnlineStatusQueueSize(): JSX.Element | null {
   // Whenever something happens such as the online status changing, the queue
   // being processed, the assignments list changing, or a session ending, count
   // the number of unsubmitted lessons/reviews in the submission queue.
-  const processingQueue = useSelector((s: RootState) => s.sync.processingQueue);
-  const queueProgress = useSelector((s: RootState) => s.sync.queueProgress);
-  const queueNonce = useSelector((s: RootState) => s.sync.queueNonce);
-  const ongoingSession = useSelector((s: RootState) => s.session.ongoing);
-  const sessionState = useSelector((s: RootState) => s.session.sessionState);
-  const assignments = useAssignments();
+  const processingQueue = useAppSelector(s => s.sync.processingQueue);
+  const queueProgress   = useAppSelector(s => s.sync.queueProgress);
+  const queueNonce      = useAppSelector(s => s.sync.queueNonce);
+  const ongoingSession  = useAppSelector(s => s.session.ongoing);
+  const sessionState    = useAppSelector(s => s.session.sessionState);
+  const assignments     = useAssignments();
 
   useEffect(() => {
     debug("recalculating unsubmitted count");

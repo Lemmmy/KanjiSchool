@@ -2,9 +2,14 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import {
+  initSubjects,
+  setSubjectsLastSynced,
+  setSubjectsSyncedThisSession,
+  setSyncingSubjects,
+  setSyncingSubjectsProgress
+} from "@store/syncSlice.ts";
 
 import * as api from "@api";
 import { ApiSubject, NormalizedSubjectType, SubjectType } from "@api";
@@ -48,7 +53,7 @@ export async function syncSubjects(fullSync?: boolean): Promise<void> {
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? store.getState().sync.subjectsLastSynced
     : undefined;
-  store.dispatch(actions.setSyncingSubjects(true));
+  store.dispatch(setSyncingSubjects(true));
   debug("beginning subjects sync since %s (ver %d -> %d)", lastSynced, syncLastVersion, syncCurrentVersion);
 
   let count = 0;
@@ -57,20 +62,20 @@ export async function syncSubjects(fullSync?: boolean): Promise<void> {
 
     // Update the progress bar
     count += data.length;
-    store.dispatch(actions.setSyncingSubjectsProgress({
+    store.dispatch(setSyncingSubjectsProgress({
       count, total: total_count
     }));
   });
 
   // We're now done syncing
-  store.dispatch(actions.setSyncingSubjects(false));
+  store.dispatch(setSyncingSubjects(false));
   debug("setting subjectsSyncedThisSession");
-  store.dispatch(actions.setSubjectsSyncedThisSession());
+  store.dispatch(setSubjectsSyncedThisSession());
 
   const lastSyncedNow = new Date().toISOString();
   lsSetString("subjectsLastSynced", lastSyncedNow);
   lsSetNumber("syncSubjectsLastVersion", syncCurrentVersion);
-  store.dispatch(actions.setSubjectsLastSynced(lastSyncedNow));
+  store.dispatch(setSubjectsLastSynced(lastSyncedNow));
 
   // Re-load all the subjects from the database (both modified and unmodified)
   // into the Redux store. NOTE: This has been moved to the end, to prevent
@@ -130,7 +135,7 @@ export async function loadSubjects(): Promise<void> {
   /*     TIMING                                                               */ performance.measure("loadSubjects-map", "loadSubjects-map-start", "loadSubjects-map-end");
 
   /*     TIMING                                                               */ performance.mark("loadSubjects-dispatch-start");
-  store.dispatch(actions.initSubjects({
+  store.dispatch(initSubjects({
     subjectMap, partsOfSpeechCache, slugCache
   }));
   /*     TIMING                                                               */ performance.mark("loadSubjects-dispatch-end");

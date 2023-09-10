@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { initImages, setImagesSynced, setSyncingImages, setSyncingImagesProgress } from "@store/syncSlice.ts";
 
 import { ApiCharacterImage } from "@api";
 import { db } from "@db";
@@ -31,7 +31,7 @@ function findSvg(images: ApiCharacterImage[]): string | undefined {
 
 export async function syncImages(): Promise<void> {
   if (store.getState().sync.syncingImages) return;
-  store.dispatch(actions.setSyncingImages(true));
+  store.dispatch(setSyncingImages(true));
 
   debug("syncing images from subjects");
 
@@ -87,11 +87,11 @@ export async function syncImages(): Promise<void> {
     }
 
     count++;
-    store.dispatch(actions.setSyncingImagesProgress({ count, total }));
+    store.dispatch(setSyncingImagesProgress({ count, total }));
   }
 
-  store.dispatch(actions.setSyncingImages(false));
-  store.dispatch(actions.imagesSynced());
+  store.dispatch(setSyncingImages(false));
+  store.dispatch(setImagesSynced(true));
 
   await loadImages();
 }
@@ -110,5 +110,5 @@ export async function loadImages(): Promise<void> {
   const imageMap: StoredImageMap = {};
   for (const i of images) { imageMap[i.id] = i; }
 
-  store.dispatch(actions.initImages(imageMap));
+  store.dispatch(initImages(imageMap));
 }

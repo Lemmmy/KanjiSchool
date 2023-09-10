@@ -7,8 +7,7 @@ import { Button, Tooltip } from "antd";
 import { SoundOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio, useUserLevel } from "@api";
 
@@ -69,7 +68,7 @@ export function useVocabAudio(
 ): VocabAudioHookRes {
   const userLevel = useUserLevel();
   const levelLocked = userLevel + 1 < (subject?.data.level || 1);
-  const stillSyncing = useSelector((s: RootState) => s.sync.syncingAudio);
+  const stillSyncing = useAppSelector(s => s.sync.syncingAudio);
 
   const [savedPronunciation, setSavedPronunciation] = useState<string>();
   const [buffers, setBuffers] = useState<AudioBuffer[]>();

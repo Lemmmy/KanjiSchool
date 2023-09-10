@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import { Card, Button } from "antd";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@store";
-import { setTip } from "@actions/SettingsActions";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@store";
+import { setTip } from "@store/settingsSlice.ts";
 
 import { lsSetNumber } from "@utils";
 
@@ -24,7 +24,7 @@ const TIP_COUNT = TIPS.length;
 /** Advance the tip on app start. */
 export function AdvanceTip(): JSX.Element | null {
   const dispatch = useDispatch();
-  const currentTip = useSelector((s: RootState) => s.settings.tip);
+  const currentTip = useAppSelector(s => s.settings.tip);
 
   useEffect(() => {
     const next = mod(currentTip + 1, TIP_COUNT);
@@ -41,7 +41,7 @@ export function AdvanceTip(): JSX.Element | null {
 
 export function TipsCard(): JSX.Element {
   const dispatch = useDispatch();
-  const rawTip = useSelector((s: RootState) => s.settings.tip);
+  const rawTip = useAppSelector(s => s.settings.tip);
   const currentTip = mod(rawTip, TIP_COUNT);
 
   const changeTip = (tip: number) => {

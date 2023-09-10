@@ -4,8 +4,7 @@
 
 import { useEffect } from "react";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { lsSetBoolean, lsSetObject } from "@utils";
 
@@ -14,8 +13,8 @@ const debug = Debug("kanjischool:last-results-save");
 
 // This is jank, but w/e
 export function LastResultsSave(): JSX.Element | null {
-  const lastResults = useSelector((s: RootState) => s.session.lastResults);
-  const lastResultsViewed = useSelector((s: RootState) => s.session.lastResultsViewed);
+  const lastResults = useAppSelector(s => s.session.lastResults);
+  const lastResultsViewed = useAppSelector(s => s.session.lastResultsViewed);
 
   useEffect(() => {
     debug("saving lastResults %o lastResultsViewed %o",

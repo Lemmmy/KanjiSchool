@@ -2,26 +2,25 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
-import * as actions from "@actions/SessionActions";
+import { store } from "@store";
+import { useAppSelector } from "@store";
+import { studyQueueAdd, studyQueueClear, studyQueueRemove } from "@store/sessionSlice";
 
 import { lsSetObject } from "@utils";
 
 export function addToStudyQueue(subjectIds: number | number[]): void {
   const ids = typeof subjectIds === "number" ? [subjectIds] : subjectIds;
-  store.dispatch(actions.studyQueueAdd(ids));
+  store.dispatch(studyQueueAdd(ids));
   saveStudyQueue();
 }
 
 export function removeFromStudyQueue(subjectId: number): void {
-  store.dispatch(actions.studyQueueRemove(subjectId));
+  store.dispatch(studyQueueRemove(subjectId));
   saveStudyQueue();
 }
 
 export function clearStudyQueue(): void {
-  store.dispatch(actions.studyQueueClear());
+  store.dispatch(studyQueueClear());
   saveStudyQueue();
 }
 
@@ -30,7 +29,7 @@ export function isInStudyQueue(subjectId: number): boolean {
 }
 
 export const useIsInStudyQueue = (subjectId: number): boolean =>
-  useSelector((s: RootState) => !!s.session.studyQueue?.[subjectId]);
+  useAppSelector(s => !!s.session.studyQueue?.[subjectId]);
 
 export function saveStudyQueue(): void {
   const queue = store.getState().session.studyQueue;

@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { countSessionItems, QuestionType } from "@session";
 
@@ -33,7 +33,7 @@ interface Props {
 export function SessionQuestionContents(props: Props): JSX.Element {
   const { type, itemId, current } = props;
 
-  const incorrectAnswer = useSelector((s: RootState) => s.session.incorrectAnswer);
+  const incorrectAnswer = useAppSelector(s => s.session.incorrectAnswer);
 
   const reducedMotion = useReducedMotion();
 
@@ -54,7 +54,7 @@ function IncorrectAnswerPart({
   type, subject, incorrectAnswer,
   onIncorrectNext, onIncorrectUndo, onSkip
 }: Props & { incorrectAnswer: string }): JSX.Element {
-  const digraphMatch = useSelector((s: RootState) => s.session.incorrectAnswerDigraphMatch, shallowEqual);
+  const digraphMatch = useAppSelector(s => s.session.incorrectAnswerDigraphMatch, shallowEqual);
 
   const { finishedItems, totalItems, wrappingUp } = countSessionItems();
 

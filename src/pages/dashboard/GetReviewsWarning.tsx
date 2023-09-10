@@ -4,20 +4,20 @@
 
 import { Alert, Button, Space } from "antd";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { lsSetBoolean } from "@utils";
-import * as actions from "@actions/SettingsActions";
-import { RootState } from "@store";
+import { useAppSelector } from "@store";
+import { setGetReviewsWarning } from "@store/settingsSlice.ts";
 
 export function GetReviewsWarning(): JSX.Element | null {
   const dispatch = useDispatch();
 
-  const acknowledged = useSelector((state: RootState) => state.settings.getReviewsWarning);
+  const acknowledged = useAppSelector(state => state.settings.getReviewsWarning);
 
   const hide = useCallback(() => {
     lsSetBoolean("getReviewsWarning", true);
-    dispatch(actions.setGetReviewsWarning(true));
+    dispatch(setGetReviewsWarning(true));
   }, [dispatch]);
 
   if (acknowledged) return null;

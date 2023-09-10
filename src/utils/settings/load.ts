@@ -2,9 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import {
-  getSettingKey, SettingsState, DEFAULT_SETTINGS, AnySettingName, SettingName
-} from ".";
+import { getSettingKey, SettingsState, DEFAULT_SETTINGS, AnySettingName, SettingName } from ".";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:settings-load");

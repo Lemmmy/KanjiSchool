@@ -6,8 +6,8 @@ import { ReactNode } from "react";
 import { Tooltip, Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { SessionType, gotoSession } from "@session";
@@ -32,7 +32,7 @@ export function ResumeSessionRow(): JSX.Element | null {
 
   // Get session state to resume session if possible
   const { ongoing, sessionState } =
-    useSelector((s: RootState) => s.session, shallowEqual);
+    useAppSelector(s => s.session, shallowEqual);
 
   // Don't show row if no ongoing session
   if (!ongoing || !sessionState) return null;

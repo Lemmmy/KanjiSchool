@@ -4,8 +4,8 @@
 
 import { useCallback } from "react";
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { GlobalHotKeys, KeyMap } from "react-hotkeys";
 
@@ -33,12 +33,12 @@ export function SessionHotkeys(): JSX.Element | null {
   const lessonMatch = useMatch("/lesson/session");
   const studyMatch = useMatch("/study/session");
 
-  const pendingLessons = useSelector((s: RootState) => s.sync.pendingLessons);
-  const pendingReviews = useSelector((s: RootState) => s.sync.pendingReviews);
+  const pendingLessons = useAppSelector(s => s.sync.pendingLessons);
+  const pendingReviews = useAppSelector(s => s.sync.pendingReviews);
 
   // Get session state to resume session if possible
   const { ongoing, sessionState } =
-    useSelector((s: RootState) => s.session, shallowEqual);
+    useAppSelector(s => s.session, shallowEqual);
 
   const onSessionHotkey = useCallback((type: SessionType) => {
     debug("session hotkey pressed");

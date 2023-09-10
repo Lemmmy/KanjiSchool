@@ -2,9 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { initReviewStatistics, setReviewStatisticsLastSynced, setSyncingReviewStatistics } from "@store/syncSlice.ts";
 
 import { ApiReviewStatistic, ApiReviewStatisticMap } from "@api";
 import * as api from "@api";
@@ -34,7 +33,7 @@ async function _syncReviewStatistics(fullSync?: boolean): Promise<void> {
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? store.getState().sync.reviewStatisticsLastSynced
     : undefined;
-  store.dispatch(actions.setSyncingReviewStatistics(true));
+  store.dispatch(setSyncingReviewStatistics(true));
   debug("beginning review statistics sync since %s (ver %d -> %d)", lastSynced, syncLastVersion, syncCurrentVersion);
 
   await api.paginateCollection<ApiReviewStatistic>("/review_statistics", lastSynced, async ({ data }) => {
@@ -49,12 +48,12 @@ async function _syncReviewStatistics(fullSync?: boolean): Promise<void> {
   await loadReviewStatistics(true);
 
   // We're now done syncing
-  store.dispatch(actions.setSyncingReviewStatistics(false));
+  store.dispatch(setSyncingReviewStatistics(false));
 
   const lastSyncedNow = new Date().toISOString();
   lsSetString("reviewStatisticsLastSynced", lastSyncedNow);
   lsSetNumber("syncReviewStatisticsLastVersion", syncCurrentVersion);
-  store.dispatch(actions.setReviewStatisticsLastSynced(lastSyncedNow));
+  store.dispatch(setReviewStatisticsLastSynced(lastSyncedNow));
 }
 
 /** Load all the review statistics from the database into the Redux store. */
@@ -66,7 +65,7 @@ export async function loadReviewStatistics(
   // If there are no review statistics in the database, then return immediately.
   if (await db.reviewStatistics.count() === 0) {
     debug("no review statistics in the database, not loading anything");
-    store.dispatch(actions.initReviewStatistics({}));
+    store.dispatch(initReviewStatistics({}));
     return;
   }
 
@@ -94,5 +93,5 @@ export async function loadReviewStatistics(
     debug("removed");
   }
 
-  store.dispatch(actions.initReviewStatistics(reviewStatisticMap));
+  store.dispatch(initReviewStatistics(reviewStatisticMap));
 }

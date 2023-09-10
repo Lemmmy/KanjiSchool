@@ -2,11 +2,10 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as syncActions from "@actions/SyncActions";
-
+import { store } from "@store";
 import { StoredSubject, StoredAssignment } from "@api";
 import { db } from "@db";
+import { updateAssignment } from "@store/syncSlice.ts";
 
 import { startOfHour, add as dateAdd } from "date-fns";
 import { getSrsSystemStageDurationSeconds } from "@utils";
@@ -51,7 +50,7 @@ export async function fakeAssignmentUpdate(
 
   // Store it everywhere
   db.assignments.put(newAssignment);
-  store.dispatch(syncActions.updateAssignment(newAssignment));
+  store.dispatch(updateAssignment(newAssignment));
 }
 
 function calculateNextSrsStage(

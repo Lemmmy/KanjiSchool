@@ -12,6 +12,8 @@ import { notification } from "antd";
 
 import "./index.css";
 
+import "@global/js-api";
+
 import Debug from "debug";
 import React from "react";
 const debug = Debug("kanjischool:index");

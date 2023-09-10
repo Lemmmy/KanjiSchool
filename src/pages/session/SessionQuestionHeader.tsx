@@ -15,8 +15,7 @@ import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { startCase } from "lodash-es";
 import { normalizeVocabType, nts, useBooleanSetting, useRandomFont, useStringSetting } from "@utils";
 import { UndoButton } from "./UndoButton";
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
+import { useAppSelector } from "@store";
 import { QuestionType } from "@session";
 import { useSingleBreakpoint } from "@utils/hooks/useSingleBreakpoint.ts";
 
@@ -102,7 +101,7 @@ export function SessionQuestionHeader({
   const { characters } = subject.data;
   const hasCharacter = characters !== null;
 
-  const sessionUuid = useSelector((state: RootState) => state.session?.sessionState?.uuid);
+  const sessionUuid = useAppSelector(state => state.session?.sessionState?.uuid);
   const shouldShakeIncorrect = useBooleanSetting("shakeCharactersIncorrect");
   const randomFontEnabled = useBooleanSetting("randomFontEnabled");
   const randomFontHover = useBooleanSetting("randomFontHover");

@@ -4,9 +4,9 @@
 
 import { useCallback } from "react";
 
-import { RootState } from "@store";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import * as actions from "@actions/SessionActions";
+import { useAppSelector } from "@store";
+import { useDispatch, shallowEqual } from "react-redux";
+import { nextLesson, prevLesson } from "@store/sessionSlice.ts";
 
 import { SubjectInfo } from "@pages/subject/SubjectInfo";
 import { SessionPageTransition } from "@pages/session/SessionPageTransition.tsx";
@@ -22,12 +22,12 @@ const KEY_MAP = {
 
 export function SessionLessonsPage(): JSX.Element {
   const subjects = useSubjects();
-  const lessonCounter = useSelector((s: RootState) => s.session.lessonCounter);
-  const items = useSelector((s: RootState) => s.session.sessionState?.items, shallowEqual);
+  const lessonCounter = useAppSelector(s => s.session.lessonCounter);
+  const items = useAppSelector(s => s.session.sessionState?.items, shallowEqual);
 
   const dispatch = useDispatch();
-  const onPrevLesson = useCallback(() => dispatch(actions.prevLesson()), [dispatch]);
-  const onNextLesson = useCallback(() => dispatch(actions.nextLesson()), [dispatch]);
+  const onPrevLesson = useCallback(() => dispatch(prevLesson()), [dispatch]);
+  const onNextLesson = useCallback(() => dispatch(nextLesson()), [dispatch]);
 
   const contents = <>{subjects && items && Object.entries(items).map(([id, item]) => (
     <SessionLessonContents

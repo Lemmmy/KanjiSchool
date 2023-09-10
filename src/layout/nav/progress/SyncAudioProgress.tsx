@@ -2,14 +2,14 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { HeaderProgress } from "./HeaderProgress";
 
 export function SyncAudioProgress(): JSX.Element | null {
-  const syncing = useSelector((s: RootState) => s.sync.syncingAudio);
-  const progress = useSelector((s: RootState) => s.sync.audioProgress, shallowEqual);
+  const syncing  = useAppSelector(s => s.sync.syncingAudio);
+  const progress = useAppSelector(s => s.sync.audioProgress, shallowEqual);
   if (!syncing || !progress || progress.count <= 0) return null;
 
   return <HeaderProgress

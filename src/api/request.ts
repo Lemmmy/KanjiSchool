@@ -4,7 +4,7 @@
 
 import axios, { Method, AxiosRequestConfig } from "axios";
 
-import { store } from "@app";
+import { store } from "@store";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 

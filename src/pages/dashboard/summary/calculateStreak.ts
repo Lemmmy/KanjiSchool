@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import { setStreak } from "@actions/SyncActions";
+import { store } from "@store";
+import { setStreak } from "@store/syncSlice.ts";
 
 import { db } from "@db";
 

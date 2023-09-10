@@ -5,7 +5,7 @@
 import { useState, useEffect } from "react";
 
 import { Provider } from "react-redux";
-import { initStore } from "@store/init";
+import { initStore, store } from "@store";
 
 import { AppLayout } from "@layout/AppLayout";
 import { InnerAppServices } from "@global/InnerAppServices.tsx";
@@ -31,11 +31,9 @@ import { UpdateCheckNotification } from "@global/update/UpdateCheckNotification.
 import Debug from "debug";
 const debug = Debug("kanjischool:app");
 
-export let store: ReturnType<typeof initStore>;
-
 export default function App(): JSX.Element {
   debug("upper App rendering");
-  if (!store) store = initStore();
+  initStore();
 
   return <>
     <ThemeProvider>

@@ -4,14 +4,14 @@
 
 import classNames from "classnames";
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { ShortDuration } from "@comp/ShortDuration";
 
 export function UpcomingReviews(): JSX.Element | null {
   const { nextReviewsAt, nextReviewsNow, nextReviewsCount, nextReviewsWeek } =
-    useSelector((s: RootState) => s.sync.nextReviewsAvailable, shallowEqual);
+    useAppSelector(s => s.sync.nextReviewsAvailable, shallowEqual);
 
   if (!nextReviewsAt) return null;
 

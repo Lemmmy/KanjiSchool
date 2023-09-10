@@ -6,8 +6,7 @@ import { Form, Input } from "antd";
 import { MinusCircleOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
+import { useAppSelector } from "@store";
 
 import { Check } from "./Check.tsx";
 import { Warn } from "./Warn.tsx";
@@ -31,7 +30,7 @@ export function FontFormItem({
   showUnsupported = true,
   ...props
 }: FontFormItemProps): JSX.Element {
-  const supported = useSelector((state: RootState) => font
+  const supported = useAppSelector(state => font
     ? state.settings.supportedFonts[font]
     : false);
 

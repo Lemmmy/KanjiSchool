@@ -2,19 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { getInitialAuthState } from "@reducers/AuthReducer";
-import { getInitialSyncState } from "@reducers/SyncReducer";
-import { getInitialSessionState } from "@reducers/SessionReducer";
-import { getInitialSettingsState } from "@reducers/SettingsReducer";
-
-import { Action, createStore, Store } from "redux";
-import { composeWithDevTools } from "@redux-devtools/extension";
-import rootReducer from "./reducers/RootReducer";
-
-import { RootState, RootAction } from "./index";
-
-import Debug from "debug";
-const debug = Debug("kanjischool:store");
+import { Action } from "redux";
+import { DevToolsEnhancerOptions } from "@reduxjs/toolkit";
 
 export const actionSanitizers: Record<string, (action: Action, id: number) => Action> = {
   "INIT_SUBJECTS": action => ({
@@ -27,7 +16,7 @@ export const actionSanitizers: Record<string, (action: Action, id: number) => Ac
   "INIT_REVIEW_STATISTICS": action => ({ type: action.type, "note": "Too large." })
 };
 
-const composeEnhancers = composeWithDevTools({
+export const devToolsOptions: DevToolsEnhancerOptions = {
   actionSanitizer: (action, id) =>
     (actionSanitizers[action.type] as any)?.(action, id) ?? action,
   actionsDenylist: [
@@ -45,18 +34,4 @@ const composeEnhancers = composeWithDevTools({
       reviewStatistics: { "note": "Too large." },
     }
   })
-});
-
-export const initStore = (): Store<RootState, RootAction> => {
-  debug("initializing redux store");
-  return createStore(
-    rootReducer,
-    {
-      auth: getInitialAuthState(),
-      sync: getInitialSyncState(),
-      session: getInitialSessionState(),
-      settings: getInitialSettingsState(),
-    },
-    composeEnhancers()
-  );
 };

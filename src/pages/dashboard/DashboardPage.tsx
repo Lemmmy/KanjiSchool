@@ -9,8 +9,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { PageLayout } from "@layout/PageLayout";
 import { useTopMenuOptions } from "@layout/nav/TopMenu";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { SessionResultsAlert } from "@pages/session/results/SessionResultsAlert";
 import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonModal";
@@ -41,7 +40,7 @@ const CriticalConditionCard = lazy(() => import("./CriticalConditionCard.tsx"));
 const NewUnlocksCard = lazy(() => import("./NewUnlocksCard.tsx"));
 
 function DashboardPage(): JSX.Element {
-  const ongoingSession = useSelector((s: RootState) => s.session.ongoing);
+  const ongoingSession = useAppSelector(s => s.session.ongoing);
 
   const showLastSessionSummary = useBooleanSetting("dashboardLastSessionSummary");
   // const showReviewStatsRow = useBooleanSetting("dashboardReviewStatsRow");

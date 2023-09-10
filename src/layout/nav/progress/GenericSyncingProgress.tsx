@@ -2,9 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
-import { State } from "@reducers/SyncReducer";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
+import { SyncSliceState } from "@store/syncSlice.ts";
 
 import { SyncProgress } from "@api";
 import { HeaderProgress } from "./HeaderProgress";
@@ -13,8 +13,8 @@ import { PickByValue } from "utility-types";
 
 interface Props {
   name: string;
-  syncingKey: keyof PickByValue<State, boolean>;
-  syncProgressKey: keyof PickByValue<State, SyncProgress | undefined>;
+  syncingKey: keyof PickByValue<SyncSliceState, boolean>;
+  syncProgressKey: keyof PickByValue<SyncSliceState, SyncProgress | undefined>;
 }
 
 export function GenericSyncingProgress({
@@ -22,8 +22,8 @@ export function GenericSyncingProgress({
   syncingKey,
   syncProgressKey
 }: Props): JSX.Element | null {
-  const syncing = useSelector((s: RootState) => s.sync[syncingKey]);
-  const progress = useSelector((s: RootState) => s.sync[syncProgressKey], shallowEqual);
+  const syncing  = useAppSelector(s => s.sync[syncingKey]);
+  const progress = useAppSelector(s => s.sync[syncProgressKey], shallowEqual);
   if (!syncing || !progress || progress.total <= 0) return null;
 
   return <HeaderProgress

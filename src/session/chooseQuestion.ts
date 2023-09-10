@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SessionActions";
+import { store } from "@store";
+import { decrChoiceDelay, setQuestion } from "@store/sessionSlice.ts";
 
 import {
   MappedQuestion, mapQuestions,
@@ -141,6 +141,6 @@ export function chooseQuestion(): void {
   const pickedQuestion = candidateQuestions[index];
   debug("bucket: %d  picked question %d/%d (question %d)", bucket, index, i, pickedQuestion.questionId);
 
-  store.dispatch(actions.setQuestion(pickedQuestion.questionId));
-  store.dispatch(actions.decrChoiceDelay());
+  store.dispatch(setQuestion(pickedQuestion.questionId));
+  store.dispatch(decrChoiceDelay());
 }

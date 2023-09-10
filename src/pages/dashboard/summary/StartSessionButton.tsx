@@ -6,8 +6,7 @@ import { useCallback } from "react";
 import { Tooltip } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 import { useNavigate } from "react-router-dom";
 
 import { gotoSession, startSession } from "@session";
@@ -26,7 +25,7 @@ export function StartSessionButton({ type }: Props): JSX.Element {
   const { sm, md } = useBreakpoint();
 
   // Disable the button if there is an ongoing session
-  const ongoing = useSelector((s: RootState) => s.session.ongoing);
+  const ongoing = useAppSelector(s => s.session.ongoing);
 
   const navigate = useNavigate();
   const start: PresetStartSessionFn = useCallback(opts =>

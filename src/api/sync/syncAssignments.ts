@@ -2,9 +2,14 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import {
+  initAssignments,
+  setAssignmentsLastSynced,
+  setOverleveledAssignments,
+  setReviewForecast,
+  setSyncingAssignments
+} from "@store/syncSlice";
 
 import * as api from "@api";
 import {
@@ -18,6 +23,7 @@ import { lsGetNumber, lsSetString, lsSetNumber, shouldShowSubject, getSubjectTit
 import { Mutex } from "async-mutex";
 
 import Debug from "debug";
+import { setSyncingAssignmentsProgress } from "@store/syncSlice.ts";
 const debug = Debug("kanjischool:api-sync-assignments");
 
 export type StoredAssignment = ApiAssignment & {
@@ -67,7 +73,7 @@ async function _syncAssignments(
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? (since ?? store.getState().sync.assignmentsLastSynced)
     : undefined;
-  store.dispatch(actions.setSyncingAssignments(true));
+  store.dispatch(setSyncingAssignments(true));
   debug("beginning assignments sync since %s (ver %d -> %d)", lastSynced, syncLastVersion, syncCurrentVersion);
 
   // Get the last known total from local storage to estimate the progress bar
@@ -78,7 +84,7 @@ async function _syncAssignments(
 
   // Start the progress bar.
   let count = 0;
-  store.dispatch(actions.setSyncingAssignmentsProgress({
+  store.dispatch(setSyncingAssignmentsProgress({
     count: -1, total: Math.max(knownTotal ?? 1, 1)
   }));
 
@@ -110,7 +116,7 @@ async function _syncAssignments(
 
     // Update the progress bar
     count += assignments.length;
-    store.dispatch(actions.setSyncingAssignmentsProgress({
+    store.dispatch(setSyncingAssignmentsProgress({
       count, total: total_count
     }));
   });
@@ -121,12 +127,12 @@ async function _syncAssignments(
   await loadAssignments();
 
   // We're now done syncing
-  store.dispatch(actions.setSyncingAssignments(false));
+  store.dispatch(setSyncingAssignments(false));
 
   const lastSyncedNow = new Date().toISOString();
   lsSetString("assignmentsLastSynced", lastSyncedNow);
   lsSetNumber("syncAssignmentsLastVersion", syncCurrentVersion);
-  store.dispatch(actions.setAssignmentsLastSynced(lastSyncedNow));
+  store.dispatch(setAssignmentsLastSynced(lastSyncedNow));
 }
 
 /** Load all the assignments from the database into the Redux store. */
@@ -149,7 +155,7 @@ export async function loadAssignments(): Promise<void> {
   const assignmentMap: StoredAssignmentMap = {};
   for (const a of assignments) { assignmentMap[a.id] = a; }
 
-  store.dispatch(actions.initAssignments(assignmentMap));
+  store.dispatch(initAssignments(assignmentMap));
 
   // Re-calculate the next reviews and review forecast
   reloadAssignments();
@@ -168,7 +174,7 @@ export function reloadAssignments(): void {
 
   // Calculate the 7-day review forecast
   const forecast = generateReviewForecast(userLevel, subjects, assignments);
-  store.dispatch(actions.setReviewForecast(forecast));
+  store.dispatch(setReviewForecast(forecast));
 
   // Check if any assignments are overleveled
   checkOverleveledAssignments();
@@ -240,7 +246,7 @@ function checkOverleveledAssignments() {
 
     // Show the warning on the Dashboard, until the user dismisses it or reloads
     // the page.
-    store.dispatch(actions.setOverleveledAssignments({
+    store.dispatch(setOverleveledAssignments({
       prevLessons: previousLessons ?? 0,
       prevReviews: previousReviews ?? 0,
       currLessons: overleveledLessons,

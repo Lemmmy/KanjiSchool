@@ -4,8 +4,7 @@
 
 import { Card, Progress, Alert } from "antd";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { PageLayout } from "@layout/PageLayout";
 
@@ -17,7 +16,7 @@ import { useOnlineStatus } from "@utils";
 export function SyncPage(): JSX.Element {
   const isOnline = useOnlineStatus();
 
-  const progress = useSelector((s: RootState) => s.sync.subjectsProgress)
+  const progress = useAppSelector(s => s.sync.subjectsProgress)
   const percent = progress
     ? Math.round(((progress.count / progress.total) * 100))
     : 0;

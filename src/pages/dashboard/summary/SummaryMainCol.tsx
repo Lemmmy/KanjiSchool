@@ -4,9 +4,8 @@
 
 import { Col, Statistic } from "antd";
 
-import { RootState } from "@store";
-import { State } from "@reducers/SyncReducer";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
+import { SyncSliceState } from "@store/syncSlice.ts";
 
 import { AssignmentSubjectId } from "@api";
 import { SessionType } from "@session";
@@ -21,7 +20,7 @@ interface SessionTmpl {
   title: string;
   button: string;
   hotkey: string;
-  pendingKey: keyof PickByValue<State, AssignmentSubjectId[]>;
+  pendingKey: keyof PickByValue<SyncSliceState, AssignmentSubjectId[]>;
 }
 
 export const DATA: Record<Exclude<SessionType, "self_study">, SessionTmpl> = {
@@ -48,7 +47,7 @@ interface Props {
 export function SummaryMainCol({ type, available }: Props): JSX.Element {
   const { title, pendingKey } = DATA[type];
 
-  const pendingCount = useSelector((s: RootState) => s.sync[pendingKey]?.length);
+  const pendingCount = useAppSelector(s => s.sync[pendingKey]?.length);
 
   return <Col
     span={24}

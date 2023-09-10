@@ -2,15 +2,15 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { updateAssignment, updateReviewStatistic } from "@store/syncSlice.ts";
 import { batch } from "react-redux";
+import { Action } from "redux";
 
 import * as api from "@api";
 import { ApiCreateReviewResponse } from "@api";
 import { db } from "@db";
 
-import { Action } from "redux";
 import { isRecentTime } from "@utils/isRecentTime";
 
 import Debug from "debug";
@@ -43,14 +43,14 @@ export async function createReview(
   const assignment = api.initAssignment(resources_updated.assignment);
   debug("createReview inserting assignment %d", assignment.id);
   await db.assignments.put(assignment);
-  dispatches.push(actions.updateAssignment(assignment));
+  dispatches.push(updateAssignment(assignment));
 
   // Update the review statistic (if it's available) in Redux and the db
   const reviewStatistic = resources_updated.review_statistic;
   if (reviewStatistic) {
     debug("createReview inserting review statistic %d", reviewStatistic.id);
     await db.reviewStatistics.put(reviewStatistic);
-    dispatches.push(actions.updateReviewStatistic(reviewStatistic));
+    dispatches.push(updateReviewStatistic(reviewStatistic));
   }
 
   // Perform all the dispatches simultaneously

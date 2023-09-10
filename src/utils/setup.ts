@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import "@global/js-api";
-
 import Debug from "debug";
 
 import { configureDefaultAntInterface } from "@global/AntInterface.tsx";

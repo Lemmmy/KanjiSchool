@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as sessionActions from "@actions/SessionActions";
+import { store } from "@store";
+import { answerQuestion, endSession } from "@store/sessionSlice.ts";
 
 import * as api from "@api";
 
@@ -37,7 +37,7 @@ export function submitQuestionAnswer(
   // First, update the question in the Redux store, so the user can move on
   // immediately.
   debug("dispatching session state");
-  store.dispatch(sessionActions.answerQuestion({ type, itemId, correct }));
+  store.dispatch(answerQuestion({ type, itemId, correct }));
 
   // If both the meaning and reading are now completed (or just the meaning for
   // radicals), and this is not a self-study, submit the review to the server,
@@ -89,7 +89,7 @@ export function submitQuestionAnswer(
   // Session is complete, clear it from the Redux store
   if (sessionComplete) {
     debug("session complete, clearing from redux");
-    store.dispatch(sessionActions.endSession());
+    store.dispatch(endSession());
   }
 
   debug("saving session");

@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SessionActions";
+import { store } from "@store";
+import { startSession as startSessionAction } from "@store/sessionSlice.ts";
 
 import { SubjectWithAssignment, fetchSubjectsAudios } from "@api";
 import { hasReadings, isVocabularyLike } from "@utils";
@@ -54,7 +54,7 @@ export function startSession(
   fetchSubjectsAudios(fetchAudioSubjects, true);
 
   debug("creating session %s with subjects %o", uuid, subjects);
-  store.dispatch(actions.startSession({
+  store.dispatch(startSessionAction({
     type, uuid,
     items, questions,
     comparatorOptions: opts,

@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { incrSyncingAudioProgress, incrSyncingAudioQueue } from "@store/syncSlice.ts";
 
 import {
   AudioContentType, getStoredAudioMap, StoredAudio, StoredSubject
@@ -102,7 +102,7 @@ export async function fetchSubjectsAudios(
   }
 
   // Add all the tasks to the audio sync progress bar total
-  store.dispatch(actions.incrSyncingAudioQueue(fetchTasks.length));
+  store.dispatch(incrSyncingAudioQueue(fetchTasks.length));
 
   lsSetNumber("audioFetchLastVersion", syncCurrentVersion);
 
@@ -139,7 +139,7 @@ async function performAudioFetch({
     throw err;
   } finally {
     // TODO: Get redux-debounced working
-    store.dispatch(actions.incrSyncingAudioProgress());
+    store.dispatch(incrSyncingAudioProgress());
   }
 }
 

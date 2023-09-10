@@ -5,8 +5,7 @@
 import { useCallback } from "react";
 import { Button } from "antd";
 
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { useUser, syncRefresh } from "@api";
 
@@ -26,8 +25,8 @@ export function RefreshButton({ className }: Props): JSX.Element {
 
   const user = useUser();
 
-  const syncing = useSelector((s: RootState) => s.sync.syncingAssignments);
-  const canRefresh = useSelector((s: RootState) =>
+  const syncing = useAppSelector(s => s.sync.syncingAssignments);
+  const canRefresh = useAppSelector(s =>
     s.sync.assignments && s.sync.pendingLessons && s.sync.pendingReviews);
 
   const refresh = useCallback(() => {

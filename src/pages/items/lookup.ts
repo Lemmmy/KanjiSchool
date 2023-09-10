@@ -4,7 +4,7 @@
 
 import { ReactNode } from "react";
 
-import { store } from "@app";
+import { store } from "@store";
 import { SubjectWithAssignment } from "@api";
 
 import {

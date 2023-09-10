@@ -4,8 +4,8 @@
 
 import { globalMessage } from "@global/AntInterface.tsx";
 
-import { store } from "@app";
-import * as actions from "@actions/SettingsActions";
+import { store } from "@store";
+import * as settings from "@store/settingsSlice.ts";
 
 import { getSettingKey, SettingName, SETTING_CONFIGS } from ".";
 
@@ -24,7 +24,7 @@ export function setBooleanSetting(
   debug("changing setting [boolean] %s value to %o", settingName, value);
 
   localStorage.setItem(getSettingKey(settingName), value ? "true" : "false");
-  store.dispatch(actions.setBooleanSetting({
+  store.dispatch(settings.setBooleanSetting({
     settingName,
     value
   }));
@@ -40,7 +40,7 @@ export function setIntegerSetting(
   debug("changing setting [integer] %s value to %o", settingName, value);
 
   localStorage.setItem(getSettingKey(settingName), Math.floor(value).toString());
-  store.dispatch(actions.setIntegerSetting({
+  store.dispatch(settings.setIntegerSetting({
     settingName,
     value
   }));
@@ -56,7 +56,7 @@ export function setStringSetting<T extends string>(
   debug("changing setting [string] %s value to %o", settingName, value);
 
   localStorage.setItem(getSettingKey(settingName), value);
-  store.dispatch(actions.setStringSetting({
+  store.dispatch(settings.setStringSetting({
     settingName: settingName as any,
     value
   }));

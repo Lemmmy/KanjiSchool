@@ -2,15 +2,15 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { RootState } from "@store";
-import { shallowEqual, useSelector } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { ShortDuration } from "@comp/ShortDuration";
 import { nts } from "@utils";
 
 export function UpcomingReviewsNext(): JSX.Element | null {
   const { nextReviewsAt, nextReviewsNow, nextReviewsCount } =
-    useSelector((s: RootState) => s.sync.nextReviewsAvailable, shallowEqual);
+    useAppSelector(s => s.sync.nextReviewsAvailable, shallowEqual);
 
   // Don't render if we have nothing to show
   if (!nextReviewsAt || nextReviewsCount <= 0 || nextReviewsNow) {

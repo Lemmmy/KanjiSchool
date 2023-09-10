@@ -5,8 +5,7 @@
 import { useEffect } from "react";
 
 import * as api from "@api";
-import { RootState } from "@store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { useOnlineStatus } from "@utils";
 
@@ -20,7 +19,7 @@ const debug = Debug("kanjischool:sync-subjects-global");
 export function SyncSubjects(): JSX.Element | null {
   const isOnline = useOnlineStatus();
   const subjectsSyncedThisSession =
-    useSelector((s: RootState) => s.sync.subjectsSyncedThisSession);
+    useAppSelector(s => s.sync.subjectsSyncedThisSession);
 
   useEffect(() => {
     if (subjectsSyncedThisSession || !isOnline) return;

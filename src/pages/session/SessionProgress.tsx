@@ -5,8 +5,8 @@
 import { useCallback } from "react";
 import classNames from "classnames";
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { countSessionItems } from "@session";
 import { useBooleanSetting, useReducedMotion } from "@utils";
@@ -24,9 +24,9 @@ export function SessionProgress({
   barClassName = "inline-block",
   barHeightClassName = heightClassName,
 }: Props): JSX.Element {
-  const doingLessons = useSelector((s: RootState) => s.session.doingLessons);
-  const lessonCounter = useSelector((s: RootState) => s.session.lessonCounter);
-  const sessionState = useSelector((s: RootState) => s.session.sessionState, shallowEqual);
+  const doingLessons = useAppSelector(s => s.session.doingLessons);
+  const lessonCounter = useAppSelector(s => s.session.lessonCounter);
+  const sessionState = useAppSelector(s => s.session.sessionState, shallowEqual);
 
   const showStarted = useBooleanSetting("sessionProgressStarted");
   const showSkipped = useBooleanSetting("sessionProgressSkipped");

@@ -2,10 +2,10 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
-import * as actions from "@actions/AuthActions";
+import { store } from "@store";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
+import { setApiKey, setUser } from "@store/authSlice.ts";
 
 import * as api from "@api";
 import { ApiUser } from "@api";
@@ -18,15 +18,15 @@ import Debug from "debug";
 const debug = Debug("kanjischool:api-auth");
 
 export const useIsLoggedIn = (): boolean =>
-  !!useSelector((s: RootState) => s.auth.user?.data.id);
+  !!useAppSelector(s => s.auth.user?.data.id);
 export const useUser = (): ApiUser | undefined =>
-  useSelector((s: RootState) => s.auth.user, shallowEqual);
+  useAppSelector(s => s.auth.user, shallowEqual);
 export const useUsername = (): string | undefined =>
-  useSelector((s: RootState) => s.auth.user?.data.username);
+  useAppSelector(s => s.auth.user?.data.username);
 export const useUserLevel = (): number =>
-  useSelector((s: RootState) => s.auth.user?.data.level) || 1;
+  useAppSelector(s => s.auth.user?.data.level) || 1;
 export const useUserMaxLevel = (): number =>
-  useSelector((s: RootState) => s.auth.user?.data.subscription.max_level_granted) || 3;
+  useAppSelector(s => s.auth.user?.data.subscription.max_level_granted) || 3;
 
 /** Attempt to authenticate with the API using the specified API key. If it is
  * successful, save the API key. */
@@ -40,8 +40,8 @@ export async function attemptLogIn(apiKey: string): Promise<void> {
 
   lsSetString("apiKey", apiKey);
   lsSetObject("user", user);
-  store.dispatch(actions.setApiKey(apiKey));
-  store.dispatch(actions.setUser(user));
+  store.dispatch(setApiKey(apiKey));
+  store.dispatch(setUser(user));
 }
 
 /** Clears all user data and logs out. */

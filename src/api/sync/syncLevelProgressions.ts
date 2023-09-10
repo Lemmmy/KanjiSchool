@@ -2,9 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { initLevelProgressions, setLevelProgressionsLastSynced, setSyncingLevelProgressions } from "@store/syncSlice";
 
 import { ApiLevelProgression, ApiLevelProgressionMap } from "@api";
 import * as api from "@api";
@@ -32,7 +31,7 @@ async function _syncLevelProgressions(fullSync?: boolean): Promise<void> {
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? store.getState().sync.levelProgressionsLastSynced
     : undefined;
-  store.dispatch(actions.setSyncingLevelProgressions(true));
+  store.dispatch(setSyncingLevelProgressions(true));
   debug("beginning level progressions sync since %s (ver %d -> %d)", lastSynced, syncLastVersion, syncCurrentVersion);
 
   await api.paginateCollection<ApiLevelProgression>("/level_progressions", lastSynced, async ({ data }) => {
@@ -45,12 +44,12 @@ async function _syncLevelProgressions(fullSync?: boolean): Promise<void> {
   await loadLevelProgressions();
 
   // We're now done syncing
-  store.dispatch(actions.setSyncingLevelProgressions(false));
+  store.dispatch(setSyncingLevelProgressions(false));
 
   const lastSyncedNow = new Date().toISOString();
   lsSetString("levelProgressionsLastSynced", lastSyncedNow);
   lsSetNumber("syncLevelProgressionsLastVersion", syncCurrentVersion);
-  store.dispatch(actions.setLevelProgressionsLastSynced(lastSyncedNow));
+  store.dispatch(setLevelProgressionsLastSynced(lastSyncedNow));
 }
 
 /** Load all the level progressions from the database into the Redux store. */
@@ -60,7 +59,7 @@ export async function loadLevelProgressions(): Promise<void> {
   // If there are no level progressions, then return immediately
   if (await db.levelProgressions.count() === 0) {
     debug("no level progressions in the database, not loading anything");
-    store.dispatch(actions.initLevelProgressions({}));
+    store.dispatch(initLevelProgressions({}));
     return;
   }
 
@@ -68,5 +67,5 @@ export async function loadLevelProgressions(): Promise<void> {
   const levelProgressionMap: ApiLevelProgressionMap = {};
   for (const r of levelProgressions) { levelProgressionMap[r.id] = r; }
 
-  store.dispatch(actions.initLevelProgressions(levelProgressionMap));
+  store.dispatch(initLevelProgressions(levelProgressionMap));
 }

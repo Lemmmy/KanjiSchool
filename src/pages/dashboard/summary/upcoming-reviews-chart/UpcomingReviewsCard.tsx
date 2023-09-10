@@ -6,8 +6,8 @@ import { Card } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import classNames from "classnames";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "@store";
+import { shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
 
 import { UpcomingReviewsChart } from "./UpcomingReviewsChart.tsx";
 import { useIntegerSetting } from "@utils";
@@ -20,7 +20,7 @@ export default function UpcomingReviewsCard(): JSX.Element {
   const nowMax = dayjs().startOf("hour").add(maxDays, "day");
   const nowMaxStr = nowMax.toISOString();
 
-  const forecast = useSelector((s: RootState) => s.sync.reviewForecast, shallowEqual);
+  const forecast = useAppSelector(s => s.sync.reviewForecast, shallowEqual);
 
   return <Card
     className="[&>.ant-card-body]:p-0 [&>.ant-card-body]:flex [&>.ant-card-body]:flex-col"
@@ -41,7 +41,7 @@ export default function UpcomingReviewsCard(): JSX.Element {
 }
 
 function UpcomingReviewsExtra(): JSX.Element | null {
-  const nextReviewsWeek = useSelector((s: RootState) =>
+  const nextReviewsWeek = useAppSelector(s =>
     s.sync.nextReviewsAvailable.nextReviewsWeek);
 
   if (!nextReviewsWeek) return null;

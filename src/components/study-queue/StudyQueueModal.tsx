@@ -8,9 +8,8 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { CloseOutlined, DownOutlined, QuestionCircleOutlined, UpOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
-import { RootState } from "@store";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import * as actions from "@actions/SessionActions";
+import { useAppSelector } from "@store";
+import { useDispatch, shallowEqual } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +22,7 @@ import { GlobalHotKeys } from "react-hotkeys";
 import { pluralN, setBooleanSetting, useBooleanSetting } from "@utils";
 
 import { globalModal } from "@global/AntInterface.tsx";
+import { studyQueueSetCollapsed } from "@store/sessionSlice.ts";
 
 const KEY_MAP = {
   TOGGLE_COLLAPSE: ["shift+q"]
@@ -35,14 +35,14 @@ export function StudyQueueModal(): JSX.Element | null {
   const dispatch = useDispatch();
 
   // The queue items, converted back to an array of subject IDs
-  const queue = useSelector((s: RootState) => s.session.studyQueue, shallowEqual);
+  const queue = useAppSelector(s => s.session.studyQueue, shallowEqual);
   const items = useMemo(() =>
     queue ? Object.keys(queue).map(k => parseInt(k)) : undefined, [queue]);
 
   // Collapse the modal to just the header
-  const collapsed = useSelector((s: RootState) => s.session.studyQueueCollapsed);
+  const collapsed = useAppSelector(s => s.session.studyQueueCollapsed);
   const toggleCollapse = useCallback(() =>
-    dispatch(actions.studyQueueSetCollapsed(!collapsed)), [dispatch, collapsed]);
+    dispatch(studyQueueSetCollapsed(!collapsed)), [dispatch, collapsed]);
 
   // Don't show if assignments aren't loaded yet (prematurely)
   const hasAssignments = !!useAssignments();

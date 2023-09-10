@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import {
   StoredAssignmentMap, SubjectAssignmentIdMap, StoredAssignment,
@@ -11,15 +11,16 @@ import {
 } from "@api";
 
 export const useAssignments = (): StoredAssignmentMap | undefined =>
-  useSelector((s: RootState) => s.sync.assignments);
+  useAppSelector(s => s.sync.assignments);
 
 export const useSubjectAssignmentIds = (): SubjectAssignmentIdMap =>
-  useSelector((s: RootState) => s.sync.subjectAssignmentIdMap);
+  useAppSelector(s => s.sync.subjectAssignmentIdMap);
 
 export const useAssignmentBySubjectId = (id: number): StoredAssignment | undefined =>
-  useSelector((s: RootState) =>
-    s.sync.assignments?.[s.sync.subjectAssignmentIdMap?.[id]],
-  shallowEqual);
+  useAppSelector(
+    s => s.sync.assignments?.[s.sync.subjectAssignmentIdMap?.[id]],
+    shallowEqual
+  );
 
 export function getAssignmentBySubject(
   assignments: StoredAssignmentMap | undefined,

@@ -5,9 +5,9 @@
 import { useCallback, ReactNode, FC, Fragment } from "react";
 import { Modal, Typography, Row, Col } from "antd";
 
-import { RootState } from "@store";
-import { useSelector, useDispatch } from "react-redux";
-import { setHotkeyHelpVisible } from "@actions/SettingsActions";
+import { useAppSelector } from "@store";
+import { useDispatch } from "react-redux";
+import { setHotkeyHelpVisible } from "@store/settingsSlice.ts";
 
 import { GlobalHotKeys } from "react-hotkeys";
 
@@ -21,7 +21,7 @@ const KEY_MAP = {
 
 export function HotkeyHelpListener(): JSX.Element {
   const dispatch = useDispatch();
-  const visible = useSelector((s: RootState) => s.settings.hotkeyHelpVisible);
+  const visible = useAppSelector(s => s.settings.hotkeyHelpVisible);
   const setVisible = useCallback((v: boolean) => dispatch(setHotkeyHelpVisible(v)), [dispatch]);
   const toggleVisible = useCallback(() => setVisible(!visible), [visible, setVisible]);
 

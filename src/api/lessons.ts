@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { updateAssignment } from "@store/syncSlice.ts";
 
 import * as api from "@api";
 import { ApiAssignment } from "@api";
@@ -21,7 +21,7 @@ export async function startAssignment(
 
   // Update the assignment in the Redux store
   const assignment = api.initAssignment(res);
-  store.dispatch(actions.updateAssignment(assignment));
+  store.dispatch(updateAssignment(assignment));
 
   return res;
 }

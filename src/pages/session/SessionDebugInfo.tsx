@@ -4,19 +4,19 @@
 
 import { Divider } from "antd";
 
-import { RootState } from "@store";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "@store";
+import { shallowEqual } from "react-redux";
 
 import { countSessionItems } from "@session";
 
 export function SessionDebugInfo(): JSX.Element {
-  const currentQuestion = useSelector((s: RootState) => s.session.currentQuestion);
-  const sessionState = useSelector((s: RootState) => s.session.sessionState, shallowEqual);
+  const currentQuestion = useAppSelector(s => s.session.currentQuestion);
+  const sessionState = useAppSelector(s => s.session.sessionState, shallowEqual);
   const { startedItems, finishedItems, skippedItems, totalItems, wrappingUp } =
     countSessionItems(sessionState);
-  const question = useSelector((s: RootState) =>
+  const question = useAppSelector(s =>
     s.session.sessionState?.questions[currentQuestion ?? -1], shallowEqual);
-  const item = useSelector((s: RootState) =>
+  const item = useAppSelector(s =>
     s.session.sessionState?.items[question?.itemId ?? -1], shallowEqual);
 
   return <div className="session-debug-info">

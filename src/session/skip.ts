@@ -4,10 +4,15 @@
 
 import { ReactNode } from "react";
 
-import { store } from "@app";
-import * as actions from "@actions/SessionActions";
-import { SkipQuestionPayload } from "@actions/SessionActions";
-import { PayloadActionCreator } from "typesafe-actions";
+import { store } from "@store";
+import {
+  SkipQuestionPayload,
+  skipQuestionDelay,
+  skipQuestionPutEnd,
+  skipQuestionRemove,
+  endSession
+} from "@store/sessionSlice";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 import { saveSession } from "@session";
 
@@ -29,18 +34,6 @@ const debug = Debug("kanjischool:session-skip");
  * - REMOVE - Remove the item (both questions) from the session entirely.
  */
 export type SkipType = "DELAY" | "PUT_END" | "REMOVE";
-
-const PAYLOADS: Record<SkipType, PayloadActionCreator<
-  "SESSION_SKIP_QUESTION_DELAY"
-  | "SESSION_SKIP_QUESTION_PUT_END"
-  | "SESSION_SKIP_QUESTION_REMOVE",
-  SkipQuestionPayload
->> = {
-  "DELAY": actions.skipQuestionDelay,
-  "PUT_END": actions.skipQuestionPutEnd,
-  "REMOVE": actions.skipQuestionRemove,
-};
-
 const SKIP_NOTIFICATIONS: Record<SkipType, ReactNode> = {
   "DELAY": "Question skipped.",
   "PUT_END": "Subject skipped and put back to end of queue.",
@@ -58,9 +51,13 @@ export function skipQuestion(
 
   // Trigger the appropriate skip action based on the user's setting
   const payload: SkipQuestionPayload = { type, itemId };
-  const action = PAYLOADS[skipType];
-  if (!action) throw new Error("Unknown skip type: " + skipType);
-  store.dispatch(action(payload));
+  if (skipType === "DELAY") {
+    store.dispatch(skipQuestionDelay(payload));
+  } else if (skipType === "PUT_END") {
+    store.dispatch(skipQuestionPutEnd(payload));
+  } else if (skipType === "REMOVE") {
+    store.dispatch(skipQuestionRemove(payload));
+  }
 
   // Figure out if the session is now complete (questions list is empty)
   const sessionState = store.getState().session.sessionState;
@@ -70,7 +67,7 @@ export function skipQuestion(
   // Session is complete, clear it from the Redux store
   if (sessionComplete) {
     debug("session complete, clearing from redux");
-    store.dispatch(actions.endSession());
+    store.dispatch(endSession());
   }
 
   debug("saving session");

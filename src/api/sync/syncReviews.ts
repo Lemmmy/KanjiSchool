@@ -2,9 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { store } from "@app";
-
-import * as actions from "@actions/SyncActions";
+import { store } from "@store";
+import { setReviewsLastSynced, setSyncingReviews, setSyncingReviewsProgress } from "@store/syncSlice";
 
 import * as api from "@api";
 import { ApiReview } from "@api";
@@ -32,7 +31,7 @@ async function _syncReviews(fullSync?: boolean): Promise<void> {
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
     ? store.getState().sync.reviewsLastSynced
     : undefined;
-  store.dispatch(actions.setSyncingReviews(true));
+  store.dispatch(setSyncingReviews(true));
   debug("beginning reviews sync since %s (ver %d -> %d)", lastSynced, syncLastVersion, syncCurrentVersion);
 
   let count = 0;
@@ -41,7 +40,7 @@ async function _syncReviews(fullSync?: boolean): Promise<void> {
 
     // Update the progress bar
     count += data.length;
-    store.dispatch(actions.setSyncingReviewsProgress({
+    store.dispatch(setSyncingReviewsProgress({
       count, total: total_count
     }));
   });
@@ -56,10 +55,10 @@ async function _syncReviews(fullSync?: boolean): Promise<void> {
   debug("removed %d fake reviews", fakeReviews);
 
   // We're now done syncing
-  store.dispatch(actions.setSyncingReviews(false));
+  store.dispatch(setSyncingReviews(false));
 
   const lastSyncedNow = new Date().toISOString();
   lsSetString("reviewsLastSynced", lastSyncedNow);
   lsSetNumber("syncReviewsLastVersion", syncCurrentVersion);
-  store.dispatch(actions.setReviewsLastSynced(lastSyncedNow));
+  store.dispatch(setReviewsLastSynced(lastSyncedNow));
 }
