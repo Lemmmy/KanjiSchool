@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useCallback, useEffect, useState } from "react";
-import { Button, Form, Input, Popconfirm, Space } from "antd";
+import { Button, Form, Input, Popconfirm, Space, Switch } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,7 @@ export function RandomFontForm(): JSX.Element {
   const [form] = Form.useForm<FormValues>();
   const customFonts = useSelector((state: RootState) => state.settings.customFonts);
   const [sampleText, setSampleText] = useState("あいうえお");
+  const [showUnsupported, setShowUnsupported] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -61,26 +62,30 @@ export function RandomFontForm(): JSX.Element {
   }, [dispatch]);
 
   return <>
-    <div className="inline-flex items-center gap-xs w-[55%] mb-sm">
-      <label htmlFor="sample-text">Preview text:</label>
-      <Input
-        placeholder="Sample text"
-        id="sample-text"
-        value={sampleText}
-        onChange={e => setSampleText(e.target.value)}
-        className="flex-1"
-      />
+    <div className="flex flex-col md:flex-row gap-xs items-center mb-sm">
+      <div className="inline-flex items-center gap-xs w-[55%]">
+        <label htmlFor="sample-text">Preview text:</label>
+        <Input
+          placeholder="Sample text"
+          id="sample-text"
+          value={sampleText}
+          onChange={e => setSampleText(e.target.value)}
+          className="flex-1"
+        />
+      </div>
+
+      <div className="inline-flex items-center gap-xs">
+        <Switch defaultChecked={true} onChange={setShowUnsupported} id="show-unsupported" />
+        <label htmlFor="show-unsupported">Show unsupported fonts</label>
+      </div>
     </div>
 
     <Form
-      className="random-font-form"
       layout="vertical"
       form={form}
       onFinish={onFinish}
     >
-      <Form.List
-        name="customFonts"
-      >
+      <Form.List name="customFonts">
         {(fields, { add, remove }, { errors }) => (
           <>
             {fields.map(field =>
@@ -91,6 +96,7 @@ export function RandomFontForm(): JSX.Element {
                 remove={remove}
                 font={form.getFieldValue("customFonts")?.[field.name]}
                 sampleText={sampleText}
+                showUnsupported={showUnsupported}
               />
             )}
 

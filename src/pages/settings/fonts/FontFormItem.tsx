@@ -19,10 +19,21 @@ interface FontFormItemProps {
   fields: number;
   remove: (field: number) => void;
   sampleText: string;
+  showUnsupported?: boolean;
 }
 
-export function FontFormItem({ field, font, fields, remove, sampleText, ...props }: FontFormItemProps): JSX.Element {
-  const supported = useSelector((state: RootState) => font ? state.settings.supportedFonts[font] : false);
+export function FontFormItem({
+  field,
+  font,
+  fields,
+  remove,
+  sampleText,
+  showUnsupported = true,
+  ...props
+}: FontFormItemProps): JSX.Element {
+  const supported = useSelector((state: RootState) => font
+    ? state.settings.supportedFonts[font]
+    : false);
 
   return <Form.Item
     required={false}
@@ -32,7 +43,8 @@ export function FontFormItem({ field, font, fields, remove, sampleText, ...props
       "[&_.ant-form-item-control-input]:-mb-px",
       {
         "[&_.ant-form-item-control-input]:min-h-[40px]": supported,
-        "[&_.ant-form-item-control-input]:min-h-[28px]": !supported
+        "[&_.ant-form-item-control-input]:min-h-[28px]": !supported,
+        "hidden": !showUnsupported && !supported && fields > 1 && font
       }
     )}
     {...props}
@@ -53,7 +65,7 @@ export function FontFormItem({ field, font, fields, remove, sampleText, ...props
           "w-[55%] rounded-none group-first:rounded-t group-last:rounded-b z-10 hover:z-20 focus:z-30",
           {
             "h-[40px] text-base": supported,
-            "h-[28px] text-sm": !supported
+            "h-[28px] text-sm text-desc": !supported
           }
         )}
       />
