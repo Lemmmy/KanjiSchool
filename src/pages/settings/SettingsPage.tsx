@@ -16,7 +16,7 @@ import {
   settingsGroup
 } from "./SettingsSubGroup.tsx";
 import { getLessonSettingsGroup, getReviewSettingsGroup, getSelfStudySettingsGroup } from "./SettingsSessions";
-import { getFontSettingsGroup } from "./SettingsFonts";
+import { getFontSettingsGroup } from "./fonts/SettingsFonts.tsx";
 
 import { SettingsButtonRow } from "./ButtonRow";
 import { StorageUsageCard } from "./StorageUsageCard";

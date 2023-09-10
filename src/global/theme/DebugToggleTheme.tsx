@@ -5,6 +5,7 @@
 import { Button } from "antd";
 import { useThemeContext } from "@global/theme/ThemeContext.tsx";
 import { setStringSetting } from "@utils";
+import { BulbOutlined } from "@ant-design/icons";
 
 const debugTheme = localStorage.getItem("debugTheme") === "true";
 
@@ -18,7 +19,5 @@ export function DebugToggleTheme(): JSX.Element | null {
     setStringSetting("siteTheme", theme === "light" ? "dark" : "light");
   }
 
-  return <Button onClick={onClick}>
-    Toggle theme
-  </Button>;
+  return <Button onClick={onClick} icon={<BulbOutlined />} />;
 }
