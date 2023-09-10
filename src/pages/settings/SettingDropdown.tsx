@@ -29,14 +29,16 @@ export function SettingDropdown<T extends string>({
   }
 
   return <div className={menuItemSettingInner}>
-    {title}
-    <Select
-      value={settingValue}
-      options={options}
-      onChange={onChange}
-      className="ml-sm"
-      popupMatchSelectWidth={false}
-    />
+    <div className="flex flex-col md:flex-row md:items-center gap-sm leading-none">
+      {title}
+
+      <Select
+        value={settingValue}
+        options={options}
+        onChange={onChange}
+        popupMatchSelectWidth={false}
+      />
+    </div>
 
     <SettingDescription description={description} />
   </div>;

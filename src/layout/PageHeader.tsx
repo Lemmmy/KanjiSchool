@@ -27,7 +27,7 @@ export function PageHeader({
       aria-label="Back"
       tabIndex={0}
       onClick={onBack}
-      className="mr-md px-0 text-white flex-shrink-0"
+      className="mr-md px-0 text-white light:text-black flex-shrink-0"
     >
       <ArrowLeftOutlined />
     </Button>}

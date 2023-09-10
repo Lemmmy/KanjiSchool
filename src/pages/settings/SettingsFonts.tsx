@@ -7,12 +7,15 @@ import { Button, Form, Input, Popconfirm, Space, Tooltip } from "antd";
 import { CheckCircleFilled, FontSizeOutlined, MinusCircleOutlined, PlusOutlined, WarningFilled } from "@ant-design/icons";
 import { ExtLink } from "@comp/ExtLink";
 import { defaultFonts, lsSetObject, reloadFontCache, useBooleanSetting } from "@utils";
+import classNames from "classnames";
 
 import { RootState } from "@store";
 import { useSelector, useDispatch } from "react-redux";
 import { setCustomFonts } from "@actions/SettingsActions";
 
 import { booleanSetting, MenuItem, settingsSubGroup } from "./SettingsSubGroup.tsx";
+
+import { menuItemClass } from "./settingsStyles.ts";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:settings-fonts");
@@ -39,6 +42,10 @@ export function getFontSettingsGroup(): MenuItem {
       </>),
       {
         key: "randomFontList",
+        className: classNames(
+          menuItemClass,
+          "!cursor-auto hover:!bg-transparent"
+        ),
         label: <RandomFontList />
       }
     ]
@@ -46,17 +53,19 @@ export function getFontSettingsGroup(): MenuItem {
 }
 
 function RandomFontList(): JSX.Element {
+  const baseClass = "leading-normal py-md whitespace-normal";
+
   const enabled = useBooleanSetting("randomFontEnabled");
   if (!enabled) {
-    return <div className="random-font-list">
+    return <div className={baseClass}>
       <RandomFontCredits enabled={false} />
     </div>;
   }
 
-  return <div className="random-font-list">
+  return <div className={baseClass}>
     <RandomFontCredits enabled={true} />
 
-    <p className="font-intro">
+    <p className="mt-sm">
       Fonts supported by your system are shown with a green checkmark <Check />. The default list of fonts is based
       on <ExtLink href="https://gist.github.com/obskyr/9f3c77cf6bf663792c6e">this list</ExtLink>, and more fonts can be
       found at <ExtLink href="https://freejapanesefont.com">freejapanesefont.com</ExtLink>.
@@ -67,15 +76,20 @@ function RandomFontList(): JSX.Element {
 }
 
 function RandomFontCredits({ enabled }: { enabled: boolean }): JSX.Element {
-  return <div className="random-font-credits">
+  return <div>
     Random Fonts is based on the
     fantastic <ExtLink href="https://community.wanikani.com/t/jitai-%E5%AD%97%E4%BD%93-the-font-randomizer-that-fits/12617">Jitai</ExtLink> userscript.
     {!enabled && <> Enable to see the full list of fonts.</>}
   </div>;
 }
 
-const Check = () => <Tooltip title="This font is available!"><CheckCircleFilled className="check" /></Tooltip>;
-const Warn = () => <Tooltip title="Font not found"><WarningFilled className="warn" /></Tooltip>;
+const Check = () => <Tooltip title="This font is available!">
+  <CheckCircleFilled className="text-green" />
+</Tooltip>;
+
+const Warn = () => <Tooltip title="Font not found">
+  <WarningFilled className="text-yellow light:text-orange" />
+</Tooltip>;
 
 interface FormValues {
   customFonts: string[];
@@ -122,17 +136,18 @@ function RandomFontForm(): JSX.Element {
   }, [dispatch]);
 
   return <>
-    <div className="font-sample-input">
+    <div className="inline-flex items-center gap-xs w-[55%] mb-sm">
       <label htmlFor="sample-text">Preview text:</label>
       <Input
         placeholder="Sample text"
         id="sample-text"
         value={sampleText}
         onChange={e => setSampleText(e.target.value)}
+        className="flex-1"
       />
     </div>
 
-    <Form<FormValues>
+    <Form
       className="random-font-form"
       layout="vertical"
       form={form}
@@ -154,10 +169,10 @@ function RandomFontForm(): JSX.Element {
               />
             )}
 
-            <Form.Item>
+            <Form.Item className="mb-0">
               <Button
                 type="dashed"
-                className="dynamic-add-button"
+                className="w-[55%] my-xs text-sm"
                 onClick={() => add()}
                 icon={<PlusOutlined />}
               >
@@ -169,20 +184,20 @@ function RandomFontForm(): JSX.Element {
         )}
       </Form.List>
 
-      <p className="font-install-hint">
+      <p className="text-desc text-sm mt-xss">
         Note that on some systems you may need to restart the browser for newly installed fonts to take effect.
       </p>
 
       <Space>
-        <Form.Item>
+        <Form.Item className="mb-0">
           <Button type="primary" htmlType="submit">Save</Button>
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item className="mb-0">
           <Button onClick={reloadFonts}>Reload fonts</Button>
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item className="mb-0">
           <Popconfirm
             title="Are you sure you want to reset to the default list of fonts?"
             onConfirm={resetToDefaults}
@@ -197,24 +212,39 @@ function RandomFontForm(): JSX.Element {
   </>;
 }
 
-function FontSample({ font, sampleText }: { font: string; sampleText: string }): JSX.Element {
-  return <div className="font-sample" style={{ fontFamily: font }}>
+interface FontSampleProps {
+  font: string;
+  sampleText: string;
+}
+
+function FontSample({ font, sampleText }: FontSampleProps): JSX.Element {
+  return <div className="text-[24px] leading-none" style={{ fontFamily: font }}>
     {sampleText}
   </div>;
 }
 
-function FontFormItem({ field, font, fields, remove, sampleText, ...props }: {
+interface FontFormItemProps {
   field: any;
   font: string | undefined;
   fields: number;
   remove: (field: number) => void;
   sampleText: string;
-}): JSX.Element {
+}
+
+function FontFormItem({ field, font, fields, remove, sampleText, ...props }: FontFormItemProps): JSX.Element {
   const supported = useSelector((state: RootState) => font ? state.settings.supportedFonts[font] : false);
 
   return <Form.Item
     required={false}
-    className={supported ? "font-supported" : "font-unsupported"}
+    className={classNames(
+      "mb-0 group",
+      "[&_.ant-form-item-control-input-content]:flex [&_.ant-form-item-control-input-content]:items-center",
+      "[&_.ant-form-item-control-input]:-mb-px",
+      {
+        "[&_.ant-form-item-control-input]:min-h-[40px]": supported,
+        "[&_.ant-form-item-control-input]:min-h-[28px]": !supported
+      }
+    )}
     {...props}
   >
     <Form.Item
@@ -227,20 +257,32 @@ function FontFormItem({ field, font, fields, remove, sampleText, ...props }: {
       }]}
       noStyle
     >
-      <Input placeholder="Font name" />
+      <Input
+        placeholder="Font name"
+        className={classNames(
+          "w-[55%] rounded-none group-first:rounded-t group-last:rounded-b z-10 hover:z-20 focus:z-30",
+          {
+            "h-[40px] text-base": supported,
+            "h-[28px] text-sm": !supported
+          }
+        )}
+      />
     </Form.Item>
 
-    {fields > 1 && <div className="font-buttons">
+    {fields > 1 && <div className="inline-flex items-center mx-xs gap-xs">
       {font && <span className="font-support-icon">
         {supported ? <Check /> : <Warn />}
       </span>}
 
       <MinusCircleOutlined
-        className="dynamic-delete-button"
+        className="hover:text-red"
         onClick={() => remove(field.name)}
       />
     </div>}
 
-    {font && supported && <FontSample font={font} sampleText={sampleText} />}
+    {font && supported && <FontSample
+      font={font}
+      sampleText={sampleText}
+    />}
   </Form.Item>;
 }

@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React from "react";
+import React, { useRef, useCallback } from "react";
 import { ImportOutlined } from "@ant-design/icons";
 
 import { SettingsExportFile } from "./ImportExport";
@@ -10,9 +10,16 @@ import { SettingsExportFile } from "./ImportExport";
 import { AnySettingName, DEFAULT_SETTINGS, getSettingKey } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
+import { Button } from "antd";
 
 export function SettingsImportButton(): JSX.Element {
-  function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const onButtonClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const onFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (!files?.[0])
       return;
@@ -33,20 +40,30 @@ export function SettingsImportButton(): JSX.Element {
       const contents = e.target.result.toString();
       importSettings(contents);
     };
-  }
+  }, []);
+
+  const stopPropagation = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
 
   return <div>
-    {/* Pretend to be an ant-design button */}
-    <label htmlFor="import-settings-file" className="ant-btn">
-      <ImportOutlined /><span>Import settings</span>
-    </label>
+    <span tabIndex={0} role="button" className="inline-block">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="text/plain,application/json"
+        onChange={onFileChange}
+        onClick={stopPropagation}
+        className="hidden"
+      />
 
-    <input
-      id="import-settings-file"
-      type="file"
-      accept="text/plain,application/json"
-      onChange={onFileChange}
-      style={{ display: "none" }} />
+      <Button
+        icon={<ImportOutlined />}
+        onClick={onButtonClick}
+      >
+        Import settings
+      </Button>
+    </span>
   </div>;
 }
 

@@ -30,15 +30,16 @@ export function SettingBoolean({
     className={menuItemSettingInner}
     onClick={() => onChange(!settingValue)}
   >
-    <Switch
-      // FIXME: This was double-firing change events (due to the click listener
-      //        on the parent div); omitting this event is bad for a11y
-      // onChange={onChange}
-      checked={settingValue}
-      style={{ marginRight: 12 }}
-    />
+    <div className="flex items-center gap-sm leading-none">
+      <Switch
+        // FIXME: This was double-firing change events (due to the click listener
+        //        on the parent div); omitting this event is bad for a11y
+        // onChange={onChange}
+        checked={settingValue}
+      />
 
-    {title}
+      {title}
+    </div>
 
     <SettingDescription description={description} />
   </div>;

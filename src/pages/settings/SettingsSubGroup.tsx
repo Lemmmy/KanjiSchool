@@ -9,53 +9,81 @@ import { SettingName } from "@utils/settings";
 import { SettingBoolean } from "./SettingBoolean";
 import { SettingInteger } from "./SettingInteger";
 import { SettingDropdown } from "./SettingDropdown";
+import { menuItemClass } from "./settingsStyles.ts";
 
 export type MenuItem = Required<MenuProps>["items"][number];
 
-export const booleanSetting = (
+export function booleanSetting(
   setting: SettingName<boolean>,
   title?: string,
   description?: ReactNode
-): MenuItem => ({
-  key: setting,
-  label: <SettingBoolean setting={setting} title={title} description={description} />
-});
+): MenuItem {
+  return {
+    key: setting,
+    className: menuItemClass,
+    label: <SettingBoolean
+      setting={setting}
+      title={title}
+      description={description}
+    />
+  };
+}
 
-export const integerSetting = (
+export function integerSetting(
   setting: SettingName<number>,
   title?: string,
   description?: ReactNode
-): MenuItem => ({
-  key: setting,
-  label: <SettingInteger setting={setting} title={title} description={description} />
-});
+): MenuItem {
+  return {
+    key: setting,
+    className: menuItemClass,
+    label: <SettingInteger
+      setting={setting}
+      title={title}
+      description={description}
+    />
+  };
+}
 
-export const dropdownSetting = <T extends string>(
+export function dropdownSetting<T extends string>(
   setting: SettingName<T>,
   title?: string,
   description?: ReactNode,
   options: { label: string; value: T }[] = []
-): MenuItem => ({
+): MenuItem {
+  return {
     key: setting,
-    label: <SettingDropdown setting={setting} title={title} description={description} options={options} />
-  });
+    className: menuItemClass,
+    label: <SettingDropdown
+      setting={setting}
+      title={title}
+      description={description}
+      options={options}
+    />
+  };
+}
 
-export const settingsSubGroup = (
+export function settingsSubGroup(
   title: string,
   icon: ReactNode | undefined,
   settings: MenuItem[]
-): MenuItem => ({
-  key: title,
-  label: <div className="flex gap-sm">{icon} {title}</div>,
-  children: settings
-});
+): MenuItem {
+  return {
+    key: title,
+    className: "!cursor-auto",
+    label: <div className="flex gap-sm">{icon} {title}</div>,
+    children: settings
+  };
+}
 
-export const settingsGroup = (
+export function settingsGroup(
   title: string,
   settings: MenuItem[]
-): MenuItem => ({
-  key: title,
-  type: "group",
-  label: title,
-  children: settings
-});
+): MenuItem {
+  return {
+    key: title,
+    type: "group",
+    label: title,
+    children: settings
+  };
+}

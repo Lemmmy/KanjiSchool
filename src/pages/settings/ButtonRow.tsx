@@ -8,7 +8,7 @@ import { SettingsImportButton } from "./SettingsImportButton";
 import { LogOutButton } from "./LogOutButton";
 
 export function SettingsButtonRow(): JSX.Element {
-  return <Row gutter={24} style={{ marginBottom: 24 }}>
+  return <Row gutter={24} className="my-lg">
     <Col>
       <Space wrap>
         <SettingsExportButton />

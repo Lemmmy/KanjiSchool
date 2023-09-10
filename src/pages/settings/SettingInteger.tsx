@@ -38,25 +38,31 @@ export function SettingInteger({
   }, [isValid, numVal, setting]);
 
   return <div className={menuItemSettingInner}>
-    <Input.Group compact className="inline-block w-auto mr-sm mb-xs">
-      {/* Number input */}
-      <InputNumber
-        value={value}
-        onChange={onChange}
-        onPressEnter={onSave}
-      />
+    <div className="flex items-center gap-sm">
+      {/* Input and save button */}
+      <Input.Group compact className="inline-block w-auto">
+        {/* Number input */}
+        <InputNumber
+          value={value}
+          onChange={onChange}
+          onPressEnter={onSave}
+        />
 
-      {/* Save button */}
-      <Button
-        type="primary"
-        disabled={settingValue === Number(value) || !isValid}
-        onClick={onSave}
-      >
-        Save
-      </Button>
-    </Input.Group>
+        {/* Save button */}
+        <Button
+          type="primary"
+          disabled={settingValue === Number(value) || !isValid}
+          onClick={onSave}
+        >
+          Save
+        </Button>
+      </Input.Group>
 
-    {title}
+      {/* Item title */}
+      <div>
+        {title}
+      </div>
+    </div>
 
     <SettingDescription description={description} />
   </div>;

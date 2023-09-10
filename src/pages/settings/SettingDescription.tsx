@@ -12,7 +12,7 @@ export function SettingDescription({ description }: Props): JSX.Element | null {
   if (!description) return null;
 
   return (
-    <div className="text-desc text-sm">
+    <div className="text-desc text-sm mt-xss -mb-xss whitespace-normal">
       {description}
     </div>
   );

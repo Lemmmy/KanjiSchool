@@ -7,6 +7,7 @@ import { HomeOutlined, BugOutlined, SettingOutlined, BgColorsOutlined, SearchOut
 import { AccessibilityFilled } from "@comp/icons/AccessibilityFilled";
 
 import { PageLayout } from "@layout/PageLayout";
+import { menuClass } from "./settingsStyles.ts";
 import {
   settingsSubGroup,
   booleanSetting,
@@ -156,13 +157,13 @@ const menuItems: MenuProps["items"] = [
 
 function SettingsPage(): JSX.Element {
   return <PageLayout
-    contentsClassName="max-w-[960px] mx-auto mt-lg"
+    contentsClassName="max-w-[960px] mx-auto"
     siteTitle="Settings"
     title="Settings"
   >
     <Menu
       mode="inline"
-      className="w-full border-solid border-split !border rounded"
+      className={menuClass}
       selectable={false}
       items={menuItems}
     />
@@ -172,6 +173,9 @@ function SettingsPage(): JSX.Element {
 
     {/* Storage estimate */}
     <StorageUsageCard />
+
+    {/* Page contents margin/spacer */}
+    <div className="h-lg" />
   </PageLayout>;
 }
 

@@ -12,7 +12,7 @@ import { nts, stringifyBytes } from "@utils";
 const { Item } = Descriptions;
 
 export function StorageUsageCard(): JSX.Element {
-  return <Card title="Storage usage" className="storage-estimate-card">
+  return <Card title="Storage usage">
     <StorageEstimateRow />
     <AudioUsageRow />
   </Card>;
@@ -58,7 +58,7 @@ function AudioUsageRow(): JSX.Element | null {
   const supportedTypes = useMemo(checkSupportedAudioTypes, []);
 
   if (!audioUsage) return null;
-  return <Row gutter={24} style={{ marginTop: 24 }}>
+  return <Row gutter={24} className="mt-lg">
     <Col>
       <Descriptions title="Vocabulary audio" bordered size="small" column={1}>
         <Item label="Subjects">{nts(audioUsage.subjectCount)}</Item>
@@ -70,7 +70,7 @@ function AudioUsageRow(): JSX.Element | null {
       <Button
         type="primary" danger
         onClick={() => clearAudio().then(getAudioUsage).then(setAudioUsage)}
-        style={{ marginTop: 16 }}
+        className="mt-md"
       >
         Clear audio cache
       </Button>
