@@ -115,7 +115,7 @@ function PopoverInner({ setValue }: Pick<Props, "setValue">): JSX.Element {
       </>
       : <HwOfflineWarning />}
 
-    <div className="flex bg-white/5 border-0 border-solid border-t border-t-split py-xs px-sm mb-px">
+    <div className="flex bg-white/5 light:bg-black/5 border-0 border-solid border-t border-t-split py-xs px-sm mb-px">
       <Button tabIndex={2} className={btnClass} onClick={backspace}><BackspaceFilled /></Button>
       <Button tabIndex={3} className={btnClass} onClick={undo}><UndoOutlined /></Button>
       <Button tabIndex={4} className={btnClass + " flex-1"} onClick={space}><SpaceOutlined /></Button>
