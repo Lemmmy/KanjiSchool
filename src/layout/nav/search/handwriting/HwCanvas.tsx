@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React, { Dispatch, useCallback, useRef, useState, SetStateAction } from "react";
+import { Dispatch, useCallback, useRef, useMemo, useState, SetStateAction } from "react";
 import { theme } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
@@ -314,7 +314,7 @@ export function useHwCanvas(
   }, [penUp]);
 
   // Canvas is cached so its ref doesn't change when `empty` state changes
-  const canvasEl = React.useMemo(() => <canvas
+  const canvasEl = useMemo(() => <canvas
     className="w-full aspect-2/1 cursor-pen touch-none select-none"
 
     ref={onCanvasInit}
@@ -322,13 +322,14 @@ export function useHwCanvas(
     onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
   />, [onCanvasInit, onMouseDown, onMouseMove, onMouseUp, onTouchStart, onTouchMove, onTouchEnd]);
 
-  const el = React.useMemo(() => <div className="relative">
+  const el = useMemo(() => <div className="relative">
     {/* Cached canvas */}
     {canvasEl}
     {/* Pencil background image shown when the canvas is empty, used to indicate
       * a drawable area to the user */}
     {empty && <EditOutlined
-      className="w-full flex items-center justify-center absolute inset-0 text-white/10 pointer-events-none
+      className="w-full flex items-center justify-center absolute inset-0 pointer-events-none
+        text-white/10 light:text-black/10
         [&_svg]:w-1/2 [&_svg]:h-1/2"
     />}
   </div>, [empty, canvasEl]);

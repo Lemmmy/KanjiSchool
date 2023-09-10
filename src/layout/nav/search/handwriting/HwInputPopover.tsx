@@ -104,7 +104,8 @@ function PopoverInner({ setValue }: Pick<Props, "setValue">): JSX.Element {
             <span
               key={c}
               className="inline-block cursor-pointer px-md h-[48px] leading-[48px] text-center align-middle
-                 border-0 border-solid border-r border-r-split font-ja text-lg select-none hover:bg-white/5"
+                 border-0 border-solid border-r border-r-split font-ja text-lg select-none
+                 hover:bg-white/5 light:hover:bg-black/5"
               onClick={() => appendValue(c)}
             >
               {c}
