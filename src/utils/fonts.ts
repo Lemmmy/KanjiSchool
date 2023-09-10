@@ -18,12 +18,14 @@ import { lru } from "tiny-lru";
 import Debug from "debug";
 const debug = Debug("kanjischool:fonts");
 
+const defaultFont = "Noto Sans JP";
+
 // This selection of fonts is based on the fantastic Jitai userscript. Fonts can
 // be found on freejapanesefont.com.
 // https://gist.github.com/obskyr/9f3c77cf6bf663792c6e
 export const defaultFonts = [
   // Default KanjiSchool font
-  "Noto Sans JP",
+  defaultFont,
 
   // Default Windows fonts
   "Meiryo, メイリオ",
@@ -93,8 +95,10 @@ const testFontWidth = memoize((font: string): number => {
 });
 
 export function fontExists(font: string): boolean {
+  if (font === defaultFont) return true;
+
   const controlWidth = testFontWidth(DEFAULT_TEST_FONT);
-  const testWidth = testFontWidth(`72px "${font}", monospace`);
+  const testWidth = testFontWidth(`72px ${font}, monospace`);
   return controlWidth !== testWidth;
 }
 
