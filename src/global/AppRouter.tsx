@@ -34,7 +34,6 @@ export const router = createBrowserRouter([
 
       { path: "/settings",         lazy: () => import("@pages/settings/SettingsPage.tsx") },
       { path: "/debug",            lazy: () => import("@pages/debug/DebugPage.tsx") },
-      { path: "/debug/picktest",   lazy: () => import("@pages/debug/DebugPickTest.tsx") },
 
       { path: "*",                 element: <NotFoundPage /> }
     ]

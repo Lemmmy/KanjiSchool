@@ -20,17 +20,17 @@ export function LoginFooter(): JSX.Element {
   return <Space
     align="center"
     wrap
-    className="min-w-[300px] w-full max-w-sm mt-lg mb-32 md:mb-0 justify-center text-desc-c/75"
+    className="min-w-[300px] w-full max-w-sm mt-lg mb-32 md:mb-0 justify-center text-desc"
   >
     {/* Theme toggle */}
-    <Button type="link" onClick={toggleTheme} className="px-0 text-desc">
+    <Button type="link" onClick={toggleTheme} className="px-0 text-desc-c/75">
       {theme === "light" ? "Dark" : "Light"} theme
     </Button>
 
     <Separator />
 
     {/* GitHub */}
-    <ExtLink href="https://github.com/Lemmmy/KanjiSchool" className="text-desc">
+    <ExtLink href="https://github.com/Lemmmy/KanjiSchool" className="text-desc-c/75">
       GitHub
     </ExtLink>
 
@@ -38,7 +38,7 @@ export function LoginFooter(): JSX.Element {
 
     {/* Attribution */}
     <span>
-      Created by <ExtLink href="https://lemmmy.me" className="text-desc">Lemmmy</ExtLink>
+      Created by <ExtLink href="https://lemmmy.me" className="text-desc-c/75">Lemmmy</ExtLink>
     </span>
   </Space>;
 }

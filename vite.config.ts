@@ -4,6 +4,7 @@
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import mkcert from "vite-plugin-mkcert";
 import { VitePWA } from "vite-plugin-pwa";
 
 import fs from "fs";
@@ -38,10 +39,14 @@ export default defineConfig({
   resolve: {
     alias: parseTsAliases(),
   },
+  server: {
+    https: true,
+  },
   plugins: [
     react(),
+    mkcert(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
       workbox: {
         runtimeCaching: [
           // Cache the Google Fonts stylesheets

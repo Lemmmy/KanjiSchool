@@ -6,7 +6,6 @@ import { Progress } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { nts } from "@utils";
-import classNames from "classnames";
 
 interface Props {
   title: string;

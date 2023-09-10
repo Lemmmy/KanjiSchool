@@ -9,7 +9,6 @@ import { initStore } from "@store/init";
 
 import { AppLayout } from "@layout/AppLayout";
 import { InnerAppServices } from "@global/InnerAppServices.tsx";
-import { UpdateCheck } from "@global/UpdateCheck";
 import { StudyQueueHotkeyHandlerProvider } from "@comp/study-queue/StudyQueueHotkeyHandler";
 import { PresetModalProvider } from "@comp/preset-editor/PresetModalContext";
 
@@ -24,10 +23,12 @@ import { WkErrorBoundary } from "@comp/ErrorBoundary";
 
 import { getTheme } from "@global/theme";
 import AntInterface, { globalNotification } from "@global/AntInterface.tsx";
-
-import Debug from "debug";
 import { ThemeProvider } from "@global/theme/ThemeContext.tsx";
 import { AppServices } from "@global/AppServices.tsx";
+import { ServiceWorkerContextProvider } from "@global/update/ServiceWorkerContext.tsx";
+import { UpdateCheckNotification } from "@global/update/UpdateCheckNotification.tsx";
+
+import Debug from "debug";
 const debug = Debug("kanjischool:app");
 
 export let store: ReturnType<typeof initStore>;
@@ -44,20 +45,21 @@ export default function App(): JSX.Element {
           <AntInterface />
 
           {/* Have the update checker run at the highest level possible, as it is
-          * responsible for registering the service worker. */}
-          <UpdateCheck />
-
-          <Provider store={store}>
-            {/* Highest level error boundary underneath the Redux store, to prevent
-            * nuking the data if something goes SUPER wrong. If the Redux store gets
-            * re-initialized due to the uppermost App component re-rendering, it
-            * will trigger further errors and probably cause confusion while
-            * debugging. */}
-            <WkErrorBoundary name="app-top-level">
-              <AppServices />
-              <AppInner />
-            </WkErrorBoundary>
-          </Provider>
+            * responsible for registering the service worker. */}
+          <ServiceWorkerContextProvider>
+            <Provider store={store}>
+              {/* Highest level error boundary underneath the Redux store, to prevent
+                * nuking the data if something goes SUPER wrong. If the Redux store gets
+                * re-initialized due to the uppermost App component re-rendering, it
+                * will trigger further errors and probably cause confusion while
+                * debugging. */}
+              <WkErrorBoundary name="app-top-level">
+                <AppServices />
+                <UpdateCheckNotification />
+                <AppInner />
+              </WkErrorBoundary>
+            </Provider>
+          </ServiceWorkerContextProvider>
         </AntApp>
       </ConfigProvider>}
     </ThemeProvider>

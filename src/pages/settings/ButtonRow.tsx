@@ -6,7 +6,7 @@ import { SettingsExportButton } from "./SettingsExportButton";
 import { SettingsImportButton } from "./SettingsImportButton";
 
 export function SettingsButtonRow(): JSX.Element {
-  return <div className="mx-md my-lg flex gap-md items-center">
+  return <div className="mx-md my-lg flex flex-col md:flex-row gap-md items-center">
     <p className="text-desc text-sm my-0 flex-1">
       Export a copy of your settings to back them up, or import them on another device.
     </p>

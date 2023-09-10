@@ -113,7 +113,9 @@ export function LoginPage(): JSX.Element {
         {/* Fake username for autofill */}
         <Input
           type="username"
-          id="username" name="username"
+          id="username"
+          name="username"
+          autoComplete="username"
           value="WaniKani API Key"
           className="absolute pointer-events-none opacity-0"
         />
