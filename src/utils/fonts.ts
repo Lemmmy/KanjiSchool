@@ -94,7 +94,7 @@ const testFontWidth = memoize((font: string): number => {
 
 export function fontExists(font: string): boolean {
   const controlWidth = testFontWidth(DEFAULT_TEST_FONT);
-  const testWidth = testFontWidth(`72px ${font}, monospace`);
+  const testWidth = testFontWidth(`72px "${font}", monospace`);
   return controlWidth !== testWidth;
 }
 
