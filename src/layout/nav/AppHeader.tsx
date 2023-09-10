@@ -27,8 +27,10 @@ export const headerElementClass = classNames(
 );
 
 export const dropdownOverlayClass = classNames(
+  // .site-header-dropdown-overlay is used in index.css
   "fixed !top-header site-header-dropdown-overlay",
   "[&_.ant-dropdown-menu-item]:px-md [&_.ant-dropdown-menu-item]:py-xs",
+  "[&_.clink-dis]:text-basec"
   // See also the styles in index.css
 );
 
