@@ -48,8 +48,6 @@ export function ServiceWorkerContextProvider({ children }: { children: ReactNode
     close
   }), [loading, needRefresh, update, close]);
 
-  console.log("ServiceWorkerContextProvider4", res);
-
   return <ServiceWorkerContext.Provider value={res}>
     {children}
   </ServiceWorkerContext.Provider>;

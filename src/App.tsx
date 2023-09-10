@@ -22,7 +22,7 @@ import { SyncPage } from "@pages/login/SyncPage";
 import { WkErrorBoundary } from "@comp/ErrorBoundary";
 
 import { getTheme } from "@global/theme";
-import AntInterface, { globalNotification } from "@global/AntInterface.tsx";
+import AntInterface, { globalNotification, messageConfig, notificationConfig } from "@global/AntInterface.tsx";
 import { ThemeProvider } from "@global/theme/ThemeContext.tsx";
 import { AppServices } from "@global/AppServices.tsx";
 import { ServiceWorkerContextProvider } from "@global/update/ServiceWorkerContext.tsx";
@@ -40,7 +40,7 @@ export default function App(): JSX.Element {
   return <>
     <ThemeProvider>
       {(themeName) => <ConfigProvider theme={getTheme(themeName).antTheme}>
-        <AntApp>
+        <AntApp message={messageConfig} notification={notificationConfig}>
           {/* Provide the globals for message, modal, and notification. */}
           <AntInterface />
 
