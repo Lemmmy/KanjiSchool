@@ -11,7 +11,7 @@ import {
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { useDispatch } from "react-redux";
-import { setHotkeyHelpVisible } from "@store/settingsSlice.ts";
+import { setHotkeyHelpVisible } from "@store/slices/settingsSlice.ts";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 import { ExtLink } from "@comp/ExtLink";

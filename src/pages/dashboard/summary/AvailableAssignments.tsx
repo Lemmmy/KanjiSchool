@@ -93,7 +93,7 @@ export function useAvailableAssignments(): FullAvailableAssignments | undefined 
 
   const assignments = api.useAssignments();
   const subjects = api.useSubjects();
-  const checkTime = useAppSelector(s => s.sync.nextReviewsAvailable.checkTime);
+  const checkTime = useAppSelector(s => s.reviews.nextReviewsAvailable.checkTime);
 
   return useMemo(() => getData(level, maxLevel, assignments, subjects, checkTime),
     [level, maxLevel, assignments, subjects, checkTime]);

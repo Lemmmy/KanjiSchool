@@ -8,10 +8,10 @@ import { shallowEqual } from "react-redux";
 import { ApiStudyMaterialMap, ApiStudyMaterial } from "@api";
 
 export const useStudyMaterials = (): ApiStudyMaterialMap | undefined =>
-  useAppSelector(s => s.sync.studyMaterials);
+  useAppSelector(s => s.studyMaterials.studyMaterials);
 
 export const useStudyMaterialBySubjectId = (id: number): ApiStudyMaterial | undefined =>
   useAppSelector(
-    s => s.sync.studyMaterials[s.sync.subjectStudyMaterialIdMap[id] ?? -1],
+    s => s.studyMaterials.studyMaterials[s.studyMaterials.subjectStudyMaterialIdMap[id] ?? -1],
     shallowEqual
   );

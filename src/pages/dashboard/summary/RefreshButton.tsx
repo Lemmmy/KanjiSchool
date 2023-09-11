@@ -27,7 +27,7 @@ export function RefreshButton({ className }: Props): JSX.Element {
 
   const syncing = useAppSelector(s => s.sync.syncingAssignments);
   const canRefresh = useAppSelector(s =>
-    s.sync.assignments && s.sync.pendingLessons && s.sync.pendingReviews);
+    s.assignments.assignments && s.reviews.pendingLessons && s.reviews.pendingReviews);
 
   const refresh = useCallback(() => {
     // Don't refresh if there's no state loaded yet

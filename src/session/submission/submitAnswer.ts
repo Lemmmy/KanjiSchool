@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { answerQuestion, endSession } from "@store/sessionSlice.ts";
+import { answerQuestion, endSession } from "@store/slices/sessionSlice.ts";
 
 import * as api from "@api";
 
@@ -22,17 +22,22 @@ export function submitQuestionAnswer(
 ): boolean {
   debug("submitting question answer for %d (correct: %o)", assignmentId, correct);
 
-  const userLevel = store.getState().auth.user?.data.level ?? 1;
-  const maxLevel = store.getState().auth.user?.data.subscription.max_level_granted ?? 3;
-  const { subjects, assignments, reviewStatistics, subjectReviewStatisticIdMap }
-    = store.getState().sync;
-  if (!subjects || !assignments || !reviewStatistics)
+  const { user } = store.getState().auth;
+  const userLevel = user?.data.level ?? 1;
+  const maxLevel = user?.data.subscription.max_level_granted ?? 3;
+
+  const { subjects } = store.getState().subjects;
+  const { assignments } = store.getState().assignments;
+  const { reviewStatistics, subjectReviewStatisticIdMap } = store.getState().reviewStatistics;
+  if (!subjects || !assignments || !reviewStatistics) {
     throw new Error("No assignments or other data available yet!");
+  }
 
   const assignment = assignments[assignmentId || -1];
   const subject = subjects[assignment?.data.subject_id || -1];
-  if (subject?.data.level > maxLevel)
+  if (subject?.data.level > maxLevel) {
     throw new Error("Question cannot be submitted at WaniKani current subscription level.");
+  }
 
   // First, update the question in the Redux store, so the user can move on
   // immediately.

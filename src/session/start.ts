@@ -3,9 +3,9 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { startSession as startSessionAction } from "@store/sessionSlice.ts";
+import { startSession as startSessionAction } from "@store/slices/sessionSlice.ts";
 
-import { SubjectWithAssignment, fetchSubjectsAudios } from "@api";
+import { fetchSubjectsAudios, SubjectWithAssignment } from "@api";
 import { hasReadings, isVocabularyLike } from "@utils";
 
 import { SessionItem, SessionQuestion, SessionState, SessionType } from "./types";
@@ -20,6 +20,7 @@ import { globalNotification } from "@global/AntInterface.tsx";
 import { v4 as uuidv4 } from "uuid";
 
 import Debug from "debug";
+
 const debug = Debug("kanjischool:session-start");
 
 export function startSession(
@@ -62,8 +63,7 @@ export function startSession(
   }));
   saveSession();
 
-  const sessionState = store.getState().session.sessionState!;
-  return sessionState;
+  return store.getState().session.sessionState!;
 }
 
 // function subjectIdsToSubjects(subjectIds: number[]): SubjectWithAssignment[] {

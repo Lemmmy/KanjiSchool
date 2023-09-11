@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { setNextReviewsAvailable, setPendingLessons, setPendingReviews } from "@store/syncSlice.ts";
+import { setNextReviewsAvailable, setPendingLessons, setPendingReviews } from "@store/slices/reviewsSlice.ts";
 
 import { StoredAssignmentMap, AssignmentSubjectId, StoredSubjectMap } from "@api";
 

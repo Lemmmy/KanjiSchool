@@ -38,7 +38,7 @@ export function buildSessionComparator(
   type: SessionType,
   opts: SessionOpts
 ): SubjectComparator {
-  const { subjects } = store.getState().sync;
+  const { subjects } = store.getState().subjects;
   const { user } = store.getState().auth;
   if (!subjects) throw new Error("No subjects available yet!");
   if (!user) throw new Error("No user available yet!");

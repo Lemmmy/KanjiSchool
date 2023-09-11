@@ -12,7 +12,7 @@ import { shallowEqual } from "react-redux";
 import { slugifyPartOfSpeech } from "@utils";
 
 export function PartsOfSpeechPicker({ ...props }: any): JSX.Element {
-  const partsOfSpeech = useAppSelector(s => s.sync.partsOfSpeechCache, shallowEqual);
+  const partsOfSpeech = useAppSelector(s => s.subjects.partsOfSpeechCache, shallowEqual);
   const options = useMemo(() => {
     const values = Object.keys(partsOfSpeech || {});
     values.sort((a, b) => a.localeCompare(b, undefined, { ignorePunctuation: true }));

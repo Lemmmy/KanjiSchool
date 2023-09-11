@@ -10,7 +10,7 @@ import { nts } from "@utils";
 
 export function UpcomingReviewsNext(): JSX.Element | null {
   const { nextReviewsAt, nextReviewsNow, nextReviewsCount } =
-    useAppSelector(s => s.sync.nextReviewsAvailable, shallowEqual);
+    useAppSelector(s => s.reviews.nextReviewsAvailable, shallowEqual);
 
   // Don't render if we have nothing to show
   if (!nextReviewsAt || nextReviewsCount <= 0 || nextReviewsNow) {

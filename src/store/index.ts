@@ -5,19 +5,33 @@
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
-import authReducer, { AuthSliceState } from "./authSlice.ts";
-import sessionReducer, { SessionSliceState } from "./sessionSlice.ts";
-import settingsReducer, { SettingsSliceState } from "./settingsSlice.ts";
-import syncReducer, { SyncSliceState } from "./syncSlice.ts";
+import assignmentsReducer, { AssignmentsSliceState } from "@store/slices/assignmentsSlice.ts";
+import authReducer, { AuthSliceState } from "./slices/authSlice.ts";
+import imagesReducer, { ImagesSliceState } from "@store/slices/imagesSlice.ts";
+import levelProgressionsSlice, { LevelProgressionsSliceState } from "@store/slices/levelProgressionsSlice.ts";
+import reviewsReducer, { ReviewsSliceState } from "@store/slices/reviewsSlice.ts";
+import reviewStatisticsReducer, { ReviewStatisticsSliceState } from "@store/slices/reviewStatisticsSlice.ts";
+import sessionReducer, { SessionSliceState } from "./slices/sessionSlice.ts";
+import settingsReducer, { SettingsSliceState } from "./slices/settingsSlice.ts";
+import studyMaterialsSlice, { StudyMaterialsSliceState } from "@store/slices/studyMaterialsSlice.ts";
+import subjectsReducer, { SubjectsSliceState } from "./slices/subjectsSlice.ts";
+import syncReducer, { SyncSliceState } from "./slices/syncSlice.ts";
 
 import { devToolsOptions } from "./devTools.ts";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 
 export interface RootState {
-  auth: AuthSliceState;
-  session: SessionSliceState;
-  settings: SettingsSliceState;
-  sync: SyncSliceState;
+  assignments      : AssignmentsSliceState;
+  auth             : AuthSliceState;
+  images           : ImagesSliceState;
+  levelProgressions: LevelProgressionsSliceState;
+  reviews          : ReviewsSliceState;
+  reviewStatistics : ReviewStatisticsSliceState;
+  session          : SessionSliceState;
+  settings         : SettingsSliceState;
+  studyMaterials   : StudyMaterialsSliceState;
+  subjects         : SubjectsSliceState;
+  sync             : SyncSliceState;
 }
 
 export let store: ToolkitStore<RootState>;
@@ -27,12 +41,21 @@ export function initStore(): void {
 
   store = configureStore({
     reducer: {
-      auth: authReducer,
-      session: sessionReducer,
-      settings: settingsReducer,
-      sync: syncReducer
+      assignments      : assignmentsReducer,
+      auth             : authReducer,
+      images           : imagesReducer,
+      levelProgressions: levelProgressionsSlice,
+      reviews          : reviewsReducer,
+      reviewStatistics : reviewStatisticsReducer,
+      session          : sessionReducer,
+      settings         : settingsReducer,
+      studyMaterials   : studyMaterialsSlice,
+      subjects         : subjectsReducer,
+      sync             : syncReducer
     },
+
     devTools: devToolsOptions,
+
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         // SerializableStateInvariantMiddleware took 38ms, which is more than the warning threshold of 32ms

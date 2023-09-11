@@ -8,17 +8,17 @@ import { shallowEqual } from "react-redux";
 import { StoredSubjectMap, StoredSubject, NormalizedSubjectType } from "@api";
 
 export const useSubjects = (): StoredSubjectMap | undefined =>
-  useAppSelector(s => s.sync.subjects);
+  useAppSelector(s => s.subjects.subjects);
 
 export function useSubject(id?: number): StoredSubject | undefined {
-  const subject = useAppSelector(s => s.sync.subjects?.[id || -1], shallowEqual);
+  const subject = useAppSelector(s => s.subjects.subjects?.[id || -1], shallowEqual);
   return id !== undefined ? subject : undefined;
 }
 
 export function useSubjectBySlug(type: NormalizedSubjectType, slug: string | undefined): StoredSubject | undefined {
-  const id = useAppSelector(s => slug ? s.sync.slugCache?.[type][slug] : undefined);
-  return useAppSelector(s => s.sync.subjects?.[id || -1], shallowEqual);
+  const id = useAppSelector(s => slug ? s.subjects.slugCache?.[type][slug] : undefined);
+  return useAppSelector(s => s.subjects.subjects?.[id || -1], shallowEqual);
 }
 
 export const useHasSubjects = (): boolean =>
-  useAppSelector(s => !!s.sync.subjects);
+  useAppSelector(s => !!s.subjects.subjects);

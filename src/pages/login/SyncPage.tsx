@@ -16,7 +16,7 @@ import { useOnlineStatus } from "@utils";
 export function SyncPage(): JSX.Element {
   const isOnline = useOnlineStatus();
 
-  const progress = useAppSelector(s => s.sync.subjectsProgress)
+  const progress = useAppSelector(s => s.sync.subjectsProgress);
   const percent = progress
     ? Math.round(((progress.count / progress.total) * 100))
     : 0;

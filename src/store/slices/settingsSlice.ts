@@ -22,20 +22,18 @@ export type SettingsSliceState = SettingsState & {
   readonly getReviewsWarning: boolean;
 };
 
-export function getInitialSettingsState(): SettingsSliceState {
-  return {
-    ...loadSettings(),
-    hotkeyHelpVisible: false,
-    presets: {
-      lesson: lsGetObject<Preset[]>("lessonPresets") ?? [],
-      review: lsGetObject<Preset[]>("reviewPresets") ?? []
-    },
-    customFonts: lsGetObject<string[]>("customFonts") ?? defaultFonts,
-    supportedFonts: lsGetObject<Record<string, boolean>>("supportedFonts") ?? {},
-    tip: lsGetNumber("tip") ?? -1,
-    getReviewsWarning: lsGetObject<boolean>("getReviewsWarning") ?? false
-  };
-}
+export const initialState = (): SettingsSliceState => ({
+  ...loadSettings(),
+  hotkeyHelpVisible: false,
+  presets: {
+    lesson: lsGetObject<Preset[]>("lessonPresets") ?? [],
+    review: lsGetObject<Preset[]>("reviewPresets") ?? []
+  },
+  customFonts: lsGetObject<string[]>("customFonts") ?? defaultFonts,
+  supportedFonts: lsGetObject<Record<string, boolean>>("supportedFonts") ?? {},
+  tip: lsGetNumber("tip") ?? -1,
+  getReviewsWarning: lsGetObject<boolean>("getReviewsWarning") ?? false
+});
 
 interface SetSettingPayload<T> {
   settingName: keyof PickByValue<SettingsSliceState, T>;
@@ -46,7 +44,7 @@ type SetSettingPayloadAction<T> = PayloadAction<SetSettingPayload<T>>;
 
 const settingsSlice = createSlice({
   name: "settings",
-  initialState: getInitialSettingsState,
+  initialState,
   reducers: {
     setBooleanSetting(s, { payload }: SetSettingPayloadAction<boolean>) {
       s[payload.settingName] = payload.value;

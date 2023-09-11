@@ -5,7 +5,7 @@
 import { store } from "@store";
 import { StoredSubject, StoredAssignment } from "@api";
 import { db } from "@db";
-import { updateAssignment } from "@store/syncSlice.ts";
+import { updateAssignment } from "@store/slices/assignmentsSlice.ts";
 
 import { startOfHour, add as dateAdd } from "date-fns";
 import { getSrsSystemStageDurationSeconds } from "@utils";

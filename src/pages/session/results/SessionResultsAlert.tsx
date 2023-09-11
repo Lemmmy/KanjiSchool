@@ -7,7 +7,7 @@ import { Collapse, CollapseProps } from "antd";
 
 import { useAppSelector } from "@store";
 import { useDispatch } from "react-redux";
-import { setResultsViewed } from "@store/sessionSlice.ts";
+import { setResultsViewed } from "@store/slices/sessionSlice.ts";
 
 import { HeaderTitle } from "./HeaderTitle";
 import { Summary } from "./Summary";

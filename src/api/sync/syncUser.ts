@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { setUser } from "@store/authSlice.ts";
+import { setUser } from "@store/slices/authSlice.ts";
 
 import * as api from "@api";
 import { ApiUser } from "@api";

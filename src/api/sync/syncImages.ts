@@ -3,7 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { initImages, setImagesSynced, setSyncingImages, setSyncingImagesProgress } from "@store/syncSlice.ts";
+import { setImagesSynced, setSyncingImages, setSyncingImagesProgress } from "@store/slices/syncSlice.ts";
+import { initImages } from "@store/slices/imagesSlice.ts";
 
 import { ApiCharacterImage } from "@api";
 import { db } from "@db";
@@ -36,7 +37,7 @@ export async function syncImages(): Promise<void> {
   debug("syncing images from subjects");
 
   // Find the subjects that use images
-  const subjects = store.getState().sync.subjects;
+  const { subjects } = store.getState().subjects;
   if (!subjects) throw new Error("No subjects");
 
   const subjectsWithImages: Record<number, string> = [];

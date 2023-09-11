@@ -4,7 +4,7 @@
 
 import { store } from "@store";
 
-import { ApiReviewStatistic, StoredAssignment, StoredSubject, SubjectType, SubjectWithAssignment } from "@api";
+import { ApiReviewStatistic, StoredAssignment, StoredSubject, SubjectWithAssignment } from "@api";
 import { PerformSearchFn } from "./KeywordSearch";
 import { SearchParams } from ".";
 
@@ -24,10 +24,12 @@ export function searchSubjects(
   params: SearchParams,
   keywordSearch: PerformSearchFn
 ): SearchResults {
-  const { subjects, assignments, subjectAssignmentIdMap, reviewStatistics } =
-    store.getState().sync;
-  if (!subjects || !assignments || !subjectAssignmentIdMap || !reviewStatistics)
+  const { subjects } = store.getState().subjects;
+  const { assignments, subjectAssignmentIdMap } = store.getState().assignments;
+  const { reviewStatistics } = store.getState().reviewStatistics;
+  if (!subjects || !assignments || !subjectAssignmentIdMap || !reviewStatistics) {
     throw new Error("No data available yet!");
+  }
 
   const now = dayjs();
 

@@ -5,7 +5,7 @@
 import { globalMessage } from "@global/AntInterface.tsx";
 
 import { store } from "@store";
-import * as settings from "@store/settingsSlice.ts";
+import * as settings from "@store/slices/settingsSlice.ts";
 
 import { getSettingKey, SettingName, SETTING_CONFIGS } from ".";
 

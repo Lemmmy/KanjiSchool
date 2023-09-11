@@ -19,14 +19,17 @@ export const actionSanitizers: Record<string, (action: Action, id: number) => Ac
 export const devToolsOptions: DevToolsEnhancerOptions = {
   actionSanitizer: (action, id) =>
     (actionSanitizers[action.type] as any)?.(action, id) ?? action,
+
   actionsDenylist: [
-    "INIT_SUBJECTS", "INIT_ASSIGNMENTS", "INIT_REVIEW_STATISTICS",
-    "SET_SYNCING_IMAGES_PROGRESS", "SET_SYNCING_AUDIO_PROGRESS"
+    "INIT_SUBJECTS",
+    "INIT_ASSIGNMENTS",
+    "INIT_REVIEW_STATISTICS"
   ],
+
   stateSanitizer: (state: any) => ({
     ...state,
-    sync: {
-      ...(state as any).sync,
+    subjects: {
+      ...state.subjects,
       subjects: { "note": "Too large." },
       partsOfSpeechCache: { "note": "Too large." },
       slugCache: { "note": "Too large." },

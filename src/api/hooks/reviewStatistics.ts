@@ -8,10 +8,10 @@ import { shallowEqual } from "react-redux";
 import { ApiReviewStatisticMap, ApiReviewStatistic } from "@api";
 
 export const useReviewStatistics = (): ApiReviewStatisticMap | undefined =>
-  useAppSelector(s => s.sync.reviewStatistics);
+  useAppSelector(s => s.reviewStatistics.reviewStatistics);
 
 export const useReviewStatisticBySubjectId = (id: number): ApiReviewStatistic | undefined =>
   useAppSelector(
-    s => s.sync.reviewStatistics?.[s.sync.subjectReviewStatisticIdMap?.[id]],
+    s => s.reviewStatistics.reviewStatistics?.[s.reviewStatistics.subjectReviewStatisticIdMap?.[id]],
     shallowEqual
   );

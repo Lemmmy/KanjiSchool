@@ -23,7 +23,7 @@ export function ReviewForecastCard(): JSX.Element {
   const grouping = useStringSetting<ReviewForecastGrouping>("dashboardReviewForecastGrouping");
   const hours12h = useBooleanSetting("dashboardReviewForecast12h");
 
-  const forecast = useAppSelector(s => s.sync.reviewForecast, shallowEqual);
+  const forecast = useAppSelector(s => s.reviews.reviewForecast, shallowEqual);
   const data = useMemo(() => analyzeData(forecast, hours12h),
     [forecast, hours12h]);
   const items = useMemo(() => generateCollapseItems(data, grouping, hours12h, activeKeys),

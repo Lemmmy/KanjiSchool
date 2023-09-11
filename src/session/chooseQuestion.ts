@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { decrChoiceDelay, setQuestion } from "@store/sessionSlice.ts";
+import { decrChoiceDelay, setQuestion } from "@store/slices/sessionSlice.ts";
 
 import {
   MappedQuestion, mapQuestions,
@@ -17,7 +17,7 @@ const debug = localStorage.getItem("kanjischool-chooseQuestionDebug") === "true"
   : (): void => { /* noop */ };
 
 export function chooseQuestion(): void {
-  const { subjects } = store.getState().sync;
+  const { subjects } = store.getState().subjects;
   if (!subjects) throw new Error("No subjects available yet!");
   const { sessionState } = store.getState().session;
   if (!sessionState) return;

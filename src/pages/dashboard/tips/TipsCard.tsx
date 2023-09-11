@@ -8,7 +8,7 @@ import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@store";
-import { setTip } from "@store/settingsSlice.ts";
+import { setTip } from "@store/slices/settingsSlice.ts";
 
 import { lsSetNumber } from "@utils";
 

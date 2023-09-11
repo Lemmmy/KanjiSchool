@@ -7,7 +7,7 @@ import { Alert, Button, Space } from "antd";
 
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@store";
-import { setOverleveledAssignments } from "@store/syncSlice.ts";
+import { setOverleveledAssignments } from "@store/slices/assignmentsSlice.ts";
 
 import { lsSetNumber, plural, pluralN } from "@utils";
 import { gotoSearch, useUserLevel } from "@api";
@@ -18,7 +18,7 @@ export function OverleveledAssignments(): JSX.Element | null {
   const navigate = useNavigate();
 
   const level = useUserLevel();
-  const over = useAppSelector(s => s.sync.overleveledAssignments);
+  const over = useAppSelector(s => s.assignments.overleveledAssignments);
 
   const hide = useCallback(() => {
     if (!over) return;

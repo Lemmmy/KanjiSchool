@@ -13,8 +13,7 @@ import Debug from "debug";
 const debug = Debug("kanjischool:sync-subjects-global");
 
 /**
- * SyncSubjects is responsible for ensuring the subjects are up to date on
- * startup.
+ * SyncSubjects is responsible for ensuring the subjects are up-to-date on startup.
  */
 export function SyncSubjects(): JSX.Element | null {
   const isOnline = useOnlineStatus();

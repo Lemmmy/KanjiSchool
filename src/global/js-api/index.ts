@@ -9,15 +9,15 @@ import { startSession } from "@session";
 import { db } from "@db";
 
 function getAssignments(): StoredAssignmentMap | undefined {
-  return store.getState().sync.assignments;
+  return store.getState().assignments.assignments;
 }
 
 function getSubjects(): StoredSubjectMap | undefined {
-  return store.getState().sync.subjects;
+  return store.getState().subjects.subjects;
 }
 
 async function resetOverlevelAssignment(assignmentId: number) {
-  const assignment = store.getState().sync.assignments?.[assignmentId];
+  const assignment = store.getState().assignments.assignments?.[assignmentId];
   if (!assignment) throw new Error("Assignment not found");
 
   await db.assignments.update(assignmentId, {

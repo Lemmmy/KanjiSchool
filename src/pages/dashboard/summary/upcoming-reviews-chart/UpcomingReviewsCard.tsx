@@ -20,7 +20,7 @@ export default function UpcomingReviewsCard(): JSX.Element {
   const nowMax = dayjs().startOf("hour").add(maxDays, "day");
   const nowMaxStr = nowMax.toISOString();
 
-  const forecast = useAppSelector(s => s.sync.reviewForecast, shallowEqual);
+  const forecast = useAppSelector(s => s.reviews.reviewForecast, shallowEqual);
 
   return <Card
     className="[&>.ant-card-body]:p-0 [&>.ant-card-body]:flex [&>.ant-card-body]:flex-col"
@@ -42,7 +42,7 @@ export default function UpcomingReviewsCard(): JSX.Element {
 
 function UpcomingReviewsExtra(): JSX.Element | null {
   const nextReviewsWeek = useAppSelector(s =>
-    s.sync.nextReviewsAvailable.nextReviewsWeek);
+    s.reviews.nextReviewsAvailable.nextReviewsWeek);
 
   if (!nextReviewsWeek) return null;
 

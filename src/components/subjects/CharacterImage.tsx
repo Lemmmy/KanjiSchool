@@ -23,7 +23,7 @@ export const CharacterImage = React.memo(({
   className,
   sizeClassName = "w-[32px] h-[32px] text-[32px]"
 }: Props) => {
-  const image = useAppSelector(s => s.sync.images?.[subjectId]?.svg);
+  const image = useAppSelector(s => s.images.images?.[subjectId]?.svg);
 
   const memoImg: JSX.Element | undefined = useMemo(() => {
     if (!image) return;
@@ -40,7 +40,7 @@ export const CharacterImage = React.memo(({
       raw
       style={{ width: size, height: size }}
     />;
-  }, [image, className, size]);
+  }, [image, className, sizeClassName, size]);
 
   return memoImg || <LoadingOutlined spin />;
 });

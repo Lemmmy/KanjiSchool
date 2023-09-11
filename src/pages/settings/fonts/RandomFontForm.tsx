@@ -8,7 +8,7 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@store";
-import { setCustomFonts } from "@store/settingsSlice.ts";
+import { setCustomFonts } from "@store/slices/settingsSlice.ts";
 
 import { FontFormItem } from "./FontFormItem.tsx";
 import { defaultFonts, lsSetObject, reloadFontCache } from "@utils";

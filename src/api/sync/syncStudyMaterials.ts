@@ -3,7 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { initStudyMaterials, setStudyMaterialsLastSynced, setSyncingStudyMaterials } from "@store/syncSlice";
+import { setStudyMaterialsLastSynced, setSyncingStudyMaterials } from "@store/slices/syncSlice.ts";
+import { initStudyMaterials } from "@store/slices/studyMaterialsSlice.ts";
 
 import { ApiStudyMaterial, ApiStudyMaterialMap } from "@api";
 import * as api from "@api";

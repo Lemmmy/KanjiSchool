@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { setReviewsLastSynced, setSyncingReviews, setSyncingReviewsProgress } from "@store/syncSlice";
+import { setReviewsLastSynced, setSyncingReviews, setSyncingReviewsProgress } from "@store/slices/syncSlice.ts";
 
 import * as api from "@api";
 import { ApiReview } from "@api";

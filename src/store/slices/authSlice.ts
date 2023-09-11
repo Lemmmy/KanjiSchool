@@ -12,16 +12,14 @@ export interface AuthSliceState {
   readonly user?: ApiUser;
 }
 
-export function getInitialAuthState(): AuthSliceState {
-  return {
-    apiKey: lsGetString("apiKey"),
-    user: lsGetObject<ApiUser>("user")
-  };
-}
+export const initialState = (): AuthSliceState => ({
+  apiKey: lsGetString("apiKey"),
+  user: lsGetObject<ApiUser>("user")
+});
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: getInitialAuthState,
+  initialState,
   reducers: {
     setApiKey(s, action: PayloadAction<string>) {
       s.apiKey = action.payload;

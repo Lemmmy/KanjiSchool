@@ -6,7 +6,7 @@ import { useCallback } from "react";
 
 import { useAppSelector } from "@store";
 import { useDispatch, shallowEqual } from "react-redux";
-import { nextLesson, prevLesson } from "@store/sessionSlice.ts";
+import { nextLesson, prevLesson } from "@store/slices/sessionSlice.ts";
 
 import { SubjectInfo } from "@pages/subject/SubjectInfo";
 import { SessionPageTransition } from "@pages/session/SessionPageTransition.tsx";

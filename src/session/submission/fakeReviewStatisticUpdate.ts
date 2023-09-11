@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { updateReviewStatistic } from "@store/syncSlice.ts";
+import { updateReviewStatistic } from "@store/slices/reviewStatisticsSlice.ts";
 
 import { ApiReviewStatistic, StoredAssignment } from "@api";
 import { db } from "@db";
@@ -11,6 +11,7 @@ import { db } from "@db";
 import { lsGetThenDecr } from "@utils";
 
 import Debug from "debug";
+
 const debug = Debug("kanjischool:session-submission");
 
 export async function fakeReviewStatisticUpdate(
@@ -70,10 +71,9 @@ export async function fakeReviewStatisticUpdate(
   d.reading_incorrect += (readingIncorrectAnswers ?? 0);
 
   // Update the percentage correct according to the formula from the WK docs.
-  const perc = Math.floor((100 * (d.meaning_correct + d.reading_correct)) /
+  d.percentage_correct = Math.floor((100 * (d.meaning_correct + d.reading_correct)) /
     (d.meaning_incorrect + d.reading_incorrect +
       d.meaning_correct + d.reading_correct));
-  d.percentage_correct = perc;
 
   // If there were no incorrect answers, raise the streak by one, and set the
   // max streak to max(oldMax, currentStreak).

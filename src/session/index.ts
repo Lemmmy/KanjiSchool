@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { endSession, wrapUpSession as wrapUpSessionAction } from "@store/sessionSlice.ts";
+import { endSession, wrapUpSession as wrapUpSessionAction } from "@store/slices/sessionSlice.ts";
 
 import { SessionState } from "./types";
 

@@ -3,13 +3,13 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
+import { initSubjects } from "@store/slices/subjectsSlice.ts";
 import {
-  initSubjects,
   setSubjectsLastSynced,
   setSubjectsSyncedThisSession,
   setSyncingSubjects,
   setSyncingSubjectsProgress
-} from "@store/syncSlice.ts";
+} from "@store/slices/syncSlice.ts";
 
 import * as api from "@api";
 import { ApiSubject, NormalizedSubjectType, SubjectType } from "@api";
@@ -42,7 +42,8 @@ const validSubjectTypes: Record<SubjectType, true> = {
 
 export async function syncSubjects(fullSync?: boolean): Promise<void> {
   // Don't sync if we're already syncing.
-  if (store.getState().sync.syncingSubjects) return;
+  const syncState = store.getState().sync;
+  if (syncState.syncingSubjects) return;
 
   // Get the date of the last subject sync. If the stored version is not the
   // same as the current version, force a re-sync by nulling the date. Also null
@@ -51,7 +52,7 @@ export async function syncSubjects(fullSync?: boolean): Promise<void> {
   const syncCurrentVersion = 3;
   const syncLastVersion = lsGetNumber("syncSubjectsLastVersion", 0);
   const lastSynced = syncLastVersion === syncCurrentVersion && !fullSync
-    ? store.getState().sync.subjectsLastSynced
+    ? syncState.subjectsLastSynced
     : undefined;
   store.dispatch(setSyncingSubjects(true));
   debug("beginning subjects sync since %s (ver %d -> %d)", lastSynced, syncLastVersion, syncCurrentVersion);

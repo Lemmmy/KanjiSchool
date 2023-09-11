@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { updateStudyMaterial as updateStudyMaterialAction } from "@store/syncSlice.ts";
+import { updateStudyMaterial as updateStudyMaterialAction } from "@store/slices/studyMaterialsSlice.ts";
 
 import * as api from "@api";
 import { ApiStudyMaterial } from "@api";

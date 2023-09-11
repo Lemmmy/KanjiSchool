@@ -3,7 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { updateAssignment, updateReviewStatistic } from "@store/syncSlice.ts";
+import { updateAssignment } from "@store/slices/assignmentsSlice.ts";
+import { updateReviewStatistic } from "@store/slices/reviewStatisticsSlice.ts";
 import { batch } from "react-redux";
 import { Action } from "redux";
 

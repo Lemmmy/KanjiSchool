@@ -23,7 +23,7 @@ export async function fakeSubmission(
   meaningIncorrectAnswers?: number,
   readingIncorrectAnswers?: number,
 ): Promise<void[]> {
-  const subject = store.getState().sync.subjects?.[assignment.data.subject_id];
+  const subject = store.getState().subjects.subjects?.[assignment.data.subject_id];
   if (!subject) throw new Error("No subjects available yet!");
 
   return Promise.all([

@@ -68,9 +68,8 @@ export function pickSubjects(
   debug("picking %s session subjects from a pool of %d using options:", type, subjectIds.length);
   for (const opt in opts) debug("[%s]: %o", opt, (opts as any)[opt]);
 
-  const { assignments, subjects, subjectAssignmentIdMap } =
-    store.getState().sync;
-
+  const { subjects } = store.getState().subjects;
+  const { assignments, subjectAssignmentIdMap } = store.getState().assignments;
   const { user } = store.getState().auth;
   if (!assignments) throw new Error("No assignments available yet!");
   if (!subjects) throw new Error("No subjects available yet!");
@@ -110,9 +109,10 @@ const mergeOptions = <T extends SessionOpts>(
 function pickLessonItems(
   options?: Partial<LessonOpts>
 ): SessionPickResult {
-  const { pendingLessons, subjects } = store.getState().sync;
-  if (!pendingLessons) throw new Error("No pendingLessons available yet!");
+  const { subjects } = store.getState().subjects;
+  const { pendingLessons } = store.getState().reviews;
   if (!subjects) throw new Error("No subjects available yet!");
+  if (!pendingLessons) throw new Error("No pendingLessons available yet!");
 
   // Pre-sort by lesson position before passing to the user-defined ordering
   const lessonSubjectIds = pendingLessons.map(l => l[1]);
@@ -130,7 +130,7 @@ function pickLessonItems(
 function pickReviewItems(
   options?: Partial<ReviewOpts>
 ): SessionPickResult {
-  const { pendingReviews } = store.getState().sync;
+  const { pendingReviews } = store.getState().reviews;
   if (!pendingReviews) throw new Error("No pendingReviews available yet!");
 
   const reviewSubjectIds = pendingReviews.map(r => r[1]);

@@ -3,13 +3,9 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import {
-  initAssignments,
-  setAssignmentsLastSynced,
-  setOverleveledAssignments,
-  setReviewForecast,
-  setSyncingAssignments
-} from "@store/syncSlice";
+import { setAssignmentsLastSynced, setSyncingAssignments } from "@store/slices/syncSlice.ts";
+import { initAssignments, setOverleveledAssignments } from "@store/slices/assignmentsSlice.ts";
+import { setReviewForecast } from "@store/slices/reviewsSlice.ts";
 
 import * as api from "@api";
 import {
@@ -23,7 +19,7 @@ import { lsGetNumber, lsSetString, lsSetNumber, shouldShowSubject, getSubjectTit
 import { Mutex } from "async-mutex";
 
 import Debug from "debug";
-import { setSyncingAssignmentsProgress } from "@store/syncSlice.ts";
+import { setSyncingAssignmentsProgress } from "@store/slices/syncSlice.ts";
 const debug = Debug("kanjischool:api-sync-assignments");
 
 export type StoredAssignment = ApiAssignment & {
@@ -101,7 +97,7 @@ async function _syncAssignments(
   }
 
   // The subject map, for checking if assignments should be hidden
-  const subjects = store.getState().sync.subjects;
+  const { subjects } = store.getState().subjects;
   if (!subjects) throw new Error("no subjects!");
 
   await api.paginateCollection<ApiAssignment>("/assignments", lastSynced, async ({ total_count, data }) => {
@@ -148,7 +144,7 @@ export async function loadAssignments(): Promise<void> {
   // User level and subjects are required for loading assignments.
   const userLevel = store.getState().auth.user?.data.level;
   if (!userLevel) throw new Error("No user level!");
-  const subjects = store.getState().sync.subjects;
+  const { subjects } = store.getState().subjects;
   if (!subjects) throw new Error("No subjects!");
 
   const assignments = await db.assignments.toArray();
@@ -162,9 +158,12 @@ export async function loadAssignments(): Promise<void> {
 }
 
 export function reloadAssignments(): void {
-  const userLevel = store.getState().auth.user?.data.level;
-  const maxLevel = store.getState().auth.user?.data.subscription.max_level_granted || 3;
-  const { subjects, assignments } = store.getState().sync;
+  const { user } = store.getState().auth;
+  const userLevel = user?.data.level;
+  const maxLevel = user?.data.subscription.max_level_granted || 3;
+
+  const { subjects } = store.getState().subjects;
+  const { assignments } = store.getState().assignments;
   if (!userLevel || !subjects || !assignments) return;
 
   debug("reloading assignments next reviews & review forecast");
@@ -190,7 +189,7 @@ export function initAssignment(
   if (!userLevel) userLevel = store.getState().auth.user?.data.level;
   if (!userLevel) throw new Error("No user level!");
 
-  if (!subjects) subjects = store.getState().sync.subjects;
+  if (!subjects) subjects = store.getState().subjects.subjects;
   if (!subjects) throw new Error("No subjects!");
 
   // For all assignments, ignore based on level/hidden
@@ -215,7 +214,8 @@ export function initAssignment(
 }
 
 function checkOverleveledAssignments() {
-  const { subjects, assignments } = store.getState().sync;
+  const { subjects } = store.getState().subjects;
+  const { assignments } = store.getState().assignments;
   if (!subjects || !assignments) return;
 
   // See if any more assignments are over-levelled since the last time we

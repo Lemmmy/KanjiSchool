@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "@store";
 import { shallowEqual, useDispatch } from "react-redux";
-import { setIncorrectAnswer } from "@store/sessionSlice.ts";
+import { setIncorrectAnswer } from "@store/slices/sessionSlice.ts";
 
 import {
   chooseQuestion,

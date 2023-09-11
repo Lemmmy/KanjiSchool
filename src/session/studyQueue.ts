@@ -4,7 +4,7 @@
 
 import { store } from "@store";
 import { useAppSelector } from "@store";
-import { studyQueueAdd, studyQueueClear, studyQueueRemove } from "@store/sessionSlice";
+import { studyQueueAdd, studyQueueClear, studyQueueRemove } from "@store/slices/sessionSlice.ts";
 
 import { lsSetObject } from "@utils";
 

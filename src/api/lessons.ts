@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { updateAssignment } from "@store/syncSlice.ts";
+import { updateAssignment } from "@store/slices/assignmentsSlice.ts";
 
 import * as api from "@api";
 import { ApiAssignment } from "@api";

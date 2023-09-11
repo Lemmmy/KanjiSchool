@@ -4,7 +4,7 @@
 
 import { useAppSelector } from "@store";
 import { shallowEqual } from "react-redux";
-import { SyncSliceState } from "@store/syncSlice.ts";
+import { SyncSliceState } from "@store/slices/syncSlice.ts";
 
 import { SyncProgress } from "@api";
 import { HeaderProgress } from "./HeaderProgress";

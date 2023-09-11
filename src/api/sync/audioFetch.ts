@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { incrSyncingAudioProgress, incrSyncingAudioQueue } from "@store/syncSlice.ts";
+import { incrSyncingAudioProgress, incrSyncingAudioQueue } from "@store/slices/syncSlice.ts";
 
 import {
   AudioContentType, getStoredAudioMap, StoredAudio, StoredSubject

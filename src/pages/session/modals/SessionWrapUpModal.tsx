@@ -32,7 +32,7 @@ interface Props {
 function SessionWrapUpModalContents({ state }: Props): JSX.Element {
   const { type, items } = state;
 
-  const assignments = store.getState().sync.assignments;
+  const { assignments } = store.getState().assignments;
   if (!assignments) throw new Error("Invalid state");
 
   let toCompleteCount = 0;

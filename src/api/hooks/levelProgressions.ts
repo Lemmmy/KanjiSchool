@@ -7,4 +7,4 @@ import { useAppSelector } from "@store";
 import { ApiLevelProgressionMap } from "@api";
 
 export const useLevelProgressions = (): ApiLevelProgressionMap | undefined =>
-  useAppSelector(s => s.sync.levelProgressions);
+  useAppSelector(s => s.levelProgressions.levelProgressions);

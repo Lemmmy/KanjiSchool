@@ -3,7 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { initLevelProgressions, setLevelProgressionsLastSynced, setSyncingLevelProgressions } from "@store/syncSlice";
+import { setLevelProgressionsLastSynced, setSyncingLevelProgressions } from "@store/slices/syncSlice.ts";
+import { initLevelProgressions } from "@store/slices/levelProgressionsSlice.ts";
 
 import { ApiLevelProgression, ApiLevelProgressionMap } from "@api";
 import * as api from "@api";

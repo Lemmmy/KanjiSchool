@@ -3,8 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import * as syncActions from "@store/syncSlice.ts";
-import { submitAssignment } from "@store/sessionSlice.ts";
+import * as syncActions from "@store/slices/syncSlice.ts";
+import { submitAssignment } from "@store/slices/sessionSlice.ts";
 
 import * as api from "@api";
 import { ApiUser } from "@api";

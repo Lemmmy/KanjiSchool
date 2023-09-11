@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { setPresets } from "@store/settingsSlice.ts";
+import { setPresets } from "@store/slices/settingsSlice.ts";
 
 import { PresetType } from ".";
 

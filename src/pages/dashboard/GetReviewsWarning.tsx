@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { lsSetBoolean } from "@utils";
 import { useAppSelector } from "@store";
-import { setGetReviewsWarning } from "@store/settingsSlice.ts";
+import { setGetReviewsWarning } from "@store/slices/settingsSlice.ts";
 
 export function GetReviewsWarning(): JSX.Element | null {
   const dispatch = useDispatch();

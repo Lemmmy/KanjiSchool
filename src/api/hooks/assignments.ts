@@ -11,14 +11,14 @@ import {
 } from "@api";
 
 export const useAssignments = (): StoredAssignmentMap | undefined =>
-  useAppSelector(s => s.sync.assignments);
+  useAppSelector(s => s.assignments.assignments);
 
 export const useSubjectAssignmentIds = (): SubjectAssignmentIdMap =>
-  useAppSelector(s => s.sync.subjectAssignmentIdMap);
+  useAppSelector(s => s.assignments.subjectAssignmentIdMap);
 
 export const useAssignmentBySubjectId = (id: number): StoredAssignment | undefined =>
   useAppSelector(
-    s => s.sync.assignments?.[s.sync.subjectAssignmentIdMap?.[id]],
+    s => s.assignments.assignments?.[s.assignments.subjectAssignmentIdMap?.[id]],
     shallowEqual
   );
 

@@ -9,7 +9,7 @@ import { sample } from "lodash-es";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@store";
 import { store } from "@store";
-import { setSupportedFonts } from "@store/settingsSlice";
+import { setSupportedFonts } from "@store/slices/settingsSlice.ts";
 
 import { useBooleanSetting } from "./settings";
 

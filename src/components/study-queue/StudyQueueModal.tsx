@@ -22,7 +22,7 @@ import { GlobalHotKeys } from "react-hotkeys";
 import { pluralN, setBooleanSetting, useBooleanSetting } from "@utils";
 
 import { globalModal } from "@global/AntInterface.tsx";
-import { studyQueueSetCollapsed } from "@store/sessionSlice.ts";
+import { studyQueueSetCollapsed } from "@store/slices/sessionSlice.ts";
 
 const KEY_MAP = {
   TOGGLE_COLLAPSE: ["shift+q"]

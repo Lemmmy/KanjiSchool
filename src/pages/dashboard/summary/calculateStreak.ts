@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { setStreak } from "@store/syncSlice.ts";
+import { setStreak } from "@store/slices/reviewsSlice.ts";
 
 import { db } from "@db";
 

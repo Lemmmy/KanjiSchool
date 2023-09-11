@@ -33,8 +33,8 @@ export function SessionHotkeys(): JSX.Element | null {
   const lessonMatch = useMatch("/lesson/session");
   const studyMatch = useMatch("/study/session");
 
-  const pendingLessons = useAppSelector(s => s.sync.pendingLessons);
-  const pendingReviews = useAppSelector(s => s.sync.pendingReviews);
+  const pendingLessons = useAppSelector(s => s.reviews.pendingLessons);
+  const pendingReviews = useAppSelector(s => s.reviews.pendingReviews);
 
   // Get session state to resume session if possible
   const { ongoing, sessionState } =
@@ -75,7 +75,7 @@ export function SessionHotkeys(): JSX.Element | null {
   const onHotkeyStartReviews = useCallback(() =>
     onSessionHotkey("review"), [onSessionHotkey]);
   const onHotkeyStartSelfStudy = useCallback(() =>
-    navigate("/study"), [history]);
+    navigate("/study"), [navigate]);
   const onHotkeyAbandonSession = useCallback(() =>
     showSessionAbandonModal(), []);
 

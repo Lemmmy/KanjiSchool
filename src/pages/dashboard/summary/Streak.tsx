@@ -14,7 +14,7 @@ export function Streak(): JSX.Element | null {
   const showStreak = useBooleanSetting("dashboardCurrentStreak");
 
   const { currentStreak, maxStreak, todayInStreak } =
-    useAppSelector(s => s.sync.streak, shallowEqual);
+    useAppSelector(s => s.reviews.streak, shallowEqual);
 
   // Don't clutter if nothing useful to say
   if (!showStreak) return null;

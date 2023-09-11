@@ -5,7 +5,7 @@
 import { store } from "@store";
 import { useAppSelector } from "@store";
 import { shallowEqual } from "react-redux";
-import { setApiKey, setUser } from "@store/authSlice.ts";
+import { setApiKey, setUser } from "@store/slices/authSlice.ts";
 
 import * as api from "@api";
 import { ApiUser } from "@api";

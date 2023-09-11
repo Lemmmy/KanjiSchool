@@ -11,7 +11,7 @@ import { ShortDuration } from "@comp/ShortDuration";
 
 export function UpcomingReviews(): JSX.Element | null {
   const { nextReviewsAt, nextReviewsNow, nextReviewsCount, nextReviewsWeek } =
-    useAppSelector(s => s.sync.nextReviewsAvailable, shallowEqual);
+    useAppSelector(s => s.reviews.nextReviewsAvailable, shallowEqual);
 
   if (!nextReviewsAt) return null;
 

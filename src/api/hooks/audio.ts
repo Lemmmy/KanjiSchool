@@ -7,7 +7,7 @@ import { store } from "@store";
 import { db } from "@db";
 
 import { AudioContentType } from "@api";
-import { fetchSubjectsAudios, getAudioKey } from "../sync/audioFetch";
+import { fetchSubjectsAudios, getAudioKey } from "@api/sync";
 
 export async function getStoredAudio(
   subjectId: number,
@@ -22,7 +22,8 @@ export async function getStoredAudio(
 
   // Otherwise, fetch the audio now. Note that this will occasionally result in
   // double fetches, but the world won't explode
-  const subject = store.getState().sync.subjects?.[subjectId];
+  const { subjects } = store.getState().subjects;
+  const subject = subjects?.[subjectId];
   if (!subject) throw new Error("No subjects!");
 
   // Download all necessary audio for the subject

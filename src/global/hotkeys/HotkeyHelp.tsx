@@ -7,7 +7,7 @@ import { Modal, Typography, Row, Col } from "antd";
 
 import { useAppSelector } from "@store";
 import { useDispatch } from "react-redux";
-import { setHotkeyHelpVisible } from "@store/settingsSlice.ts";
+import { setHotkeyHelpVisible } from "@store/slices/settingsSlice.ts";
 
 import { GlobalHotKeys } from "react-hotkeys";
 

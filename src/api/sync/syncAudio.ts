@@ -69,9 +69,11 @@ function getImportantAudioSubjects(): StoredSubject[] {
   const level = store.getState().auth.user?.data.level;
   if (!level) throw new Error("No level!");
 
-  const { subjects, assignments, subjectAssignmentIdMap } = store.getState().sync;
-  if (!subjects || !assignments || !subjectAssignmentIdMap)
+  const { subjects } = store.getState().subjects;
+  const { assignments, subjectAssignmentIdMap } = store.getState().assignments;
+  if (!subjects || !assignments || !subjectAssignmentIdMap) {
     throw new Error("No data yet!");
+  }
 
   // Return only the most important subjects that need audio. For now, this is
   // all subjects on the current level between SRS stages [0, 5).

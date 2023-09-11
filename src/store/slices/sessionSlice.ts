@@ -37,22 +37,20 @@ export interface SessionSliceState {
   studyQueueCollapsed: boolean;
 }
 
-export function getInitialSessionState(): SessionSliceState {
-  return {
-    ongoing: lsGetBoolean("sessionOngoing2"),
-    sessionState: loadSession(),
-    doingLessons: lsGetBoolean("sessionDoingLessons"),
-    lessonCounter: lsGetNumber("sessionLessonCounter", 0) ?? 0,
-    currentQuestion: null,
-    incorrectAnswer: undefined,
+export const initialState = (): SessionSliceState => ({
+  ongoing: lsGetBoolean("sessionOngoing2"),
+  sessionState: loadSession(),
+  doingLessons: lsGetBoolean("sessionDoingLessons"),
+  lessonCounter: lsGetNumber("sessionLessonCounter", 0) ?? 0,
+  currentQuestion: null,
+  incorrectAnswer: undefined,
 
-    lastResults: lsGetObject<SessionResults>("sessionLastResults"),
-    lastResultsViewed: lsGetBoolean("sessionLastResultsViewed", true),
+  lastResults: lsGetObject<SessionResults>("sessionLastResults"),
+  lastResultsViewed: lsGetBoolean("sessionLastResultsViewed", true),
 
-    studyQueue: unlut(lsGetObject<number[]>("selfStudyQueue")),
-    studyQueueCollapsed: false
-  };
-}
+  studyQueue: unlut(lsGetObject<number[]>("selfStudyQueue")),
+  studyQueueCollapsed: false
+});
 
 interface StartSessionPayload {
   type: SessionType;
@@ -134,7 +132,7 @@ const delaySkipHandler = (putEnd: boolean) => (s: SessionSliceState, { payload }
 
 const sessionSlice = createSlice({
   name: "session",
-  initialState: getInitialSessionState,
+  initialState,
   reducers: {
     startSession(s, { payload }: PayloadAction<StartSessionPayload>) {
       s.ongoing = true;

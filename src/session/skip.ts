@@ -11,8 +11,7 @@ import {
   skipQuestionPutEnd,
   skipQuestionRemove,
   endSession
-} from "@store/sessionSlice";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+} from "@store/slices/sessionSlice.ts";
 
 import { saveSession } from "@session";
 

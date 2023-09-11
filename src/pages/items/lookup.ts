@@ -50,7 +50,8 @@ export function lookupItems(
     types, srsStages
   }: FormValues
 ): LookupResults[] {
-  const { subjects, assignments, subjectAssignmentIdMap } = store.getState().sync;
+  const { subjects } = store.getState().subjects;
+  const { assignments, subjectAssignmentIdMap } = store.getState().assignments;
   if (!subjects || !assignments || !subjectAssignmentIdMap) return [];
 
   const typeWk = type === "wk";
