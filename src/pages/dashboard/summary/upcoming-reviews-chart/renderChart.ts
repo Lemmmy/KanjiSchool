@@ -9,12 +9,13 @@ import { timeDay, timeHour, timeHours } from "d3-time";
 import { scaleBand, scaleLinear, scaleTime } from "d3-scale";
 import { axisBottom, axisLeft, axisTop } from "d3-axis";
 import { bisect, max } from "d3-array";
-import { line, stack } from "d3-shape";
+import { curveMonotoneX, line, stack } from "d3-shape";
 import { timeFormat } from "d3-time-format";
 
 import { ChartDatum } from "./data";
 
 import { ColorPalette } from "@global/theme";
+import dayjs from "dayjs";
 
 const chartHeight = 196;
 const margins = [16, 16, 16, 32];
@@ -55,7 +56,7 @@ export function renderChart(
 
   // X axis
   const start = new Date(data[0].date);
-  const end = new Date(data[data.length - 1].date);
+  const end = dayjs(data[data.length - 1].date).add(1, "hour").toDate();
 
   const xTicks = timeHour.every(maxDays > 2 ? 12 : 6)!.range(start, end)
     .map(d => d.toISOString());
@@ -138,9 +139,12 @@ export function renderChart(
     .classed("stroke-reviews-cumulative", true)
     .attr("fill", "none")
     .attr("stroke-width", 3)
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
     .attr("d", line<ChartDatum>()
-      .x(d => xLine(new Date(d.date)) || 0)
-      .y(d => y(d.cumulative)));
+      .curve(curveMonotoneX)
+      .x(d => xLine(dayjs(d.date).add(30, "minutes").toDate()) || 0) // Horizontally center on bars
+      .y(d => Math.max(y(d.cumulative), 2))); // Don't allow line to escape chart
 
   ctx
     .attr("width", chartWidth)

@@ -21,6 +21,7 @@ import { getFontSettingsGroup } from "./fonts/SettingsFonts.tsx";
 import { SettingsButtonRow } from "./ButtonRow";
 import { StorageUsageCard } from "./StorageUsageCard";
 import { SettingsUserInfo } from "@pages/settings/SettingsUserInfo.tsx";
+import { reloadAssignments } from "@api";
 
 const themeNames = [
   { value: "dark", label: "Dark (default)" },
@@ -85,6 +86,12 @@ const menuItems: MenuProps["items"] = [
     settingsSubGroup("Dashboard settings", <HomeOutlined />, [
       booleanSetting("dashboardCurrentStreak", "Show the current streak on the dashboard"),
       booleanSetting("dashboardLevelProgressPassed", "Include passed levels in the level progress bars"),
+      booleanSetting(
+        "dashboardReviewForecastNow",
+        "Include reviews made available before now in the upcoming reviews chart and reviews forecast",
+        "This may be useful if you have a large number of reviews, but still want to see upcoming reviews clearly.",
+        () => reloadAssignments()
+      ),
       integerSetting("dashboardReviewChartDays", "Number of days to show in the reviews chart"),
       integerSetting("dashboardCriticalThreshold", "Review percentage correct for an item to be considered in " +
         "'critical condition'"),

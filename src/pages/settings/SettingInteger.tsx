@@ -13,12 +13,14 @@ interface Props {
   setting: SettingName<number>;
   title?: string;
   description?: ReactNode;
+  onChanged?: (value: number) => void;
 }
 
 export function SettingInteger({
   setting,
   title,
-  description
+  description,
+  onChanged
 }: Props): JSX.Element {
   const settingValue = useIntegerSetting(setting);
   const [value, setValue] = useState<string | number>(settingValue);
@@ -35,7 +37,8 @@ export function SettingInteger({
   const onSave = useCallback(() => {
     if (!isValid) return;
     setIntegerSetting(setting, numVal!);
-  }, [isValid, numVal, setting]);
+    onChanged?.(numVal!);
+  }, [isValid, numVal, setting, onChanged]);
 
   return <div className={menuItemSettingInner}>
     <div className="flex items-center gap-sm">

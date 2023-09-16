@@ -35,6 +35,8 @@ export interface SettingsStateBase {
   dashboardCurrentStreak: boolean;
   /** Include passed levels in the level progress bars. */
   dashboardLevelProgressPassed: boolean;
+  /** Include reviews made available before now in the upcoming reviews chart and reviews forecast. */
+  dashboardReviewForecastNow: boolean;
   /** Number of days to show in the reviews chart. */
   dashboardReviewChartDays: number;
   /** Show the review stats row (new unlocks, burned items, etc.). */
@@ -192,6 +194,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
 
   dashboardCurrentStreak: true,
   dashboardLevelProgressPassed: true,
+  dashboardReviewForecastNow: true,
   dashboardReviewChartDays: 2,
   dashboardCriticalThreshold: 75,
   dashboardReviewStatsRow: true,

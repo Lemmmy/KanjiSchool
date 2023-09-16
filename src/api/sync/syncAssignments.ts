@@ -172,7 +172,8 @@ export function reloadAssignments(): void {
   calculateNextReviews(subjects, assignments, maxLevel);
 
   // Calculate the 7-day review forecast
-  const forecast = generateReviewForecast(userLevel, subjects, assignments);
+  const includeNow = store.getState().settings.dashboardReviewForecastNow;
+  const forecast = generateReviewForecast(userLevel, includeNow, subjects, assignments);
   store.dispatch(setReviewForecast(forecast));
 
   // Check if any assignments are overleveled

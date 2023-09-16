@@ -67,11 +67,15 @@ export function generateChart(
 
   // Add the buckets to the output data
   const data: Record<string, ChartDatum> = {};
-  transposeBucket(data, "apprentice", apprentice, sortedDates, maxDate);
-  transposeBucket(data, "guru", guru, sortedDates, maxDate);
-  transposeBucket(data, "master", master, sortedDates, maxDate);
-  transposeBucket(data, "enlightened", enlightened, sortedDates, maxDate);
-  transposeBucket(data, "cumulative", cumulativeBucket, sortedDates, maxDate);
+
+  const transpose = (key: Exclude<keyof ChartDatum, "date">, bucket: Bucket) =>
+    transposeBucket(data, key, bucket, sortedDates, maxDate);
+
+  transpose("apprentice", apprentice);
+  transpose("guru", guru);
+  transpose("master", master);
+  transpose("enlightened", enlightened);
+  transpose("cumulative", cumulativeBucket);
 
   return Object.values(data);
 }

@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { ReactNode } from "react";
+import { ReactNode, useCallback } from "react";
 import { Switch } from "antd";
 
 import { SettingName, setBooleanSetting, useBooleanSetting } from "@utils/settings";
@@ -13,18 +13,21 @@ interface Props {
   setting: SettingName<boolean>;
   title?: string;
   description?: ReactNode;
+  onChanged?: (value: boolean) => void;
 }
 
 export function SettingBoolean({
   setting,
   title,
-  description
+  description,
+  onChanged
 }: Props): JSX.Element {
   const settingValue = useBooleanSetting(setting);
 
-  function onChange(value: boolean) {
+  const onChange = useCallback((value: boolean) => {
     setBooleanSetting(setting, value);
-  }
+    onChanged?.(value);
+  }, [setting, onChanged]);
 
   return <div
     className={menuItemSettingInner}

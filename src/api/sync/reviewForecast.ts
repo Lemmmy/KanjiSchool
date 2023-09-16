@@ -50,6 +50,7 @@ function addToBucket(date: string, bucket: Bucket): void {
  */
 export function generateReviewForecast(
   userLevel: number,
+  includeNow: boolean,
   subjects: StoredSubjectMap,
   assignments: StoredAssignmentMap
 ): ReviewForecast {
@@ -106,8 +107,11 @@ export function generateReviewForecast(
     // Bucketing
     // -------------------------------------------------------------------------
     // If the assignment is due now (in or before the current hour), add it to
-    // the 'now' buckets, otherwise add it to its hour buckets
+    // the 'now' buckets, otherwise add it to its hour buckets. If includeNow is
+    // false then ignore dates before the current hour.
+    if (!includeNow && date.isBefore(now)) continue;
     const bucketDate = now.isSameOrAfter(date) ? nowStr : dateStr;
+
     const add = addToBucket.bind(addToBucket, bucketDate);
 
     // If the subject is a current-level radical or kanji, and it has not yet

@@ -16,7 +16,8 @@ export type MenuItem = Required<MenuProps>["items"][number];
 export function booleanSetting(
   setting: SettingName<boolean>,
   title?: string,
-  description?: ReactNode
+  description?: ReactNode,
+  onChanged?: (value: boolean) => void
 ): MenuItem {
   return {
     key: setting,
@@ -25,6 +26,7 @@ export function booleanSetting(
       setting={setting}
       title={title}
       description={description}
+      onChanged={onChanged}
     />
   };
 }
@@ -32,7 +34,8 @@ export function booleanSetting(
 export function integerSetting(
   setting: SettingName<number>,
   title?: string,
-  description?: ReactNode
+  description?: ReactNode,
+  onChanged?: (value: number) => void
 ): MenuItem {
   return {
     key: setting,
@@ -41,6 +44,7 @@ export function integerSetting(
       setting={setting}
       title={title}
       description={description}
+      onChanged={onChanged}
     />
   };
 }
@@ -49,7 +53,8 @@ export function dropdownSetting<T extends string>(
   setting: SettingName<T>,
   title?: string,
   description?: ReactNode,
-  options: { label: string; value: T }[] = []
+  options: { label: string; value: T }[] = [],
+  onChanged?: (value: T) => void
 ): MenuItem {
   return {
     key: setting,
@@ -59,6 +64,7 @@ export function dropdownSetting<T extends string>(
       title={title}
       description={description}
       options={options}
+      onChanged={onChanged}
     />
   };
 }
