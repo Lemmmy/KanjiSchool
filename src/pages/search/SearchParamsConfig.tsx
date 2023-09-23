@@ -77,7 +77,6 @@ export function SearchParamsConfig({
   }, [form]);
 
   const onFinish = useCallback((values: SearchParams) => {
-    console.log("onFinish", values);
     const params = normalizeSearchParams(values);
     onSearch(params);
   }, [onSearch]);

@@ -50,7 +50,6 @@ export function AdvancedSearchPageBase({ selfStudy, title }: Props): JSX.Element
   const onSearch = useCallback((params: SearchParams) => {
     // Push the latest params into the history stack, which will trigger the
     // search via the useEffect
-    console.log("onSearch");
     pushSearchState(navigate, params, true);
   }, [navigate]);
 
