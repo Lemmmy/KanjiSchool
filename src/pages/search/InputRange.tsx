@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode } from "react";
-import { Form, Input, InputNumber } from "antd";
+import { Form, Input, Space, InputNumber } from "antd";
 
 interface Props {
   label: ReactNode;
@@ -23,7 +23,7 @@ export function InputRange({
   ...props
 }: Props): JSX.Element {
   return <Form.Item label={label} {...props}>
-    <Input.Group compact className="!flex">
+    <Space.Compact className="!flex">
       {/* Min */}
       <Form.Item name={minName} noStyle>
         <InputNumber
@@ -50,6 +50,6 @@ export function InputRange({
           className="flex-1 w-1/2"
         />
       </Form.Item>
-    </Input.Group>
+    </Space.Compact>
   </Form.Item>;
 }

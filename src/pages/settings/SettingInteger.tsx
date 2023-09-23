@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode, useCallback, useState } from "react";
-import { Input, InputNumber, Button } from "antd";
+import { Space, InputNumber, Button } from "antd";
 
 import { SettingName, setIntegerSetting, useIntegerSetting, validateIntegerSetting } from "@utils/settings";
 import { SettingDescription } from "./SettingDescription";
@@ -43,7 +43,7 @@ export function SettingInteger({
   return <div className={menuItemSettingInner}>
     <div className="flex items-center gap-sm">
       {/* Input and save button */}
-      <Input.Group compact className="inline-block w-auto">
+      <Space.Compact className="inline-block w-auto">
         {/* Number input */}
         <InputNumber
           value={value}
@@ -59,7 +59,7 @@ export function SettingInteger({
         >
           Save
         </Button>
-      </Input.Group>
+      </Space.Compact>
 
       {/* Item title */}
       <div>
