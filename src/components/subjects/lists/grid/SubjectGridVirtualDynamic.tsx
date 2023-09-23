@@ -63,6 +63,7 @@ const calculateDynamicRowData = memoizee((
 
 export const SubjectGridVirtualDynamic = forwardRef<HTMLDivElement, SubjectGridVirtualProps>(function SubjectGridVirtualDynamic({
   classes,
+  rowClassName,
   items,
   innerPadding,
   renderItem,
@@ -94,6 +95,7 @@ export const SubjectGridVirtualDynamic = forwardRef<HTMLDivElement, SubjectGridV
   return <div ref={ref}> {/* Resize observer */}
     <EpicVirtualList
       className={classes}
+      rowClassName={rowClassName}
       itemCount={rows.length}
       itemHeight={rowHeight}
       overscanCount={overscanCount}

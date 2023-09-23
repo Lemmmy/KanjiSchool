@@ -23,18 +23,20 @@ export function InputRange({
   ...props
 }: Props): JSX.Element {
   return <Form.Item label={label} {...props}>
-    <Input.Group compact className="range-input-group">
+    <Input.Group compact className="!flex">
       {/* Min */}
       <Form.Item name={minName} noStyle>
         <InputNumber
           placeholder={minPlaceholder}
-          min={min} max={max}
+          min={min}
+          max={max}
+          className="flex-1 w-1/2"
         />
       </Form.Item>
 
       {/* Separator */}
       <Input
-        className="range-input-split"
+        className="flex-0 !w-[32px] text-center pointer-events-none"
         placeholder="-"
         disabled
       />
@@ -43,7 +45,9 @@ export function InputRange({
       <Form.Item name={maxName} noStyle>
         <InputNumber
           placeholder={maxPlaceholder}
-          min={min} max={max}
+          min={min}
+          max={max}
+          className="flex-1 w-1/2"
         />
       </Form.Item>
     </Input.Group>

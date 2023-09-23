@@ -3,6 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import React, { forwardRef, RefObject, useState } from "react";
+import classNames from "classnames";
 import useResizeObserver from "use-resize-observer";
 
 import { StoredAssignment, StoredSubject } from "@api";
@@ -13,6 +14,7 @@ import { EpicVirtualList, EpicVirtualListItemProps } from "@comp/EpicVirtualList
 
 export interface SubjectGridVirtualProps {
   classes: string;
+  rowClassName?: string;
   items: [StoredSubject, StoredAssignment | undefined][];
   size: Size;
   hideSrs?: boolean;
@@ -28,6 +30,7 @@ export interface SubjectGridVirtualProps {
 
 export const SubjectGridVirtual = forwardRef<HTMLDivElement, SubjectGridVirtualProps>(function SubjectGridVirtual({
   classes,
+  rowClassName,
   items,
   size,
   hideSrs,
@@ -73,7 +76,7 @@ export const SubjectGridVirtual = forwardRef<HTMLDivElement, SubjectGridVirtualP
   return <div ref={ref}> {/* Resize observer */}
     <EpicVirtualList
       className={classes}
-      rowClassName={style.paddingClass}
+      rowClassName={classNames(style.paddingClass, rowClassName)}
       itemCount={rowCount}
       itemHeight={rowHeight}
       overscanCount={overscanCount}

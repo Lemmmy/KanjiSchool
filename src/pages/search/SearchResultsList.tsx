@@ -18,9 +18,10 @@ import { nts } from "@utils";
 
 interface Props {
   groups: SearchResultGroup[];
+  isNested?: boolean;
 }
 
-export function SearchResultsList({ groups }: Props): JSX.Element {
+export function SearchResultsList({ groups, isNested }: Props): JSX.Element {
   // Active keys for the panel (managed so we can reset them on new results)
   const [activeKeys, setActiveKeys] = useState<string | string[]>();
 
@@ -34,13 +35,19 @@ export function SearchResultsList({ groups }: Props): JSX.Element {
   // Shared props for all the subject lists
   const elProps: { size: "small"; alignLeft: boolean; innerPadding: number } = {
     size: "small",
-    alignLeft: true,
-    innerPadding: 16
+    alignLeft: false,
+    innerPadding: 16,
   };
 
-  const classes = classNames("search-results-list", {
-    "nested": hasSubgroups
-  });
+  const classes = classNames(
+    "max-w-[920px] mx-auto my-lg",
+    "[&_.ant-collapse-header]:!items-center",
+    {
+      "!my-0": isNested,
+      "[&_.ant-collapse-content-box]:!p-md": hasSubgroups && !isNested,
+      "[&_.ant-collapse-content-box]:!p-0": !hasSubgroups || isNested,
+    }
+  );
 
   return <Collapse
     className={classes}
@@ -54,20 +61,21 @@ export function SearchResultsList({ groups }: Props): JSX.Element {
         key={group.name}
 
         // Header
-        header={<div className="search-results-header-main">
+        header={<div className="inline-flex items-center">
           {/* Group name */}
-          <h1>{group.name}</h1>
+          <h2 className="font-medium my-0">{group.name}</h2>
 
           {/* Total count */}
-          <Tag className="total-count-tag">
+          <Tag className="mt-px ml-xs text-sm font-normal">
             {nts(group.count)}
           </Tag>
         </div>}
 
         // Header extra
-        extra={<div className="search-results-extra">
+        extra={<div className="flex flex-col items-end justify-center">
           {/* Counts per SRS stage */}
           <ResultStageCounts counts={group.srsCounts} />
+
           {/* Add to self-study queue button */}
           {group?.itemSubjects?.length && <StudyQueueButton
             type="primary"
@@ -76,8 +84,11 @@ export function SearchResultsList({ groups }: Props): JSX.Element {
           />}
         </div>}
       >
-        {/* If there are sub-groups, render those with another list */}
-        {group.subGroups && <SearchResultsList groups={group.subGroups} />}
+        {/* If there are subgroups, render those with another list */}
+        {group.subGroups && <SearchResultsList
+          groups={group.subGroups}
+          isNested
+        />}
 
         {/* Display the list items */}
         {group.itemSubjects && group.name === "Radical" &&

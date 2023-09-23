@@ -14,12 +14,11 @@ import {
   useSubjects, useAssignments, useReviewStatistics, pushSearchState
 } from "@api";
 import { useKeywordSearch } from "@api/search/KeywordSearch";
-import { SearchParamsForm } from "./SearchParamsForm";
+import { SearchParamsConfig } from "./SearchParamsConfig";
 import { SearchResultsList } from "./SearchResultsList";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:advanced-search-page");
-
 
 export interface SearchLocationState {
   params: SearchParams;
@@ -29,9 +28,10 @@ export interface SearchLocationState {
 
 interface Props {
   selfStudy?: boolean;
+  title?: string;
 }
 
-export function AdvancedSearchPageBase({ selfStudy }: Props): JSX.Element {
+export function AdvancedSearchPageBase({ selfStudy, title }: Props): JSX.Element {
   const navigate = useNavigate();
   const state = useLocation()?.state as SearchLocationState | null;
   const [keywordSearch] = useKeywordSearch();
@@ -50,6 +50,7 @@ export function AdvancedSearchPageBase({ selfStudy }: Props): JSX.Element {
   const onSearch = useCallback((params: SearchParams) => {
     // Push the latest params into the history stack, which will trigger the
     // search via the useEffect
+    console.log("onSearch");
     pushSearchState(navigate, params, true);
   }, [navigate]);
 
@@ -77,15 +78,15 @@ export function AdvancedSearchPageBase({ selfStudy }: Props): JSX.Element {
 
     setResults(grouped);
     setSearching(false);
-  }, [location, onSearch, subjects, assignments, reviewStatistics, keywordSearch]);
+  }, [state, onSearch, subjects, assignments, reviewStatistics, keywordSearch]);
 
   return <PageLayout
-    siteTitle={selfStudy ? "Self-study" : "Advanced search"}
-    title={selfStudy ? "Self-study" : "Advanced search"}
-    className="advanced-search-page"
+    siteTitle={title}
+    title={title}
+    headerClassName="max-w-[960px] mx-auto"
   >
     {/* Search parameters form */}
-    <SearchParamsForm
+    <SearchParamsConfig
       results={results?.total}
       initialParams={state?.params}
       hideForm={hideForm}
@@ -101,12 +102,12 @@ export function AdvancedSearchPageBase({ selfStudy }: Props): JSX.Element {
 
     {/* Display a skeleton when loading */}
     {!results && searching && (
-      <div style={{ maxWidth: 920, margin: "0 auto" }}>
+      <div className="max-w-[920px] mx-auto">
         <Skeleton />
       </div>
     )}
 
     {/* Bottom margin (TODO: something is very weird here) */}
-    <div style={{ height: 1 }} />
+    <div className="h-px" />
   </PageLayout>;
 }

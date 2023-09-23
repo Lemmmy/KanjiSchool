@@ -161,6 +161,7 @@ export function SubjectGrid({
           : SubjectGridVirtual,
         {
           classes,
+          rowClassName: alignLeft ? undefined : "flex justify-center",
           items,
           size,
           hideSrs,

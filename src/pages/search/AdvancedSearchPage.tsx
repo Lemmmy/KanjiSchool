@@ -4,4 +4,6 @@
 
 import { AdvancedSearchPageBase } from "@pages/search/AdvancedSearchPageBase.tsx";
 
-export const Component = (): JSX.Element => <AdvancedSearchPageBase />;
+export const Component = (): JSX.Element => <AdvancedSearchPageBase
+  title="Advanced search"
+/>;
