@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect } from "react";
-import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
+import { DeleteOutlined, CloseOutlined, FastForwardOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
 import { PageLayout } from "@layout/PageLayout";
@@ -21,7 +21,7 @@ import { SessionQuestionsPage } from "./SessionQuestionsPage";
 import { SessionDebugInfo } from "./SessionDebugInfo";
 
 import { useSubjects } from "@api";
-import { wrapUpSession } from "@session";
+import { startLessonReviewNow, wrapUpSession } from "@session";
 import { showSessionWrapUpModal } from "./modals/SessionWrapUpModal";
 import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonModal";
 
@@ -56,6 +56,14 @@ function SessionPage(): JSX.Element {
   const [,set, unset] = useTopMenuOptions();
   useEffect(() => {
     set([
+      // Start lesson review now
+      doingLessons ? {
+        key: "top-start-review",
+        onClick: () => startLessonReviewNow(),
+        icon: <FastForwardOutlined />,
+        label: "Start lesson review now"
+      } : null,
+
       // Wrap up session
       !doingLessons ? {
         key: "top-wrap-up",

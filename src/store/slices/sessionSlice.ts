@@ -19,7 +19,7 @@ import { max } from "d3-array";
 import { DigraphMatch, lsGetBoolean, lsGetNumber, lsGetObject, unlut } from "@utils";
 
 import Debug from "debug";
-const debug = Debug("kanjischool:session-reducer");
+const debug = Debug("kanjischool:session-slice");
 
 export interface SessionSliceState {
   ongoing: boolean;
@@ -293,6 +293,25 @@ const sessionSlice = createSlice({
       }
     },
 
+    // Starts the session review immediately, with only the lessons that were covered
+    startLessonReviewNow(s) {
+      if (!s.sessionState) return;
+
+      const { items, questions } = s.sessionState;
+
+      // Remove all items that are beyond the current lesson counter
+      const lessonItems = items.filter(i => i.bucket <= s.lessonCounter);
+      const lessonQuestions = questions.filter(q => lessonItems[q.itemId]);
+
+      debug("startLessonReviewNow: lessonItems %o  lessonQuestions %o", lessonItems, lessonQuestions);
+
+      s.sessionState.items = lessonItems;
+      s.sessionState.questions = lessonQuestions;
+
+      s.lessonCounter = 0;
+      s.doingLessons = false;
+    },
+
     // End the session
     endSession: endSessionState,
 
@@ -339,6 +358,7 @@ export const {
   skipQuestionRemove,
   submitAssignment,
   wrapUpSession,
+  startLessonReviewNow,
   endSession,
   setResultsViewed,
   studyQueueSetCollapsed,

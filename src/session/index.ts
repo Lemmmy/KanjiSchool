@@ -3,12 +3,16 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { store } from "@store";
-import { endSession, wrapUpSession as wrapUpSessionAction } from "@store/slices/sessionSlice.ts";
+import {
+  endSession,
+  wrapUpSession as wrapUpSessionAction,
+  startLessonReviewNow as startLessonReviewNowAction
+} from "@store/slices/sessionSlice.ts";
 
 import { SessionState } from "./types";
 
 import { reloadAssignments } from "@api";
-import { lsSetString, lsSetBoolean } from "@utils";
+import { lsSetString, lsSetBoolean, pluralN } from "@utils";
 import { NavigateFunction } from "react-router-dom";
 
 import { globalNotification } from "@global/AntInterface.tsx";
@@ -62,6 +66,12 @@ export function wrapUpSession(): void {
     // by submitAnswer -> saveSession when the final answer is submitted.
     globalNotification.success({ message: "Session now wrapping up." });
   }
+}
+
+export function startLessonReviewNow(): void {
+  const count = store.getState().session.lessonCounter + 1;
+  store.dispatch(startLessonReviewNowAction());
+  globalNotification.info({ message: `Lesson review started with ${pluralN(count, "lesson")}` });
 }
 
 export * from "./chooseQuestion";
