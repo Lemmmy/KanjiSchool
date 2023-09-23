@@ -24,6 +24,7 @@ import { useSubjects } from "@api";
 import { startLessonReviewNow, wrapUpSession } from "@session";
 import { showSessionWrapUpModal } from "./modals/SessionWrapUpModal";
 import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonModal";
+import { AppLoading } from "@global/AppLoading.tsx";
 
 import { GlobalHotKeys, KeyMap } from "react-hotkeys";
 import { useBooleanSetting } from "@utils";
@@ -91,8 +92,9 @@ function SessionPage(): JSX.Element {
     return unset;
   }, [dispatch, set, unset, doingLessons]);
 
-  if (!sessionState || !subjects)
-    return <b>Loading...</b>;
+  if (!sessionState || !subjects) {
+    return <AppLoading />;
+  }
 
   // Show the table of contents if lessons are happening
   const classes = classNames("w-full", {

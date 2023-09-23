@@ -3,7 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Dispatch, SetStateAction, useCallback, useState, useMemo } from "react";
-import { Alert } from "antd";
 
 import { PageLayout } from "@layout/PageLayout";
 
@@ -12,6 +11,7 @@ import { useAssignments, useSubjectAssignmentIds, useSubjects } from "@api";
 import { ItemsConfigForm } from "./form/ItemsConfigForm";
 import { FormValues, ItemsBaseType, ItemsColorBy } from "./types/types";
 import { TYPE_TITLES } from "./types/titles";
+import { AppLoading } from "@global/AppLoading.tsx";
 
 import { lookupItems, LookupResults } from "./lookup";
 import { ItemsResults } from "./ItemsResults";
@@ -66,8 +66,9 @@ export function ItemsPage({ type }: Props): JSX.Element {
   }, [hasSubjects, hasAssignments, hasSubjectAssignmentIdMap, type]);
 
   // Don't
-  if (!hasSubjects || !hasAssignments || !hasSubjectAssignmentIdMap)
-    return <b>Loading...</b>;
+  if (!hasSubjects || !hasAssignments || !hasSubjectAssignmentIdMap) {
+    return <AppLoading />;
+  }
 
   return <PageLayout
     siteTitle={TYPE_TITLES[type]}
