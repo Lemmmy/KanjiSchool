@@ -137,7 +137,7 @@ const sessionSlice = createSlice({
     startSession(s, { payload }: PayloadAction<StartSessionPayload>) {
       s.ongoing = true;
       s.sessionState = payload;
-      s.doingLessons = payload.withLessons ?? false;
+      s.doingLessons = (payload.withLessons ?? false) || payload.type === "lesson";
       s.lessonCounter = 0;
       s.currentQuestion = null;
       s.incorrectAnswer = undefined;
