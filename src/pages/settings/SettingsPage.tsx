@@ -7,20 +7,15 @@ import { HomeOutlined, BugOutlined, SettingOutlined, BgColorsOutlined, SearchOut
 import { AccessibilityFilled } from "@comp/icons/AccessibilityFilled";
 
 import { PageLayout } from "@layout/PageLayout";
-import { menuClass } from "./settingsStyles.ts";
-import {
-  settingsSubGroup,
-  booleanSetting,
-  integerSetting,
-  dropdownSetting,
-  settingsGroup
-} from "./SettingsSubGroup.tsx";
+import { menuClass } from "./components/settingsStyles.ts";
+import { settingsSubGroup, booleanSetting, integerSetting, dropdownSetting, settingsGroup } from "./components/SettingsSubGroup.tsx";
 import { getLessonSettingsGroup, getReviewSettingsGroup, getSelfStudySettingsGroup } from "./SettingsSessions";
 import { getFontSettingsGroup } from "./fonts/SettingsFonts.tsx";
 
-import { SettingsButtonRow } from "./ButtonRow";
-import { StorageUsageCard } from "./StorageUsageCard";
-import { SettingsUserInfo } from "@pages/settings/SettingsUserInfo.tsx";
+import { SettingsBackupButtons } from "./backup/SettingsBackupButtons.tsx";
+import { SettingsUserInfo } from "./SettingsUserInfo.tsx";
+import { getAudioSettingsGroup } from "./SettingsAudio.tsx";
+
 import { reloadAssignments } from "@api";
 
 const themeNames = [
@@ -106,6 +101,12 @@ const menuItems: MenuProps["items"] = [
       booleanSetting("reviewHeatmapIncludeFuture", "Show upcoming reviews in the review heatmap")
     ]),
 
+    // Subject info settings
+    settingsSubGroup("Subject info settings", <SettingOutlined />, [
+      booleanSetting("subjectOnyomiReadingsKatakana", "Show on'yomi readings in katakana"),
+      booleanSetting("subjectCharactersUseCharBlocks", "Color hiragana and katakana separately in vocabulary words"),
+    ]),
+
     // Font settings
     getFontSettingsGroup()
   ]),
@@ -128,7 +129,6 @@ const menuItems: MenuProps["items"] = [
       booleanSetting("sessionProgressBar", "Show the session progress bar"),
       booleanSetting("sessionProgressStarted", "Show in-progress questions in the session progress bar"),
       booleanSetting("sessionProgressSkipped", "Show skipped questions in the session progress bar"),
-      integerSetting("audioFetchMax", "Max. # of audio fetch tasks at session start"),
     ]),
 
     // Lesson settings
@@ -140,21 +140,18 @@ const menuItems: MenuProps["items"] = [
     // Self-study settings
     getSelfStudySettingsGroup(),
 
-    // Subject info settings
-    settingsSubGroup("Subject info settings", <SettingOutlined />, [
-      booleanSetting("subjectOnyomiReadingsKatakana", "Show on'yomi readings in katakana"),
-      booleanSetting("subjectCharactersUseCharBlocks", "Color hiragana and katakana separately in vocabulary words"),
-    ])
-  ]),
+    // Audio settings
+    getAudioSettingsGroup(),
 
-  // Advanced settings
-  settingsGroup("Advanced settings", [
     // Search settings
     settingsSubGroup("Search settings", <SearchOutlined />, [
       booleanSetting("searchAlwaysHandwriting", "Always open the handwriting input when searching"),
       booleanSetting("sessionDisableSearch", "Disable the search box when in a session")
     ]),
+  ]),
 
+  // Advanced settings
+  settingsGroup("Advanced settings", [
     // Debug settings
     settingsSubGroup("Debug settings", <BugOutlined />, [
       booleanSetting("sessionInfoDebug", "Show debug info during a session"),
@@ -173,18 +170,16 @@ function SettingsPage(): JSX.Element {
     {/* User info */}
     <SettingsUserInfo />
 
+    {/* Import/export buttons */}
+    <SettingsBackupButtons />
+
+    {/* Main settings menu */}
     <Menu
       mode="inline"
       className={menuClass}
       selectable={false}
       items={menuItems}
     />
-
-    {/* Log out button, import/export buttons */}
-    <SettingsButtonRow />
-
-    {/* Storage estimate */}
-    <StorageUsageCard />
 
     {/* Page contents margin/spacer */}
     <div className="h-lg" />

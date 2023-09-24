@@ -5,7 +5,7 @@
 import { Button } from "antd";
 import { ExportOutlined } from "@ant-design/icons";
 
-import { SettingsExportFile } from "./ImportExport";
+import { SettingsExportFile } from "./SettingsBackupButtons.tsx";
 
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";

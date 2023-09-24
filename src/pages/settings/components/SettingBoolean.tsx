@@ -6,7 +6,7 @@ import { ReactNode, useCallback } from "react";
 import { Switch } from "antd";
 
 import { SettingName, setBooleanSetting, useBooleanSetting } from "@utils/settings";
-import { SettingDescription } from "./SettingDescription";
+import { SettingDescription } from "./SettingDescription.tsx";
 import { menuItemSettingInner } from "./settingsStyles.ts";
 
 interface Props {

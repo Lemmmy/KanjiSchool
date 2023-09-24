@@ -6,7 +6,7 @@ import { ReactNode, useCallback, useState } from "react";
 import { Space, InputNumber, Button } from "antd";
 
 import { SettingName, setIntegerSetting, useIntegerSetting, validateIntegerSetting } from "@utils/settings";
-import { SettingDescription } from "./SettingDescription";
+import { SettingDescription } from "./SettingDescription.tsx";
 import { menuItemSettingInner } from "./settingsStyles.ts";
 
 interface Props {

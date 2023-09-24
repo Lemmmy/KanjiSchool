@@ -4,7 +4,7 @@
 
 import { BulbOutlined, AuditOutlined, ReadOutlined } from "@ant-design/icons";
 
-import { settingsSubGroup, booleanSetting, integerSetting, dropdownSetting, MenuItem } from "./SettingsSubGroup.tsx";
+import { settingsSubGroup, booleanSetting, integerSetting, dropdownSetting, MenuItem } from "./components/SettingsSubGroup.tsx";
 
 import { LESSON_ORDERS } from "@session/order/LessonOrder";
 import { REVIEW_ORDERS } from "@session/order/ReviewOrder";
@@ -50,6 +50,9 @@ export function getReviewSettingsGroup(): MenuItem {
       booleanSetting("reviewMeaningFirst", "Meaning before reading"),
       integerSetting("reviewMaxSize", "Max. # of reviews per session"),
       integerSetting("reviewMaxStarted", "Max. # of in-progress subjects in a session"),
+      integerSetting("overdueThreshold", "Threshold (percent) for when to consider an item overdue",
+        "For example, if this is set to 20, an item will be considered overdue if more than 20% of its SRS interval" +
+        " has passed since it became available again."),
     ]
   );
 }

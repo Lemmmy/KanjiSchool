@@ -115,8 +115,6 @@ export interface SettingsStateBase {
   sessionProgressStarted: boolean;
   /** Show skipped questions in the session progress bar. */
   sessionProgressSkipped: boolean;
-  /** Max. # of audio fetch tasks at session start. */
-  audioFetchMax: number;
 
   // ===========================================================================
   // LESSON SETTINGS
@@ -144,6 +142,8 @@ export interface SettingsStateBase {
   reviewShuffleAfterSelection: boolean;
   reviewMaxSize: number;
   reviewMaxStarted: number;
+  /** Threshold (percent) for when to consider an item overdue. */
+  overdueThreshold: number;
 
   // ===========================================================================
   // SELF-STUDY SETTINGS
@@ -162,18 +162,24 @@ export interface SettingsStateBase {
   selfStudyWithLessons: boolean;
 
   // ===========================================================================
+  // AUDIO SETTINGS
+  // ===========================================================================
+  /** Mute all audio. */
+  audioMuted: boolean;
+  /** Autoplay audio in lessons. */
+  audioAutoplayLessons: boolean;
+  /** Autoplay audio in reviews. */
+  audioAutoplayReviews: boolean;
+  /** Max. # of audio fetch tasks at session start. */
+  audioFetchMax: number;
+
+  // ===========================================================================
   // SEARCH SETTINGS
   // ===========================================================================
   /** Always open the handwriting input when searching. */
   searchAlwaysHandwriting: boolean;
   /** Disable the search box when in a session. */
   sessionDisableSearch: boolean;
-
-  // ===========================================================================
-  // OTHER ADVANCED SETTINGS
-  // ===========================================================================
-  /** Threshold (percent) for when to consider an item overdue. */
-  overdueThreshold: number;
 
   // ===========================================================================
   // DEBUG SETTINGS
@@ -230,7 +236,6 @@ export const DEFAULT_SETTINGS: SettingsState = {
   sessionProgressBar: true,
   sessionProgressStarted: true,
   sessionProgressSkipped: true,
-  audioFetchMax: 200,
 
   lessonMeaningReadingBackToBack: false,
   lessonReadingFirst: false,
@@ -264,6 +269,11 @@ export const DEFAULT_SETTINGS: SettingsState = {
   selfStudyMaxSize: 50,
   selfStudyMaxStarted: 10,
   selfStudyWithLessons: false,
+
+  audioMuted: false,
+  audioAutoplayLessons: true,
+  audioAutoplayReviews: true,
+  audioFetchMax: 200,
 
   searchAlwaysHandwriting: false,
   sessionDisableSearch: false,

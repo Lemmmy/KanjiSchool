@@ -6,5 +6,5 @@ export * from "./get";
 export * from "./hooks";
 export * from "./load";
 export * from "./set";
-export * from "./state";
+export * from "./settings.ts";
 export * from "./types";

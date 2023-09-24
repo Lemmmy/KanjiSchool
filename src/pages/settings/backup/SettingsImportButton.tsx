@@ -5,7 +5,7 @@
 import React, { useRef, useCallback } from "react";
 import { ImportOutlined } from "@ant-design/icons";
 
-import { SettingsExportFile } from "./ImportExport";
+import { SettingsExportFile } from "./SettingsBackupButtons.tsx";
 
 import { AnySettingName, DEFAULT_SETTINGS, getSettingKey } from "@utils";
 

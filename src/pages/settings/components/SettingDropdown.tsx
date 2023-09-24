@@ -6,7 +6,7 @@ import { ReactNode, useCallback } from "react";
 import { Select } from "antd";
 
 import { SettingName, setStringSetting, useStringSetting } from "@utils/settings";
-import { SettingDescription } from "./SettingDescription";
+import { SettingDescription } from "./SettingDescription.tsx";
 import { menuItemSettingInner } from "./settingsStyles.ts";
 
 interface Props<T extends string> {

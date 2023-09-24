@@ -6,9 +6,9 @@ import React, { ReactNode } from "react";
 import { MenuProps } from "antd";
 
 import { SettingName } from "@utils/settings";
-import { SettingBoolean } from "./SettingBoolean";
-import { SettingInteger } from "./SettingInteger";
-import { SettingDropdown } from "./SettingDropdown";
+import { SettingBoolean } from "./SettingBoolean.tsx";
+import { SettingInteger } from "./SettingInteger.tsx";
+import { SettingDropdown } from "./SettingDropdown.tsx";
 import { menuItemClass } from "./settingsStyles.ts";
 
 export type MenuItem = Required<MenuProps>["items"][number];

@@ -5,9 +5,9 @@
 import { FontSizeOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 
-import { booleanSetting, MenuItem, settingsSubGroup } from "../SettingsSubGroup.tsx";
+import { booleanSetting, MenuItem, settingsSubGroup } from "../components/SettingsSubGroup.tsx";
 
-import { menuItemClass } from "../settingsStyles.ts";
+import { menuItemClass } from "../components/settingsStyles.ts";
 import { RandomFontList } from "./RandomFontList.tsx";
 
 export function getFontSettingsGroup(): MenuItem {
