@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { FC, useCallback, useMemo } from "react";
-import { Dropdown, Menu, MenuProps } from "antd";
+import { Dropdown, MenuProps } from "antd";
 import { DropdownButtonProps } from "antd/lib/dropdown";
 import { EditOutlined } from "@ant-design/icons";
 
@@ -52,7 +52,7 @@ export const PresetDropdownBtn: FC<Props> = ({
       for (const p of userPresets) {
         items.push({
           key: p.uuid,
-          label: p.name || "Unnamed preset"
+          label: p.nameNode || p.name || "Unnamed preset"
         });
       }
 
@@ -63,7 +63,7 @@ export const PresetDropdownBtn: FC<Props> = ({
     for (const p of defaultPresets) {
       items.push({
         key: p.uuid,
-        label: p.name || "Unnamed preset"
+        label: p.nameNode || p.name || "Unnamed preset"
       });
     }
 
