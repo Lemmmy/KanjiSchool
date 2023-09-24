@@ -5,7 +5,7 @@
 import { store } from "@store";
 import { updateReviewStatistic } from "@store/slices/reviewStatisticsSlice.ts";
 
-import { ApiReviewStatistic, StoredAssignment } from "@api";
+import { ApiReviewStatistic, ApiReviewStatisticInner, StoredAssignment } from "@api";
 import { db } from "@db";
 
 import { lsGetThenDecr } from "@utils";
@@ -61,7 +61,7 @@ export async function fakeReviewStatisticUpdate(
     // };
   }
 
-  const d = rs.data;
+  const d: ApiReviewStatisticInner = { ...rs.data };
 
   // Increment the relevant values. To finish a review, we'd have gotten all the
   // answers correct at least once, and incorrect 0 or more times.

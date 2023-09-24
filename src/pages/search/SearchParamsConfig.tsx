@@ -60,7 +60,7 @@ export function SearchParamsConfig({
   // Self-study "With lessons" checkbox
   const withLessons = useBooleanSetting("selfStudyWithLessons");
   const setWithLessons = useCallback((e: CheckboxChangeEvent) =>
-    setBooleanSetting("selfStudyWithLessons", !!e.target.checked, false), []);
+    setBooleanSetting("selfStudyWithLessons", e.target.checked, false), []);
 
   const initialValues = useMemo(() => initialParams ?? DEFAULT_PARAMS,
     [initialParams]);
