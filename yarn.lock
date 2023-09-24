@@ -6021,6 +6021,7 @@ __metadata:
     postcss: ^8.4.29
     progress: ^2.0.3
     react: ^18.2.0
+    react-children-utilities: ^2.9.0
     react-dom: ^18.2.0
     react-error-boundary: ^4.0.11
     react-highlight-words: ^0.20.0
@@ -7755,6 +7756,15 @@ __metadata:
     react: "*"
     react-dom: "*"
   checksum: 0d8d8a20eba339eb639a898e43df6ec0210f10f21ba3e760bacff6352f15b2d725fd37fd4eb6348b9e6cddb1dd29761671c48e5f604e9f55bdc52453822023f2
+  languageName: node
+  linkType: hard
+
+"react-children-utilities@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "react-children-utilities@npm:2.9.0"
+  peerDependencies:
+    react: 18 || 17 || 16 || 15
+  checksum: fda25c582ab31c9d3cfa65bbd738cb731c43fa2af6bc78210e355c2b7849483b68fcec80f704bb7e9beae61421c9c5e24be356d558ab5f535a83b34f1c107075
   languageName: node
   linkType: hard
 
