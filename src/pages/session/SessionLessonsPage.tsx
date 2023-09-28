@@ -13,7 +13,7 @@ import { SessionPageTransition } from "@pages/session/SessionPageTransition.tsx"
 import { StoredSubject, useSubjects } from "@api";
 
 import { GlobalHotKeys } from "react-hotkeys";
-import { useReducedMotion } from "@utils";
+import { useBooleanSetting, useReducedMotion } from "@utils";
 
 const KEY_MAP = {
   PREV: ["backspace", "left"],
@@ -69,6 +69,8 @@ function SessionLessonContents({
   onNextLesson?: () => void;
 }): JSX.Element {
   const reducedMotion = useReducedMotion();
+  const audioMuted = useBooleanSetting("audioMuted");
+  const autoPlayAudio = useBooleanSetting("audioAutoplayLessons");
 
   return <SessionPageTransition
     shouldWrap={!reducedMotion}
@@ -86,7 +88,7 @@ function SessionLessonContents({
         onPrevLesson={onPrevLesson}
         onNextLesson={onNextLesson}
 
-        autoPlayAudio={true}
+        autoPlayAudio={!audioMuted && autoPlayAudio}
 
         showToc
       />

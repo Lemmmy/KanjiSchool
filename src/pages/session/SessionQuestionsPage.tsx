@@ -74,10 +74,11 @@ export function SessionQuestionsPage(): JSX.Element {
   const currentItemId = question?.itemId;
   const currentType = question?.type;
 
-  // Grab a playAudio function if this is a vocabulary subject and reading
-  // question
+  // Grab a playAudio function if this is a vocabulary subject and reading question
+  const audioMuted = useBooleanSetting("audioMuted");
+  const autoPlayAudio = useBooleanSetting("audioAutoplayReviews");
   const [playAudio] = useVocabAudio(
-    question?.type === "reading" && subject && isVocabularyLike(subject)
+    question?.type === "reading" && subject && isVocabularyLike(subject) && !audioMuted && autoPlayAudio
       ? subject : undefined
   );
 

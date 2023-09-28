@@ -4,6 +4,7 @@
 
 import { Layout } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import classNames from "classnames";
 
 import * as api from "@api";
 
@@ -12,10 +13,10 @@ import { ConditionalLink } from "@comp/ConditionalLink";
 import { OnlineStatus } from "./OnlineStatus";
 import { SyncProgressBars } from "./progress";
 import { ItemsDropdown } from "./ItemsDropdown";
+import { MuteButton } from "./MuteButton.tsx";
 import { Search } from "./search/Search";
 import { UserInfo } from "./UserInfo";
 import { TopMenu } from "./TopMenu";
-import classNames from "classnames";
 import { DebugToggleTheme } from "@global/theme/DebugToggleTheme.tsx";
 
 const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
@@ -64,6 +65,9 @@ export function AppHeader(): JSX.Element | null {
 
     {/* Spacer */}
     {md && <div className="lg:flex-1" />}
+
+    {/* Mute */}
+    <MuteButton />
 
     {/* Non-mobile stuff */}
     {sm && <>

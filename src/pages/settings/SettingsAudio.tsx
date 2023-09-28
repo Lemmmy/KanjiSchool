@@ -21,7 +21,7 @@ export function getAudioSettingsGroup(): MenuItem {
     "Audio settings",
     <SoundOutlined />,
     [
-      booleanSetting("audioMuted", "Mute all audio"),
+      booleanSetting("audioMuted", "Mute all auto-playing audio"),
       booleanSetting("audioAutoplayLessons", "Automatically play vocabulary audio in lessons"),
       booleanSetting("audioAutoplayReviews", "Automatically play vocabulary audio in reviews and self-study"),
       integerSetting("audioFetchMax", "Max. # of audio files to download at session start"),
