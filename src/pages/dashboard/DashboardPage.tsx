@@ -22,12 +22,11 @@ import { KanjiProgressCard } from "./jlpt-joyo/KanjiProgressCard";
 import { ReviewAccuracyCard } from "./ReviewAccuracyCard";
 import { TipsCard } from "./tips/TipsCard";
 import { SubscriptionStatus } from "./SubscriptionStatus";
+import { OverleveledAssignments } from "./OverleveledAssignments";
 
 import { useBooleanSetting } from "@utils";
-
 import useResizeObserver from "use-resize-observer";
-import { OverleveledAssignments } from "@pages/dashboard/OverleveledAssignments";
-import { GetReviewsWarning } from "@pages/dashboard/GetReviewsWarning";
+
 
 // Lazy load some of the cards that result in a large bundle size:
 // UpcomingReviewsCard depends on Chart.JS
@@ -68,7 +67,6 @@ function DashboardPage(): JSX.Element {
     className="[&_.ant-card]:h-full [&_.ant-card]:flex [&_.ant-card]:flex-col [&_.ant-card>.ant-card-body]:flex-1"
   >
     <SubscriptionStatus />
-    <GetReviewsWarning />
     <OverleveledAssignments />
 
     <DashboardTopRow />

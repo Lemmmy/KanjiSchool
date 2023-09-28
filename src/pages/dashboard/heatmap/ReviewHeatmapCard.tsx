@@ -3,20 +3,22 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState } from "react";
-import { Button, Card } from "antd";
+import { Button, Card, Tooltip } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { Heatmap } from "./Heatmap";
 import { HeatmapDay } from "./data";
 import { ReviewHeatmapTooltip } from "./ReviewHeatmapTooltip";
 import { ReviewHeatmapLegend } from "./ReviewHeatmapLegend";
+import { WarningOutlined } from "@ant-design/icons";
+import { openGetReviewsModal } from "@pages/dashboard/GetReviewsModal.tsx";
 
 export default function ReviewHeatmapCard(): JSX.Element {
   const [showAll, setShowAll] = useState(false);
   const [hoverDay, setHoverDay] = useState<HeatmapDay>();
 
   return <Card
-    title="Review heatmap"
+    title={<CardTitle />}
     className="h-auto [&>.ant-card-body]:p-0 [&>.ant-card-head]:pr-sm"
 
     // Show all button in top right of card
@@ -34,6 +36,19 @@ export default function ReviewHeatmapCard(): JSX.Element {
 
     <CardFooter hoverDay={hoverDay} />
   </Card>;
+}
+
+function CardTitle(): JSX.Element {
+  return <div className="flex items-center gap-sm">
+    <span>Review heatmap</span>
+
+    <Tooltip title="Review history may be incomplete or inaccurate">
+      <WarningOutlined
+        className="text-yellow light:text-orange opacity-50 cursor-pointer"
+        onClick={() => openGetReviewsModal()}
+      />
+    </Tooltip>
+  </div>;
 }
 
 interface FooterProps {
