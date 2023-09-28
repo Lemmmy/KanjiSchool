@@ -36,7 +36,7 @@ export function OnlineStatus(): JSX.Element | null {
       {/* Top row - icon and 'offline' text */}
       <div className="online-status-row flex gap-xs items-center leading-normal">
         <CloudDisconnectedOutlined className="relative top-px" />
-        <span className="none md:inline online-text text-sm uppercase">Offline</span>
+        <span className="hidden md:inline online-text text-sm uppercase">Offline</span>
       </div>
 
       {/* Bottom row - queue size */}

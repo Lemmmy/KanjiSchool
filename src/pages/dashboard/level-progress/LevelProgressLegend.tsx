@@ -6,7 +6,7 @@ import { Tooltip } from "antd";
 import classNames from "classnames";
 
 export function LevelProgressLegend(): JSX.Element {
-  return <div className="none md:flex items-center text-sm text-desc">
+  return <div className="hidden md:flex items-center text-sm text-desc">
     <LegendSquare className="bg-srs-passed rounded-sm" />
     <LegendLabel>Passed</LegendLabel>
 

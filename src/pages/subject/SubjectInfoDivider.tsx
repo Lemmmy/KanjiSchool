@@ -20,7 +20,9 @@ export function SubjectInfoDivider({
   return <Divider
     orientation="left"
     className={classNames(
-      "!mt-[32px] before:!w-[32px] before:shrink-0 after:w-full",
+      "flex !mt-[32px]",
+      "after:flex-1 after:sm:!w-full",
+      "before:flex-grow before:shrink-0 before:sm:!w-[32px] before:sm:!flex-grow-0",
       "before:!translate-y-px after:!translate-y-px", // 50% y makes the divider 2px thick, yuck
       className
     )}

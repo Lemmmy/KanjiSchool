@@ -37,7 +37,7 @@ export const dropdownOverlayClass = classNames(
 
 export function AppHeader(): JSX.Element | null {
   // Hide certain features on mobile (TODO)
-  const { sm, md } = useBreakpoint();
+  const { sm } = useBreakpoint();
 
   if (!api.useIsLoggedIn()) return null;
 
@@ -64,7 +64,7 @@ export function AppHeader(): JSX.Element | null {
     <DebugToggleTheme />
 
     {/* Spacer */}
-    {md && <div className="lg:flex-1" />}
+    <div className="flex-1" />
 
     {/* Mute */}
     <MuteButton />
@@ -82,7 +82,6 @@ export function AppHeader(): JSX.Element | null {
     </>}
 
     {/* Settings button and dropdown menu */}
-    {!sm && <div className="flex-1" />}
     <TopMenu />
   </Layout.Header>;
 }
