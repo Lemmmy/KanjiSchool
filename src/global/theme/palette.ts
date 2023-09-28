@@ -81,7 +81,7 @@ export const PALETTE_KANJI_SCHOOL_LIGHT: ColorPalette = {
   vocabularyKatakana: "#389e0d", // green-7 in antd 5
 
   srsLesson: "#cacaca",
-  srsPassed: "#003eb3", // blue-8 in antd 5
+  srsPassed: "#0958d9", // blue-7 in antd 5
   srsLocked: "#959595",
 };
 

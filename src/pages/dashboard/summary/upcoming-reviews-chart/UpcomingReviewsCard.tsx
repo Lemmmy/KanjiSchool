@@ -58,7 +58,8 @@ function CardFooter(): JSX.Element | null {
   return <div className="py-sm px-md bg-white/4 border-solid border-0 border-t border-t-split text-desc text-sm">
     <div className="flex items-center justify-end">
       <LegendSquare label="Cumulative"
-        className="bg-transparent border-2 border-solid border-reviews-cumulative border-box" />
+        className="bg-transparent border-2 border-solid border-reviews-cumulative-dark
+          light:border-reviews-cumulative-light border-box" />
       <LegendSquare label="Apprentice"
         className="bg-srs-apprentice" />
       <LegendSquare label="Guru"

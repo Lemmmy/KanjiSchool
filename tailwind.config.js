@@ -140,6 +140,11 @@ export default {
         "session-page": "ease",
       },
 
+      backgroundImage: {
+        "locked-stripes-dark":  "repeating-linear-gradient(-45deg, var(--wktc-srs-locked) 0, var(--wktc-srs-locked) 4px, transparent 4px, transparent 8px)",
+        "locked-stripes-light": "repeating-linear-gradient(-45deg, var(--wktc-srs-lesson) 0, var(--wktc-srs-lesson) 4px, transparent 4px, transparent 8px)",
+      },
+
       // END OF EXTEND
     },
 
@@ -267,7 +272,8 @@ export default {
       "question-meaning-light-hc": "#ffffff",
       "question-reading-light"   : "#808080",
       "question-reading-light-hc": "#434343",
-      "reviews-cumulative"       : "#095cb5",
+      "reviews-cumulative-dark"  : "#095cb5",
+      "reviews-cumulative-light" : "#69b1ff",
 
       // misc missing values
       "transparent": "transparent",

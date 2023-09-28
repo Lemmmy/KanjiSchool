@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Fragment, useMemo } from "react";
-import { Collapse, CollapseProps, Divider, Tag } from "antd";
+import { CollapseProps, Divider, Tag } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 

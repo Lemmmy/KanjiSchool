@@ -140,7 +140,8 @@ interface BarPartProps {
 }
 
 const stageClasses: Record<BarPartStage, string> = {
-  "locked": "bg-srs-locked hover:bg-srs-locked-lighter",
+  "locked": "bg-locked-stripes-dark hover:bg-srs-locked-darker " +
+    "light:bg-locked-stripes-light light:hover:bg-srs-lesson-lighter",
   "lesson": "bg-srs-lesson hover:bg-srs-lesson-lighter",
   "appr1":  "bg-srs-apprentice-1 hover:bg-srs-apprentice-1-lighter",
   "appr2":  "bg-srs-apprentice-2 hover:bg-srs-apprentice-2-lighter",

@@ -136,7 +136,7 @@ export function renderChart(
     .range([0, width]);
   group.append("path")
     .datum(data)
-    .classed("stroke-reviews-cumulative", true)
+    .classed("stroke-reviews-cumulative-dark light:stroke-reviews-cumulative-light", true)
     .attr("fill", "none")
     .attr("stroke-width", 3)
     .attr("stroke-linejoin", "round")

@@ -23,7 +23,7 @@ export function LevelProgressLegend(): JSX.Element {
       <LegendLabel>Less.</LegendLabel>
     </Tooltip>
 
-    <LegendSquare className="bg-srs-locked rounded-sm" />
+    <LegendSquare className="bg-locked-stripes-dark light:bg-locked-stripes-light rounded-sm" />
     <LegendLabel>Locked</LegendLabel>
   </div>;
 }

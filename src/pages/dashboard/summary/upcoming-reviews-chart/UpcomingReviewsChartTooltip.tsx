@@ -37,7 +37,8 @@ function TooltipInner({ datum: d }: DeepNonNullable<Props>): JSX.Element | null 
 
     <div className="flex flex-col gap-xs">
       <TooltipRow label="Cumulative" value={d.cumulative}
-        className="bg-transparent border-2 border-solid border-reviews-cumulative border-box" />
+        className="bg-transparent border-2 border-solid border-reviews-cumulative-dark
+          light:border-reviews-cumulative-light border-box" />
       <TooltipRow label="Apprentice" value={d.apprentice}
         className="bg-srs-apprentice" />
       <TooltipRow label="Guru" value={d.guru}

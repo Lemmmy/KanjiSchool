@@ -74,7 +74,7 @@ export function SessionResultsAlert(): JSX.Element | null {
         <Summary results={lastResults} />
 
         <Collapse
-          className="mt-lg"
+          className="mt-lg overflow-hidden"
           defaultActiveKey={expand ? DEFAULT_EXPAND : DEFAULT_COLLAPSE}
           items={subItems}
         />
