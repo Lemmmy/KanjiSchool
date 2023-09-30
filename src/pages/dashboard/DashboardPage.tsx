@@ -104,22 +104,22 @@ function DashboardPage(): JSX.Element {
       <Col span={24} xl={6} xxl={6}><ReviewForecastCard /></Col>
     </Row>
 
-    <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
+    <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md -mb-md">
       {/* Kanji progress */}
       <Col span={24} lg={12}><KanjiProgressCard /></Col>
 
       <Col span={24} lg={12} style={{ display: "flex", flexDirection: "column" }}>
         {/* Unlocked/burned items */}
-        <Row gutter={16} className="mb-md">
+        <Row gutter={16}>
           {/* New unlocks in last 30d */}
-          <Col span={24} xl={12}>
+          <Col span={24} xl={12} className="mb-md">
             <Suspense fallback={<Card loading />}>
               <NewUnlocksCard dateField="unlocked_at" />
             </Suspense>
           </Col>
 
           {/* Burned items in last 30d */}
-          <Col span={24} xl={12}>
+          <Col span={24} xl={12} className="mb-md">
             <Suspense fallback={<Card loading />}>
               <NewUnlocksCard dateField="burned_at" />
             </Suspense>

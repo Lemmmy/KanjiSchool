@@ -82,7 +82,7 @@ const THEME_DARK: WkTheme = {
 
   scrollbarThumbColor     : "rgba(255, 255, 255, 0.17)",
   scrollbarThumbHoverColor: "rgba(255, 255, 255, 0.3)",
-  scrollbarTrackColor     : "rgba(0, 0, 0, 0.1)"
+  scrollbarTrackColor     : "rgba(255, 255, 255, 0.1)"
 };
 
 export const THEMES: Record<ThemeName, WkTheme> = {

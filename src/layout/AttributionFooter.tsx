@@ -20,12 +20,12 @@ export function AttributionFooter({
   className
 }: Props): JSX.Element {
   return <div className={classNames(
-    "min-w-[300px] w-full mt-lg mb-32 md:mb-0 flex flex-col gap-md mx-auto",
+    "min-w-[300px] w-full my-lg md:mb-0 flex flex-col gap-md mx-auto",
     className
   )}>
     <TopRow withThemeToggle={withThemeToggle} />
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-desc justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-lg text-desc justify-center">
       <LeftCol />
       <RightCol />
     </div>

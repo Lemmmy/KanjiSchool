@@ -11,8 +11,11 @@ import { AnySettingName, DEFAULT_SETTINGS, getSettingKey } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 import { Button } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 export function SettingsImportButton(): JSX.Element {
+  const { md } = useBreakpoint();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const onButtonClick = useCallback(() => {
@@ -61,7 +64,7 @@ export function SettingsImportButton(): JSX.Element {
         icon={<ImportOutlined />}
         onClick={onButtonClick}
       >
-        Import settings
+        {md ? "Import settings" : "Import"}
       </Button>
     </span>
   </div>;

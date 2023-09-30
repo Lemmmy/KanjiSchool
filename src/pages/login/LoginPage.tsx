@@ -56,7 +56,6 @@ export function LoginPage(): JSX.Element {
     siteTitle="Log in"
     noHeader
     verticallyCentered
-    className="!h-screen overflow-y-auto overflow-x-hidden"
     contentsHeightClassName="h-auto min-h-screen"
   >
     <Card title="KanjiSchool" className="min-w-[300px] w-full max-w-[720px] box-border">

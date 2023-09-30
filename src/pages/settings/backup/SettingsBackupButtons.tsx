@@ -18,7 +18,9 @@ export function SettingsBackupButtons(): JSX.Element {
       Export a copy of your settings to back them up, or import them on another device.
     </p>
 
-    <SettingsExportButton />
-    <SettingsImportButton />
+    <div className="flex flex-wrap gap-md items-center">
+      <SettingsExportButton />
+      <SettingsImportButton />
+    </div>
   </div>;
 }

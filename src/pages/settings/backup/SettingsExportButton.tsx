@@ -13,16 +13,19 @@ import { saveAs } from "file-saver";
 import { DEFAULT_SETTINGS, AnySettingName, getSettingKey } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 
 export function SettingsExportButton(): JSX.Element {
+  const { md } = useBreakpoint();
+
   return <Button
     type="primary"
     icon={<ExportOutlined />}
     onClick={exportSettings}
   >
-    Export settings
+    {md ? "Export settings" : "Export"}
   </Button>;
 }
 
