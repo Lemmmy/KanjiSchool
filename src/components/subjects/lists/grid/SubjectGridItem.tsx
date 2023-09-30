@@ -65,7 +65,6 @@ const sizeClasses: Record<Size, SizeClasses> = {
   },
   tiny: {
     base: "w-[36px] h-[25px] p-0 m-px leading-[20px] rounded-sm",
-    subjectCharacters: "!text-black",
     subjectCharactersFont: "text-[20px] leading-none",
     subjectCharactersImageSize: "w-[20px] h-[20px]",
     types: {
@@ -75,9 +74,9 @@ const sizeClasses: Record<Size, SizeClasses> = {
 };
 
 const colorByTypeClasses: Record<NormalizedSubjectType, string> = {
-  radical   : "bg-radical hover:bg-radical-lighter",
-  kanji     : "bg-kanji hover:bg-kanji-lighter",
-  vocabulary: "bg-vocabulary hover:bg-vocabulary-lighter",
+  radical   : "bg-radical hover:bg-radical-lighter !text-radical-text",
+  kanji     : "bg-kanji hover:bg-kanji-lighter !text-kanji-text",
+  vocabulary: "bg-vocabulary hover:bg-vocabulary-lighter !text-vocabulary-text",
 };
 
 const colorBySrsStageClasses: Record<Lowercase<SrsStageBaseName>, string> = {
@@ -160,6 +159,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
       className={classNames("align-middle text-center", sizeClassesObj.subjectCharacters)}
       fontClassName={sizeClassesObj.subjectCharactersFont}
       imageSizeClassName={sizeClassesObj.subjectCharactersImageSize}
+      withColorClasses={size !== "tiny"}
     />
 
     {size !== "tiny" && <div

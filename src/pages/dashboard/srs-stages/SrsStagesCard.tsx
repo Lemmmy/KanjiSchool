@@ -112,7 +112,7 @@ export function SrsStagesCard(): JSX.Element | null {
   if (!assignments || !subjects || !data) return null;
   const [stageData, knownSubjects] = data;
 
-  return <div className="grid grid-cols-3 gap-xss text-black">
+  return <div className="grid grid-cols-3 gap-xss text-shared-stages-text">
     <SrsStage stageData={stageData} min={1} max={4} /> {/* Apprentice */}
     <SrsStage stageData={stageData} min={5} max={6} /> {/* Guru */}
     <SrsStage stageData={stageData} min={7} /> {/* Master */}

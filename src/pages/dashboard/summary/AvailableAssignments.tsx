@@ -104,7 +104,11 @@ interface Props {
   data?: AvailableAssignments;
 }
 
-const cellClass = "w-[40px] text-center";
+const cellClass  = "w-[40px] text-center light:text-black light:text-shared-stages-text";
+
+const radicalClass    = classNames(cellClass, "text-radical light:bg-radical-lighter");
+const kanjiClass      = classNames(cellClass, "text-kanji light:bg-kanji");
+const vocabularyClass = classNames(cellClass, "text-vocabulary light:bg-vocabulary");
 
 export function AvailableAssignmentsTable({
   type,
@@ -116,13 +120,13 @@ export function AvailableAssignmentsTable({
   // Don't render the table at all if there's nothing interesting to show.
   if (!data) return null;
 
-  return <table className="mt-sm md:mt-md text-sm xxl:text-base w-full">
+  return <table className="mt-sm md:mt-md text-sm xxl:text-base w-full border-collapse">
     <thead>
       <tr>
         <th></th>
-        <th className={classNames(cellClass, "text-radical")} title="Radical">R</th>
-        <th className={classNames(cellClass, "text-kanji")} title="Kanji">K</th>
-        <th className={classNames(cellClass, "text-vocabulary")} title="Vocabulary">V</th>
+        <th className={classNames(radicalClass, "rounded-tl")} title="Radical">R</th>
+        <th className={kanjiClass} title="Kanji">K</th>
+        <th className={classNames(vocabularyClass, "rounded-tr")} title="Vocabulary">V</th>
       </tr>
     </thead>
 
@@ -130,10 +134,12 @@ export function AvailableAssignmentsTable({
       <AssRow
         title={bps.xxl ? `Current-level ${type}s` : `Lvl ${data.level} ${type}s`}
         rkv={data.current}
+        last={!data.earlier}
       />
       <AssRow
         title={bps.xxl ? `Earlier-level ${type}s` : `Earlier ${type}s`}
         rkv={data.earlier}
+        last
       />
     </tbody>
   </table>;
@@ -142,21 +148,23 @@ export function AvailableAssignmentsTable({
 interface AssRowProps {
   title: string;
   rkv?: Rkv;
+  last: boolean;
 }
 
 const num = (n: number): string => n > 0 ? nts(n) : "";
 
 function AssRow({
   title,
-  rkv
+  rkv,
+  last
 }: AssRowProps): JSX.Element | null {
   if (!rkv) return null;
   const [r, k, v] = rkv;
 
   return <tr>
     <td className="text-desc">{title}</td>
-    <td className={classNames(cellClass, "text-radical")}>{num(r)}</td>
-    <td className={classNames(cellClass, "text-kanji")}>{num(k)}</td>
-    <td className={classNames(cellClass, "text-vocabulary")}>{num(v)}</td>
+    <td className={classNames(radicalClass, { "rounded-bl": last })}>{num(r)}</td>
+    <td className={kanjiClass}>{num(k)}</td>
+    <td className={classNames(vocabularyClass, { "rounded-br": last })}>{num(v)}</td>
   </tr>;
 }

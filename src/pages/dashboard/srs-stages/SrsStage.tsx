@@ -22,7 +22,7 @@ const stageClasses: Partial<Record<SrsStageBaseName, string>> = {
   "Guru":        "bg-srs-guru hover:bg-srs-guru-lighter",
   "Master":      "bg-srs-master hover:bg-srs-master-lighter",
   "Enlightened": "bg-srs-enlightened hover:bg-srs-enlightened-lighter",
-  "Burned":      "bg-srs-burned hover:bg-srs-burned-lighter"
+  "Burned":      "bg-srs-burned hover:bg-srs-burned-lighter palette-fdl:text-white"
 };
 
 export function SrsStage({ stageData, min, max }: SrsStageProps): JSX.Element {

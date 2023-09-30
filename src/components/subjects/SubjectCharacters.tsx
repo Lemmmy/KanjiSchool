@@ -28,6 +28,7 @@ interface Props {
   fontClassName?: string;
   imageClassName?: string;
   imageSizeClassName?: string;
+  withColorClasses?: boolean;
   style?: React.CSSProperties;
 }
 
@@ -47,6 +48,7 @@ export const SubjectCharacters = React.memo(({
   fontClassName = "text-[32px]",
   imageClassName,
   imageSizeClassName,
+  withColorClasses = true,
   style
 }: Props): JSX.Element | null => {
   const objectType = subject.object;
@@ -73,10 +75,10 @@ export const SubjectCharacters = React.memo(({
 
   const classes = classNames(
     "font-ja",
-    colorClasses[normObjectType],
     fontClassName,
     className,
     {
+      [colorClasses[normObjectType]]: withColorClasses,
       "subject-characters-textfit": textfit,
       "subject-characters-with-char-blocks": !!charBlocks
     }

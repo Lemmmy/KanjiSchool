@@ -3,27 +3,9 @@ import { presetPalettes } from "@ant-design/colors";
 import plugin from "tailwindcss/plugin";
 import clipPath from "tailwind-clip-path";
 import logical from "tailwindcss-logical";
+import { kebabCase } from "lodash-es";
 
-function generateAntColors() {
-  const out = {};
-
-  for (const colorName in presetPalettes) {
-    const palette = presetPalettes[colorName];
-    const colorOut = {};
-
-    for (const shade in palette) {
-      if (shade === "grey") continue;
-      const name = shade === "primary" ? "DEFAULT" : shade.toString();
-      colorOut[name] = `rgb(var(--antd-${colorName}-${shade}) / <alpha-value>)`;
-    }
-
-    out[colorName] = colorOut;
-  }
-
-  return out;
-}
-
-export default {
+const generateConfig = () => ({
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -175,92 +157,8 @@ export default {
       "spotlight" : "rgb(var(--antd-spotlight) / <alpha-value>)",
       "header"    : "rgb(var(--antd-header) / <alpha-value>)",
 
-      // wktc base colors
-      "radical"             : "var(--wktc-radical)",
-      "kanji"               : "var(--wktc-kanji)",
-      "vocabulary"          : "var(--wktc-vocabulary)",
-      "reading"             : "var(--wktc-reading)",
-      "vocabulary-hiragana" : "var(--wktc-vocabulary-hiragana)",
-      "vocabulary-katakana" : "var(--wktc-vocabulary-katakana)",
-      "srs-lesson"          : "var(--wktc-srs-lesson)",
-      "srs-apprentice"      : "var(--wktc-srs-apprentice)",
-      "srs-apprentice-1"    : "var(--wktc-srs-apprentice-1)",
-      "srs-apprentice-2"    : "var(--wktc-srs-apprentice-2)",
-      "srs-apprentice-3"    : "var(--wktc-srs-apprentice-3)",
-      "srs-apprentice-4"    : "var(--wktc-srs-apprentice-4)",
-      "srs-passed"          : "var(--wktc-srs-passed)",
-      "srs-guru"            : "var(--wktc-srs-guru)",
-      "srs-master"          : "var(--wktc-srs-master)",
-      "srs-enlightened"     : "var(--wktc-srs-enlightened)",
-      "srs-burned"          : "var(--wktc-srs-burned)",
-      "srs-locked"          : "var(--wktc-srs-locked)",
-      "srs-not-on-wk"       : "var(--wktc-srs-not-on-wk)",
-
-      // wktc lighter colors
-      "radical-lighter"             : "var(--wktc-radical-lighter)",
-      "kanji-lighter"               : "var(--wktc-kanji-lighter)",
-      "vocabulary-lighter"          : "var(--wktc-vocabulary-lighter)",
-      "reading-lighter"             : "var(--wktc-reading-lighter)",
-      "vocabulary-hiragana-lighter" : "var(--wktc-vocabulary-hiragana-lighter)",
-      "vocabulary-katakana-lighter" : "var(--wktc-vocabulary-katakana-lighter)",
-      "srs-lesson-lighter"          : "var(--wktc-srs-lesson-lighter)",
-      "srs-apprentice-lighter"      : "var(--wktc-srs-apprentice-lighter)",
-      "srs-apprentice-1-lighter"    : "var(--wktc-srs-apprentice-1-lighter)",
-      "srs-apprentice-2-lighter"    : "var(--wktc-srs-apprentice-2-lighter)",
-      "srs-apprentice-3-lighter"    : "var(--wktc-srs-apprentice-3-lighter)",
-      "srs-apprentice-4-lighter"    : "var(--wktc-srs-apprentice-4-lighter)",
-      "srs-passed-lighter"          : "var(--wktc-srs-passed-lighter)",
-      "srs-guru-lighter"            : "var(--wktc-srs-guru-lighter)",
-      "srs-master-lighter"          : "var(--wktc-srs-master-lighter)",
-      "srs-enlightened-lighter"     : "var(--wktc-srs-enlightened-lighter)",
-      "srs-burned-lighter"          : "var(--wktc-srs-burned-lighter)",
-      "srs-locked-lighter"          : "var(--wktc-srs-locked-lighter)",
-      "srs-not-on-wk-lighter"       : "var(--wktc-srs-not-on-wk-lighter)",
-
-      // wktc darker colors
-      "radical-darker"             : "var(--wktc-radical-darker)",
-      "kanji-darker"               : "var(--wktc-kanji-darker)",
-      "vocabulary-darker"          : "var(--wktc-vocabulary-darker)",
-      "vocabulary-dark-darker"     : "var(--wktc-vocabulary-dark-darker)",
-      "vocabulary-hiragana-darker" : "var(--wktc-vocabulary-hiragana-darker)",
-      "vocabulary-katakana-darker" : "var(--wktc-vocabulary-katakana-darker)",
-      "srs-lesson-darker"          : "var(--wktc-srs-lesson-darker)",
-      "srs-apprentice-darker"      : "var(--wktc-srs-apprentice-darker)",
-      "srs-apprentice-1-darker"    : "var(--wktc-srs-apprentice-1-darker)",
-      "srs-apprentice-2-darker"    : "var(--wktc-srs-apprentice-2-darker)",
-      "srs-apprentice-3-darker"    : "var(--wktc-srs-apprentice-3-darker)",
-      "srs-apprentice-4-darker"    : "var(--wktc-srs-apprentice-4-darker)",
-      "srs-passed-darker"          : "var(--wktc-srs-passed-darker)",
-      "srs-guru-darker"            : "var(--wktc-srs-guru-darker)",
-      "srs-master-darker"          : "var(--wktc-srs-master-darker)",
-      "srs-enlightened-darker"     : "var(--wktc-srs-enlightened-darker)",
-      "srs-burned-darker"          : "var(--wktc-srs-burned-darker)",
-      "srs-locked-darker"          : "var(--wktc-srs-locked-darker)",
-      "srs-not-on-wk-darker"       : "var(--wktc-srs-not-on-wk-darker)",
-
-      // wktc dark colors
-      "radical-dark"             : "var(--wktc-radical-dark)",
-      "kanji-dark"               : "var(--wktc-kanji-dark)",
-      "vocabulary-dark"          : "var(--wktc-vocabulary-dark)",
-      "reading-dark"             : "var(--wktc-reading-dark)",
-      "radical-dark-dark"        : "var(--wktc-radical-dark-dark)",
-      "kanji-dark-dark"          : "var(--wktc-kanji-dark-dark)",
-      "vocabulary-dark-dark"     : "var(--wktc-vocabulary-dark-dark)",
-      "vocabulary-hiragana-dark" : "var(--wktc-vocabulary-hiragana-dark)",
-      "vocabulary-katakana-dark" : "var(--wktc-vocabulary-katakana-dark)",
-      "srs-lesson-dark"          : "var(--wktc-srs-lesson-dark)",
-      "srs-apprentice-dark"      : "var(--wktc-srs-apprentice-dark)",
-      "srs-apprentice-1-dark"    : "var(--wktc-srs-apprentice-1-dark)",
-      "srs-apprentice-2-dark"    : "var(--wktc-srs-apprentice-2-dark)",
-      "srs-apprentice-3-dark"    : "var(--wktc-srs-apprentice-3-dark)",
-      "srs-apprentice-4-dark"    : "var(--wktc-srs-apprentice-4-dark)",
-      "srs-passed-dark"          : "var(--wktc-srs-passed-dark)",
-      "srs-guru-dark"            : "var(--wktc-srs-guru-dark)",
-      "srs-master-dark"          : "var(--wktc-srs-master-dark)",
-      "srs-enlightened-dark"     : "var(--wktc-srs-enlightened-dark)",
-      "srs-burned-dark"          : "var(--wktc-srs-burned-dark)",
-      "srs-locked-dark"          : "var(--wktc-srs-locked-dark)",
-      "srs-not-on-wk-dark"       : "var(--wktc-srs-not-on-wk-dark)",
+      // wktc colors
+      ...generateWktcColors(),
 
       // antd colors
       ...generateAntColors(),
@@ -294,8 +192,94 @@ export default {
       );
     }),
 
-    // light mode variants
-    plugin(({ addVariant }) => addVariant("light", ":is(.light &)"))
+    // light mode and palette variants
+    plugin(({ addVariant }) => {
+      addVariant("light", ":is(.light &)");
+      addVariant("palette-ks", ":is(.palette-kanjiSchool &)");
+      addVariant("palette-fdd", ":is(.palette-fdDark &)");
+      addVariant("palette-fdl", ":is(.palette-fdLight &)");
+    })
   ],
-};
+});
 
+function generateAntColors() {
+  const out = {};
+
+  for (const colorName in presetPalettes) {
+    const palette = presetPalettes[colorName];
+    const colorOut = {};
+
+    for (const shade in palette) {
+      if (shade === "grey") continue;
+      const name = shade === "primary" ? "DEFAULT" : shade.toString();
+      colorOut[name] = `rgb(var(--antd-${colorName}-${shade}) / <alpha-value>)`;
+    }
+
+    out[colorName] = colorOut;
+  }
+
+  return out;
+}
+
+function generateWktcColors() {
+  // Copy from ./src/global/theme/palette.ts
+  const paletteInterface = `
+  radical   : string;
+  kanji     : string;
+  vocabulary: string;
+  reading   : string;
+
+  radicalDark   : string;
+  kanjiDark     : string;
+  vocabularyDark: string;
+
+  radicalText     : string;
+  kanjiText       : string;
+  vocabularyText  : string;
+  sharedStagesText: string;
+
+  vocabularyHiragana: string;
+  vocabularyKatakana: string;
+
+  srsLesson     : string;
+  srsApprentice : string;
+  srsApprentice1: string;
+  srsApprentice2: string;
+  srsApprentice3: string;
+  srsApprentice4: string;
+  srsPassed     : string;
+  srsGuru       : string;
+  srsMaster     : string;
+  srsEnlightened: string;
+  srsBurned     : string;
+  srsLocked     : string;
+  srsNotOnWk    : string;
+  `;
+
+  const noVariants = {
+    "radicalText"     : true,
+    "kanjiText"       : true,
+    "vocabularyText"  : true,
+    "sharedStagesText": true,
+  };
+
+  const names = paletteInterface.match(/(?<=\n\s+)(\w+)(?=\s*:)/g);
+  const convertKeyName = keyName => kebabCase(keyName.replace(/(\d+)/, "-$1"));
+
+  const out = {};
+
+  for (const name of names) {
+    const keyName = convertKeyName(name);
+    out[keyName] = `var(--wktc-${keyName})`;
+
+    if (!noVariants[keyName]) {
+      out[`${keyName}-lighter`] = `var(--wktc-${keyName}-lighter)`;
+      out[`${keyName}-light`]   = `var(--wktc-${keyName}-light)`;
+      out[`${keyName}-dark`]    = `var(--wktc-${keyName}-dark)`;
+    }
+  }
+
+  return out;
+}
+
+export default generateConfig();

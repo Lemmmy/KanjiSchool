@@ -20,6 +20,11 @@ export interface ColorPalette {
   kanjiDark     : string;
   vocabularyDark: string;
 
+  radicalText     : string;
+  kanjiText       : string;
+  vocabularyText  : string;
+  sharedStagesText: string;
+
   vocabularyHiragana: string;
   vocabularyKatakana: string;
 
@@ -38,6 +43,19 @@ export interface ColorPalette {
   srsNotOnWk    : string;
 }
 
+const noVariants: Partial<Record<keyof ColorPalette, boolean>> = {
+  "radicalText"     : true,
+  "kanjiText"       : true,
+  "vocabularyText"  : true,
+  "sharedStagesText": true,
+};
+
+const reservedKeywords: Record<string, boolean> = {
+  "unset"  : true,
+  "inherit": true,
+  "initial": true,
+};
+
 export const PALETTE_KANJI_SCHOOL: ColorPalette = {
   radical   : "#3C9AE8", // @blue-7
   kanji     : "#E8B339", // @gold-7
@@ -47,6 +65,11 @@ export const PALETTE_KANJI_SCHOOL: ColorPalette = {
   radicalDark   : "#177DDC", // @blue-6
   kanjiDark     : "#DE8E26",
   vocabularyDark: "#49AA19", // @green-6
+
+  radicalText     : "#000",
+  kanjiText       : "#000",
+  vocabularyText  : "#000",
+  sharedStagesText: "#000",
 
   vocabularyHiragana: "#B2E58B", // @green-9
   vocabularyKatakana: "#3C8618", // @green-5
@@ -76,6 +99,11 @@ export const PALETTE_KANJI_SCHOOL_LIGHT: ColorPalette = {
   radicalDark:    "#0958d9", // blue-7 in antd 5
   kanjiDark:      "#d46b08", // orange-7 in antd 5
   vocabularyDark: "#389e0d", // green-7 in antd 5
+
+  radicalText     : "#000",
+  kanjiText       : "#000",
+  vocabularyText  : "#000",
+  sharedStagesText: "#000",
 
   vocabularyHiragana: "#95de64", // green-4 in antd 5
   vocabularyKatakana: "#389e0d", // green-7 in antd 5
@@ -115,7 +143,7 @@ export const PALETTE_KANJI_SCHOOL_LIGHT: ColorPalette = {
  *   8 - Lesson
  *   9 - Locked
  */
-export const PALETTE_FD_LIGHT: ColorPalette = {
+export const PALETTE_FD_LIGHT_ON_DARK: ColorPalette = {
   radical   : "#0098F0", // subjectTypeBackgroundColors[0]
   kanji     : "#E80092", // subjectTypeBackgroundColors[1]
   vocabulary: "#9808F3", // subjectTypeBackgroundColors[2]
@@ -124,6 +152,11 @@ export const PALETTE_FD_LIGHT: ColorPalette = {
   radicalDark   : "#0098F0", // subjectTypeBackgroundColors[0]
   kanjiDark     : "#E80092", // subjectTypeBackgroundColors[1]
   vocabularyDark: "#9808F3", // subjectTypeBackgroundColors[2]
+
+  radicalText     : "#000",
+  kanjiText       : "#000",
+  vocabularyText  : "#000",
+  sharedStagesText: "#fff",
 
   vocabularyHiragana: "#C167FA",
   vocabularyKatakana: "#6A06A9",
@@ -138,12 +171,24 @@ export const PALETTE_FD_LIGHT: ColorPalette = {
   srsGuru       : "#7D2893", // stageBucketColors[3]
   srsMaster     : "#2344D6", // stageBucketColors[4]
   srsEnlightened: "#0094EB", // stageBucketColors[5]
-  srsBurned     : "#444444", // stageBucketColors[6]
-  srsLocked     : "#373737", // fade(@white, 15%) (converted to hex)
+  srsBurned     : "#444",
+  srsLocked     : "#777",
   srsNotOnWk    : "#531dab", // @purple-7
 };
 
-export const PALETTE_FD_DARK: ColorPalette = {
+export const PALETTE_FD_LIGHT_ON_LIGHT: ColorPalette = {
+  ...PALETTE_FD_LIGHT_ON_DARK,
+
+  radicalText     : "#fff",
+  kanjiText       : "#fff",
+  vocabularyText  : "#fff",
+  sharedStagesText: "#fff",
+
+  srsBurned: "#444",
+  srsLocked: "#aaa",
+};
+
+export const PALETTE_FD_DARK_ON_DARK: ColorPalette = {
   radical   : "#3DAEE9", // subjectTypeTextColors[0]
   kanji     : "#FDBC4B", // subjectTypeTextColors[1]
   vocabulary: "#2ECC71", // subjectTypeTextColors[2]
@@ -153,6 +198,11 @@ export const PALETTE_FD_DARK: ColorPalette = {
   radicalDark   : "#3DAEE9", // subjectTypeTextColors[0]
   kanjiDark     : "#FDBC4B", // subjectTypeTextColors[1]
   vocabularyDark: "#2ECC71", // subjectTypeTextColors[2]
+
+  radicalText     : "#000",
+  kanjiText       : "#000",
+  vocabularyText  : "#000",
+  sharedStagesText: "#000",
 
   vocabularyHiragana: "#7EE2A8",
   vocabularyKatakana: "#208E4E",
@@ -194,10 +244,11 @@ export const PALETTES: Record<PaletteName, ColorPaletteMapping> = {
     light: PALETTE_KANJI_SCHOOL_LIGHT
   },
   fdLight: {
-    dark: PALETTE_FD_LIGHT
+    dark: PALETTE_FD_LIGHT_ON_DARK,
+    light: PALETTE_FD_LIGHT_ON_LIGHT
   },
   fdDark: {
-    dark: PALETTE_FD_DARK
+    dark: PALETTE_FD_DARK_ON_DARK
   }
 };
 
@@ -206,19 +257,27 @@ export function buildPaletteStyles(palette: ColorPalette): CSSProperties {
 
   for (const origKey in palette) {
     const color = palette[origKey as keyof ColorPalette];
-    props[`--wktc-${convertKeyName(origKey)}`] = color;
+    const name = convertKeyName(origKey);
+
+    props[`--wktc-${name}`] = color;
+
+    if (noVariants[origKey as keyof ColorPalette]) {
+      continue;
+    }
+
+    const reserved = reservedKeywords[color] ? color : undefined;
 
     // Lighten the color (for hover etc.)
-    props[`--wktc-${convertKeyName(origKey)}-lighter`] =
-      new TinyColor(color).lighten(10).toHexString();
+    props[`--wktc-${name}-lighter`] =
+      reserved || new TinyColor(color).lighten(10).toHexString();
 
     // Darken the color (for hover etc.)
-    props[`--wktc-${convertKeyName(origKey)}-darker`] =
-      new TinyColor(color).darken(7.5).toHexString();
+    props[`--wktc-${name}-darker`] =
+      reserved || new TinyColor(color).darken(7.5).toHexString();
 
     // Even darker color
-    props[`--wktc-${convertKeyName(origKey)}-dark`] =
-      new TinyColor(color).darken(15).toHexString();
+    props[`--wktc-${name}-dark`] =
+      reserved || new TinyColor(color).darken(15).toHexString();
   }
 
   debug("color palette: %o", palette);
