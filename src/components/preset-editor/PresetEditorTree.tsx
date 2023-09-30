@@ -7,7 +7,6 @@ import { Tree } from "antd";
 
 import { PresetType, Preset, getDefaultPresets, usePresets } from ".";
 import { movePreset } from "./move";
-import { DataNode } from "rc-tree/lib/interface";
 import classNames from "classnames";
 
 const TREE_TITLES: Record<PresetType, string> = {
@@ -84,10 +83,9 @@ export function PresetEditorTree({
     // Only allow dragging of user presets
     draggable={{
       icon: false,
-      nodeDraggable: (({ key }: { key: string }) =>
+      nodeDraggable: ({ key }) =>
         !(key.toString()).startsWith("default-")
         && !(key.toString()).startsWith("root-")
-      ) as unknown as (node: DataNode) => boolean
     }}
 
     onDrop={({ dragNode, dropToGap, dropPosition, node }) => {
