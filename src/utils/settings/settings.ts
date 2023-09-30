@@ -200,7 +200,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
 
   dashboardCurrentStreak: true,
   dashboardLevelProgressPassed: true,
-  dashboardReviewForecastNow: true,
+  dashboardReviewForecastNow: false,
   dashboardReviewChartDays: 2,
   dashboardCriticalThreshold: 75,
   dashboardReviewStatsRow: true,
