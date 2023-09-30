@@ -7,6 +7,7 @@ import { PageLayout } from "@layout/PageLayout";
 import { SettingsBackupButtons } from "./backup/SettingsBackupButtons.tsx";
 import { SettingsUserInfo } from "./SettingsUserInfo.tsx";
 import { SettingsMenu } from "@pages/settings/SettingsMenu.tsx";
+import { AttributionFooter } from "@layout/AttributionFooter.tsx";
 
 function SettingsPage(): JSX.Element {
   return <PageLayout
@@ -23,6 +24,9 @@ function SettingsPage(): JSX.Element {
 
     {/* Main settings menu */}
     <SettingsMenu />
+
+    {/* Attribution footer */}
+    <AttributionFooter />
 
     {/* Page contents margin/spacer */}
     <div className="h-lg" />

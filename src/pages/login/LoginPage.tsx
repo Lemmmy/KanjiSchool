@@ -12,8 +12,8 @@ import { PageLayout } from "@layout/PageLayout";
 import * as api from "@api";
 
 import { ExtLink } from "@comp/ExtLink";
-import { LoginFooter } from "./LoginFooter";
 import { DemoCarousel } from "./DemoCarousel";
+import { AttributionFooter } from "@layout/AttributionFooter.tsx";
 
 const UUID_RE = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 
@@ -167,6 +167,9 @@ export function LoginPage(): JSX.Element {
     </Card>
 
     {/* Footer */}
-    <LoginFooter />
+    <AttributionFooter
+      withThemeToggle
+      className="max-w-[720px] mt-5 mx-auto"
+    />
   </PageLayout>;
 }
