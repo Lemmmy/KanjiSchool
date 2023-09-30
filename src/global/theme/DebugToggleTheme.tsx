@@ -20,11 +20,11 @@ function DebugToggleThemeInner(): JSX.Element {
   const sitePalette = useStringSetting<PaletteName>("sitePalette");
 
   function onThemeClick() {
-    setStringSetting("siteTheme", theme === "light" ? "dark" : "light");
+    setStringSetting("siteTheme", theme === "light" ? "dark" : "light", false);
   }
 
   function setPalette(palette: PaletteName) {
-    setStringSetting("sitePalette", palette);
+    setStringSetting("sitePalette", palette, false);
   }
 
   return <div className="flex flex-col">

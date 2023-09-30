@@ -70,7 +70,7 @@ export function AnchorList({
       items.push({ key: "your-progression", href: "#your-progression", title: "Your progression" });
 
     if (showDebug) {
-      items.push({ key: "debug", href: "#debug", title: "Debug", className: "[&_a]:!text-purple" });
+      items.push({ key: "debug", href: "#debug", title: "Debug", className: "[&_a]:!text-[#722ed1]" });
     }
 
     // Add linkClass to all items

@@ -315,7 +315,7 @@ export function useHwCanvas(
 
   // Canvas is cached so its ref doesn't change when `empty` state changes
   const canvasEl = useMemo(() => <canvas
-    className="w-full aspect-2/1 cursor-pen touch-none select-none"
+    className="w-full aspect-2/1 cursor-pen light:cursor-pen-light touch-none select-none"
 
     ref={onCanvasInit}
     onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}

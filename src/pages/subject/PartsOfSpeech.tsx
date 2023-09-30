@@ -26,13 +26,13 @@ const partClasses: Record<string, string> = {
 
   "adverb"           : "!bg-green-8",
 
-  "no-adjective"     : "!bg-purple",
-  "na-adjective"     : "!bg-purple",
-  "i-adjective"      : "!bg-purple",
-  "adjective"        : "!bg-purple",
+  "no-adjective"     : "!bg-[#722ed1]",
+  "na-adjective"     : "!bg-[#722ed1]",
+  "i-adjective"      : "!bg-[#722ed1]",
+  "adjective"        : "!bg-[#722ed1]",
 
   "numeral"          : "!bg-orange-6",
-  "expression"       : "!bg-cyan-6",
+  "expression"       : "!bg-[#13c2c2]",
 
   "suffix"           : "!bg-red-6",
   "prefix"           : "!bg-yellow-7",

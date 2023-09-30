@@ -4,27 +4,17 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { MenuProps } from "antd";
-import { HomeOutlined, BugOutlined, SettingOutlined, BgColorsOutlined, SearchOutlined } from "@ant-design/icons";
+import { HomeOutlined, BugOutlined, SettingOutlined, SearchOutlined } from "@ant-design/icons";
 import { AccessibilityFilled } from "@comp/icons/AccessibilityFilled";
 
 import { settingsSubGroup, booleanSetting, integerSetting, dropdownSetting, settingsGroup } from "./components/SettingsSubGroup.tsx";
 import { getLessonSettingsGroup, getReviewSettingsGroup, getSelfStudySettingsGroup } from "./SettingsSessions";
 import { getFontSettingsGroup } from "./fonts/SettingsFonts.tsx";
 
-import { getAudioSettingsGroup } from "./SettingsAudio.tsx";
+import { getAudioSettingsGroup } from "./audio/SettingsAudio.tsx";
 
 import { reloadAssignments } from "@api";
-
-const themeNames = [
-  { value: "dark", label: "Dark (default)" },
-  { value: "light", label: "Light" }
-];
-
-const paletteNames = [
-  { value: "kanjiSchool", label: "KanjiSchool (default)" },
-  { value: "fdLight", label: "FD light palette" },
-  { value: "fdDark", label: "FD dark palette" }
-];
+import { getThemeSettingsGroup } from "@pages/settings/theme/SettingsTheme.tsx";
 
 const reviewForecastGroupingSettings = [
   { value: "total", label: "Total reviews (single bar)" },
@@ -62,11 +52,7 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
   // Display settings
   settingsGroup("Display settings", [
     // Site theme
-    settingsSubGroup("Site theme", <BgColorsOutlined />, [
-      dropdownSetting("siteTheme", "Site color theme", undefined, themeNames),
-      dropdownSetting("sitePalette", "Color palette for SRS stages and subject types", undefined, paletteNames)
-      // TODO: Color palette previews
-    ]),
+    getThemeSettingsGroup(),
 
     // Accessibility
     settingsSubGroup("Accessibility", <AccessibilityFilled />, [

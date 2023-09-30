@@ -16,6 +16,18 @@ interface LockedProps {
   count: number;
 }
 
+export const lockedSquareTextClasses = classNames(
+  "text-white light:text-black",
+  "light:palette-fdd:text-white",
+  "palette-fdl:text-white light:palette-fdl:text-black"
+);
+
+const lockedSquareClasses = classNames(
+  baseStageClasses,
+  lockedSquareTextClasses,
+  "bg-srs-locked"
+);
+
 export function LockedSubjects({ level, count }: LockedProps): JSX.Element {
   // Hide the level on mobile for space
   const { sm } = useBreakpoint();
@@ -31,14 +43,7 @@ export function LockedSubjects({ level, count }: LockedProps): JSX.Element {
     }, true, true);
   }
 
-  const classes = classNames(
-    baseStageClasses,
-    "text-white light:text-black bg-srs-locked hover:bg-srs-locked-lighter",
-    "light:palette-fdd:text-white",
-    "palette-fdl:text-white light:palette-fdl:text-black"
-  );
-
-  return <div className={classes} onClick={onClick}>
+  return <div className={lockedSquareClasses} onClick={onClick}>
     <div>Locked {sm && <>(lvl {level})</>}</div>
     <div className="text-4xl">{nts(count)}</div>
   </div>;

@@ -53,7 +53,7 @@ export function dropdownSetting<T extends string>(
   setting: SettingName<T>,
   title?: string,
   description?: ReactNode,
-  options: { label: string; value: T }[] = [],
+  options: { label: ReactNode; value: T }[] = [],
   onChanged?: (value: T) => void
 ): MenuItem {
   return {

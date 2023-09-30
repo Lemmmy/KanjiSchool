@@ -4,12 +4,16 @@
 
 import { useEffect } from "react";
 import { theme } from "antd";
-import { presetPalettes } from "@ant-design/colors";
+import { red, orange, yellow, lime, green, blue, PalettesProps } from "@ant-design/colors";
+
 import { TinyColor } from "@ctrl/tinycolor";
-import { colorToRgbOnly, fadeColor } from "@global/theme/themeUtil.ts";
-import { useThemeContext } from "@global/theme/ThemeContext.tsx";
+
+import { colorToRgbOnly, fadeColor } from "./themeUtil.ts";
+import { useThemeContext } from "./ThemeContext.tsx";
 
 const { useToken } = theme;
+
+const usedAntPalettes: PalettesProps = { red, orange, yellow, lime, green, blue };
 
 export function ApplyAntThemeVariables(): JSX.Element | null {
   const { token } = useToken();
@@ -39,8 +43,8 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
     };
 
     // Add the colors from the antd color palette
-    for (const colorName in presetPalettes) {
-      const palette = presetPalettes[colorName];
+    for (const colorName in usedAntPalettes) {
+      const palette = usedAntPalettes[colorName];
 
       for (const shade in palette) {
         if (shade === "grey") continue;
@@ -62,7 +66,7 @@ export function ApplyAntThemeVariables(): JSX.Element | null {
         document.documentElement.style.setProperty(key, colorToRgbOnly(new TinyColor(col)));
       }
     }
-  }, [token]);
+  }, [token, themeName]);
 
   return null;
 }

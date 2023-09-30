@@ -75,7 +75,7 @@ function LeftCol() {
 
 function RightCol() {
   return <div className="text-justify">
-    Kanji data including JLPT level, Jōyō grade and newspaper frequency is collected
+    Kanji data including JLPT level, Jōyō grade, and newspaper frequency is collected
     from <Link href="https://jisho.org/">Jisho</Link>, which obtained the majority of this data from
     the <Link href="https://www.edrdg.org/wiki/index.php/KANJIDIC_Project">KANJIDIC project</Link>. This data is
     copyright &copy; the <Link href="https://www.edrdg.org/">Electronic Dictionary Research and Development
