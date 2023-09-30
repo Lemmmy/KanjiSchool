@@ -85,6 +85,7 @@ export function ItemsResults({
         hasVocabulary={hasVocabulary}
         renderTooltip={renderTooltipFn}
         forceVirtual
+        alignLeft
       />}
   </div>;
 }
