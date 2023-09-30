@@ -25,7 +25,9 @@ export function SyncImages(): JSX.Element | null {
     if (hasSynced || !isOnline || !subjects) return;
     debug("SyncImages starting sync");
     setHasSynced(true);
-    syncImages();
+    syncImages().catch((err) => {
+      debug("SyncImages failed to sync", err);
+    });
   }, [hasSynced, isOnline, subjects]);
 
   return null;
