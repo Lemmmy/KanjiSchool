@@ -5,7 +5,8 @@
 import { ReactNode } from "react";
 import classNames from "classnames";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { lockedSquareTextClasses } from "@pages/dashboard/srs-stages/Locked.tsx";
+
+import { lockedSquareTextClasses } from "@pages/dashboard/srs-stages/styles.ts";
 
 export function PalettePreview(): JSX.Element {
   const { md } = useBreakpoint();

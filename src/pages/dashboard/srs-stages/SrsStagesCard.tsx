@@ -5,8 +5,12 @@
 import { useMemo } from "react";
 
 import {
-  StoredAssignment, StoredAssignmentMap, StoredSubjectMap,
-  useAssignments, useSubjects, useUserLevel
+  StoredAssignment,
+  StoredAssignmentMap,
+  StoredSubjectMap,
+  useAssignments,
+  useSubjects,
+  useUserLevel
 } from "@api";
 
 import { SrsStage } from "./SrsStage";
@@ -97,8 +101,6 @@ function countLocked(
 
   return locked;
 }
-
-export const baseStageClasses = "inline-block p-sm rounded transition-colors text-center leading-tight cursor-pointer";
 
 export function SrsStagesCard(): JSX.Element | null {
   const userLevel = useUserLevel();

@@ -2,31 +2,19 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import classNames from "classnames";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 import { useNavigate } from "react-router-dom";
 
 import { gotoSearch } from "@api";
 import { nts } from "@utils";
-import { baseStageClasses } from "@pages/dashboard/srs-stages/SrsStagesCard.tsx";
+
+import { lockedSquareClasses } from "./styles.ts";
 
 interface LockedProps {
   level: number;
   count: number;
 }
-
-export const lockedSquareTextClasses = classNames(
-  "text-white light:text-black",
-  "light:palette-fdd:text-white",
-  "palette-fdl:text-white light:palette-fdl:text-black"
-);
-
-const lockedSquareClasses = classNames(
-  baseStageClasses,
-  lockedSquareTextClasses,
-  "bg-srs-locked"
-);
 
 export function LockedSubjects({ level, count }: LockedProps): JSX.Element {
   // Hide the level on mobile for space
