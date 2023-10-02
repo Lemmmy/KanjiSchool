@@ -90,6 +90,7 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
       booleanSetting("subjectOnyomiReadingsKatakana", "Show on'yomi readings in katakana"),
       booleanSetting("subjectCharactersUseCharBlocks", "Color hiragana and katakana separately in vocabulary words"),
       booleanSetting("pitchAccentEnabled", "Show pitch accent diagrams on vocabulary pages", <KanjiumAttribution />),
+      // TODO: pitchAccentDiagramStyle
     ]),
 
     // Font settings

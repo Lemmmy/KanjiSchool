@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { ApiSubjectKanjiInner, StoredSubject } from "@api";
 
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
-import { CommaList } from "@pages/subject/CommaList";
+import { CommaList } from "@pages/subject/components/CommaList.tsx";
 
 import { isVocabularyLike, normalizeVocabType, onyomiToKatakana, useBooleanSetting } from "@utils";
 import { startCase } from "lodash-es";

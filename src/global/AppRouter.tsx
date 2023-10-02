@@ -16,9 +16,9 @@ export const router = createBrowserRouter([
     children: [
       { path: "/",                 lazy: () => import("@pages/dashboard/DashboardPage.tsx") },
 
-      { path: "/radical/:slug",    lazy: () => import("@pages/subject/RadicalSubjectPage.tsx") },
-      { path: "/kanji/:slug",      lazy: () => import("@pages/subject/KanjiSubjectPage.tsx") },
-      { path: "/vocabulary/:slug", lazy: () => import("@pages/subject/VocabularySubjectPage.tsx") },
+      { path: "/radical/:slug",    lazy: () => import("@pages/subject/pages/RadicalSubjectPage.tsx") },
+      { path: "/kanji/:slug",      lazy: () => import("@pages/subject/pages/KanjiSubjectPage.tsx") },
+      { path: "/vocabulary/:slug", lazy: () => import("@pages/subject/pages/VocabularySubjectPage.tsx") },
 
       { path: "/lesson/session",   lazy: () => import("@pages/session/SessionPage.tsx") },
       { path: "/review/session",   lazy: () => import("@pages/session/SessionPage.tsx") },

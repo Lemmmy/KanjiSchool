@@ -34,7 +34,7 @@ import { VocabList } from "@comp/subjects/lists/vocab";
 import { hasReadings, isVocabularyLike, normalizeVocabType, useBooleanSetting } from "@utils";
 import { clamp } from "lodash-es";
 import { SubjectInfoHint } from "@pages/subject/SubjectInfoHint.tsx";
-import { SubjectInfoDivider } from "@pages/subject/SubjectInfoDivider.tsx";
+import { SubjectInfoDivider } from "@pages/subject/components/SubjectInfoDivider.tsx";
 
 export interface SubjectInfoProps {
   subject: StoredSubject;

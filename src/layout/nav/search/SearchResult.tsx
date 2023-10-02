@@ -9,7 +9,7 @@ import { StoredSubject, useUserLevel } from "@api";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
-import { CommaList } from "@pages/subject/CommaList";
+import { CommaList } from "@pages/subject/components/CommaList.tsx";
 
 import Highlighter from "react-highlight-words";
 

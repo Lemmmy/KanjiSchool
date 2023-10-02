@@ -12,6 +12,7 @@ import { SessionPriority } from "@session/order/SessionPriority";
 import { NearMatchAction } from "@utils";
 
 import { AnySettingName, IntegerSettingConfig } from ".";
+import { AccentDiagramStyle } from "@pages/subject/readings/accentDiagramTypes.ts";
 
 export interface SettingsStateBase {
   // ===========================================================================
@@ -88,6 +89,8 @@ export interface SettingsStateBase {
   subjectCharactersUseCharBlocks: boolean;
   /** Show pitch accent diagrams on vocabulary pages. */
   pitchAccentEnabled: boolean;
+  /** Style for pitch accent diagrams. */
+  pitchAccentDiagramStyle: AccentDiagramStyle;
 
   // ===========================================================================
   // GENERAL SESSION SETTINGS
@@ -226,6 +229,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   subjectOnyomiReadingsKatakana: true,
   subjectCharactersUseCharBlocks: false,
   pitchAccentEnabled: false,
+  pitchAccentDiagramStyle: "dots",
 
   questionHeaderTypeColor: "DEFAULT",
   shakeCharactersIncorrect: true,

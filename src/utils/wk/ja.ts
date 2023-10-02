@@ -26,6 +26,23 @@ export function toKatakana(inp?: string): string {
   return out;
 }
 
+/** Convert Katakana characters in a string to Hiragana. */
+export function toHiragana(inp?: string): string {
+  if (!inp) return "";
+
+  let out = "";
+  for (const c of inp) {
+    const code = c.charCodeAt(0);
+    if (code >= 0x30A0 && code <= 0x30F6) {
+      out += String.fromCharCode(code - 0x60);
+    } else {
+      out += c;
+    }
+  }
+
+  return out;
+}
+
 export function isKanjiReading(reading: AnyReading): reading is ApiSubjectKanjiReading {
   return (reading as ApiSubjectKanjiReading).type !== undefined;
 }

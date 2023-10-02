@@ -7,7 +7,7 @@ import { StoredAssignment, StoredSubject } from "@api";
 import { SrsStageBar } from "./SrsStageBar";
 import { DateRow } from "./DateRow";
 import { CorrectBars } from "./CorrectBars";
-import { SubjectInfoDivider } from "../SubjectInfoDivider.tsx";
+import { SubjectInfoDivider } from "../components/SubjectInfoDivider.tsx";
 
 interface Props {
   subject: StoredSubject;
