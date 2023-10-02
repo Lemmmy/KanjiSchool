@@ -15,6 +15,7 @@ import { getAudioSettingsGroup } from "./audio/SettingsAudio.tsx";
 
 import { reloadAssignments } from "@api";
 import { getThemeSettingsGroup } from "@pages/settings/theme/SettingsTheme.tsx";
+import { KanjiumAttribution } from "@layout/AttributionFooter.tsx";
 
 const reviewForecastGroupingSettings = [
   { value: "total", label: "Total reviews (single bar)" },
@@ -88,6 +89,7 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
     settingsSubGroup("Subject info settings", <SettingOutlined />, [
       booleanSetting("subjectOnyomiReadingsKatakana", "Show on'yomi readings in katakana"),
       booleanSetting("subjectCharactersUseCharBlocks", "Color hiragana and katakana separately in vocabulary words"),
+      booleanSetting("pitchAccentEnabled", "Show pitch accent diagrams on vocabulary pages", <KanjiumAttribution />),
     ]),
 
     // Font settings

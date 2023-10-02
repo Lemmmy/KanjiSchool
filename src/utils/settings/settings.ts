@@ -86,6 +86,8 @@ export interface SettingsStateBase {
   subjectOnyomiReadingsKatakana: boolean;
   /** Color hiragana and katakana separately in vocabulary words. */
   subjectCharactersUseCharBlocks: boolean;
+  /** Show pitch accent diagrams on vocabulary pages. */
+  pitchAccentEnabled: boolean;
 
   // ===========================================================================
   // GENERAL SESSION SETTINGS
@@ -223,6 +225,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
 
   subjectOnyomiReadingsKatakana: true,
   subjectCharactersUseCharBlocks: false,
+  pitchAccentEnabled: false,
 
   questionHeaderTypeColor: "DEFAULT",
   shakeCharactersIncorrect: true,

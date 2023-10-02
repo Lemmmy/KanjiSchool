@@ -19,15 +19,18 @@ export function AttributionFooter({
   withThemeToggle = false,
   className
 }: Props): JSX.Element {
+  const colClass = "text-justify [text-align-last:center]";
+
   return <div className={classNames(
     "min-w-[300px] w-full my-lg md:mb-0 flex flex-col gap-md mx-auto",
     className
   )}>
     <TopRow withThemeToggle={withThemeToggle} />
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-lg text-desc justify-center">
-      <LeftCol />
-      <RightCol />
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-lg text-desc justify-center">
+      <div className={colClass}><WaniKaniAttribution /></div>
+      <div className={colClass}><JishoAttribution /></div>
+      <div className={colClass}><KanjiumAttribution /></div>
     </div>
   </div>;
 }
@@ -61,27 +64,24 @@ function TopRow({ withThemeToggle }: Props) {
   </div>;
 }
 
-function LeftCol() {
-  return <div className="text-justify">
-    All lesson content and audio clips are obtained from <Link href="https://www.wanikani.com/">WaniKani</Link>,
-    copyright &copy; <Link href="https://www.tofugu.com">Tofugu LLC</Link>, made available by your WaniKani
-    subscription.
+const WaniKaniAttribution = () => <>
+  Lesson content and audio clips are obtained from <Link href="https://www.wanikani.com/">WaniKani</Link>, copyright
+  &copy; <Link href="https://www.tofugu.com">Tofugu LLC</Link>, made available by your WaniKani subscription. KanjiSchool
+  is not affiliated Tofugu LLC.
+</>;
 
-    <br /><br />
+const JishoAttribution = () => <>
+  Kanji data including JLPT level, Jōyō grade, and newspaper frequency is collected
+  from <Link href="https://jisho.org/">Jisho</Link>, which obtained most of its data from
+  the <Link href="https://www.edrdg.org/wiki/index.php/KANJIDIC_Project">KANJIDIC</Link> project, copyright &copy;
+  the <Link href="https://www.edrdg.org/">EDRDG</Link>.
+</>;
 
-    KanjiSchool is not affiliated with WaniKani or Tofugu LLC.
-  </div>;
-}
-
-function RightCol() {
-  return <div className="text-justify">
-    Kanji data including JLPT level, Jōyō grade, and newspaper frequency is collected
-    from <Link href="https://jisho.org/">Jisho</Link>, which obtained the majority of this data from
-    the <Link href="https://www.edrdg.org/wiki/index.php/KANJIDIC_Project">KANJIDIC project</Link>. This data is
-    copyright &copy; the <Link href="https://www.edrdg.org/">Electronic Dictionary Research and Development
-    Group</Link>.
-  </div>;
-}
+export const KanjiumAttribution = (): JSX.Element => <>
+  Pitch accent data is obtained from the <Link href="https://github.com/mifunetoshiro/kanjium">Kanjium</Link> project,
+  licensed under the <Link href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</Link> license, provided
+  by Uros O. through his free database.
+</>;
 
 const Separator = () => <span className="text-desc-c/35">&middot;</span>;
 
