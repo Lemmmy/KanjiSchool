@@ -80,13 +80,13 @@ const colorByTypeClasses: Record<NormalizedSubjectType, string> = {
 };
 
 const colorBySrsStageClasses: Record<Lowercase<SrsStageBaseName>, string> = {
-  lesson     : "bg-srs-lesson hover:bg-srs-lesson-lighter",
-  apprentice : "bg-srs-apprentice hover:bg-srs-apprentice-lighter",
-  guru       : "bg-srs-guru hover:bg-srs-guru-lighter",
-  master     : "bg-srs-master hover:bg-srs-master-lighter",
-  enlightened: "bg-srs-enlightened hover:bg-srs-enlightened-lighter",
-  burned     : "bg-srs-burned hover:bg-srs-burned-lighter",
-  locked     : "bg-srs-locked hover:bg-srs-locked-lighter light:opacity-35",
+  lesson     : "bg-srs-lesson hover:bg-srs-lesson-lighter !text-black",
+  apprentice : "bg-srs-apprentice hover:bg-srs-apprentice-lighter !text-black",
+  guru       : "bg-srs-guru hover:bg-srs-guru-lighter !text-black",
+  master     : "bg-srs-master hover:bg-srs-master-lighter !text-black",
+  enlightened: "bg-srs-enlightened hover:bg-srs-enlightened-lighter !text-black",
+  burned     : "bg-srs-burned hover:bg-srs-burned-lighter !text-black",
+  locked     : "bg-srs-locked hover:bg-srs-locked-lighter light:opacity-35 !text-black",
 };
 
 function getBgColorClass(
