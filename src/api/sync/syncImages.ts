@@ -24,7 +24,7 @@ export type StoredImageMap = Record<number, StoredImage>;
 // Fetch the SVG images without inline styles (so we can apply our own styles)
 function findSvg(images: ApiCharacterImage[]): string | undefined {
   for (const img of images) {
-    if (img.content_type === "image/svg+xml" && !img.metadata?.inline_styles) {
+    if (img.content_type === "image/svg+xml") {
       return img.url;
     }
   }

@@ -30,6 +30,7 @@ export const CharacterImage = React.memo(({
 
     const classes = classNames(
       "leading-none fill-none [stroke:currentColor] [stroke-linecap:square] [stroke-miterlimit:2] [stroke-width:68px]",
+      "[--color-text:currentColor]",
       className,
       sizeClassName
     );
