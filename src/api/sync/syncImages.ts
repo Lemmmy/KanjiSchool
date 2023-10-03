@@ -21,14 +21,9 @@ export interface StoredImage {
 }
 export type StoredImageMap = Record<number, StoredImage>;
 
-// Fetch the SVG images without inline styles (so we can apply our own styles)
-function findSvg(images: ApiCharacterImage[]): string | undefined {
-  for (const img of images) {
-    if (img.content_type === "image/svg+xml") {
-      return img.url;
-    }
-  }
-}
+// Fetch the first available SVG image
+const findSvg = (images: ApiCharacterImage[]): string | undefined =>
+  images.find(i => i.content_type === "image/svg+xml")?.url;
 
 export async function syncImages(): Promise<void> {
   if (store.getState().sync.syncingImages) return;
