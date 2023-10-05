@@ -6,38 +6,15 @@ import { Fragment, useCallback, useMemo } from "react";
 import classNames from "classnames";
 
 import { ApiSubjectReadingBase } from "@api";
-import { getMoraAccents, PitchInfo, PitchPattern } from "@utils/pitchAccent.ts";
+import { getMoraAccents, PitchInfo } from "@utils/pitchAccent.ts";
 
 import { diagramSettings } from "./PitchDiagramOnkaiShiki.tsx";
+import { pitchDiagramColors } from "./pitchDiagramColors.ts";
 
 interface Props {
   reading: ApiSubjectReadingBase;
   pitchInfo: PitchInfo;
 }
-
-interface Colors {
-  stroke: string;
-  fill: string;
-}
-
-export const colorMap: Record<PitchPattern, Colors> = {
-  [PitchPattern.Heiban]: {
-    stroke: "stroke-[#eb2f96]",
-    fill: "fill-[#eb2f96]",
-  },
-  [PitchPattern.Atamadaka]: {
-    stroke: "stroke-orange-5",
-    fill: "fill-orange-5",
-  },
-  [PitchPattern.Nakadaka]: {
-    stroke: "stroke-blue-5",
-    fill: "fill-blue-5",
-  },
-  [PitchPattern.Odaka]: {
-    stroke: "stroke-green-5",
-    fill: "fill-green-5",
-  }
-};
 
 export function PitchDiagramOnkaiShikiAccents({ reading: { reading }, pitchInfo }: Props): JSX.Element {
   const accents = useMemo(() => getMoraAccents(pitchInfo), [pitchInfo]);
@@ -46,7 +23,7 @@ export function PitchDiagramOnkaiShikiAccents({ reading: { reading }, pitchInfo 
   const lowY = circleSize + circleStrokeWidth + kanaSize;
   const highY = circleSize + circleStrokeWidth;
 
-  const colors = colorMap[pitchInfo.pattern];
+  const colors = pitchDiagramColors[pitchInfo.pattern];
 
   const moraWidth = useCallback((moraIndex: number) => {
     return kanaSize * (pitchInfo.mora[moraIndex]?.length ?? 1);

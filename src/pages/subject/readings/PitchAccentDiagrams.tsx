@@ -13,6 +13,7 @@ import vocabAccentData from "@data/vocab-accent.json";
 import { PitchDiagramOnkaiShiki } from "./PitchDiagramOnkaiShiki.tsx";
 import { PlainPrimaryReadings } from "./PlainPrimaryReadings.tsx";
 import { AccentDiagramStyle } from "./accentDiagramTypes.ts";
+import { PitchDiagramSenShiki } from "@pages/subject/readings/PitchDiagramSenShiki.tsx";
 
 interface Props {
   subject: ApiSubject;
@@ -31,9 +32,13 @@ export default function PitchAccentDiagrams({ subject }: Props): JSX.Element | n
 
   switch (style) {
   case "sen-shiki":
-    return <>
-      <b>nyi</b>
-    </>;
+    return <div className="mt-md flex flex-col gap-sm leading-none">
+      {data.map(({ reading, pitchInfos }, i) => <PitchDiagramSenShiki
+        key={`${i}-${reading.reading}-${pitchInfos.length}`}
+        reading={reading}
+        pitchInfos={pitchInfos}
+      />)}
+    </div>;
   case "onkai-shiki":
   default:
     return <div className="mt-md flex flex-col gap-sm leading-none">

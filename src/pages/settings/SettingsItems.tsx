@@ -16,11 +16,20 @@ import { getAudioSettingsGroup } from "./audio/SettingsAudio.tsx";
 import { reloadAssignments } from "@api";
 import { getThemeSettingsGroup } from "@pages/settings/theme/SettingsTheme.tsx";
 import { KanjiumAttribution } from "@layout/AttributionFooter.tsx";
+import {
+  PitchDiagramOnkaiShikiLegend,
+  PitchDiagramSenShikiLegend
+} from "@pages/subject/readings/PitchDiagramStyleLegend.tsx";
 
 const reviewForecastGroupingSettings = [
   { value: "total", label: "Total reviews (single bar)" },
   { value: "level_up", label: "Current-level radicals and kanji (green), other reviews (blue)" },
   { value: "type", label: "Radicals, kanji, and vocabulary" }
+];
+
+const pitchAccentDiagramStyles = [
+  { value: "onkai-shiki", label: <PitchDiagramOnkaiShikiLegend /> },
+  { value: "sen-shiki", label: <PitchDiagramSenShikiLegend /> },
 ];
 
 const skipTypes = [
@@ -90,7 +99,7 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
       booleanSetting("subjectOnyomiReadingsKatakana", "Show on'yomi readings in katakana"),
       booleanSetting("subjectCharactersUseCharBlocks", "Color hiragana and katakana separately in vocabulary words"),
       booleanSetting("pitchAccentEnabled", "Show pitch accent diagrams on vocabulary pages", <KanjiumAttribution />),
-      // TODO: pitchAccentDiagramStyle
+      dropdownSetting("pitchAccentDiagramStyle", "Pitch accent diagram style", undefined, pitchAccentDiagramStyles)
     ]),
 
     // Font settings

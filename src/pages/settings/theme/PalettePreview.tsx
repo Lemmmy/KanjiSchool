@@ -17,9 +17,12 @@ export function PalettePreview(): JSX.Element {
       <Title>Subject types</Title>
 
       <div className="flex gap-xs">
-        <SubjectSquare label="Radical"    className="bg-radical text-radical-text " />
-        <SubjectSquare label="Kanji"      className="bg-kanji text-kanji-text" />
-        <SubjectSquare label="Vocabulary" className="bg-vocabulary text-vocabulary-text" />
+        <SubjectSquare label="Radical" previewText="魚"
+          className="bg-radical text-radical-text" />
+        <SubjectSquare label="Kanji" previewText="鰐"
+          className="bg-kanji text-kanji-text" />
+        <SubjectSquare label="Vocabulary" previewText="蟹"
+          className="bg-vocabulary text-vocabulary-text" />
       </div>
     </div>
 
@@ -66,17 +69,18 @@ export function PalettePreview(): JSX.Element {
 
 interface SubjectSquareProps {
   label: string;
+  previewText: string;
   className?: string;
 }
 
-function SubjectSquare({ label, className }: SubjectSquareProps): JSX.Element {
+function SubjectSquare({ label, previewText, className }: SubjectSquareProps): JSX.Element {
   return <div className="flex-1">
     <div className={classNames(
       "p-sm leading-none rounded-sm text-[32px] font-ja text-center",
       "transition-colors",
       className
     )}>
-      亀
+      {previewText}
     </div>
 
     <div className="text-center text-sm font-medium">{label}</div>

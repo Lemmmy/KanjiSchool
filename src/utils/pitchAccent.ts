@@ -110,7 +110,7 @@ function getPitchInfosForReading(
     }
   }
 
-  debug("found pitch info for %s-%s: %o", word, reading, out);
+  // debug("found pitch info for %s-%s: %o", word, reading, out);
 
   return out;
 }
@@ -120,7 +120,7 @@ export function getPitchInfosForSubject(
   subject: ApiSubject
 ): ReadingPitchInfos[] | null {
   if (subject.object !== "vocabulary" && subject.object !== "kana_vocabulary") {
-    debug("skipping pitch info lookup; subject is not a vocabulary item");
+    // debug("skipping pitch info lookup; subject is not a vocabulary item");
     return null;
   }
 
@@ -128,7 +128,7 @@ export function getPitchInfosForSubject(
     ? subject.data.readings
     : [{ primary: true, reading: subject.data.characters ?? "" }];
 
-  debug("subject %s has readings: %o", subject.id, readings);
+  // debug("subject %s has readings: %o", subject.id, readings);
 
   return readings.map(reading => {
     const pitchInfos = getPitchInfosForReading(db, subject.data.characters ?? "", reading.reading);
