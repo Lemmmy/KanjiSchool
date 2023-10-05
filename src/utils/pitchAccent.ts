@@ -3,6 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ApiSubject, ApiSubjectReadingBase } from "@api";
+import { toHiragana } from "@utils/wk";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:pitch-accent");
@@ -80,7 +81,7 @@ function getPitchInfosForReading(
   reading: string
 ): PitchInfo[] | null {
   // Find the accent position(s) in the reading database
-  const entries = db[`${word}-${reading}`];
+  const entries = db[`${word}-${toHiragana(reading)}`];
   if (!entries) return null;
 
   const mora = splitReadingByMora(reading);

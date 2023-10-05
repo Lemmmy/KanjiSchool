@@ -4,9 +4,11 @@
 
 import { store } from "@store";
 import { getAssignmentWithSubject, StoredAssignmentMap, StoredSubjectMap } from "@api";
-import { isOverdue, getCharSymbol, getJpCharBlocks } from "@utils";
+import { isOverdue, getCharSymbol, getJpCharBlocks, toHiragana, toKatakana } from "@utils";
 import { startSession } from "@session";
 import { db } from "@db";
+
+import { getPitchInfosForSubject, RawVocabAccentData } from "@utils/pitchAccent.ts";
 
 function getAssignments(): StoredAssignmentMap | undefined {
   return store.getState().assignments.assignments;
@@ -14,6 +16,14 @@ function getAssignments(): StoredAssignmentMap | undefined {
 
 function getSubjects(): StoredSubjectMap | undefined {
   return store.getState().subjects.subjects;
+}
+
+let cachedVocabData: RawVocabAccentData;
+async function getVocabAccentData(): Promise<RawVocabAccentData> {
+  if (!cachedVocabData) {
+    cachedVocabData = (await import("@data/vocab-accent.json")).default as unknown as RawVocabAccentData;
+  }
+  return cachedVocabData;
 }
 
 async function resetOverlevelAssignment(assignmentId: number) {
@@ -38,6 +48,10 @@ async function resetOverlevelAssignment(assignmentId: number) {
   getCharSymbol,
   getJpCharBlocks,
   startSession,
-  resetOverlevelAssignment
+  resetOverlevelAssignment,
+  getVocabAccentData,
+  getPitchInfosForSubject,
+  toHiragana,
+  toKatakana
 };
 
