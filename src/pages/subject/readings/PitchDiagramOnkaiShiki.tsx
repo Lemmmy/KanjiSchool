@@ -77,7 +77,7 @@ function PitchRow({ pitchInfo, reading }: PitchRowProps) {
       />
 
       {/* Accent position */}
-      <div className="bg-white/15 light:bg-black/50 rounded-full p-xss leading-none text-desc w-6 h-6
+      <div className="bg-white/15 light:bg-black/15 rounded-full p-xss leading-none text-desc w-6 h-6
             flex items-center justify-center user-select-none">
         {pitchInfo.accentPos}
       </div>

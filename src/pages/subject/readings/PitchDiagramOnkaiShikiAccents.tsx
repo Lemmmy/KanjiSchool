@@ -26,8 +26,8 @@ export const colorMap: Record<PitchPattern, Colors> = {
     fill: "fill-[#eb2f96]",
   },
   [PitchPattern.Atamadaka]: {
-    stroke: "stroke-[#faad14]",
-    fill: "fill-[#faad14]",
+    stroke: "stroke-orange-5",
+    fill: "fill-orange-5",
   },
   [PitchPattern.Nakadaka]: {
     stroke: "stroke-blue-5",
@@ -89,6 +89,7 @@ export function PitchDiagramOnkaiShikiAccents({ reading: { reading }, pitchInfo 
           strokeWidth={circleStrokeWidth}
           className={classNames(colors.stroke, {
             [colors.fill]: i < accents.length - 1,
+            "fill-black light:fill-white": i === accents.length - 1,
           })}
         />
       </Fragment>;
