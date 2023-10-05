@@ -133,6 +133,29 @@ export function getPitchInfosForSubject(
     const pitchInfos = getPitchInfosForReading(db, subject.data.characters ?? "", reading.reading);
     if (!pitchInfos) return null;
 
+    pitchInfos.sort((a, b) => a.accentPos - b.accentPos);
+
     return { reading, pitchInfos };
   }).filter(x => x !== null) as ReadingPitchInfos[];
+}
+
+export function getMoraAccents({ mora, accentPos }: PitchInfo): boolean[] {
+  const moraCount = mora.length;
+  const moraAccents: boolean[] = [];
+
+  if (accentPos === 0) {
+    moraAccents.push(false);
+    moraAccents.push(...Array(moraCount).fill(true)); // The extra count is for the particle
+  } else if (accentPos === 1) {
+    moraAccents.push(true);
+    moraAccents.push(...Array(moraCount).fill(false));
+  } else {
+    for (let i = 0; i < moraCount; i++) {
+      moraAccents.push(i > 0 && i < accentPos);
+    }
+
+    moraAccents.push(false); // Particle
+  }
+
+  return moraAccents;
 }

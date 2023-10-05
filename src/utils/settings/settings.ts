@@ -229,7 +229,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   subjectOnyomiReadingsKatakana: true,
   subjectCharactersUseCharBlocks: false,
   pitchAccentEnabled: false,
-  pitchAccentDiagramStyle: "dots",
+  pitchAccentDiagramStyle: "onkai-shiki",
 
   questionHeaderTypeColor: "DEFAULT",
   shakeCharactersIncorrect: true,

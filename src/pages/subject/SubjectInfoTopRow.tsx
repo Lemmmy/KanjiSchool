@@ -3,7 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { lazy, Suspense, useMemo } from "react";
-import { Row, Col } from "antd";
 import classNames from "classnames";
 
 import { ApiSubject, ApiSubjectVocabulary } from "@api";
@@ -79,28 +78,35 @@ export function SubjectInfoTopRow({
     ? (
       // Single character
       <div className="subject-info-top">
-        <Row>
+        <div className="flex gap-sm">
           {/* Characters */}
-          <Col flex="none">
+          <div className="flex-0">
             <SubjectCharacters
               subject={subject}
               className="leading-none"
               fontClassName="text-[72px] m-lg"
               imageSizeClassName="w-[72px] h-[72px] mx-lg"
             />
-          </Col>
+          </div>
 
           {/* Level, name, reading */}
-          <Col flex="auto">
+          <div className="flex-1">
             {/* Level & object type */}
             <div className="text-sm text-desc">
               Level {level} {normObjectType}
             </div>
             {/* Meanings */}
             {!hideMeanings && meaningsComp}
-            {/* Readings. For kanji, only show the on'yomi readings. */}
-            {!hideReadings && <PlainPrimaryReadings subject={subject} />}
-          </Col>
+
+            {/* Readings. For kanji, only show the on'yomi readings. Pitch accent data will be lazily loaded for
+              * vocabulary if it is enabled, and will internally fall back to the plain readings if there is no pitch
+              * accent data available for the subject. */}
+            {!hideReadings && (
+              pitchAccentEnabled && isVocab
+                ? <Suspense><PitchAccentDiagrams subject={subject} /></Suspense>
+                : <PlainPrimaryReadings subject={subject} />
+            )}
+          </div>
 
           {/* Audio buttons */}
           {!hideAudio && isVocab && <AudioButtons
@@ -113,15 +119,10 @@ export function SubjectInfoTopRow({
             hintStage={hintStage}
             onNextHintStage={onNextHintStage}
           />
-        </Row>
+        </div>
 
         {/* On'yomi and kun'yomi readings */}
         {!hideReadings && objectType === "kanji" && <PlainKanjiReadings subject={subject} />}
-
-        {/* Pitch accent diagrams, lazily loaded if enabled */}
-        {pitchAccentEnabled && isVocab && <Suspense>
-          <PitchAccentDiagrams subject={subject} />
-        </Suspense>}
       </div>
     )
     : (
@@ -145,13 +146,19 @@ export function SubjectInfoTopRow({
         />
 
         {/* Meanings, readings, buttons */}
-        <Row className="subject-info-top-lower">
-          <Col flex="auto">
+        <div className="flex gap-sm">
+          <div className="flex-1">
             {/* Meanings */}
             {!hideMeanings && meaningsComp}
-            {/* Readings */}
-            {!hideReadings && <PlainPrimaryReadings subject={subject} />}
-          </Col>
+
+            {/* Readings. Pitch accent data will be lazily loaded for vocabulary if it is enabled, and will internally
+              * fall back to the plain readings if there is no pitch accent data available for the subject. */}
+            {!hideReadings && (
+              pitchAccentEnabled && isVocab
+                ? <Suspense><PitchAccentDiagrams subject={subject} /></Suspense>
+                : <PlainPrimaryReadings subject={subject} />
+            )}
+          </div>
 
           {/* Audio buttons */}
           {!hideAudio && isVocab && <AudioButtons
@@ -164,12 +171,7 @@ export function SubjectInfoTopRow({
             hintStage={hintStage}
             onNextHintStage={onNextHintStage}
           />
-        </Row>
-
-        {/* Pitch accent diagrams, lazily loaded if enabled */}
-        {pitchAccentEnabled && isVocab && <Suspense>
-          <PitchAccentDiagrams subject={subject} />
-        </Suspense>}
+        </div>
       </div>
     );
 }
