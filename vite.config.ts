@@ -6,6 +6,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import mkcert from "vite-plugin-mkcert";
 import { VitePWA } from "vite-plugin-pwa";
+import { viteExternalsPlugin } from "vite-plugin-externals";
 
 import fs from "fs";
 import path from "path";
@@ -37,7 +38,9 @@ process.env.VITE_GIT_VERSION = gitVersion;
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
-    alias: parseTsAliases(),
+    alias: {
+      ...parseTsAliases(),
+    },
   },
   server: {
     https: true,
@@ -45,6 +48,9 @@ export default defineConfig({
   plugins: [
     react(),
     mkcert(),
+    viteExternalsPlugin({
+      "resize-observer-polyfill": "ResizeObserver", // Only needed for IE support, which we don't
+    }),
     VitePWA({
       registerType: "prompt",
       workbox: {

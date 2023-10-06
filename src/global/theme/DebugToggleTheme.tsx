@@ -4,7 +4,7 @@
 
 import { Button } from "antd";
 import { useThemeContext } from "@global/theme/ThemeContext.tsx";
-import { setStringSetting, useStringSetting } from "@utils";
+import { setBooleanSetting, setStringSetting, useBooleanSetting, useStringSetting } from "@utils";
 import { BulbOutlined } from "@ant-design/icons";
 import { PaletteName } from "@global/theme/palette.ts";
 import { AccentDiagramStyle } from "@pages/subject/readings/accentDiagramTypes.ts";
@@ -19,6 +19,8 @@ export function DebugToggleTheme(): JSX.Element | null {
 function DebugToggleThemeInner(): JSX.Element {
   const { theme } = useThemeContext();
   const sitePalette = useStringSetting<PaletteName>("sitePalette");
+
+  const pitchAccentEnabled = useBooleanSetting("pitchAccentEnabled");
   const accentDiagramStyle = useStringSetting<AccentDiagramStyle>("pitchAccentDiagramStyle");
 
   function onThemeClick() {
@@ -29,14 +31,20 @@ function DebugToggleThemeInner(): JSX.Element {
     setStringSetting("sitePalette", palette, false);
   }
 
-  function setAccentDiagramStyle(style: AccentDiagramStyle) {
-    setStringSetting("pitchAccentDiagramStyle", style, false);
+  function setAccentDiagramStyle(style: AccentDiagramStyle | null) {
+    if (style === null) {
+      setBooleanSetting("pitchAccentEnabled", false, false);
+    } else {
+      setBooleanSetting("pitchAccentEnabled", true, false);
+      setStringSetting("pitchAccentDiagramStyle", style, false);
+    }
   }
 
   return <div className="flex flex-col">
-    <Button size="small" onClick={onThemeClick} icon={<BulbOutlined />} />
-
     <div className="flex items-center">
+      <Button size="small" onClick={onThemeClick} icon={<BulbOutlined />}
+        className="mr-xs" />
+
       <Button size="small" disabled={sitePalette === "kanjiSchool"}
         onClick={() => setPalette("kanjiSchool")}>ks</Button>
       <Button size="small" disabled={sitePalette === "fdDark"}
@@ -46,10 +54,12 @@ function DebugToggleThemeInner(): JSX.Element {
     </div>
 
     <div className="flex items-center">
-      <Button size="small" disabled={accentDiagramStyle === "onkai-shiki"}
+      <Button size="small" disabled={pitchAccentEnabled && accentDiagramStyle === "onkai-shiki"}
         onClick={() => setAccentDiagramStyle("onkai-shiki")}>音階式</Button>
-      <Button size="small" disabled={accentDiagramStyle === "sen-shiki"}
+      <Button size="small" disabled={pitchAccentEnabled && accentDiagramStyle === "sen-shiki"}
         onClick={() => setAccentDiagramStyle("sen-shiki")}>線式</Button>
+      <Button size="small" disabled={!pitchAccentEnabled}
+        onClick={() => setAccentDiagramStyle(null)}>off</Button>
     </div>
   </div>;
 }
