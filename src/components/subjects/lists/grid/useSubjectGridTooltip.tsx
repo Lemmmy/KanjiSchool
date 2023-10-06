@@ -83,7 +83,7 @@ export function useSubjectGridTooltip(
         return;
       }
 
-      tooltipEl.style.top = `${rect.top + 24}px`;
+      tooltipEl.style.top = `${rect.top + 24 + window.scrollY}px`;
       tooltipEl.style.left = `${rect.left + (rect.width / 2)}px`;
       tooltipEl.style.display = "block";
     }
