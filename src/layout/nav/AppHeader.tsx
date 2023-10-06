@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Layout } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import classNames from "classnames";
 
 import * as api from "@api";

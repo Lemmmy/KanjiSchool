@@ -4,8 +4,8 @@
 
 import { useState, useMemo, useRef, ReactNode, Dispatch, SetStateAction, useCallback, lazy, Suspense } from "react";
 import { AutoComplete, Input, Spin, Tooltip } from "antd";
-import { RefSelectProps } from "antd/lib/select";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { RefSelectProps } from "antd/es/select";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import classNames from "classnames";
 
 import { useNavigate, useMatch } from "react-router-dom";

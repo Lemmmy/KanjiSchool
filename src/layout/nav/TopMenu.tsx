@@ -8,7 +8,7 @@ import {
   MoreOutlined, SettingOutlined, BugOutlined, SearchOutlined, ReadOutlined,
   MacCommandOutlined, ReloadOutlined, GithubOutlined, UnorderedListOutlined
 } from "@ant-design/icons";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { useDispatch } from "react-redux";
 import { setHotkeyHelpVisible } from "@store/slices/settingsSlice.ts";

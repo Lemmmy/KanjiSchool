@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 import classNames from "classnames";
 
 import { PresetDropdownBtn, PresetStartSessionFn } from "@comp/preset-editor";

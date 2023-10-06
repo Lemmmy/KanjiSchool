@@ -3,12 +3,13 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useCallback, useMemo } from "react";
-import { Form, Card, Row, Input, Dropdown, Menu } from "antd";
+import { Form, Row, Input, Dropdown, Menu } from "antd";
 
 import { useNavigate } from "react-router-dom";
 
 import { StoredSubject } from "@api";
 import { gotoSession, SessionType, startSession } from "@session";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 const CSV_DIGITS = /^(?:\d+,\s*)*\d+$/;
 
@@ -63,7 +64,7 @@ export function useCustomSessionCard(): HookRes {
     </Menu.Item>
   </Menu>, [onStartSession]);
 
-  const card = useMemo(() => <Card title="Custom session">
+  const card = useMemo(() => <SimpleCard title="Custom session">
     {/* Custom session form */}
     <Row style={{ marginBottom: 16 }}>
       <Form form={form} layout="inline">
@@ -85,7 +86,7 @@ export function useCustomSessionCard(): HookRes {
         </Dropdown.Button>
       </Form>
     </Row>
-  </Card>, [form, onStartSelfStudy, menu]);
+  </SimpleCard>, [form, onStartSelfStudy, menu]);
 
   return [card, onAddSubject];
 }

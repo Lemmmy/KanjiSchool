@@ -2,12 +2,13 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Card, Button, Space } from "antd";
+import { Button, Space } from "antd";
 import { globalNotification } from "@global/AntInterface.tsx";
 import { showNearMatchNotification, showSrsNotification } from "@session";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 export function DebugMiscCard(): JSX.Element {
-  return <Card title="Misc">
+  return <SimpleCard title="Misc" extra="foo">
     <Space size="large">
       <Button onClick={() => globalNotification.success({ message: "Test!" })}>
         Notification
@@ -22,5 +23,5 @@ export function DebugMiscCard(): JSX.Element {
         Near match
       </Button>
     </Space>
-  </Card>;
+  </SimpleCard>;
 }

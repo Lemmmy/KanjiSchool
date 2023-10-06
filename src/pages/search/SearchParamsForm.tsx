@@ -4,9 +4,9 @@
 
 import { useMemo } from "react";
 import { Button, Col, Form, Input, Row, Select } from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
-import { SEARCH_ORDERS, SearchParams } from "@api";
+import { SEARCH_ORDERS } from "@api";
 import { PresetStartSessionFn } from "@comp/preset-editor";
 
 import { InputRange } from "./InputRange.tsx";
@@ -24,7 +24,6 @@ interface Props {
   withLessons: boolean;
   setWithLessons: (e: CheckboxChangeEvent) => void;
 
-  onSearch: (params: SearchParams) => void;
   onReset: () => void;
 
   loading?: boolean;
@@ -38,7 +37,6 @@ export function SearchParamsForm({
   onSelfStudy,
   withLessons,
   setWithLessons,
-  onSearch,
   onReset,
   loading,
   results,

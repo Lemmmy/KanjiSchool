@@ -3,14 +3,15 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Card, Empty } from "antd";
-import classNames from "classnames";
+import { Empty } from "antd";
 
 import { StoredAssignmentMap, StoredSubjectMap, useSubjects, useAssignments } from "@api";
 import { SubjectGrid } from "@comp/subjects/lists/grid";
+import ListShowAllButton from "@comp/subjects/lists/vertical/ListShowAllButton.tsx";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
+import { dashboardCardClass, dashboardEmptyableCardBodyClass } from "./sharedStyles.ts";
 
 import dayjs from "dayjs";
-import ListShowAllButton from "@comp/subjects/lists/vertical/ListShowAllButton.tsx";
 
 // Find the first 10 subjects unlocked/burned in the last 30 days
 function getData(
@@ -77,15 +78,14 @@ export default function NewUnlocksCard({ dateField }: Props): JSX.Element {
   }, []);
 
   const isEmpty = data && !data.length;
-  const classes = classNames("[&>.ant-card-body]:p-0", {
-    "[&>.ant-card-body]:flex [&>.ant-card-body]:items-center [&>.ant-card-body]:justify-center": isEmpty
-  });
 
-  return <Card
+  return <SimpleCard
     title={dateField === "unlocked_at"
       ? "New unlocks in last 30d"
       : "Burned items in last 30d"}
-    className={classes}
+    className={dashboardCardClass}
+    bodyClassName={dashboardEmptyableCardBodyClass(isEmpty)}
+    flush
     loading={!data}
   >
     {data && (data.length
@@ -115,5 +115,5 @@ export default function NewUnlocksCard({ dateField }: Props): JSX.Element {
         </div>
       )
       : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />)}
-  </Card>;
+  </SimpleCard>;
 }

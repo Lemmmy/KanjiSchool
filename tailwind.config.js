@@ -61,6 +61,7 @@ const generateConfig = () => ({
       },
 
       lineHeight: {
+        ant   : 1.5,
         normal: 1.5715,
       },
 
@@ -69,6 +70,7 @@ const generateConfig = () => ({
         xs     : "3px",
         sm     : "4px",
         DEFAULT: "6px", // antd default
+        lg     : "8px",
       },
 
       aspectRatio: {

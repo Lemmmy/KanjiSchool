@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Card, Progress, Alert } from "antd";
+import { Progress, Alert } from "antd";
 
 import { useAppSelector } from "@store";
 
@@ -10,6 +10,7 @@ import { PageLayout } from "@layout/PageLayout";
 
 import { SyncSubjects } from "@global/sync/SyncSubjects";
 
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 import { CloudDisconnectedOutlined } from "@comp/icons/CloudDisconnectedOutlined";
 import { useOnlineStatus } from "@utils";
 
@@ -26,7 +27,7 @@ export function SyncPage(): JSX.Element {
     <SyncSubjects />
 
     <PageLayout siteTitle="Downloading data" noHeader verticallyCentered>
-      <Card title="Downloading data" className="w-full md:w-auto md:min-w-[512px]">
+      <SimpleCard title="Downloading data" className="w-full md:w-auto md:min-w-[512px]">
         {/* Offline warning */}
         {!isOnline && <Alert
           type="error"
@@ -44,7 +45,7 @@ export function SyncPage(): JSX.Element {
             <Progress percent={percent} />
           </>
           : <i>Starting...</i>}
-      </Card>
+      </SimpleCard>
     </PageLayout>
   </>;
 }

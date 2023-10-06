@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useMemo, useState, useEffect, useCallback } from "react";
-import { Card, Collapse, CollapseProps, Empty } from "antd";
+import { Collapse, CollapseProps, Empty } from "antd";
 import classNames from "classnames";
 
 import { shallowEqual } from "react-redux";
@@ -14,6 +14,8 @@ import { HourEl } from "./HourEl";
 import { Numbers } from "./Numbers";
 
 import { useBooleanSetting, useStringSetting } from "@utils";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
+import { dashboardCardClass, dashboardEmptyableCardBodyClass } from "../sharedStyles.ts";
 
 export type ReviewForecastGrouping = "total" | "level_up" | "type";
 
@@ -40,8 +42,7 @@ export function ReviewForecastCard(): JSX.Element {
   }, []);
 
   const isEmpty = data === false;
-  const classes = classNames(
-    "[&_.ant-card-body]:p-0 [&_.ant-card-body]:max-h-[420px] [&_.ant-card-body]:overflow-y-auto",
+  const collapseClasses = classNames(
     "[&_.ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box]:p-0",
     // Repair the ghost styles
     "[&_.ant-collapse-header]:border-0",
@@ -53,16 +54,16 @@ export function ReviewForecastCard(): JSX.Element {
     "[&_.ant-collapse-item:not(:last-child)_.ant-collapse-content-box]:border-0",
     "[&_.ant-collapse-item:not(:last-child)_.ant-collapse-content-box]:border-solid",
     "[&_.ant-collapse-item:not(:last-child)_.ant-collapse-content-box]:border-b",
-    "[&_.ant-collapse-item:not(:last-child)_.ant-collapse-content-box]:border-b-split",
-    {
-      "[&>.ant-card-body]:flex [&>.ant-card-body]:items-center [&>.ant-card-body]:justify-center": isEmpty
-    }
+    "[&_.ant-collapse-item:not(:last-child)_.ant-collapse-content-box]:border-b-split"
   );
 
-  return <Card
-    className={classes}
+  return <SimpleCard
     title="Review forecast"
     loading={data === undefined}
+
+    className={classNames(dashboardCardClass, collapseClasses)}
+    bodyClassName={classNames(dashboardEmptyableCardBodyClass(isEmpty), "overflow-y-auto max-h-[420px]")}
+    flush
   >
     {data /* Show the collapse if there are results, otherwise show Empty */
       ? (
@@ -74,7 +75,7 @@ export function ReviewForecastCard(): JSX.Element {
         />
       )
       : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-  </Card>;
+  </SimpleCard>;
 }
 
 function generateDayEl(

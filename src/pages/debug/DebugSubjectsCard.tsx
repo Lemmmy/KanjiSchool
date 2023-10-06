@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useCallback, useEffect, useState } from "react";
-import { Card, Button, Form, Radio, Checkbox, InputNumber, Space } from "antd";
+import { Button, Form, Radio, Checkbox, InputNumber, Space } from "antd";
 
 import { StoredSubject, StoredSubjectMap, SubjectType, useAssignments, useSubjects, useUserLevel } from "@api";
 import { lut } from "@utils";
@@ -11,6 +11,7 @@ import { lut } from "@utils";
 import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { makeRenderTooltipFn, SubjectRenderTooltipFn } from "@comp/subjects/lists/tooltip/SubjectTooltip";
 import { Size } from "@comp/subjects/lists/grid/style.ts";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 interface Props {
   onAddSubject: (subject: StoredSubject) => void;
@@ -76,7 +77,7 @@ export function DebugSubjectsCard({
 
   if (!subjects || !hasAssignments) return <b>Loading</b>;
 
-  return <Card title="Subjects">
+  return <SimpleCard title="Subjects">
     {/* Assignment listing display controls */}
     <Form
       form={form}
@@ -142,7 +143,7 @@ export function DebugSubjectsCard({
 
     {/* Subject listing */}
     {subjectList}
-  </Card>;
+  </SimpleCard>;
 }
 
 function renderSubjectList(

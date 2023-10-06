@@ -3,16 +3,17 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect, useCallback, ReactNode } from "react";
-import { Card } from "antd";
+import classNames from "classnames";
 
 import {
   useSubjects, useReviewStatistics,
   StoredSubjectMap, ApiReviewStatisticMap, NormalizedSubjectType
 } from "@api";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
+import { CardTable, CardTableCell, CardTableRow } from "./CardTable.tsx";
+import { dashboardCardBodyClass, dashboardCardClass } from "./sharedStyles.ts";
 
 import { normalizeVocabType, nts, useBooleanSetting } from "@utils";
-import { CardTable, CardTableCell, CardTableRow } from "@pages/dashboard/CardTable.tsx";
-import classNames from "classnames";
 
 interface Column {
   total: number;
@@ -164,9 +165,12 @@ export function ReviewAccuracyCard(): JSX.Element {
 
   const bottomRowClass = "bg-black/8 light:bg-black/2";
 
-  return <Card
+  return <SimpleCard
     title="Review accuracy"
-    className="h-auto [&>.ant-card-body]:p-0 [&>.ant-card-body]:overflow-hidden"
+    className={classNames(dashboardCardClass, "!h-auto")}
+    headClassName="border-b-0"
+    bodyClassName={classNames(dashboardCardBodyClass, "overflow-hidden")}
+    flush
     loading={!data}
   >
     <CardTable headers={readingFirst ? headersReadingFirst : headersMeaningFirst}>
@@ -178,5 +182,5 @@ export function ReviewAccuracyCard(): JSX.Element {
       {row("kanji", "Kanji", bottomRowClass)}
       {row("vocabulary", "Vocabulary", bottomRowClass)}
     </CardTable>
-  </Card>;
+  </SimpleCard>;
 }

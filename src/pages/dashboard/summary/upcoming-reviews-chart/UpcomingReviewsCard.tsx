@@ -2,16 +2,18 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Card } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import classNames from "classnames";
 
 import { shallowEqual } from "react-redux";
 import { useAppSelector } from "@store";
 
 import { UpcomingReviewsChart } from "./UpcomingReviewsChart.tsx";
-import { useIntegerSetting } from "@utils";
 
+import { SimpleCard } from "@comp/SimpleCard.tsx";
+import { dashboardCardBodyClass, dashboardCardClass } from "../../sharedStyles.ts";
+
+import { useIntegerSetting } from "@utils";
 import dayjs from "dayjs";
 
 export default function UpcomingReviewsCard(): JSX.Element {
@@ -22,8 +24,10 @@ export default function UpcomingReviewsCard(): JSX.Element {
 
   const forecast = useAppSelector(s => s.reviews.reviewForecast, shallowEqual);
 
-  return <Card
-    className="[&>.ant-card-body]:p-0 [&>.ant-card-body]:flex [&>.ant-card-body]:flex-col"
+  return <SimpleCard
+    className={dashboardCardClass}
+    bodyClassName={classNames(dashboardCardBodyClass, "flex flex-col")}
+    flush
     title="Upcoming reviews"
     loading={!forecast}
     extra={<UpcomingReviewsExtra />}
@@ -37,7 +41,7 @@ export default function UpcomingReviewsCard(): JSX.Element {
     </div>
 
     <CardFooter />
-  </Card>;
+  </SimpleCard>;
 }
 
 function UpcomingReviewsExtra(): JSX.Element | null {

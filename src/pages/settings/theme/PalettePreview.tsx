@@ -4,7 +4,7 @@
 
 import { ReactNode } from "react";
 import classNames from "classnames";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { lockedSquareTextClasses } from "@pages/dashboard/srs-stages/styles.ts";
 

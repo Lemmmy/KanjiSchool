@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useMemo } from "react";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { useAppSelector } from "@store";
 

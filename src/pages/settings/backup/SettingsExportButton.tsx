@@ -13,7 +13,7 @@ import { saveAs } from "file-saver";
 import { DEFAULT_SETTINGS, AnySettingName, getSettingKey } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 

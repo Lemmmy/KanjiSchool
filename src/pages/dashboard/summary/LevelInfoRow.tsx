@@ -4,7 +4,7 @@
 
 import { useMemo } from "react";
 import { Tooltip } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { ApiLevelProgressionMap, ApiUser, StoredSubjectMap, useLevelProgressions, useSubjects, useUser } from "@api";
 

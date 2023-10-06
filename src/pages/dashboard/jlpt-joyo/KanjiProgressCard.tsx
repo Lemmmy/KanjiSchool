@@ -3,13 +3,16 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useMemo } from "react";
-import { Card } from "antd";
+import classNames from "classnames";
 
 import * as api from "@api";
 
 import { analyze } from "./analyze";
 import { KanjiProgressTable } from "./KanjiProgressTable";
 import { KanjiProgressLegend } from "./KanjiProgressLegend";
+import { dashboardCardBodyClass, dashboardCardClass } from "../sharedStyles.ts";
+
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 import { JLPT_KEYS, JOYO_KEYS } from "@utils";
 
@@ -20,9 +23,12 @@ export function KanjiProgressCard(): JSX.Element {
   const data = useMemo(() => analyze(subjects, assignments),
     [subjects, assignments]);
 
-  return <Card
+  return <SimpleCard
     title="Kanji progress"
-    className="[&>.ant-card-body]:p-0 [&>.ant-card-body]:overflow-hidden"
+    className={dashboardCardClass}
+    headClassName="border-b-0"
+    bodyClassName={classNames(dashboardCardBodyClass, "overflow-hidden")}
+    flush
     extra={<KanjiProgressLegend />}
   >
     <KanjiProgressTable
@@ -40,5 +46,5 @@ export function KanjiProgressCard(): JSX.Element {
       data={data?.jlpt}
       totals={data?.jlptTotals}
     />
-  </Card>;
+  </SimpleCard>;
 }

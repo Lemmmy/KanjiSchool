@@ -2,9 +2,10 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Card, Tooltip } from "antd";
+import { Tooltip } from "antd";
 
 import { useUser } from "@api/auth.ts";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 import { ExtLink } from "@comp/ExtLink.tsx";
 
 import { LogOutButton } from "./LogOutButton.tsx";
@@ -20,7 +21,7 @@ export function SettingsUserInfo(): JSX.Element | null {
   const sub = user.data.subscription;
   const level = Math.min(user.data.level, sub.max_level_granted);
 
-  return <Card className="mb-md">
+  return <SimpleCard className="mb-md">
     <div className="leading-none">
       <LogOutButton />
 
@@ -59,5 +60,5 @@ export function SettingsUserInfo(): JSX.Element | null {
         {" "}({dayjs(user.data.started_at).format("DD MMM, YYYY")})
       </span>
     </div>}
-  </Card>;
+  </SimpleCard>;
 }

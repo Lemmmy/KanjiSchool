@@ -4,7 +4,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Form, Collapse, CollapseProps } from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 import { useNavigate } from "react-router-dom";
 import { useKeywordSearch } from "@api/search/KeywordSearch";
@@ -102,13 +102,12 @@ export function SearchParamsConfig({
       onSelfStudy={onSelfStudy}
       withLessons={withLessons}
       setWithLessons={setWithLessons}
-      onSearch={onSearch}
       onReset={onReset}
       loading={loading}
       results={results}
       showQueryInput={showQueryInput}
     />
-  }], [loading, onReset, onSearch, onSelfStudy, results, selfStudy, setWithLessons, showQueryInput, withLessons]);
+  }], [loading, onReset, onSelfStudy, results, selfStudy, setWithLessons, showQueryInput, withLessons]);
 
   return <Form<SearchParams>
     form={form}

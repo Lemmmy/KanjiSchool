@@ -4,7 +4,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { Modal, Tooltip, Checkbox } from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { CloseOutlined, DownOutlined, QuestionCircleOutlined, UpOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 

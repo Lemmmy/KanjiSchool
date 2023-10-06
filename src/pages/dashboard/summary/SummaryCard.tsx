@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { forwardRef } from "react";
-import { Row, Card } from "antd";
+import { Row } from "antd";
 
 import { useUser } from "@api";
 
@@ -13,6 +13,8 @@ import { SummaryMainCol } from "./SummaryMainCol";
 import { ResumeSessionRow } from "./ResumeSessionRow";
 import { useAvailableAssignments } from "./AvailableAssignments";
 
+import { SimpleCard } from "@comp/SimpleCard.tsx";
+
 export const SummaryCard = forwardRef<HTMLDivElement>((_, ref) => {
   const user = useUser();
 
@@ -20,22 +22,23 @@ export const SummaryCard = forwardRef<HTMLDivElement>((_, ref) => {
   const available = useAvailableAssignments();
 
   return <div ref={ref}>
-    <Card
+    <SimpleCard
       title={user ? "Summary for " + user.data.username : "Summary"}
-      className="[&>.ant-card-body]:p-0 [&>.ant-card-head]:pr-sm"
+      headClassName="pr-sm"
+      flush
       // Refresh button in top right of summary card, with a loading icon when syncing
       extra={<RefreshButton className="border-0 my-px mx-0 h-[54px]" />}
     >
       {/* Current level, time on level, etc. */}
       <LevelInfoRow />
 
-      <Row className="summary-card-main">
+      <Row>
         <SummaryMainCol type="lesson" available={available?.lessons} />
         <SummaryMainCol type="review" available={available?.reviews} />
       </Row>
 
       {/* If there is an ongoing session, show the resume/abandon buttons */}
       <ResumeSessionRow />
-    </Card>
+    </SimpleCard>
   </div>;
 });

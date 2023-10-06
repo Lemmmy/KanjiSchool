@@ -4,7 +4,7 @@
 
 import { FC, useCallback, useMemo } from "react";
 import { Dropdown, MenuProps } from "antd";
-import { DropdownButtonProps } from "antd/lib/dropdown";
+import { DropdownButtonProps } from "antd/es/dropdown";
 import { EditOutlined } from "@ant-design/icons";
 
 import { SessionOpts } from "@session/order/options";

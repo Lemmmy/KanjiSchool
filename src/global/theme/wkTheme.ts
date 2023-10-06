@@ -61,10 +61,6 @@ const THEME_LIGHT: WkTheme = {
 
       Divider: {
         colorSplit: "rgba(0, 0, 0, 0.15)"
-      },
-
-      Card: {
-        colorBorderSecondary: "#e0e0e0"
       }
     }
   },

@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect } from "react";
-import { Card, Tooltip, Typography } from "antd";
+import { Tooltip, Typography } from "antd";
 
 import {
   useSubjects, useLevelProgressions, useAssignments, useUser,
@@ -12,6 +12,7 @@ import {
 } from "@api";
 
 import { DhmDuration } from "@comp/DhmDuration";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 import dayjs from "dayjs";
 import { normalizeVocabType, nts, useBooleanSetting } from "@utils";
@@ -115,9 +116,10 @@ export function CurrentStatusCard(): JSX.Element {
   useEffect(() => setData(getData(user, subjects, assignments, levelProgressions)),
     [user, subjects, assignments, levelProgressions]);
 
-  return <Card
+  return <SimpleCard
     title="Current status"
     className="dashboard-current-status-card dashboard-epic-table-card"
+    flush
     loading={!user || !data}
   >
     <table className="center-table">
@@ -164,5 +166,5 @@ export function CurrentStatusCard(): JSX.Element {
         </tr>}
       </tbody>
     </table>
-  </Card>;
+  </SimpleCard>;
 }

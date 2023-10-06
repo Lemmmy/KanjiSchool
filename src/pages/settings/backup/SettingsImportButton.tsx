@@ -11,7 +11,7 @@ import { AnySettingName, DEFAULT_SETTINGS, getSettingKey } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 import { Button } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 export function SettingsImportButton(): JSX.Element {
   const { md } = useBreakpoint();

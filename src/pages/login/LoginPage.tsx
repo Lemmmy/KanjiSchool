@@ -3,14 +3,15 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState } from "react";
-import { Form, Input, Button, Card, Row, Col, Divider } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { Form, Input, Button, Row, Col, Divider } from "antd";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { AppLoading } from "@global/AppLoading";
 import { PageLayout } from "@layout/PageLayout";
 
 import * as api from "@api";
 
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 import { ExtLink } from "@comp/ExtLink";
 import { DemoCarousel } from "./DemoCarousel";
 import { AttributionFooter } from "@layout/AttributionFooter.tsx";
@@ -58,7 +59,7 @@ export function LoginPage(): JSX.Element {
     verticallyCentered
     contentsHeightClassName="h-auto min-h-screen"
   >
-    <Card title="KanjiSchool" className="min-w-[300px] w-full max-w-[720px] box-border">
+    <SimpleCard title="KanjiSchool" className="min-w-[300px] w-full max-w-[720px] box-border relative">
       {/* Top section - lead text and carousel */}
       <Row>
         {/* Lead text */}
@@ -163,7 +164,7 @@ export function LoginPage(): JSX.Element {
           <Col><DemoCarousel /></Col>
         </Row>
       </>}
-    </Card>
+    </SimpleCard>
 
     {/* Footer */}
     <AttributionFooter

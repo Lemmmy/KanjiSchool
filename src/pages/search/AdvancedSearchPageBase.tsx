@@ -3,7 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect, useCallback, useState } from "react";
-import { Skeleton } from "antd";
 
 import { PageLayout } from "@layout/PageLayout";
 
@@ -18,6 +17,7 @@ import { SearchParamsConfig } from "./SearchParamsConfig";
 import { SearchResultsList } from "./SearchResultsList";
 
 import Debug from "debug";
+import { SimpleSkeleton } from "@comp/SimpleSkeleton.tsx";
 const debug = Debug("kanjischool:advanced-search-page");
 
 export interface SearchLocationState {
@@ -102,7 +102,7 @@ export function AdvancedSearchPageBase({ selfStudy, title }: Props): JSX.Element
     {/* Display a skeleton when loading */}
     {!results && searching && (
       <div className="max-w-[920px] mx-auto">
-        <Skeleton />
+        <SimpleSkeleton />
       </div>
     )}
 

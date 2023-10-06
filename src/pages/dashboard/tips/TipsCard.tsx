@@ -3,8 +3,9 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect } from "react";
-import { Card, Button } from "antd";
+import { Button } from "antd";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
+import classNames from "classnames";
 
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@store";
@@ -13,6 +14,8 @@ import { setTip } from "@store/slices/settingsSlice.ts";
 import { lsSetNumber } from "@utils";
 
 import { TIPS } from "./tips";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
+import { dashboardCardBodyClass, dashboardCardClass } from "@pages/dashboard/sharedStyles.ts";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:tips-card");
@@ -51,9 +54,11 @@ export function TipsCard(): JSX.Element {
   const previousTip = () => changeTip(mod(currentTip - 1, TIP_COUNT));
   const nextTip = () => changeTip(mod(currentTip + 1, TIP_COUNT));
 
-  return <Card
+  return <SimpleCard
     title="Tip of the day"
-    className="h-full flex-auto mt-md [&>.ant-card-head]:pr-sm"
+    className={classNames(dashboardCardClass, "flex-auto mt-md")}
+    headClassName="pr-sm"
+    bodyClassName={dashboardCardBodyClass}
 
     // Prev/Next tip buttons
     extra={<>
@@ -69,5 +74,5 @@ export function TipsCard(): JSX.Element {
     <p className="mt-0">
       {TIPS[currentTip] ?? "Error"}
     </p>
-  </Card>;
+  </SimpleCard>;
 }

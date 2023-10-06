@@ -3,11 +3,12 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect, lazy, Suspense } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { PageLayout } from "@layout/PageLayout";
 import { useTopMenuOptions } from "@layout/nav/TopMenu";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 import { useAppSelector } from "@store";
 
@@ -62,10 +63,7 @@ function DashboardPage(): JSX.Element {
     return unset;
   }, [ongoingSession, set, unset]);
 
-  const page = <PageLayout
-    siteTitle="Dashboard"
-    className="[&_.ant-card]:h-full [&_.ant-card]:flex [&_.ant-card]:flex-col [&_.ant-card>.ant-card-body]:flex-1"
-  >
+  const page = <PageLayout siteTitle="Dashboard">
     <SubscriptionStatus />
     <OverleveledAssignments />
 
@@ -74,7 +72,7 @@ function DashboardPage(): JSX.Element {
     <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
       {/* Upcoming reviews chart */}
       <Col span={24} lg={14}>
-        <Suspense fallback={<Card loading />}>
+        <Suspense fallback={<SimpleCard loading />}>
           <UpcomingReviewsCard />
         </Suspense>
       </Col>
@@ -86,7 +84,7 @@ function DashboardPage(): JSX.Element {
     <Row gutter={16} className="items-stretch [&>.ant-col]:mb-md">
       <Col span={24} xl={12} style={{ display: "flex", flexDirection: "column" }}>
         {/* Review heatmap */}
-        <Suspense fallback={<Card loading />}>
+        <Suspense fallback={<SimpleCard loading />}>
           <ReviewHeatmapCard />
         </Suspense>
 
@@ -96,7 +94,7 @@ function DashboardPage(): JSX.Element {
 
       <Col span={24} xl={6} xxl={6}>
         {/* Critical condition items */}
-        <Suspense fallback={<Card loading />}>
+        <Suspense fallback={<SimpleCard loading />}>
           <CriticalConditionCard />
         </Suspense>
       </Col>
@@ -113,14 +111,14 @@ function DashboardPage(): JSX.Element {
         <Row gutter={16}>
           {/* New unlocks in last 30d */}
           <Col span={24} xl={12} className="mb-md">
-            <Suspense fallback={<Card loading />}>
+            <Suspense fallback={<SimpleCard loading />}>
               <NewUnlocksCard dateField="unlocked_at" />
             </Suspense>
           </Col>
 
           {/* Burned items in last 30d */}
           <Col span={24} xl={12} className="mb-md">
-            <Suspense fallback={<Card loading />}>
+            <Suspense fallback={<SimpleCard loading />}>
               <NewUnlocksCard dateField="burned_at" />
             </Suspense>
           </Col>

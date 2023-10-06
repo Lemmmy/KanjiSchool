@@ -2,16 +2,16 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Dispatch, SetStateAction } from "react";
-import { Space, Divider, Descriptions, Tabs, Typography, Radio, Checkbox, Row, Col } from "antd";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Space, Divider, Descriptions, Typography, Radio, Checkbox, Row, Col, Button } from "antd";
 
 import { HintStageObject, HINT_STAGE_OBJECTS, SubjectHintStage } from "../hintStages";
 import { SubjectInfoProps } from "../SubjectInfo";
 
 import * as api from "@api";
 import { normalizeVocabType } from "@utils";
+import { StoredAssignment, StoredSubject } from "@api";
 
-const { TabPane } = Tabs;
 const { Paragraph } = Typography;
 
 interface Props extends SubjectInfoProps {
@@ -22,7 +22,9 @@ interface Props extends SubjectInfoProps {
   show: (object: HintStageObject) => boolean;
 }
 
-export function SubjectInfoDebug({
+type DebugTab = "hidden" | "subject" | "assignment";
+
+export default function SubjectInfoDebug({
   subject,
   useHintStage, setUseHintStage,
   questionType, setQuestionType,
@@ -93,27 +95,40 @@ export function SubjectInfoDebug({
       </Space>
 
       {/* JSON dump tabs */}
-      <h3>JSON dumps (internal representation)</h3>
-      <Tabs defaultActiveKey="1" type="card" className="[&_.ant-tabs-nav]:mb-0">
-        {/* Subject */}
-        <TabPane tab="Subject" key="1">
-          <Paragraph copyable>
-            <pre className="!mt-0 !border-t-0 !rounded-t-none text-sm">
-              {JSON.stringify(subject, undefined, 2).trim()}
-            </pre>
-          </Paragraph>
-        </TabPane>
-
-        {/* Assignment */}
-        {assignment && <TabPane tab="Assignment" key="2">
-          <Paragraph copyable>
-            <pre className="!mt-0 !border-t-0 rounded-t-none text-sm">
-              {JSON.stringify(assignment, undefined, 2).trim()}
-            </pre>
-          </Paragraph>
-        </TabPane>}
-      </Tabs>
+      <DebugTabs subject={subject} assignment={assignment} />
     </div>
+  </>;
+}
 
+interface DebugTabsProps {
+  subject: StoredSubject;
+  assignment?: StoredAssignment;
+}
+
+function DebugTabs({ subject, assignment }: DebugTabsProps): JSX.Element {
+  const [tab, setTab] = useState<DebugTab>("hidden");
+
+  return <>
+    <h3>JSON dumps (internal representation)</h3>
+
+    <Button disabled={tab === "hidden"} onClick={() => setTab("hidden")}>Hidden</Button>
+    <Button disabled={tab === "subject"} onClick={() => setTab("subject")}>Subject</Button>
+    <Button disabled={tab === "assignment"} onClick={() => setTab("assignment")}>Assignment</Button>
+
+    {tab === "subject" && (
+      <Paragraph copyable>
+        <pre className="!mt-0 !border-t-0 !rounded-t-none text-sm">
+          {JSON.stringify(subject, undefined, 2).trim()}
+        </pre>
+      </Paragraph>
+    )}
+
+    {tab === "assignment" && (
+      <Paragraph copyable>
+        <pre className="!mt-0 !border-t-0 rounded-t-none text-sm">
+          {JSON.stringify(assignment, undefined, 2).trim()}
+        </pre>
+      </Paragraph>
+    )}
   </>;
 }

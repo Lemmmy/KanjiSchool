@@ -3,16 +3,19 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useMemo, useEffect, useCallback } from "react";
-import { Card } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+import classNames from "classnames";
 
 import { useUserLevel, useAssignments, useSubjects, useUserMaxLevel } from "@api";
 
 import { analyze, isComplete } from "./analyze";
 import { LevelProgressBars } from "./LevelProgressBars";
 import { LevelProgressLegend } from "./LevelProgressLegend";
+import { dashboardCardBodyClass, dashboardCardClass } from "../sharedStyles.ts";
 
 import { useBooleanSetting } from "@utils";
+
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 interface Props {
   height?: number;
@@ -27,7 +30,7 @@ export function LevelProgressCard({
   // Automatically scroll to the bottom
   const scrollToBottom = useCallback(() => {
     // TODO: Unfortunately this is the most reliable way I could figure out
-    const bodyEl = document.querySelector(".dashboard-level-progress-card .ant-card-body");
+    const bodyEl = document.querySelector(".dashboard-level-progress-card .wk-card-body");
     if (!bodyEl) return;
     bodyEl.scrollTop = bodyEl.scrollHeight;
   }, []);
@@ -35,17 +38,21 @@ export function LevelProgressCard({
   // Scroll to the bottom if the height changes
   useEffect(() => scrollToBottom, [scrollToBottom, height]);
 
-  return <Card
+  return <SimpleCard
     title="Level progress"
     extra={<LevelProgressLegend />}
-    className="dashboard-level-progress-card [&_.ant-card-body]:overflow-y-auto"
+
+    // The .dashboard-level-progress-card class here is required, used by document.querySelector above
+    className={classNames(dashboardCardClass, "dashboard-level-progress-card")}
+    bodyClassName={classNames(dashboardCardBodyClass, "overflow-y-auto")}
+
     style={{
       // Apply forced height from Summary card except on mobile
       height: sm ? height : undefined
     }}
   >
     <LevelProgressCardInner scrollToBottom={scrollToBottom} />
-  </Card>;
+  </SimpleCard>;
 }
 
 interface InnerProps {

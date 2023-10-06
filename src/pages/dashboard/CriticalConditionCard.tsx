@@ -3,8 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect, useCallback } from "react";
-import { Card, Empty } from "antd";
-import classNames from "classnames";
+import { Empty } from "antd";
 
 import {
   useSubjects, useReviewStatistics, useAssignments, useSubjectAssignmentIds,
@@ -15,6 +14,8 @@ import {
 } from "@api";
 import { VerticalSubjectList, ListItem } from "@comp/subjects/lists/vertical";
 import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton";
+import { SimpleCard } from "@comp/SimpleCard.tsx";
+import { dashboardCardClass, dashboardEmptyableCardBodyClass } from "./sharedStyles.ts";
 
 import { useIntegerSetting } from "@utils";
 import { asc, desc, map, queue } from "@utils/comparator";
@@ -93,13 +94,12 @@ export default function CriticalConditionCard(): JSX.Element {
   const onShowAll = useCallback(() => setShowingAll(true), []);
 
   const isEmpty = data && !data[0].length;
-  const classes = classNames("[&>.ant-card-body]:p-0", {
-    "[&>.ant-card-body]:flex [&>.ant-card-body]:items-center [&>.ant-card-body]:justify-center": isEmpty
-  });
 
-  return <Card
+  return <SimpleCard
     title="Critical condition items"
-    className={classes}
+    className={dashboardCardClass}
+    bodyClassName={dashboardEmptyableCardBodyClass(isEmpty)}
+    flush
     loading={!data}
 
     // Add to self-study queue button
@@ -118,5 +118,5 @@ export default function CriticalConditionCard(): JSX.Element {
         />
       )
       : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />)}
-  </Card>;
+  </SimpleCard>;
 }

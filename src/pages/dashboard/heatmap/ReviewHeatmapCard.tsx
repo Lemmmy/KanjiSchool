@@ -3,23 +3,30 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState } from "react";
-import { Button, Card, Tooltip } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { Button, Tooltip } from "antd";
+import { WarningOutlined } from "@ant-design/icons";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+import classNames from "classnames";
 
 import { Heatmap } from "./Heatmap";
 import { HeatmapDay } from "./data";
 import { ReviewHeatmapTooltip } from "./ReviewHeatmapTooltip";
 import { ReviewHeatmapLegend } from "./ReviewHeatmapLegend";
-import { WarningOutlined } from "@ant-design/icons";
-import { openGetReviewsModal } from "@pages/dashboard/GetReviewsModal.tsx";
+import { openGetReviewsModal } from "../GetReviewsModal.tsx";
+import { dashboardCardBodyClass, dashboardCardClass } from "../sharedStyles.ts";
+
+import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 export default function ReviewHeatmapCard(): JSX.Element {
   const [showAll, setShowAll] = useState(false);
   const [hoverDay, setHoverDay] = useState<HeatmapDay>();
 
-  return <Card
+  return <SimpleCard
     title={<CardTitle />}
-    className="h-auto [&>.ant-card-body]:p-0 [&>.ant-card-head]:pr-sm"
+    className={classNames(dashboardCardClass, "!h-auto")}
+    headClassName="pr-sm"
+    bodyClassName={dashboardCardBodyClass}
+    flush
 
     // Show all button in top right of card
     extra={!showAll && <Button
@@ -35,7 +42,7 @@ export default function ReviewHeatmapCard(): JSX.Element {
     </div>
 
     <CardFooter hoverDay={hoverDay} />
-  </Card>;
+  </SimpleCard>;
 }
 
 function CardTitle(): JSX.Element {

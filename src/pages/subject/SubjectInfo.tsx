@@ -3,7 +3,6 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { lazy, Suspense, useCallback, useState } from "react";
-import { Skeleton } from "antd";
 import classNames from "classnames";
 
 import {
@@ -25,7 +24,6 @@ import { StudyMaterialSynonyms } from "./StudyMaterialSynonyms";
 import { PartsOfSpeech } from "./PartsOfSpeech";
 import { DictionaryInfoRow } from "./DictionaryInfoRow.tsx";
 import { YourProgression } from "./progression/YourProgression";
-import { SubjectInfoDebug } from "./debug/SubjectInfoDebug";
 
 import { SubjectMarkup } from "@comp/subjects/SubjectMarkup";
 import { SubjectGrid } from "@comp/subjects/lists/grid";
@@ -35,6 +33,7 @@ import { hasReadings, isVocabularyLike, normalizeVocabType, useBooleanSetting } 
 import { clamp } from "lodash-es";
 import { SubjectInfoHint } from "@pages/subject/SubjectInfoHint.tsx";
 import { SubjectInfoDivider } from "@pages/subject/components/SubjectInfoDivider.tsx";
+import { SimpleSkeleton } from "@comp/SimpleSkeleton.tsx";
 
 export interface SubjectInfoProps {
   subject: StoredSubject;
@@ -57,6 +56,7 @@ export interface SubjectInfoProps {
 }
 
 const ContextSentences = lazy(() => import("./ContextSentences"));
+const SubjectInfoDebug = lazy(() => import("./debug/SubjectInfoDebug"));
 
 export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   const {
@@ -263,7 +263,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {vocabularyLike && show("context_sentences") && <>
       <a id="context-sentences" />
       <SubjectInfoDivider label="Context sentences" />
-      <Suspense fallback={<Skeleton />}>
+      <Suspense fallback={<SimpleSkeleton />}>
         <ContextSentences subject={vocabSubjectData} />
       </Suspense>
     </>}
@@ -277,13 +277,15 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
     {/* Debug info */}
     {showDebug && <>
       <a id="debug" />
-      <SubjectInfoDebug
-        {...props}
-        useHintStage={useHintStage} setUseHintStage={setUseHintStageOverride}
-        questionType={questionType} setQuestionType={setQuestionTypeOverride}
-        hintStage={hintStage} setHintStage={setHintStage}
-        show={show}
-      />
+      <Suspense>
+        <SubjectInfoDebug
+          {...props}
+          useHintStage={useHintStage} setUseHintStage={setUseHintStageOverride}
+          questionType={questionType} setQuestionType={setQuestionTypeOverride}
+          hintStage={hintStage} setHintStage={setHintStage}
+          show={show}
+        />
+      </Suspense>
     </>}
   </div>;
 
