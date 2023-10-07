@@ -10,10 +10,10 @@ import classNames from "classnames";
 import { useAppSelector } from "@store";
 
 import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio, useUserLevel } from "@api";
+import { sample } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 
-import { sample } from "lodash-es";
 import { GlobalHotKeys } from "react-hotkeys";
 
 import Debug from "debug";

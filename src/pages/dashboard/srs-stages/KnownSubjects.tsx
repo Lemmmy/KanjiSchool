@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { gotoSearch, NormalizedSubjectType } from "@api";
 
-import { startCase } from "lodash-es";
-import { nts } from "@utils";
+import { nts, uppercaseFirst } from "@utils";
 
 import { baseStageClasses, subjectTypeClasses } from "./styles.ts";
 
@@ -23,7 +22,7 @@ const KNOWN_STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export function KnownSubjects({ type, count }: KnownSubjectsProps): JSX.Element {
   const navigate = useNavigate();
 
-  const name = startCase(type);
+  const name = uppercaseFirst(type);
 
   function onClick() {
     gotoSearch(navigate, {

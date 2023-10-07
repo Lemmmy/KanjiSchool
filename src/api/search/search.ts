@@ -5,15 +5,14 @@
 import { store } from "@store";
 
 import { ApiReviewStatistic, StoredAssignment, StoredSubject, SubjectWithAssignment } from "@api";
+import { NormalizedSubjectType } from "@api/types";
 import { PerformSearchFn } from "./KeywordSearch";
 import { SearchParams } from ".";
 
-import { normalizeVocabType, ulut } from "@utils";
+import { lut, normalizeVocabType, ulut } from "@utils";
 import dayjs, { Dayjs } from "dayjs";
-import { intersection, noop } from "lodash-es";
 
 import Debug from "debug";
-import { NormalizedSubjectType } from "@api/types";
 const debug = Debug("kanjischool:search");
 
 /** Subject, assignment, next review hours */
@@ -115,7 +114,7 @@ function applySearchFilter(
   if (maxFreq !== undefined && (!subject.data.jisho || !subject.data.jisho.nfr || subject.data.jisho.nfr > maxFreq))
     return;
 
-  noop(reviewStatistic); // TODO: Leeches
+  // noop(reviewStatistic); // TODO: Leeches
 
   // Percentage correct less than/more than
   if (percentageCorrectLt !== undefined || percentageCorrectGt !== undefined) {
@@ -166,8 +165,8 @@ function applySearchFilter(
 
     // If the query partsOfSpeech and the subject's parts_of_speech have no
     // items in common, then reject the subject
-    const int = intersection(partsOfSpeech, subject.data.parts_of_speech);
-    if (int.length === 0) return;
+    const partsOfSpeechLut = lut(partsOfSpeech);
+    if (!subject.data.parts_of_speech.some(pos => partsOfSpeechLut[pos])) return;
   }
 
   return true;

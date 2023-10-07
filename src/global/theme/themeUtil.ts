@@ -2,9 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { kebabCase } from "lodash-es";
 import { mostReadable, TinyColor } from "@ctrl/tinycolor";
 import { ColorPalette } from "@global/theme/palette.ts";
+import { kebabCase } from "@utils";
 
 const TEXT_COLORS = ["rgba(255, 255, 255, 0.85)", "rgba(0, 0, 0, 0.85)"];
 

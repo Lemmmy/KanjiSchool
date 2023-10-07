@@ -5,11 +5,10 @@
 import { useMemo } from "react";
 import { Space } from "antd";
 
-import { ApiSubjectVocabulary } from "@api";
+import { ApiSubjectPronunciationAudio, ApiSubjectVocabulary } from "@api";
 
 import { AudioButton } from "./AudioButton";
 
-import { groupBy } from "lodash-es";
 import { getPrimaryReading } from "@utils";
 import { asc, map as mapCmp } from "@utils/comparator";
 
@@ -31,9 +30,12 @@ export function AudioButtons({
 
     // Get the primary reading and pronunciations for this subject.
     const primaryReading = getPrimaryReading(subject);
-    const pronunciations = Object.keys(groupBy(
-      subject.data.pronunciation_audios, "metadata.pronunciation"
-    ));
+    const pronunciations = Object.keys(subject.data.pronunciation_audios.reduce((acc, a) => {
+      const p = a.metadata.pronunciation;
+      acc[p] ??= [];
+      acc[p].push(a);
+      return acc;
+    }, {} as Record<string, ApiSubjectPronunciationAudio[]>));
 
     // Sort by distance such that the primary reading comes first
     if (primaryReading) {

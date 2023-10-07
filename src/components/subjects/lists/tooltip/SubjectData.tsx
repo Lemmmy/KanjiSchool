@@ -9,9 +9,8 @@ import { ApiSubjectKanjiInner, StoredSubject } from "@api";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { CommaList } from "@pages/subject/components/CommaList.tsx";
 
-import { isVocabularyLike, normalizeVocabType, onyomiToKatakana, useBooleanSetting } from "@utils";
-import { startCase } from "lodash-es";
-import { SubjectTooltipLabel } from "@comp/subjects/lists/tooltip/SubjectTooltipLabel.tsx";
+import { isVocabularyLike, normalizeVocabType, onyomiToKatakana, useBooleanSetting, uppercaseFirst } from "@utils";
+import { SubjectTooltipLabel } from "./SubjectTooltipLabel.tsx";
 
 interface Props {
   subject: StoredSubject;
@@ -50,7 +49,7 @@ export function SubjectTooltipSubjectData({ subject }: Props): JSX.Element {
       />
 
       <div className="text-desc mb-xs text-sm">
-        Level {level} {startCase(normalizeVocabType(objectType))}
+        Level {level} {uppercaseFirst(normalizeVocabType(objectType))}
       </div>
     </div>
 

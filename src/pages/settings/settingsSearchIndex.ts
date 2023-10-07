@@ -6,7 +6,6 @@ import { MenuItem } from "./components/SettingsSubGroup.tsx";
 import { menuItems } from "./SettingsItems.tsx";
 
 import { onlyText } from "react-children-utilities";
-import { isArray } from "lodash-es";
 
 import Fuse from "fuse.js";
 import { ReactNode } from "react";
@@ -53,7 +52,7 @@ function processItem(rootKey: string, item: MenuItem, items: IndexedSettingsMap,
     };
   }
 
-  if ("children" in item && isArray(item.children)) {
+  if ("children" in item && Array.isArray(item.children)) {
     item.children.forEach(c => processItem(`${rootKey}.${item?.key}`, c, items, indexCounter));
   }
 }
@@ -79,7 +78,7 @@ export function getChildByPath(children: MenuItem[], remainingKey: string): Menu
   if (!child) return undefined;
 
   if (remainingKey.indexOf(".") === -1) return child;
-  if (!("children" in child) || !isArray(child.children)) return undefined;
+  if (!("children" in child) || !Array.isArray(child.children)) return undefined;
 
   return getChildByPath(child.children, remainingKey.slice(keyPart.length + 1));
 }

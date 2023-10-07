@@ -30,9 +30,8 @@ import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { VocabList } from "@comp/subjects/lists/vocab";
 
 import { hasReadings, isVocabularyLike, normalizeVocabType, useBooleanSetting } from "@utils";
-import { clamp } from "lodash-es";
-import { SubjectInfoHint } from "@pages/subject/SubjectInfoHint.tsx";
-import { SubjectInfoDivider } from "@pages/subject/components/SubjectInfoDivider.tsx";
+import { SubjectInfoHint } from "./SubjectInfoHint.tsx";
+import { SubjectInfoDivider } from "./components/SubjectInfoDivider.tsx";
 import { SimpleSkeleton } from "@comp/SimpleSkeleton.tsx";
 
 export interface SubjectInfoProps {
@@ -74,7 +73,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
   const defaultHintStage = useBooleanSetting("hideHintsOnIncorrect") ? -1 : 0;
   const [hintStage, setHintStage] = useState<SubjectHintStage>(defaultHintStage);
   const nextHintStage = useCallback(() =>
-    setHintStage(s => clamp(s + 1, -1, 2) as SubjectHintStage), []);
+    setHintStage(s => Math.min(Math.max(s + 1, -1), 2) as SubjectHintStage), []);
 
   const objectType = normalizeVocabType(subject.object);
   const hasReading = hasReadings(subject);

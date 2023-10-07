@@ -3,7 +3,6 @@ import { presetPalettes } from "@ant-design/colors";
 import plugin from "tailwindcss/plugin";
 import clipPath from "tailwind-clip-path";
 import logical from "tailwindcss-logical";
-import { kebabCase } from "lodash-es";
 
 const generateConfig = () => ({
   content: [
@@ -284,5 +283,10 @@ function generateWktcColors() {
 
   return out;
 }
+
+const kebabCase = str => str
+  .replace(/([a-z])([A-Z])/g, "$1-$2")
+  .replace(/([a-z])(\d+)/g, "$1-$2")
+  .toLowerCase();
 
 export default generateConfig();

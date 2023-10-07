@@ -4,7 +4,6 @@
 
 import { useEffect, useMemo } from "react";
 import memoize from "memoizee";
-import { sample } from "lodash-es";
 
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@store";
@@ -12,6 +11,7 @@ import { store } from "@store";
 import { setSupportedFonts } from "@store/slices/settingsSlice.ts";
 
 import { useBooleanSetting } from "./settings";
+import { sample } from "./shuffle.ts";
 
 import { lru } from "tiny-lru";
 

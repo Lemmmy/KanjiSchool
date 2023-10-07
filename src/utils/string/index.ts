@@ -6,3 +6,4 @@ export * from "./bytes";
 export * from "./ctrl";
 export * from "./nts";
 export * from "./plural";
+export * from "./case";

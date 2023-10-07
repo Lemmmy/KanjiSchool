@@ -14,11 +14,10 @@ import {
 import { LESSON_ORDERS } from "./order/LessonOrder";
 import { buildSessionComparator } from "./order/sessionOrder";
 
+import { shuffle } from "@utils";
 import { SubjectComparator } from "@utils/comparator";
 
 import { globalNotification } from "@global/AntInterface.tsx";
-
-import { sortBy, shuffle } from "lodash-es";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:session-pick");
@@ -85,7 +84,7 @@ export function pickSubjects(
   // Clone the subject ID list, shuffling it if necessary, then convert to
   // SubjectWithOptAssignment
   let list: SubjectWithAssignment[] =
-    (shouldShuffle ? shuffle(subjectIds) : subjectIds)
+    (shouldShuffle ? shuffle(Array.from(subjectIds)) : subjectIds)
       .map(id => [subjects[id], assignments[subjectAssignmentIdMap[id]]]);
 
   // If on a free subscription, remove subjects outside of max level
@@ -117,14 +116,19 @@ function pickLessonItems(
   // Pre-sort by lesson position before passing to the user-defined ordering
   const lessonSubjectIds = pendingLessons.map(l => l[1]);
   debug("picking lesson items from %d pending lessons", lessonSubjectIds.length, pendingLessons);
-  const sortedLessons = sortBy(lessonSubjectIds, [
-    l => subjects[l].data.level,
-    l => subjects[l].data.lesson_position,
-    l => l
-  ]);
+
+  lessonSubjectIds.sort((a, b) => {
+    const aS = subjects[a];
+    const bS = subjects[b];
+    if (aS.data.level !== bS.data.level)
+      return aS.data.level - bS.data.level;
+    if (aS.data.lesson_position !== bS.data.lesson_position)
+      return aS.data.lesson_position - bS.data.lesson_position;
+    return a - b;
+  });
 
   const mergedOpts = mergeOptions(getLessonSessionOrderOptions(), options);
-  return pickSubjects("lesson", sortedLessons, mergedOpts);
+  return pickSubjects("lesson", lessonSubjectIds, mergedOpts);
 }
 
 function pickReviewItems(

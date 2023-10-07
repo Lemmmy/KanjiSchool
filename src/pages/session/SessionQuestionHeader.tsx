@@ -12,8 +12,7 @@ import { OnSkipFn } from "./SessionQuestionsPage";
 import { QuestionSrsStage } from "./QuestionSrsStage";
 import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 
-import { startCase } from "lodash-es";
-import { normalizeVocabType, nts, useBooleanSetting, useRandomFont, useStringSetting } from "@utils";
+import { normalizeVocabType, nts, uppercaseFirst, useBooleanSetting, useRandomFont, useStringSetting } from "@utils";
 import { UndoButton } from "./UndoButton";
 import { useAppSelector } from "@store";
 import { QuestionType } from "@session";
@@ -196,7 +195,7 @@ export function SessionQuestionHeader({
     <Row className={questionTypeClasses}>
       {objectType === "radical"
         ? "Radical Name"
-        : (startCase(objectType) + " " + startCase(questionType))}
+        : (uppercaseFirst(objectType) + " " + uppercaseFirst(questionType))}
     </Row>
 
     {/* In  correct answer */}

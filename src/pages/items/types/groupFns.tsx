@@ -6,10 +6,9 @@ import { ReactNode } from "react";
 
 import { SubjectWithAssignment } from "@api";
 
-import { startCase } from "lodash-es";
 import {
   nts, JLPT_LEVEL_NAMES, JOYO_GRADE_NAMES, stringifySrsStage,
-  numberToSubjectType, normalizedSubjectTypeToNumber, numberToNormalizedSubjectType
+  normalizedSubjectTypeToNumber, numberToNormalizedSubjectType, uppercaseFirst
 } from "@utils";
 import { JlptLevels, JoyoGrades } from "@data";
 
@@ -41,7 +40,7 @@ export const GROUP_BY_TO_NODE_FNS: Record<ItemsGroupBy, GroupToNodeFn> = {
   "jlpt" : n => JLPT_LEVEL_NAMES[(5 - n) as JlptLevels],
   "joyo" : n => JOYO_GRADE_NAMES[n as JoyoGrades],
   "freq" : (n, g) => `${nts((n * g) + 1)}-${nts((n * g) + g)}`,
-  "type" : n => startCase(numberToNormalizedSubjectType(n)),
-  "srs"  : n => startCase(stringifySrsStage(n)),
+  "type" : n => uppercaseFirst(numberToNormalizedSubjectType(n)),
+  "srs"  : n => stringifySrsStage(n),
   "none" : () => "All items",
 };

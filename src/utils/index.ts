@@ -10,6 +10,7 @@ export * from "./localStorage";
 export * from "./lut";
 export * from "./menuItem";
 export * from "./settings";
+export * from "./shuffle";
 export * from "./sleep";
 export * from "./string";
 export * from "./wk";

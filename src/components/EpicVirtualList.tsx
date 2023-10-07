@@ -5,7 +5,7 @@
 import { useEffect, useReducer, useRef, useMemo, useCallback, forwardRef, RefObject } from "react";
 import classNames from "classnames";
 
-import { clamp, range, throttle } from "lodash-es";
+import { throttle } from "lodash-es";
 import useResizeObserver from "use-resize-observer";
 import { UpdateTooltipFn, useGridTooltipEvents } from "@comp/subjects/lists/grid/gridTooltipHook.ts";
 
@@ -64,13 +64,13 @@ function scrollReducer(state: ScrollState, action: ScrollAction): ScrollState {
     const overscanHeight = itemHeight * overscanCount;
 
     // Check the new startIndex and endIndex
-    const startIndex = clamp(
-      Math.floor((top - overscanHeight) / itemHeight),
-      0, itemCount
+    const startIndex = Math.min(
+      Math.max(Math.floor((top - overscanHeight) / itemHeight), 0),
+      itemCount
     );
-    const endIndex = clamp(
-      Math.floor((top + height + overscanHeight) / itemHeight),
-      0, itemCount
+    const endIndex = Math.min(
+      Math.max(Math.floor((top + height + overscanHeight) / itemHeight), 0),
+      itemCount
     );
 
     // If the new positions are different, update the state and trigger an
@@ -198,7 +198,9 @@ export const EpicVirtualList = forwardRef<HTMLDivElement, EpicVirtualListProps>(
   }, [scrollElement, throttleMs, updateScroll]);
 
   // Number range for the items from startIndex to endIndex
-  const items = range(scrollState.startIndex, scrollState.endIndex);
+  const items = Array(scrollState.endIndex - scrollState.startIndex)
+    .fill(0)
+    .map((_, i) => i + scrollState.startIndex);
 
   const classes = classNames(className, "epic-virtual-list");
 

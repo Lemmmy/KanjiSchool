@@ -10,7 +10,8 @@ import { ExtLink } from "@comp/ExtLink.tsx";
 
 import { LogOutButton } from "./LogOutButton.tsx";
 
-import { capitalize } from "lodash-es";
+import { uppercaseFirst } from "@utils";
+
 import TimeAgo from "react-timeago";
 import dayjs from "dayjs";
 
@@ -42,7 +43,7 @@ export function SettingsUserInfo(): JSX.Element | null {
       {/* Subscription type */}
       <Tooltip title="Manage subscription">
         <ExtLink href="https://www.wanikani.com/account/subscription" className="text-basec">
-          {capitalize(sub.type)}
+          {uppercaseFirst(sub.type)}
 
           {/* Recurring subscription period date */}
           {sub.type === "recurring" && sub.period_ends_at && <span className="text-desc">

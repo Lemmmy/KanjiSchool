@@ -13,7 +13,6 @@ import {
 } from "./types";
 
 import { KanjiJishoData } from "@data";
-import { partialRight } from "lodash-es";
 import { groupBy, lut, normalizeVocabType, ulut } from "@utils";
 import { asc, desc, map, reverse } from "@utils/comparator";
 
@@ -102,7 +101,7 @@ export function lookupItems(
   let out: LookupResults[];
 
   // Group them the groups are numbered by something that can be sorted after
-  const pGroupFn = partialRight(GROUP_BY_FNS[groupByPrimary], frequencyGroupSize);
+  const pGroupFn = (item: SubjectWithAssignment) => GROUP_BY_FNS[groupByPrimary](item, frequencyGroupSize);
   const pGroupTitleFn = GROUP_BY_TO_NODE_FNS[groupByPrimary];
   const pGroups: ResultSet[] = groupItems(pGroupFn, pGroupTitleFn,
     frequencyGroupSize, filteredSubjects);
@@ -112,12 +111,12 @@ export function lookupItems(
 
   // Now apply the secondary grouping if necessary
   if (groupBySecondary !== "none") {
-    const sGroupFn = partialRight(GROUP_BY_FNS[groupBySecondary], frequencyGroupSize);
+    const sGroupFn = (item: SubjectWithAssignment) => GROUP_BY_FNS[groupBySecondary](item, frequencyGroupSize);
     const sGroupTitleFn = GROUP_BY_TO_NODE_FNS[groupBySecondary];
 
     out = [];
 
-    // For each primary grouping, turn it into a sub-grouping thingy and group
+    // For each primary grouping, turn it into a subgrouping thingy and group
     // its items again
     for (const pGroup of pGroups) {
       // Group the items by secondary grouping

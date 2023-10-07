@@ -28,7 +28,6 @@ import { SubjectGridSpace } from "./SubjectGridSpace.tsx";
 
 import { SiteLayoutContext } from "@layout/AppLayout";
 
-import { sortBy } from "lodash-es";
 import { SubjectGridTooltip } from "@comp/subjects/lists/grid/SubjectGridTooltip.tsx";
 
 const COMPONENT_TYPES: Record<SubjectType, GridItemComponentType> = {
@@ -105,14 +104,18 @@ export function SubjectGrid({
     if (!subjects || !assignments || !subjectAssignmentIds) return [];
 
     // Map the subject IDs to [Subject, Assignment][]
-    let items: [StoredSubject, StoredAssignment | undefined][] = subjectIds.map(id => [
+    const items: [StoredSubject, StoredAssignment | undefined][] = subjectIds.map(id => [
       subjects[id],
       assignments[subjectAssignmentIds[id] || -1]
     ]);
 
     // Sort by sortByStr if it is available
     if (sortByStr) {
-      items = sortBy(items, ([s]) => sortByStr.indexOf(s.data.characters || ""));
+      items.sort(([s1], [s2]) => {
+        const i1 = sortByStr.indexOf(s1.data.characters || "");
+        const i2 = sortByStr.indexOf(s2.data.characters || "");
+        return i1 - i2;
+      });
     }
 
     return items;

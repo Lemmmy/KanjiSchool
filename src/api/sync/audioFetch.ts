@@ -6,6 +6,7 @@ import { store } from "@store";
 import { incrSyncingAudioProgress, incrSyncingAudioQueue } from "@store/slices/syncSlice.ts";
 
 import {
+  ApiSubjectPronunciationAudio,
   AudioContentType, getStoredAudioMap, StoredAudio, StoredSubject
 } from "@api";
 import { db } from "@db";
@@ -15,7 +16,6 @@ import { asc, map as cmpMap } from "@utils/comparator";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 
-import { groupBy, mapValues } from "lodash-es";
 import PQueue from "p-queue";
 
 import Debug from "debug";
@@ -149,8 +149,15 @@ function makeAudioFetchTasks(subject: StoredSubject): AudioFetchTask[] {
   if (audios.length <= 0) return [];
 
   // Group by actor, then by pronunciation
-  const grouped = mapValues(groupBy(audios, "metadata.voice_actor_id"),
-    v => groupBy(v, "metadata.pronunciation"));
+  const grouped = audios.reduce((acc, a) => {
+    const voiceActorId = a.metadata.voice_actor_id;
+    const pronunciation = a.metadata.pronunciation;
+    acc[voiceActorId] ??= {};
+    acc[voiceActorId][pronunciation] ??= [];
+    acc[voiceActorId][pronunciation].push(a);
+    return acc;
+  }, {} as Record<string, Record<string, ApiSubjectPronunciationAudio[]>>);
+
   const audioDefs: AudioFetchTask[] = [];
 
   // Pick an audio for each voice actor
