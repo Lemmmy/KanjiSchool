@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { Form, Select, Tag } from "antd";
-import { CustomTagProps } from "rc-select/lib/BaseSelect";
+import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 import { usePalette, stringifySrsStage } from "@utils";
 import { getReadableTextColor, SRS_STAGE_TO_PALETTE } from "@global/theme";

@@ -4,7 +4,7 @@
 
 import { useCallback, useMemo } from "react";
 import { Form, Select, Tag } from "antd";
-import { CustomTagProps } from "rc-select/lib/BaseSelect";
+import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 import { useAppSelector } from "@store";
 import { shallowEqual } from "react-redux";

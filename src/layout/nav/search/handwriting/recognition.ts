@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import axios from "axios";
-
 type RecognitionResult = ["SUCCESS", [string, string[], string[], { is_html_escaped: boolean }][]];
 
 const API = "https://www.google.com/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8";
@@ -29,7 +27,15 @@ export async function recognize(
   };
 
   try {
-    const { data } = await axios.post<RecognitionResult>(API, req);
+    const data = await fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(req)
+    })
+      .then(res => res.json()) as RecognitionResult;
     return data[1][0][1];
   } catch (e) {
     console.error(e);

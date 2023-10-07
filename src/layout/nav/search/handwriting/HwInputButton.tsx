@@ -4,7 +4,7 @@
 
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { EditFilled, EditOutlined } from "@ant-design/icons";
-import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
+import type { AntdIconProps } from "@ant-design/icons/es/components/AntdIcon";
 import classNames from "classnames";
 
 import Debug from "debug";

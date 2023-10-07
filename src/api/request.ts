@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import axios, { Method, AxiosRequestConfig } from "axios";
-
 import { store } from "@store";
 
 import { globalNotification } from "@global/AntInterface.tsx";
@@ -22,7 +20,7 @@ export type ApiResponseErrorable<T> = T & {
   code?: number;
 }
 
-interface RequestConfig extends AxiosRequestConfig {
+interface RequestConfig extends RequestInit {
   apiKey?: string;
   timeout?: number;
 }
@@ -46,7 +44,7 @@ export function getRequestUrl(
 }
 
 export async function request<T>(
-  method: Method,
+  method: "GET" | "POST" | "PUT",
   endpoint: string,
   options?: RequestConfig
 ): Promise<T> {
@@ -54,19 +52,24 @@ export async function request<T>(
   const url = getRequestUrl(endpoint);
 
   try {
-    const { data } = await axios.request<ApiResponseErrorable<T>>({
-      url,
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), options?.timeout ?? 30000);
+
+    const data = await fetch(url, {
       method,
       ...options,
+      ...(options?.body ? { body: JSON.stringify(options.body) } : {}),
       headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
         ...options?.headers,
-        "Authorization": apiKey ? ("Bearer " + apiKey) : undefined,
+        ...(apiKey ? { "Authorization": "Bearer " + apiKey } : {}),
         "Wanikani-Revision": "20170710"
       },
-      responseType: "json",
-      withCredentials: false, // No cookies
-      timeout: options?.timeout ?? 5000
-    });
+      credentials: "omit", // Don't send cookies
+    })
+      .then(res => res.json()) as ApiResponseErrorable<T>;
+    clearTimeout(timeout);
 
     if (data.error) {
       throw new ApiError(data.error || "unknown_error", data.code);
@@ -94,12 +97,12 @@ export const get = <T>(endpoint: string, options?: RequestConfig): Promise<T> =>
 
 export const post = <T>(endpoint: string, body?: any, options?: RequestConfig): Promise<T> =>
   request("POST", endpoint, {
-    data: body,
+    body,
     ...options
   });
 
 export const put = <T>(endpoint: string, body?: any, options?: RequestConfig): Promise<T> =>
   request("PUT", endpoint, {
-    data: body,
+    body,
     ...options
   });
