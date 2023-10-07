@@ -10,7 +10,6 @@ import { StoredAssignment, StoredSubject } from "@api";
 import { ShortDuration } from "@comp/ShortDuration";
 
 import dayjs from "dayjs";
-import { isPast, parseISO } from "date-fns";
 
 interface Props {
   subject: StoredSubject;
@@ -43,7 +42,7 @@ function DateCol({ name, date, short = false }: ColProps): JSX.Element | null {
   if (!date) return null;
 
   // Highlight the date in green for next review if it's available now
-  const past = isPast(parseISO(date));
+  const past = dayjs(date).isBefore(dayjs());
   const availableNow = name === "Next review" && date && past;
 
   return <Col span={8} className="text-center">

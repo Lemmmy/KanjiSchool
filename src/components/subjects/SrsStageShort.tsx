@@ -8,7 +8,7 @@ import { StoredAssignment } from "@api";
 
 import { ShortDuration } from "@comp/ShortDuration";
 import { stringifySrsStageShort } from "@utils";
-import { isPast, parseISO } from "date-fns";
+import dayjs from "dayjs";
 
 interface Props {
   assignment: StoredAssignment;
@@ -22,7 +22,7 @@ export function SrsStageShort({
   fontClassName = "text-sm"
 }: Props): JSX.Element {
   const { srs_stage, available_at } = assignment.data;
-  const availableNow = available_at ? isPast(parseISO(available_at)) : false;
+  const availableNow = available_at ? dayjs(available_at).isBefore(dayjs()) : false;
 
   const classes = classNames(
     "line-clamp-2 text-ellipsis leading-[1.35]",

@@ -5,9 +5,8 @@
 import { StoredAssignment } from "@api";
 
 import { stringifySrsStage } from "@utils";
-import { isPast, parseISO } from "date-fns";
+import { SubjectTooltipLabel } from "./SubjectTooltipLabel.tsx";
 import dayjs from "dayjs";
-import { SubjectTooltipLabel } from "@comp/subjects/lists/tooltip/SubjectTooltipLabel.tsx";
 
 interface Props {
   assignment?: StoredAssignment;
@@ -19,7 +18,7 @@ export function SubjectTooltipAssignmentData({
 }: Props): JSX.Element {
   const srsStage = assignment?.data.srs_stage ?? 10;
   const nextReview = assignment?.data.available_at;
-  const availableNow = nextReview ? isPast(parseISO(nextReview)) : false;
+  const availableNow = nextReview ? dayjs(nextReview).isBefore(dayjs()) : false;
 
   return <>
     {/* SRS stage */}

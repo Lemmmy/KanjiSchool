@@ -17,7 +17,7 @@ export interface ApiSrsStage {
   interval: number | null;
   /** Unit of time. Can be the following: milliseconds, seconds, minutes, hours,
    * days, and weeks. */
-  interval_unit: string | null;
+  interval_unit: "milliseconds" | "seconds" | "minutes" | "hours" | "days" | "weeks" | null;
   /** The position of the stage within the continuous order. */
   position: number;
 }

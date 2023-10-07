@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { getSrsSystemStageDurationSeconds } from "@utils";
-import { parseISO, differenceInSeconds } from "date-fns";
+import dayjs from "dayjs";
 
 export function getSrsProgress(
   systemId: number,
@@ -17,11 +17,10 @@ export function getSrsProgress(
   // last review time.
   if (availableNow || !nextReview) return 1.0;
 
-  const nowDate = new Date();
-  const nextReviewDate = parseISO(nextReview);
+  const nextReviewDate = dayjs(nextReview);
 
   const durationSeconds = getSrsSystemStageDurationSeconds(systemId, stage);
-  const progressSeconds = differenceInSeconds(nextReviewDate, nowDate);
+  const progressSeconds = nextReviewDate.diff(dayjs(), "second");
 
   return 1 - (progressSeconds / durationSeconds);
 }

@@ -8,10 +8,10 @@ import { Selection } from "d3-selection";
 import { timeDays, timeWeek, timeYear } from "d3-time";
 import { range, index } from "d3-array";
 
-import { isToday } from "date-fns";
+import { ThemeName } from "@global/theme";
 
 import Debug from "debug";
-import { ThemeName } from "@global/theme";
+import dayjs from "dayjs";
 const debug = Debug("kanjischool:heatmap-render");
 
 const CELL_SIZE = 10;
@@ -126,7 +126,7 @@ export function renderHeatmap(
       const scale = day.isFuture ? year.colorScaleFuture : year.colorScale;
       return scale(day.total);
     })
-    .classed("stroke-green stroke-2 light:stroke-green-7", ({ d }) => isToday(d))
+    .classed("stroke-green stroke-2 light:stroke-green-7", ({ d }) => dayjs(d).isToday())
     .on("mouseover", onDayMouseOver)
     .on("mouseout", onDayMouseOut);
 

@@ -8,7 +8,6 @@ import { getIntegerSetting } from "@utils";
 import { srsSystems } from "@data";
 
 import dayjs, { UnitType } from "dayjs";
-import { formatDuration, intervalToDuration, add as dateAdd } from "date-fns";
 
 import memoize from "memoizee";
 
@@ -101,29 +100,23 @@ export function getSrsSystemStage(srsId: number, stage: number): ApiSrsStage {
 function _getSrsSystemStageDurationSeconds(srsId: number, stage: number): number {
   const system = getSrsSystemStage(srsId, stage);
   const { interval, interval_unit: intervalUnit } = system;
-  if (!intervalUnit) return 0;
+  if (!intervalUnit || interval === null) return 0;
 
-  const duration = { [intervalUnit]: interval };
-  return dateAdd(0, duration).getTime() / 1000;
+  // Convert the interval to seconds
+  switch (intervalUnit) {
+  case "milliseconds": return interval / 1000;
+  case "seconds":      return interval;
+  case "minutes":      return interval * 60;
+  case "hours":        return interval * 60 * 60;
+  case "days":         return interval * 60 * 60 * 24;
+  case "weeks":        return interval * 60 * 60 * 24 * 7;
+  }
 }
 export const getSrsSystemStageDurationSeconds = memoize(_getSrsSystemStageDurationSeconds);
 
 function _stringifySrsStageDuration(srsId: number, stage: number): string {
   const durationSecs = getSrsSystemStageDurationSeconds(srsId, stage);
-
-  // date-fns' formatDuration function does not flatten the duration currently
-  // (at least until https://github.com/date-fns/date-fns/pull/2527/ is merged),
-  // so instead calculate a duration from epoch -> duration before formatting.
-  const start = new Date(0);
-  const duration = intervalToDuration({
-    start,
-    end: dateAdd(start, { "seconds": durationSecs })
-  });
-
-  return formatDuration(duration, {
-    format: ["months", "days", "hours"],
-    zero: false
-  });
+  return dayjs.duration(durationSecs, "seconds").humanize();
 }
 export const stringifySrsStageDuration = memoize(_stringifySrsStageDuration);
 

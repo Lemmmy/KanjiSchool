@@ -7,7 +7,7 @@ import { StoredSubject, StoredAssignment } from "@api";
 import { db } from "@db";
 import { updateAssignment } from "@store/slices/assignmentsSlice.ts";
 
-import { startOfHour, add as dateAdd } from "date-fns";
+import dayjs from "dayjs";
 import { getSrsSystemStageDurationSeconds } from "@utils";
 
 import Debug from "debug";
@@ -64,8 +64,8 @@ function calculateNextSrsStage(
   if (duration <= 0) return null; //  0 usually means "burned".
 
   // Add the SRS interval to the createdAt time
-  const afterDuration = dateAdd(createdAt, { "seconds": duration });
+  const afterDuration = dayjs(createdAt).add(duration, "second");
 
   // Get the start of the hour
-  return startOfHour(afterDuration);
+  return afterDuration.startOf("hour").toDate();
 }

@@ -10,7 +10,7 @@ import { SrsStageCurrentTooltip } from "./SrsStageCurrentTooltip.tsx";
 import { barColors, barHoverColors, BarStageName } from "./srsBarColors.ts";
 import { getSrsStageBaseName, stringifySrsStage, stringifySrsStageDuration } from "@utils";
 
-import { isPast, parseISO } from "date-fns";
+import dayjs from "dayjs";
 
 interface Props {
   stage: number;
@@ -27,7 +27,7 @@ export function SrsStageBarSegment({
   nextReview,
   systemId
 }: Props): JSX.Element {
-  const availableNow = nextReview ? isPast(parseISO(nextReview)) : false;
+  const availableNow = nextReview ? dayjs(nextReview).isBefore(dayjs()) : false;
   const progress = isCurrentStage
     ? getSrsProgress(systemId, stage, availableNow, nextReview)
     : (unlocked ? 1 : 0);

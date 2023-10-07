@@ -4,8 +4,6 @@
 
 import { HeatmapDay } from "./data";
 
-import { isToday } from "date-fns";
-
 import dayjs from "dayjs";
 import { nts } from "@utils";
 
@@ -16,7 +14,7 @@ interface Props {
 export function ReviewHeatmapTooltip({ day }: Props): JSX.Element {
   return <div className="flex flex-wrap gap-sm text-basec">
     <span className="whitespace-nowrap">
-      {isToday(day.date)
+      {dayjs(day.date).isToday()
         ? <b>Today</b>
         : dayjs(day.date).format("ll")}
     </span>
