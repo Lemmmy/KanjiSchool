@@ -7,7 +7,7 @@ import { menuItems } from "./SettingsItems.tsx";
 
 import { onlyText } from "react-children-utilities";
 
-import Fuse from "fuse.js";
+import type Fuse from "fuse.js";
 import { ReactNode } from "react";
 
 export interface IndexedSetting {
@@ -23,13 +23,15 @@ export interface SettingsIndex {
   indexedSettings: IndexedSettingsMap;
 }
 
-export function indexSettings(): SettingsIndex {
+export function indexSettings(fuseClass: typeof Fuse | undefined): SettingsIndex | null {
+  if (!fuseClass) return null;
+
   // Index the submenu items - convert all their children to text using react-children-utilities, then construct a
   // list of all the text with the item's path
   const items: Record<string, IndexedSetting> = {};
   menuItems.forEach(item => processItem("", item, items, [0]));
 
-  const fuse = new Fuse(Object.values(items), {
+  const fuse = new fuseClass(Object.values(items), {
     keys: ["path", "text"],
     findAllMatches: true,
     minMatchCharLength: 3,

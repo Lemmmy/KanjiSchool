@@ -57,7 +57,7 @@ function performAutocomplete(
 
 export function Search(): JSX.Element {
   const subjects = useSubjects();
-  const [keywordSearch] = useKeywordSearch();
+  const [keywordSearch, fuseLoading] = useKeywordSearch();
 
   const navigate = useNavigate();
   const bps = useBreakpoint();
@@ -284,6 +284,8 @@ export function Search(): JSX.Element {
           onSearch={onInputSearch}
           onFocus={onFocus}
           onBlur={onBlur}
+
+          loading={fuseLoading}
 
           role="searchbox"
           aria-label="Search"

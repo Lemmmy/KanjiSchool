@@ -2,13 +2,14 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Input, Menu, MenuProps } from "antd";
 import { useMemo, useState } from "react";
+import { Input, Menu, MenuProps } from "antd";
 
 import { menuItems } from "./SettingsItems.tsx";
 import { menuClass } from "./components/settingsStyles.ts";
 import { MenuItem } from "./components/SettingsSubGroup.tsx";
 import { getChildByPath, indexSettings, itemWithoutChildren } from "./settingsSearchIndex.ts";
+import { useFuseClass } from "@utils/fuse.ts";
 
 interface FilteredGroup {
   self: MenuItem;
@@ -17,16 +18,17 @@ interface FilteredGroup {
 }
 
 export function SettingsMenu(): JSX.Element {
-  const { fuse, indexedSettings } = useMemo(indexSettings, []);
+  const fuseClass = useFuseClass();
+  const indexer = useMemo(() => indexSettings(fuseClass), [fuseClass]);
 
   const [search, setSearch] = useState("");
 
   const items: MenuProps["items"] = useMemo(() => {
-    if (!search) return menuItems;
+    if (!search || !indexer) return menuItems;
 
     // Filter the menu items by search query
     const searchLower = search.toLowerCase().trim();
-    const results = fuse.search(searchLower);
+    const results = indexer.fuse.search(searchLower);
 
     // Result items, grouped by their original parent subgroup (ignore root groups for now)
     const resultItemTree: Record<string, FilteredGroup> = {};
@@ -44,7 +46,7 @@ export function SettingsMenu(): JSX.Element {
 
         resultItemTree[parentPath] = {
           self: itemWithoutChildren(parentItem),
-          index: indexedSettings[`.${parentPath}`].index,
+          index: indexer.indexedSettings[`.${parentPath}`].index,
           children: []
         };
       }
@@ -58,7 +60,7 @@ export function SettingsMenu(): JSX.Element {
       if (withoutChildren) {
         parent.children.push({
           ...withoutChildren,
-          index: indexedSettings[`.${keyPath}`].index
+          index: indexer.indexedSettings[`.${keyPath}`].index
         });
       }
     });
@@ -80,13 +82,15 @@ export function SettingsMenu(): JSX.Element {
     groupList.sort((a, b) => a.index - b.index);
 
     return groupList;
-  }, [fuse, indexedSettings, search]);
+  }, [indexer, search]);
 
   return <>
     <Input.Search
       placeholder="Search settings"
       className="w-full mb-sm"
       size="large"
+
+      loading={!fuseClass}
 
       value={search}
       onChange={e => setSearch(e.target.value)}

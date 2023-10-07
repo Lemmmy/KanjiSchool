@@ -6,10 +6,11 @@ import { createContext, useState, useEffect, useMemo, useContext, ReactNode } fr
 
 import { ApiSubjectKanji, StoredSubject, StoredSubjectMap, useSubjects } from "@api";
 
-import Fuse from "fuse.js";
+import type Fuse from "fuse.js";
 import { toKana } from "@comp/PseudoIme";
 
 import Debug from "debug";
+import { useFuseClass } from "@utils/fuse.ts";
 const debug = Debug("kanjischool:keyword-search");
 
 export interface IndexedSubject {
@@ -26,9 +27,11 @@ const emptyPerformSearch: PerformSearchFn = () => [];
 
 interface KeywordSearchCtxRes {
   fuse?: Fuse<IndexedSubject>;
+  fuseLoading: boolean;
   performSearch: PerformSearchFn;
 }
 export const KeywordSearchContext = createContext<KeywordSearchCtxRes>({
+  fuseLoading: true,
   performSearch: emptyPerformSearch
 });
 
@@ -40,11 +43,12 @@ const FUSE_OPTS: Fuse.IFuseOptions<IndexedSubject> = {
 
 export const KeywordSearchProvider = ({ children }: { children: ReactNode }): JSX.Element => {
   const [fuse, setFuse] = useState<Fuse<IndexedSubject>>();
+  const fuseClass = useFuseClass();
   const subjects = useSubjects();
 
   // Re-index and create the Fuse instance when the subjects change
   useEffect(() => {
-    if (!subjects) return;
+    if (!subjects || !fuseClass) return;
 
     // Index the subjects
     debug("initializing keyword search");
@@ -54,12 +58,13 @@ export const KeywordSearchProvider = ({ children }: { children: ReactNode }): JS
     debug("indexed %d items in %d ms", data.length, end.getTime() - start.getTime());
 
     // Build the Fuse instance
-    const fuse = new Fuse(data, FUSE_OPTS);
+    const fuse = new fuseClass(data, FUSE_OPTS);
     setFuse(fuse);
-  }, [subjects]);
+  }, [subjects, fuseClass]);
 
   const res: KeywordSearchCtxRes = useMemo(() => ({
     fuse,
+    fuseLoading: !fuseClass,
     performSearch: fuse
       ? performSearch.bind(performSearch, fuse)
       : emptyPerformSearch
@@ -128,8 +133,9 @@ function indexSubject(subject: StoredSubject): IndexedSubject {
   };
 }
 
-export type KeywordSearchHookRes = [PerformSearchFn, Fuse<IndexedSubject> | undefined];
+export type KeywordSearchHookRes = [PerformSearchFn, boolean, Fuse<IndexedSubject> | undefined];
 export function useKeywordSearch(): KeywordSearchHookRes {
-  const { fuse, performSearch } = useContext(KeywordSearchContext);
-  return useMemo(() => ([performSearch, fuse]), [performSearch, fuse]);
+  const { fuse, fuseLoading, performSearch } = useContext(KeywordSearchContext);
+  return useMemo(() => ([performSearch, fuseLoading, fuse]),
+    [performSearch, fuseLoading, fuse]);
 }
