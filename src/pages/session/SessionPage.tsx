@@ -10,6 +10,8 @@ import { PageLayout } from "@layout/PageLayout";
 import { useTopMenuOptions } from "@layout/nav/TopMenu";
 import { MenuHotkey } from "@comp/MenuHotkey";
 
+import { useNavigate } from "react-router-dom";
+
 import { useAppSelector } from "@store";
 import { useDispatch, shallowEqual } from "react-redux";
 
@@ -34,13 +36,20 @@ const KEY_MAP: KeyMap = {
 
 function SessionPage(): JSX.Element {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const subjects = useSubjects();
+  const ongoing = useAppSelector(s => s.session.ongoing);
   const doingLessons = useAppSelector(s => s.session.doingLessons);
   const sessionState = useAppSelector(s => s.session.sessionState, shallowEqual);
 
   const showProgress = useBooleanSetting("sessionProgressBar");
   const debugInfo = useBooleanSetting("sessionInfoDebug");
+
+  // Redirect back to the dashboard if there is no ongoing session (anymore)
+  useEffect(() => {
+    if (!ongoing) navigate("/");
+  }, [navigate, ongoing]);
 
   // Wrap-up and abandon session top menu buttons
   const [,set, unset] = useTopMenuOptions();
