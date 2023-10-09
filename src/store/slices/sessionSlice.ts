@@ -152,7 +152,7 @@ const sessionSlice = createSlice({
     },
 
     nextLesson(s) {
-      const lessonCount = s.sessionState?.questions.length || 0;
+      const lessonCount = s.sessionState?.items.length || 0;
       const newCounter = s.lessonCounter + 1;
       const finished = newCounter >= lessonCount;
 

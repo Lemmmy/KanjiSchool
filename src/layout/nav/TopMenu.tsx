@@ -85,7 +85,7 @@ export function TopMenu(): JSX.Element {
       // Force sync all
       {
         key: "menu-sync",
-        icon: <ReloadOutlined />, // TODO: does this render the same as having it in the label?
+        icon: <ReloadOutlined />,
         label: "Re-sync all data",
         disabled: !isOnline,
         onClick: () => syncAll(true)

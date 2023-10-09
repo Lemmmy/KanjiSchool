@@ -105,8 +105,5 @@ export function AdvancedSearchPageBase({ selfStudy, title }: Props): JSX.Element
         <SimpleSkeleton />
       </div>
     )}
-
-    {/* Bottom margin (TODO: something is very weird here) */}
-    <div className="h-px" />
   </PageLayout>;
 }
