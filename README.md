@@ -29,6 +29,7 @@ For more information, check out [WaniKani](https://www.wanikani.com) and their
 * Resumable sessions, resilient networking
 * Dark theme by default, three color palettes for subject types and SRS stages
 * Vocabulary audio
+* Vocabulary pitch accent diagrams
 * Study materials (custom meaning/reading notes, meaning synonyms)
 * Streak tracking
 * Settings import/export
@@ -50,7 +51,6 @@ For more information, check out [WaniKani](https://www.wanikani.com) and their
 
 * Better user onboarding
 * Kanji stroke order diagrams
-* Vocabulary pitch accent diagrams
 * Better leech tracking
 * Level-up time chart, show estimated 'level-up in' and 'typical level-up' times
 
