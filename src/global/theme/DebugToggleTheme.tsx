@@ -40,7 +40,7 @@ function DebugToggleThemeInner(): JSX.Element {
     }
   }
 
-  return <div className="flex flex-col">
+  return <div className="flex flex-col h-header justify-center">
     <div className="flex items-center">
       <Button size="small" onClick={onThemeClick} icon={<BulbOutlined />}
         className="mr-xs" />

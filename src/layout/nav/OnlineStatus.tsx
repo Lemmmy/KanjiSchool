@@ -30,7 +30,7 @@ export function OnlineStatus(): JSX.Element | null {
     <div
       className={classNames(
         headerElementClass,
-        "flex flex-col items-start min-w-[160px] text-red leading-tight align-middle cursor-default"
+        "flex flex-col items-start text-red leading-tight align-middle cursor-default min-w-0",
       )}
     >
       {/* Top row - icon and 'offline' text */}

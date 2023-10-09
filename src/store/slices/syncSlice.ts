@@ -44,6 +44,8 @@ export interface SyncSliceState {
   readonly queueProgress?: SyncProgress;
   readonly queueConnectionError: boolean;
   readonly queueNonce: number;
+
+  readonly apiRateLimitResetTime?: number;
 }
 
 export const initialState = (): SyncSliceState => ({
@@ -74,7 +76,9 @@ export const initialState = (): SyncSliceState => ({
 
   processingQueue: false,
   queueConnectionError: false,
-  queueNonce: 0
+  queueNonce: 0,
+
+  apiRateLimitResetTime: undefined
 });
 
 const syncSlice = createSlice({
@@ -211,6 +215,13 @@ const syncSlice = createSlice({
     },
     incrQueueNonce(s) {
       s.queueNonce++;
+    },
+
+    // ---------------------------------------------------------------------------
+    // API rate limit
+    // ---------------------------------------------------------------------------
+    setApiRateLimitResetTime(s, { payload }: PayloadAction<number | undefined>) {
+      s.apiRateLimitResetTime = payload;
     }
   }
 });
@@ -248,7 +259,9 @@ export const {
   setProcessingQueue,
   setQueueProgress,
   setQueueConnectionError,
-  incrQueueNonce
+  incrQueueNonce,
+
+  setApiRateLimitResetTime
 } = syncSlice.actions;
 
 export default syncSlice.reducer;

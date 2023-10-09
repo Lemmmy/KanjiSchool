@@ -2,6 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import { RateLimitHit } from "./RateLimitHit.tsx";
 import { GenericSyncingProgress } from "./GenericSyncingProgress";
 import { SyncImagesProgress } from "./SyncImagesProgress";
 import { SyncAudioProgress } from "./SyncAudioProgress";
@@ -9,6 +10,8 @@ import { AssignmentQueueProgress } from "./AssignmentQueueProgress";
 
 export function SyncProgressBars(): JSX.Element {
   return <div className="flex max-w-[calc(100vw-720px)] overflow-hidden mr-sm relative">
+    <RateLimitHit />
+
     <GenericSyncingProgress name="subjects"
       syncingKey="syncingSubjects" syncProgressKey="subjectsProgress" />
     <GenericSyncingProgress name="assignments"
