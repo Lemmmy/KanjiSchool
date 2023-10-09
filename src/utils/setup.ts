@@ -13,12 +13,14 @@ import isToday from "dayjs/plugin/isToday";
 import isBetween from "dayjs/plugin/isBetween";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
 dayjs.extend(localizedFormat);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isToday);
 dayjs.extend(isBetween);
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
+dayjs.extend(utc);
 
 Debug.enable("kanjischool:*");
 localStorage.setItem("debug", "kanjischool:*");

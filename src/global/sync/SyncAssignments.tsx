@@ -9,6 +9,7 @@ import { useInterval, useOnlineStatus } from "@utils/hooks";
 import * as api from "@api";
 
 import { globalNotification } from "@global/AntInterface.tsx";
+import dayjs from "dayjs";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:assignment-sync-service");
@@ -22,9 +23,8 @@ export function SyncAssignments(): JSX.Element | null {
   const isOnline = useOnlineStatus();
   const user = api.useUser();
 
-  // TODO: This won't work over daylight savings lol
   const [lastHourChecked, setLastHourChecked] =
-    useState<number>(new Date().getHours());
+    useState<number>(dayjs.utc().hour());
 
   const sync = useCallback(() => {
     // Don't refresh if there's no state loaded yet
