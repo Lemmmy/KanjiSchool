@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React, { ComponentType, useCallback, useContext, useMemo, useRef } from "react";
+import React, { ComponentType, useCallback, useMemo, useRef } from "react";
 import classNames from "classnames";
 
 import {
@@ -25,8 +25,6 @@ import { GridItemVocab } from "./GridItemVocab";
 import { SubjectGridVirtualDynamic } from "./SubjectGridVirtualDynamic.tsx";
 import { SubjectGridVirtual } from "./SubjectGridVirtual.tsx";
 import { SubjectGridSpace } from "./SubjectGridSpace.tsx";
-
-import { SiteLayoutContext } from "@layout/AppLayout";
 
 import { SubjectGridTooltip } from "@comp/subjects/lists/grid/SubjectGridTooltip.tsx";
 
@@ -78,7 +76,7 @@ export function SubjectGrid({
   forceVirtual,
   hasVocabulary,
   renderTooltip,
-  containerRef,
+  containerRef = null,
   simpleWindowing,
   overscanCount,
   className,
@@ -93,9 +91,6 @@ export function SubjectGrid({
   const mainRef = useRef<HTMLDivElement>(null);
   const { showTooltip, tooltipRef, tooltipInnerRef, tooltipContents, updateTooltip } =
     useSubjectGridTooltip(subjects, assignments, subjectAssignmentIds, renderTooltipFn);
-
-  const siteLayoutRef = useContext(SiteLayoutContext);
-  if (!containerRef) containerRef = siteLayoutRef;
 
   // Sort the subjects by the order they appear in sortByStr, and try to obtain
   // their assignments.
@@ -142,9 +137,7 @@ export function SubjectGrid({
     });
   }, [items, itemComponent, rest, size, hideSrs, isVirtual, renderTooltipFn]);
 
-  if (!subjects) return null;
-
-  const classes = classNames(
+  const classes = useMemo(() => classNames(
     "items-start",
     className,
     {
@@ -152,7 +145,9 @@ export function SubjectGrid({
       "justify-center": !alignLeft,
       "leading-none": size === "tiny"
     }
-  );
+  ), [className, alignLeft, size]);
+
+  if (!subjects) return null;
 
   const gridEl = isVirtual
     ? (

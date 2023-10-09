@@ -9,7 +9,7 @@ interface SubjectGridStyle {
   width: number;
   rowHeight: number;
   rowHeightWithSrs: number;
-  paddingClass: string;
+  paddingClass?: string;
 }
 
 export const tinyVocabPadding = 16;
@@ -20,8 +20,7 @@ export const sizeStyles: Record<Size, SubjectGridStyle> = {
     spacing         : 2,
     width           : 36,
     rowHeight       : 27,
-    rowHeightWithSrs: 27,
-    paddingClass    : "pt-0"
+    rowHeightWithSrs: 27
   },
 
   small: {

@@ -76,7 +76,9 @@ export const SubjectGridVirtual = forwardRef<HTMLDivElement, SubjectGridVirtualP
   return <div ref={ref}> {/* Resize observer */}
     <EpicVirtualList
       className={classes}
-      rowClassName={classNames(style.paddingClass, rowClassName)}
+      rowClassName={style.paddingClass && rowClassName
+        ? classNames(style.paddingClass, rowClassName)
+        : style.paddingClass ?? rowClassName}
       itemCount={rowCount}
       itemHeight={rowHeight}
       overscanCount={overscanCount}

@@ -3,11 +3,14 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect, useReducer, useRef, useMemo, useCallback, forwardRef, RefObject } from "react";
-import classNames from "classnames";
 
 import { throttle } from "lodash-es";
 import useResizeObserver from "use-resize-observer";
 import { UpdateTooltipFn, useGridTooltipEvents } from "@comp/subjects/lists/grid/gridTooltipHook.ts";
+
+import Debug from "debug";
+const debug = Debug("kanjischool:epic-virtual-list");
+const DEBUG = localStorage.getItem("virtualListDebug") === "true";
 
 export interface EpicVirtualListItemProps {
   index: number;
@@ -64,14 +67,17 @@ function scrollReducer(state: ScrollState, action: ScrollAction): ScrollState {
     const overscanHeight = itemHeight * overscanCount;
 
     // Check the new startIndex and endIndex
-    const startIndex = Math.min(
-      Math.max(Math.floor((top - overscanHeight) / itemHeight), 0),
-      itemCount
-    );
-    const endIndex = Math.min(
-      Math.max(Math.floor((top + height + overscanHeight) / itemHeight), 0),
-      itemCount
-    );
+    const startIndex = Math.floor((top - overscanHeight) / itemHeight);
+    const endIndex = Math.floor((top + height + overscanHeight) / itemHeight);
+
+    if (DEBUG) {
+      debug(
+        "scrollTo top=%o, startIndex=%o, endIndex=%o" +
+        "\theight=%o, itemHeight=%o, itemCount=%o," +
+        "\toverscanCount=%o, overscanHeight=%o,",
+        top, startIndex, endIndex, height, itemHeight, itemCount, overscanCount, overscanHeight
+      );
+    }
 
     // If the new positions are different, update the state and trigger an
     // update. Otherwise, do nothing and return the old state.
@@ -96,9 +102,9 @@ function scrollReducer(state: ScrollState, action: ScrollAction): ScrollState {
 export const EpicVirtualList = forwardRef<HTMLDivElement, EpicVirtualListProps>(function EpicVirtualList({
   itemCount,
   itemHeight,
-  scrollElement,
+  scrollElement: originalScrollElement,
   simpleWindowing,
-  throttleMs = 32,
+  throttleMs = 16,
   overscanCount = 0,
   children: renderItem,
   className,
@@ -113,7 +119,8 @@ export const EpicVirtualList = forwardRef<HTMLDivElement, EpicVirtualListProps>(
     [itemCount, itemHeight, renderItem, rowClassName]);
 
   // Ref for the inner container used to measure where the list is on-screen
-  const innerEl = useRef<HTMLDivElement>(null);
+  const ownRef = useRef<HTMLDivElement>(null);
+  const divRef = ref ?? ownRef;
 
   // Mouse event hooks to update the tooltip
   useGridTooltipEvents(updateTooltip, mainRef, tooltipInnerRef);
@@ -129,9 +136,15 @@ export const EpicVirtualList = forwardRef<HTMLDivElement, EpicVirtualListProps>(
   }, [itemCount, itemHeight, overscanCount]);
 
   // Observe the height of the scrollElement for our inner window height
-  useResizeObserver<HTMLDivElement>({
+  const scrollElement = originalScrollElement ?? document.documentElement;
+  const scrollEventListener = originalScrollElement ?? window;
+  useResizeObserver<HTMLElement>({
     ref: scrollElement,
-    onResize: ({ height }) => dispatchScroll({ type: "resize", height })
+    onResize: ({ height }) => {
+      const newHeight = originalScrollElement ? height : window.innerHeight;
+      if (DEBUG) debug("onResize", originalScrollElement, height, window.innerHeight, newHeight);
+      dispatchScroll({ type: "resize", height: newHeight });
+    }
   });
 
   // Update the scrolling position - triggers a state change if the scrolling
@@ -139,35 +152,46 @@ export const EpicVirtualList = forwardRef<HTMLDivElement, EpicVirtualListProps>(
   // re-runs if the scroll height changes.
   const updateScroll = useCallback(() => {
     // Virtual list element
-    if (!scrollElement) return;
+    if (!scrollElement) {
+      if (DEBUG) debug("no scroll element");
+      return;
+    }
 
     // Get the bounding rect. This is only usable because of the specific
     // situation here
     if (simpleWindowing) {
+      if (DEBUG) debug("simpleWindowing scrollTo", scrollElement.scrollTop);
       dispatchScroll({ type: "scrollTo", top: scrollElement.scrollTop });
     } else {
-      const vel = innerEl.current;
-      if (!vel) return;
+      const vel = (divRef as RefObject<HTMLDivElement>)?.current;
+      if (!vel) {
+        if (DEBUG) debug("no ref");
+        return;
+      }
 
       const rect = vel.getBoundingClientRect();
       const scrollTop = scrollElement.offsetTop - rect.top;
+      if (DEBUG) debug("scrollTo", scrollTop);
       dispatchScroll({ type: "scrollTo", top: scrollTop });
     }
-  }, [scrollElement, simpleWindowing]);
+  }, [scrollElement, simpleWindowing, divRef]);
 
   // Run updateScroll on mount/if the scroll height changes
   useEffect(() => {
+    if (DEBUG) debug("updateScroll on mount");
     updateScroll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollState.height]);
 
   // Wrap the renderItem component to apply the scroll styles and cache it
   const renderWrappedItem = useCallback((i: number) => {
+    if (DEBUG) debug("renderWrappedItem", i);
+
     if (itemCache.has(i)) return itemCache.get(i);
 
     const component = <div
       key={i}
-      className={classNames("epic-virtual-list-row", rowClassName)}
+      className={rowClassName}
       style={{
         position: "absolute",
         top: `${i * itemHeight}px`,
@@ -184,39 +208,40 @@ export const EpicVirtualList = forwardRef<HTMLDivElement, EpicVirtualListProps>(
 
   // Bind the scroll listener to the scrollElement to update the scrollState
   useEffect(() => {
-    if (!scrollElement) {
+    if (!scrollEventListener) {
+      if (DEBUG) debug("no scroll element, invalidating");
       dispatchScroll({ type: "invalidate" });
       return;
     }
 
+    if (DEBUG) debug("mounting scroll listener to el %o", scrollEventListener);
     const onScroll = throttle(updateScroll, throttleMs);
-    scrollElement.addEventListener("scroll", onScroll);
+    scrollEventListener.addEventListener("scroll", onScroll);
+
     return () => { // Unbind on unmount
+      if (DEBUG) debug("unmounting scroll listener");
       onScroll.cancel();
-      scrollElement.removeEventListener("scroll", onScroll);
+      scrollEventListener.removeEventListener("scroll", onScroll);
     };
-  }, [scrollElement, throttleMs, updateScroll]);
+  }, [scrollEventListener, throttleMs, updateScroll]);
 
-  // Number range for the items from startIndex to endIndex
-  const items = Array(scrollState.endIndex - scrollState.startIndex)
-    .fill(0)
-    .map((_, i) => i + scrollState.startIndex);
-
-  const classes = classNames(className, "epic-virtual-list");
+  // Number range for the items from startIndex to endIndex. If the range is outside 0 <= i < itemCount, return null
+  const start = Math.max(0, scrollState.startIndex);
+  const end = Math.min(scrollState.endIndex, itemCount);
+  const items = useMemo(() => {
+    if (start < 0 && end < 0) return null;
+    if (start >= itemCount && end >= itemCount) return null;
+    return Array.from({ length: end - start }, (_, i) => i + start);
+  }, [start, end, itemCount]);
 
   return <div
-    className="epic-virtual-list-bounding-rect"
-    ref={innerEl}
+    className={className}
+    style={{
+      position: "relative",
+      height: `${itemCount * itemHeight}px`
+    }}
+    ref={divRef}
   >
-    <div
-      className={classes}
-      style={{
-        position: "relative",
-        height: `${itemCount * itemHeight}px`
-      }}
-      ref={ref}
-    >
-      {items.map(renderWrappedItem)}
-    </div>
+    {items && items.map(renderWrappedItem)}
   </div>;
 });

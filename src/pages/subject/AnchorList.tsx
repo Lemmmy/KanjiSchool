@@ -2,12 +2,11 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useCallback, useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { Affix, Anchor, AnchorProps } from "antd";
 
 import { StoredSubject, StoredAssignment, ApiSubjectKanjiInner } from "@api";
 
-import { SiteLayoutContext } from "@layout/AppLayout";
 import { HintStageObject } from "./hintStages";
 import { normalizeVocabType } from "@utils";
 import classNames from "classnames";
@@ -29,10 +28,6 @@ export function AnchorList({
   showDebug
 }: Props): JSX.Element {
   const type = normalizeVocabType(subject.object);
-
-  const siteLayoutRef = useContext(SiteLayoutContext);
-  const getContainer = useCallback(() => siteLayoutRef ?? window,
-    [siteLayoutRef]);
 
   const anchorItems: AnchorProps["items"] = useMemo(() => {
     const items: AnchorProps["items"] = [];
@@ -83,14 +78,12 @@ export function AnchorList({
     <Affix
       // `.toc-affix` class is overridden by session page animations in `SessionQuestionContents.tsx`
       className="toc-affix opacity-100 transition-opacity absolute top-lg w-toc right-toc-right hidden md:block"
-      target={() => siteLayoutRef}
       offsetTop={24}
     >
       <Anchor
         className="text-sm"
         showInkInFixed={true}
         affix={false}
-        getContainer={getContainer}
         offsetTop={48}
         items={anchorItems}
       />
