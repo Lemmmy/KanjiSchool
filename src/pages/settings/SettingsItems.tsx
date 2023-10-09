@@ -124,6 +124,8 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
       booleanSetting("sessionProgressBar", "Show the session progress bar"),
       booleanSetting("sessionProgressStarted", "Show in-progress questions in the session progress bar"),
       booleanSetting("sessionProgressSkipped", "Show skipped questions in the session progress bar"),
+      integerSetting("sessionEnterDebounce", "Debounce time for a double Enter keypress in milliseconds",
+        "Set to 0 to disable debouncing."),
     ]),
 
     // Lesson settings

@@ -18,7 +18,7 @@ import { checkAnswer, cleanAnswer } from "./checkAnswer";
 import { showSessionWrapUpModal } from "./modals/SessionWrapUpModal";
 import { showSessionAbandonModal } from "./modals/SessionAbandonModal";
 
-import { NearMatchAction, useBooleanSetting } from "@utils";
+import { NearMatchAction, useBooleanSetting, useIntegerSetting } from "@utils";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:session-question-input");
@@ -136,7 +136,6 @@ type HookRes = [
 
 const FORCE_FOCUS_NODES = ["input", "button", "textarea"];
 
-const INPUT_DEBOUNCE = 250; // TODO: Tweak this or make it configurable
 let lastInput = -1;
 
 export function useSessionQuestionInput(
@@ -155,6 +154,8 @@ export function useSessionQuestionInput(
   const [inputShake, setInputShake] = useState(false);
   const onAnimationEnd = useCallback(() => setInputShake(false), []);
 
+  const enterDebounce = useIntegerSetting("sessionEnterDebounce");
+
   const onSubmit = useCallback(() => {
     const answer = cleanAnswer(questionType, inputValue);
     debug("value: %s  cleaned: %s", inputValue, answer);
@@ -167,7 +168,7 @@ export function useSessionQuestionInput(
     debug("verdict - ok: %o  retry: %o", verdict.ok, verdict.retry);
 
     const inputTime = new Date().getTime();
-    if (!verdict.ok && inputTime < lastInput + INPUT_DEBOUNCE) {
+    if (!verdict.ok && inputTime < lastInput + enterDebounce && enterDebounce > 0) {
       debug("input debounce - ignoring non-ok verdict submission");
       return;
     }

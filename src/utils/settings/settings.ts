@@ -120,6 +120,8 @@ export interface SettingsStateBase {
   sessionProgressStarted: boolean;
   /** Show skipped questions in the session progress bar. */
   sessionProgressSkipped: boolean;
+  /** Debounce time for a double Enter keypress in milliseconds. */
+  sessionEnterDebounce: number;
 
   // ===========================================================================
   // LESSON SETTINGS
@@ -243,6 +245,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   sessionProgressBar: true,
   sessionProgressStarted: true,
   sessionProgressSkipped: true,
+  sessionEnterDebounce: 250,
 
   lessonMeaningReadingBackToBack: false,
   lessonReadingFirst: false,
@@ -295,6 +298,7 @@ export const SETTING_CONFIGS: Partial<Record<AnySettingName, IntegerSettingConfi
   dashboardReviewChartDays: { min: 1, max: 7 },
   dashboardCriticalThreshold: { min: 1, max: 100 },
   audioFetchMax: { min: 1, max: 1000 },
+  sessionEnterDebounce: { min: 0, max: 2000 },
   lessonMaxSize: { min: 1, max: 1000 },
   lessonMaxStarted: { min: 1, max: 1000 },
   reviewMaxSize: { min: 1, max: 1000 },
