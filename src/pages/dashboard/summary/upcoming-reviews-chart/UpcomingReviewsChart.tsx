@@ -3,15 +3,16 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { LegacyRef, SVGProps, useEffect, useMemo, useRef, useState } from "react";
+import { Empty } from "antd";
 
 import { ReviewForecast } from "@api";
 import { usePalette } from "@utils";
 
 import { select } from "d3-selection";
 
-import { renderChart } from "./renderChart.ts";
+import { chartHeight, renderChart } from "./renderChart.ts";
 import { ChartDatum, generateChart } from "./data.ts";
-import { ChartTooltip } from "@pages/dashboard/summary/upcoming-reviews-chart/UpcomingReviewsChartTooltip.tsx";
+import { ChartTooltip } from "./UpcomingReviewsChartTooltip.tsx";
 
 interface Props {
   forecast: ReviewForecast;
@@ -31,6 +32,8 @@ export function UpcomingReviewsChart({
   const theme = usePalette();
   const data = useMemo(() => generateChart(forecast, maxDate), [forecast, maxDate]);
 
+  const empty = data.length === 0 || data[data.length - 1].cumulative === 0;
+
   const el = useMemo(() => <UpcomingReviewsChartInner
     d3Ref={d3Ref}
     className="min-w-min mx-auto"
@@ -38,16 +41,23 @@ export function UpcomingReviewsChart({
 
   // Render d3
   useEffect(() => {
-    if (!data || !d3Ref.current) return;
+    if (empty || !data || !d3Ref.current) return;
     const svg = select<SVGSVGElement, ChartDatum>(d3Ref.current);
     renderChart(svg, tooltipRef, setTooltipDatum, data, maxDays, theme);
-  }, [data, maxDays, theme]);
+  }, [empty, data, maxDays, theme]);
 
-  return <>
-    {el}
-
-    <ChartTooltip ref={tooltipRef} datum={tooltipDatum} />
-  </>;
+  if (empty) {
+    return <Empty
+      image={Empty.PRESENTED_IMAGE_SIMPLE}
+      className="flex flex-col items-center justify-center m-0"
+      style={{ height: chartHeight }}
+    />;
+  } else {
+    return <>
+      {el}
+      <ChartTooltip ref={tooltipRef} datum={tooltipDatum} />
+    </>;
+  }
 }
 
 interface InnerProps extends SVGProps<SVGSVGElement> {

@@ -17,7 +17,7 @@ import { ChartDatum } from "./data";
 import { ColorPalette } from "@global/theme";
 import dayjs from "dayjs";
 
-const chartHeight = 196;
+export const chartHeight = 196;
 const margins = [16, 16, 16, 32];
 const colorMapping: Record<Exclude<keyof ChartDatum, "date" | "cumulative">, keyof ColorPalette> = {
   apprentice: "srsApprentice",
