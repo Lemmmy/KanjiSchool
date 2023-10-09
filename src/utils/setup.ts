@@ -14,6 +14,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
+import minMax from "dayjs/plugin/minMax";
 dayjs.extend(localizedFormat);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isToday);
@@ -21,6 +22,7 @@ dayjs.extend(isBetween);
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
+dayjs.extend(minMax);
 
 Debug.enable("kanjischool:*");
 localStorage.setItem("debug", "kanjischool:*");
