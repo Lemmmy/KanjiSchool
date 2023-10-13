@@ -66,8 +66,6 @@ function playSound(
 export function useVocabAudio(
   subject?: ApiSubjectVocabularyLike
 ): VocabAudioHookRes {
-  const userLevel = useUserLevel();
-  const levelLocked = userLevel + 1 < (subject?.data.level || 1);
   const stillSyncing = useAppSelector(s => s.sync.syncingAudio);
 
   const [savedPronunciation, setSavedPronunciation] = useState<string>();
@@ -77,7 +75,7 @@ export function useVocabAudio(
   const [playing, setPlaying] = useState(false);
 
   const finalLoading = !subject || (!disabled && (loading || stillSyncing));
-  const finalDisabled = !subject || disabled || levelLocked;
+  const finalDisabled = !subject || disabled;
 
   const play = useCallback(async (pronunciation: string) => {
     if (!audioContext) {
