@@ -10,6 +10,9 @@ import classNames from "classnames";
 import { addToStudyQueue, removeFromStudyQueue, useIsInStudyQueue } from "@session";
 import { useStudyQueueHover } from "./StudyQueueHotkeyHandler";
 
+import Debug from "debug";
+const debug = Debug("kanjischool:study-queue-button");
+
 interface Props extends ButtonProps {
   subjectId?: number;
   subjectIds?: number[];
@@ -20,7 +23,8 @@ interface Props extends ButtonProps {
 }
 
 export function StudyQueueButton({
-  subjectId, subjectIds,
+  subjectId,
+  subjectIds,
   iconOnly,
   useShortTitle,
   noDanger,
@@ -51,6 +55,8 @@ export function StudyQueueButton({
     danger={!noDanger && inQueue}
 
     onClick={e => {
+      debug("clicked study queue button for subject(s) %o", subjectId ?? subjectIds);
+
       e.stopPropagation();
 
       if (subjectIds) {

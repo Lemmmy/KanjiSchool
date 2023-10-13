@@ -324,7 +324,7 @@ const sessionSlice = createSlice({
     },
 
     studyQueueAdd(s, { payload }: PayloadAction<number[]>) {
-      if (!s.studyQueue) return;
+      if (!s.studyQueue) s.studyQueue = {};
 
       for (const id of payload) {
         s.studyQueue[id] = 1;

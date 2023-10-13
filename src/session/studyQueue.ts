@@ -8,13 +8,18 @@ import { studyQueueAdd, studyQueueClear, studyQueueRemove } from "@store/slices/
 
 import { lsSetObject } from "@utils";
 
+import Debug from "debug";
+const debug = Debug("kanjischool:study-queue");
+
 export function addToStudyQueue(subjectIds: number | number[]): void {
   const ids = typeof subjectIds === "number" ? [subjectIds] : subjectIds;
+  debug("adding to study queue:", ids);
   store.dispatch(studyQueueAdd(ids));
   saveStudyQueue();
 }
 
 export function removeFromStudyQueue(subjectId: number): void {
+  debug("removing from study queue:", subjectId);
   store.dispatch(studyQueueRemove(subjectId));
   saveStudyQueue();
 }
