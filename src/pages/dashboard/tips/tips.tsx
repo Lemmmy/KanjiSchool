@@ -51,4 +51,8 @@ export const TIPS: ReactNode[] = [
     them by default by enabling &ldquo;Hide all hints&rdquo; in
     &ldquo;General session settings&rdquo;.
   </>,
+  <>
+    Pitch accent diagrams for vocabulary subjects can be enabled in the Settings
+    under &ldquo;Subject info settings&rdquo;.
+  </>,
 ];
