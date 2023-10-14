@@ -10,6 +10,7 @@ import { scaleBand, scaleLinear, scaleTime } from "d3-scale";
 import { axisBottom, axisLeft, axisTop } from "d3-axis";
 import { bisect, max } from "d3-array";
 import { curveMonotoneX, line, stack } from "d3-shape";
+import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 
 import { ChartDatum } from "./data";
@@ -96,7 +97,8 @@ export function renderChart(
     .domain([0, max(data, d => d.cumulative) || 0])
     .rangeRound([height, 0]);
   const yAxis = group.append("g")
-    .call(axisLeft(y));
+    .call(axisLeft<number>(y)
+      .tickFormat(d => Math.floor(d) === d ? d.toString() : ""));
   yAxis.selectAll("path, line")
     .classed("stroke-[#404040] light:stroke-[#d9d9d9]", true);
   yAxis.selectAll("text")
