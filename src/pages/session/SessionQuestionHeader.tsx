@@ -60,7 +60,7 @@ const questionTypeColorClass: Record<QuestionHeaderTypeColor, Record<QuestionTyp
 
 const incorrectAnswerClass = classNames(
   questionTypeBaseClass,
-  "-mt-sm mb-md bg-red-8 light:bg-red-5 text-white rounded-t-none !text-xxl !font-normal"
+  "-mt-sm mb-md bg-red-8 light:bg-red-5 text-white rounded-t-none !text-xxl !font-normal font-ja"
 );
 
 export function SessionQuestionHeader({
@@ -198,7 +198,7 @@ export function SessionQuestionHeader({
         : (uppercaseFirst(objectType) + " " + uppercaseFirst(questionType))}
     </Row>
 
-    {/* In  correct answer */}
+    {/* Incorrect answer */}
     {incorrectAnswer !== undefined && (
       <Row className={incorrectAnswerClass}>
         {incorrectAnswer || <>&nbsp;</>}
