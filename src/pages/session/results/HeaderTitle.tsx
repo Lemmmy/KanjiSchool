@@ -2,8 +2,13 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React from "react";
-import { theme } from "antd";
+import React, { useCallback } from "react";
+import { theme, Tooltip } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+
+import { useDispatch } from "react-redux";
+import { clearLastResults } from "@store/slices/sessionSlice.ts";
+
 import { SessionType } from "@session";
 
 import dayjs from "dayjs";
@@ -25,8 +30,24 @@ const TYPE_NAMES: Record<SessionType, string> = {
 
 export const HeaderTitle = React.memo(({ type, completedAt, total }: Props) => {
   const { token } = useToken();
+  const dispatch = useDispatch();
+
+  const clear = useCallback(() => {
+    dispatch(clearLastResults()); // LastResultSave will save this to local storage
+  }, [dispatch]);
 
   return <>
+    {/* Close button */}
+    <Tooltip title={`Clear last ${TYPE_NAMES[type]} summary`} placement="bottom">
+      <div
+        className="float-right w-[48px] h-[48px] rounded flex items-center justify-center
+          hover:bg-white/5 light:hover:bg-black/5"
+        onClick={clear}
+      >
+        <CloseOutlined className="text-desc" />
+      </div>
+    </Tooltip>
+
     {/* Summary type */}
     <span className="font-medium" style={{ color: token.colorTextHeading, fontSize: token.fontSizeHeading5 }}>
       Last {TYPE_NAMES[type]} summary

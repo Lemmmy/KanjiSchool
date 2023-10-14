@@ -16,12 +16,12 @@ import { useAnswersPanel } from "./AnswersPanel";
 import { lsSetBoolean, useBooleanSetting } from "@utils";
 
 import Debug from "debug";
-const debug = Debug("kanjischool:session-results-alert");
+const debug = Debug("kanjischool:last-session-summary");
 
 const DEFAULT_EXPAND = ["correct", "incorrect"];
 const DEFAULT_COLLAPSE: string[] = [];
 
-export function SessionResultsAlert(): JSX.Element | null {
+export function LastSessionSummary(): JSX.Element | null {
   const dispatch = useDispatch();
 
   const [showing, setShowing] = useState(false);

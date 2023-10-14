@@ -12,7 +12,7 @@ import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 import { useAppSelector } from "@store";
 
-import { SessionResultsAlert } from "@pages/session/results/SessionResultsAlert";
+import { LastSessionSummary } from "@pages/session/results/LastSessionSummary.tsx";
 import { showSessionAbandonModal } from "@pages/session/modals/SessionAbandonModal";
 
 import { SummaryCard } from "./summary/SummaryCard";
@@ -131,7 +131,7 @@ function DashboardPage(): JSX.Element {
   </PageLayout>;
 
   return <>
-    {showLastSessionSummary && <SessionResultsAlert />}
+    {showLastSessionSummary && <LastSessionSummary />}
     {page}
   </>;
 }

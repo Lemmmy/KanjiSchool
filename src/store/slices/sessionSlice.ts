@@ -319,6 +319,11 @@ const sessionSlice = createSlice({
       s.lastResultsViewed = payload;
     },
 
+    clearLastResults(s) {
+      s.lastResults = undefined;
+      s.lastResultsViewed = true;
+    },
+
     studyQueueSetCollapsed(s, { payload }: PayloadAction<boolean>) {
       s.studyQueueCollapsed = payload;
     },
@@ -361,6 +366,7 @@ export const {
   startLessonReviewNow,
   endSession,
   setResultsViewed,
+  clearLastResults,
   studyQueueSetCollapsed,
   studyQueueAdd,
   studyQueueRemove,
