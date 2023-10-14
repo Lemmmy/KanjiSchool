@@ -16,6 +16,7 @@ export function SubjectPage({ siteTitle, subject }: SubjectPageHook): JSX.Elemen
     <SubjectInfo
       subject={subject}
       showToc
+      showQueueButton
     />
   </PageLayout>;
 }

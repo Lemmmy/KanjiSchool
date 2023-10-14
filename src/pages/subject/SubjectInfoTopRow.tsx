@@ -16,6 +16,7 @@ import { SubjectCharacters } from "@comp/subjects/SubjectCharacters";
 import { AudioButtons } from "@comp/subjects/AudioButtons";
 
 import { isVocabularyLike, normalizeVocabType, useBooleanSetting } from "@utils";
+import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton.tsx";
 
 const PitchAccentDiagrams = lazy(() => import("./readings/PitchAccentDiagrams.tsx"));
 
@@ -25,13 +26,13 @@ interface Props {
   hasSingleCharacter?: boolean;
   charactersMax?: number;
 
+  showQueueButton?: boolean;
   hintStage?: SubjectHintStage | undefined;
   onNextHintStage?: () => void;
 
   hideMeanings?: boolean;
   hideReadings?: boolean;
   hideAudio?: boolean;
-
   autoPlayAudio?: boolean;
 
   subjectCharactersClass?: string;
@@ -39,31 +40,20 @@ interface Props {
   subjectCharactersImageClass?: string;
 }
 
-export function SubjectInfoTopRow({
-  subject,
-  hasSingleCharacter,
-  charactersMax,
+export function SubjectInfoTopRow(props: Props): JSX.Element {
+  const {
+    subject, hasSingleCharacter, charactersMax,
+    showQueueButton, hintStage, onNextHintStage,
+    hideMeanings, hideReadings, hideAudio, autoPlayAudio,
+    subjectCharactersClass, subjectCharactersFontClass, subjectCharactersImageClass,
+  } = props;
 
-  hintStage,
-  onNextHintStage,
-
-  hideMeanings,
-  hideReadings,
-  hideAudio,
-
-  autoPlayAudio,
-
-  subjectCharactersClass,
-  subjectCharactersFontClass,
-  subjectCharactersImageClass,
-}: Props): JSX.Element {
   const objectType = subject.object;
   const normObjectType = normalizeVocabType(subject.object);
   const { level, meanings } = subject.data;
 
   // Used for the audio buttons
   const isVocab = isVocabularyLike(subject);
-  const vocabSubject = subject as ApiSubjectVocabulary;
 
   // Get the CommaList components for all the meanings and readings lists
   const meaningsComp = useMemo(() => <CommaList
@@ -108,16 +98,13 @@ export function SubjectInfoTopRow({
             )}
           </div>
 
-          {/* Audio buttons */}
-          {!hideAudio && isVocab && <AudioButtons
-            subject={vocabSubject}
-            autoPlay={autoPlayAudio}
-          />}
-
-          {/* Show more/Show all hint stage buttons */}
-          <HintStageButtons
+          <CommonButtons
+            subject={subject}
+            showQueueButton={showQueueButton}
+            autoPlayAudio={autoPlayAudio}
             hintStage={hintStage}
             onNextHintStage={onNextHintStage}
+            hideAudio={hideAudio}
           />
         </div>
 
@@ -160,18 +147,49 @@ export function SubjectInfoTopRow({
             )}
           </div>
 
-          {/* Audio buttons */}
-          {!hideAudio && isVocab && <AudioButtons
-            subject={vocabSubject}
-            autoPlay={autoPlayAudio}
-          />}
-
-          {/* Show more/Show all hint stage buttons */}
-          <HintStageButtons
+          <CommonButtons
+            subject={subject}
+            showQueueButton={showQueueButton}
+            autoPlayAudio={autoPlayAudio}
             hintStage={hintStage}
             onNextHintStage={onNextHintStage}
+            hideAudio={hideAudio}
           />
         </div>
       </div>
     );
+}
+
+type CommonButtonsProps = Pick<Props, "subject" | "showQueueButton" | "autoPlayAudio" | "hintStage" |
+  "onNextHintStage" | "hideAudio">;
+
+function CommonButtons({
+  subject,
+  showQueueButton,
+  autoPlayAudio,
+  hintStage,
+  onNextHintStage,
+  hideAudio
+}: CommonButtonsProps) {
+  const isVocab = isVocabularyLike(subject);
+  const vocabSubject = subject as ApiSubjectVocabulary;
+
+  return <>
+    <div className="flex flex-col gap-sm">
+      {/* Queue button */}
+      {showQueueButton && <StudyQueueButton subjectId={subject.id} />}
+
+      {/* Audio buttons */}
+      {!hideAudio && isVocab && <AudioButtons
+        subject={vocabSubject}
+        autoPlay={autoPlayAudio}
+      />}
+    </div>
+
+    {/* Show more/Show all hint stage buttons */}
+    <HintStageButtons
+      hintStage={hintStage}
+      onNextHintStage={onNextHintStage}
+    />
+  </>;
 }

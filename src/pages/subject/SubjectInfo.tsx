@@ -36,6 +36,7 @@ import { SimpleSkeleton } from "@comp/SimpleSkeleton.tsx";
 
 export interface SubjectInfoProps {
   subject: StoredSubject;
+  showQueueButton?: boolean;
   useHintStage?: boolean;
   questionType?: "meaning" | "reading";
   charactersMax?: number;
@@ -131,6 +132,7 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
       hasSingleCharacter={hasSingleCharacter}
       charactersMax={charactersMax}
 
+      showQueueButton={props.showQueueButton}
       hintStage={useHintStage ? hintStage : undefined}
       onNextHintStage={useHintStage ? nextHintStage : undefined}
 
