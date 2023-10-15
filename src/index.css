@@ -7,7 +7,9 @@
 @tailwind utilities;
 
 html, body {
-  overflow: visible;
+  /* Prevent tooltips (e.g. in study queue modal) from pushing the page out */
+  overflow-x: hidden;
+  overflow-y: visible;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
