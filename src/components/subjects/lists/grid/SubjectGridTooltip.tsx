@@ -11,6 +11,11 @@ interface Props {
   tooltipContents?: ReactNode;
 }
 
+function stopWheel(e: React.WheelEvent<HTMLDivElement>) {
+  e.preventDefault();
+  return false;
+}
+
 export const SubjectGridTooltip = forwardRef<HTMLDivElement, Props>(function TooltipPortal({
   showTooltip,
   tooltipInnerRef,
@@ -24,6 +29,7 @@ export const SubjectGridTooltip = forwardRef<HTMLDivElement, Props>(function Too
     <div
       className="relative -left-[108px] -translate-y-full pb-lg pointer-events-auto"
       ref={tooltipInnerRef}
+      onWheel={stopWheel}
     >
       <div className="relative rounded shadow-md bg-spotlight !w-[200px] p-xs">
         {/* Tooltip arrow */}
