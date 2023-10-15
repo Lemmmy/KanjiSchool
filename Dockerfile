@@ -1,11 +1,12 @@
 # Build stage
-FROM node:18-alpine AS build
+FROM node:20-alpine AS build
 
 RUN apk update && apk add git
 
 WORKDIR /build
 
-COPY ["package.json", "yarn.lock", "./"]
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn ./.yarn
 RUN yarn install
 
 COPY . .
@@ -16,7 +17,7 @@ RUN yarn run build
 FROM busybox
 
 WORKDIR /build
-COPY --from=build /build/build ./build
+COPY --from=build /build/dist ./dist
 
 RUN mkdir out
-CMD cp -r build/* out/
+CMD cp -r dist/* out/
