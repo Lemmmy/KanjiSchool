@@ -11,6 +11,10 @@ html {
   overflow-y: initial !important;
 }
 
+html, body {
+  background: var(--wk-background-color);
+}
+
 body {
   /* Prevent tooltips (e.g. in study queue modal) from pushing the page out */
   overflow-x: hidden;

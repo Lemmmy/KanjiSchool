@@ -1,16 +1,18 @@
 # KanjiSchool
 
-Experimental web client for [WaniKani](https://www.wanikani.com), a Spaced Repetition System app to learn
-Japanese kanji by [Tofugu](https://www.tofugu.com/).
+Experimental web client for [WaniKani](https://www.wanikani.com), a Spaced Repetition System app to learn Japanese kanji 
+by [Tofugu](https://www.tofugu.com/).
 
 For more information, check out [WaniKani](https://www.wanikani.com) and their
 [knowledge base](https://knowledge.wanikani.com).
 
-![](https://i.imgur.com/BKLtQ1a.png)
+![](https://i.imgur.com/1nSwvjy.png)
 
 <sub>([more screenshots](#Screenshots))</sub>
 
 ## Features
+
+<sub>([what's new](https://github.com/Lemmmy/KanjiSchool/releases))</sub>
 
 * Full SRS with lessons and reviews
 * Custom self-study sessions
@@ -38,32 +40,33 @@ For more information, check out [WaniKani](https://www.wanikani.com) and their
 
 <center>
 
-| <img src="https://i.imgur.com/RUXjpFd.png" width="360"><br /><center>Summary</center> | <img src="https://i.imgur.com/si595BJ.png" width="360"><br /><center>Questions</center> |
-| :---: | :---: |
-| <img src="https://i.imgur.com/hFjEBrQ.png" width="360"><br /><center>Subject info</center> | <img src="https://i.imgur.com/NRjSRDb.png" width="360"><br /><center>Subject info</center> |
-| <img src="https://i.imgur.com/h7QwCv5.png" width="360"><br /><center>Dashboard statistics</center> | <img src="https://i.imgur.com/usDnUbs.png" width="360"><br /><center>Dashboard statistics</center> |
-| <img src="https://i.imgur.com/Q5Pnv7i.png" width="360"><br /><center>Quick search</center> | <img src="https://i.imgur.com/u0J5FeH.png" width="360"><br /><center>Keyboard shortcuts</center> |
-| <img src="https://i.imgur.com/dBPeI3U.png" width="360"><br /><center>Subject listing</center> | <img src="https://i.imgur.com/Mk1HY2s.png" width="240"><br /><center>Advanced search</center> |
+|       <img src="https://i.imgur.com/ztvRqHs.png" width="360"><br /><center>Summary</center>        |      <img src="https://i.imgur.com/UzgKpBe.png" width="360"><br /><center>Questions</center>       |
+|:--------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------:|
+|     <img src="https://i.imgur.com/JQpNlRA.png" width="360"><br /><center>Subject info</center>     |     <img src="https://i.imgur.com/o4N25MK.png" width="360"><br /><center>Subject info</center>     |
+| <img src="https://i.imgur.com/tZ9HlLV.png" width="360"><br /><center>Dashboard statistics</center> | <img src="https://i.imgur.com/gyFAT7F.png" width="360"><br /><center>Dashboard statistics</center> |
+|     <img src="https://i.imgur.com/XJV0lDu.png" width="360"><br /><center>Quick search</center>     |  <img src="https://i.imgur.com/EjXTNTb.png" width="360"><br /><center>Keyboard shortcuts</center>  |
+|   <img src="https://i.imgur.com/7W6L0Ka.png" width="360"><br /><center>Subject listing</center>    |   <img src="https://i.imgur.com/eWjm7Hj.png" width="240"><br /><center>Advanced search</center>    |
+|     <img src="https://i.imgur.com/xP12Bsi.png" width="360"><br /><center>Light theme</center>      |     <img src="https://i.imgur.com/nFJJfqe.png" width="360"><br /><center>Light theme</center>      |
 
 </center>
 
 ## TODO
 
-* Better user onboarding
+* Better new user onboarding
 * Kanji stroke order diagrams
+* Phonetic/semantic composition for radicals and kanji
 * Better leech tracking
 * Level-up time chart, show estimated 'level-up in' and 'typical level-up' times
 
 ## Contributing
 
-This project uses 
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as a
-standard for commit messages.
+This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as a standard for commit 
+messages.
 
-## Disclaimer
+## Attribution
 
-This app has been independently developed, and is not supported by, affiliated
-with or endorsed by [Tofugu LLC](https://www.tofugu.com/).
+This app has been independently developed, and is not supported by, affiliated with or endorsed by 
+[Tofugu LLC](https://www.tofugu.com/).
 
 It was also heavily influenced by:
 * [WaniKani itself](https://www.wanikani.com)
@@ -72,8 +75,19 @@ It was also heavily influenced by:
 * [Many UserScripts from the WaniKani
   community](https://community.wanikani.com/c/wanikani/api-and-third-party-apps)
 
+Lesson content and audio clips are obtained from [WaniKani](https://www.wanikani.com/), copyright &copy; 
+[Tofugu LLC](https://www.tofugu.com/), made available by your WaniKani subscription. KanjiSchool is not affiliated
+Tofugu LLC.
+
+Kanji data including JLPT level, Jōyō grade, and newspaper frequency is collected from [Jisho](https://jisho.org/),
+which obtained most of its data from the [KANJIDIC](http://www.edrdg.org/wiki/index.php/KANJIDIC_Project) project,
+copyright &copy; the [EDRDG](https://www.edrdg.org/).
+
+Pitch accent data is obtained from the [Kanjium](https://github.com/mifunetoshiro/kanjium) project, licensed under the
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license, provided by Uros O. through his free database.
+
 ## License
 
-**Copyright (c) 2021-2023 Drew Edwards**
+**Copyright &copy; 2021-2023 Drew Edwards**
 
-This project is licensed under the AGPL v3 license. See LICENSE for more.
+This project is licensed under the AGPL v3 license. See [LICENSE](/LICENSE) for more information.

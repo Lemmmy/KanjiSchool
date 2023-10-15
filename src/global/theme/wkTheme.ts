@@ -20,6 +20,7 @@ const globalToken = getDesignToken();
 export interface WkTheme {
   antTheme: Partial<ThemeConfig>;
 
+  backgroundColor         : string;
   scrollbarThumbColor     : string;
   scrollbarThumbHoverColor: string;
   scrollbarTrackColor     : string;
@@ -65,6 +66,7 @@ const THEME_LIGHT: WkTheme = {
     }
   },
 
+  backgroundColor         : "#f5f5f5",
   scrollbarThumbColor     : "rgba(0, 0, 0, 0.13)",
   scrollbarThumbHoverColor: "rgba(0, 0, 0, 0.24)",
   scrollbarTrackColor     : "rgba(0, 0, 0, 0.1)",
@@ -76,9 +78,10 @@ const THEME_DARK: WkTheme = {
     algorithm: AntTheme.darkAlgorithm
   },
 
+  backgroundColor         : "#000000",
   scrollbarThumbColor     : "rgba(255, 255, 255, 0.17)",
   scrollbarThumbHoverColor: "rgba(255, 255, 255, 0.3)",
-  scrollbarTrackColor     : "rgba(255, 255, 255, 0.1)"
+  scrollbarTrackColor     : "rgba(255, 255, 255, 0.1)",
 };
 
 export const THEMES: Record<ThemeName, WkTheme> = {
