@@ -32,7 +32,7 @@ function parseTsAliases() {
 }
 
 // Inject the git version into the build
-const gitVersion = execSync("git describe --always --tags --dirty").toString().trim();
+const gitVersion = execSync("git describe --always --tags").toString().trim();
 process.env.VITE_GIT_VERSION = gitVersion;
 
 // https://vitejs.dev/config/
