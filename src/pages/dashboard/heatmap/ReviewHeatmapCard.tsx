@@ -49,7 +49,7 @@ function CardTitle(): JSX.Element {
   return <div className="flex items-center gap-sm">
     <span>Review heatmap</span>
 
-    <Tooltip title="Review history may be incomplete or inaccurate">
+    <Tooltip title="Review history may be incomplete or inaccurate. Click for more info.">
       <WarningOutlined
         className="text-yellow light:text-orange opacity-50 cursor-pointer"
         onClick={() => openGetReviewsModal()}
