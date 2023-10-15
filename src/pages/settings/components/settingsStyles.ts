@@ -10,7 +10,8 @@ export const menuItemClass = classNames(
   "!min-h-auto !h-auto !leading-normal !rounded-none !mli-0 !w-full !overflow-visible !block",
   "border-0 border-solid border-b border-b-split first:border-t first:border-t-split",
   "[&>.ant-menu-title-content]:block [&>.ant-menu-title-content]:!shrink-0",
-  "!pli-sm md:!pis-[48px] md:!pie-md"
+  "!pli-sm md:!pis-[48px] md:!pie-md",
+  "!whitespace-normal",
 );
 
 export const menuClass = classNames(

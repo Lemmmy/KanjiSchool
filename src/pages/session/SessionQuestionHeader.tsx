@@ -63,6 +63,8 @@ const incorrectAnswerClass = classNames(
   "-mt-sm mb-md bg-red-8 light:bg-red-5 text-white rounded-t-none !text-xxl !font-normal font-ja"
 );
 
+let lastMd: boolean | null = null;
+
 export function SessionQuestionHeader({
   questionCount,
   questionTotal,
@@ -76,7 +78,8 @@ export function SessionQuestionHeader({
   onSkip
 }: Props): JSX.Element {
   // Make the buttons larger on mobile
-  const md = useSingleBreakpoint("md");
+  const md = useSingleBreakpoint("md", lastMd ?? true);
+  lastMd = md; // Prevents the buttons from resizing on mobile
 
   const objectType = normalizeVocabType(subject.object);
 

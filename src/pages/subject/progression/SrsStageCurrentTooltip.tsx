@@ -2,10 +2,13 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { ShortDuration } from "@comp/ShortDuration";
-import { stringifySrsStage } from "@utils";
 import classNames from "classnames";
-import { barTooltipColors, BarStageName } from "@pages/subject/progression/srsBarColors.ts";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+
+import { ShortDuration } from "@comp/ShortDuration";
+import { barTooltipColors, BarStageName } from "./srsBarColors.ts";
+
+import { stringifySrsStage, stringifySrsStageShort } from "@utils";
 
 interface Props {
   progress: number;
@@ -22,6 +25,8 @@ export function SrsStageCurrentTooltip({
   availableNow,
   nextReview
 }: Props): JSX.Element | null {
+  const { sm } = useBreakpoint();
+
   return <div
     className="absolute -bottom-[44px] select-none z-50"
     style={{
@@ -35,7 +40,7 @@ export function SrsStageCurrentTooltip({
         "relative -left-1/2 rounded whitespace-nowrap",
         barTooltipColors[barStageName],
         {
-          "min-w-[175px]": stage < 9,
+          "sm:min-w-[175px]": stage < 9,
         }
       )}
     >
@@ -50,7 +55,9 @@ export function SrsStageCurrentTooltip({
       {/* Current stage name + time remaining */}
       <div className="text-sm text-center py-xss px-xs" role="tooltip">
         {/* Stage name */}
-        {stringifySrsStage(stage)}
+        {sm
+          ? stringifySrsStage(stage)
+          : stringifySrsStageShort(stage)}
 
         {/* Time remaining */}
         {availableNow || nextReview ? " " : ""}

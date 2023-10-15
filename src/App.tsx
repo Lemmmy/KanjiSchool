@@ -79,6 +79,11 @@ function AppInner(): JSX.Element {
   debug("AppInner render: dbInit %s - loggedIn %s - hasSubjects %s",
     dbInit, loggedIn, hasSubjects);
 
+  // Show an update notification if the app version has changed
+  useEffect(() => {
+
+  }, []);
+
   // Initialize the database
   useEffect(() => {
     if (dbInit) return;

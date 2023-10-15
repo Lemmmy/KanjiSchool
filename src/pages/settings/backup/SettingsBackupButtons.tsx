@@ -14,7 +14,7 @@ export interface SettingsExportFile extends Partial<Record<AnySettingName, strin
 
 export function SettingsBackupButtons(): JSX.Element {
   return <div className="mx-md my-lg flex flex-col md:flex-row gap-md items-center">
-    <p className="text-desc text-sm my-0 flex-1">
+    <p className="text-desc text-sm my-0 flex-1 text-center sm:text-justify">
       Export a copy of your settings to back them up, or import them on another device.
     </p>
 

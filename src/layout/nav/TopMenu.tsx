@@ -133,7 +133,7 @@ export function TopMenu(): JSX.Element {
       {
         key: "menu-github-changelog",
         icon: <UnorderedListOutlined />,
-        label: <ExtLink href="https://github.com/Lemmmy/KanjiSchool/commits">Changelog</ExtLink>
+        label: <ExtLink href="https://github.com/Lemmmy/KanjiSchool/releases">Changelog</ExtLink>
       },
       {
         key: "menu-github-issues",

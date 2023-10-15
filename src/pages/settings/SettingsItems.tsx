@@ -14,7 +14,7 @@ import { getFontSettingsGroup } from "./fonts/SettingsFonts.tsx";
 import { getAudioSettingsGroup } from "./audio/SettingsAudio.tsx";
 
 import { reloadAssignments } from "@api";
-import { getThemeSettingsGroup } from "@pages/settings/theme/SettingsTheme.tsx";
+import { getThemeSettingsGroup } from "./theme/SettingsTheme.tsx";
 import { KanjiumAttribution } from "@layout/AttributionFooter.tsx";
 import {
   PitchDiagramOnkaiShikiLegend,

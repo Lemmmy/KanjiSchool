@@ -49,8 +49,9 @@ export function StudyQueueModal(): JSX.Element | null {
   if (!hasAssignments) return null;
 
   const classes = classNames(
-    "mt-auto mr-lg mb-lg ml-auto absolute top-[unset] left-[unset] right-0 bottom-0 pointer-events-auto",
-    "w-[420px] bg-[#1f1f1f] light:bg-container px-lg py-[20px] rounded-xl shadow-xl"
+    "mt-auto sm:mb-lg sm:mx-lg px-lg py-[20px]",
+    "w-full max-w-[420px] absolute right-0 bottom-0 pointer-events-auto",
+    "bg-[#1f1f1f] light:bg-container rounded-t-xl sm:rounded-xl shadow-xl"
   );
 
   const collapseClasses = classNames("transition-[max-height] max-h-study-modal-outer overflow-hidden", {
@@ -129,13 +130,14 @@ function ModalHeader({
   );
 
   return <div className="flex justify-between">
-    <span className="text-lg font-semibold">
-      Self-study queue <span className="ml-text text-base font-normal">
+    <div className="text-lg font-semibold flex flex-wrap gap-xs items-baseline">
+      <span>Self-study queue</span>
+      <span className="text-base font-normal whitespace-nowrap">
         ({pluralN(count, "subject")})
       </span>
-    </span>
+    </div>
 
-    <div className="flex items-end gap-sm -mr-xs">
+    <div className="flex items-start gap-sm -mr-xs">
       {/* Collapse button */}
       <Tooltip title={<>{collapseTitle} <b>(Shift+Q)</b></>}>
         <button

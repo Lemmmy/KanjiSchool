@@ -52,7 +52,7 @@ export const SimpleCard = forwardRef<HTMLDivElement, Props>(function SimpleCard(
       <div className="text-lg font-semibold">{title}</div>
 
       {/* Extra */}
-      {extra && <div>{extra}</div>}
+      {extra && <div className="text-right">{extra}</div>}
     </div>}
 
     {/* Body */}

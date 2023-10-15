@@ -4,6 +4,7 @@
 
 import { lazy, Suspense, useMemo } from "react";
 import classNames from "classnames";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { ApiSubject, ApiSubjectVocabulary } from "@api";
 
@@ -171,13 +172,18 @@ function CommonButtons({
   onNextHintStage,
   hideAudio
 }: CommonButtonsProps) {
+  const { sm } = useBreakpoint();
+
   const isVocab = isVocabularyLike(subject);
   const vocabSubject = subject as ApiSubjectVocabulary;
 
   return <>
     <div className="flex flex-col gap-sm">
       {/* Queue button */}
-      {showQueueButton && <StudyQueueButton subjectId={subject.id} />}
+      {showQueueButton && <StudyQueueButton
+        subjectId={subject.id}
+        useShortTitle={!sm}
+      />}
 
       {/* Audio buttons */}
       {!hideAudio && isVocab && <AudioButtons

@@ -36,7 +36,7 @@ export const dropdownOverlayClass = classNames(
 );
 
 export function AppHeader(): JSX.Element | null {
-  // Hide certain features on mobile (TODO)
+  // Hide certain features on mobile
   const { sm } = useBreakpoint();
 
   if (!api.useIsLoggedIn()) return null;

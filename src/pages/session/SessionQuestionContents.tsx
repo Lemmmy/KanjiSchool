@@ -60,7 +60,8 @@ function IncorrectAnswerPart({
 
   const hasSingleCharacter = subject.data.characters === null || subject.data.characters?.length === 1;
 
-  return <div>
+  // Attempt to work around keyboard screen shifting on mobile
+  return <div className="-mt-xs md:mt-0">
     <SessionQuestionHeader
       questionCount={finishedItems}
       questionTotal={totalItems}
