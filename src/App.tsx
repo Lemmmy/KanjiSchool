@@ -14,10 +14,12 @@ import { PresetModalProvider } from "@comp/preset-editor/PresetModalContext";
 
 import { initDbAndLoadAll, useHasSubjects, useIsLoggedIn } from "@api";
 
-import { App as AntApp, ConfigProvider } from "antd";
+import { App as AntApp, Button, ConfigProvider } from "antd";
 import { AppLoading } from "@global/AppLoading";
 import { LoginPage } from "@pages/login/LoginPage";
 import { SyncPage } from "@pages/login/SyncPage";
+import { ExtLink } from "@comp/ExtLink.tsx";
+import { lsGetString, lsSetString } from "@utils";
 
 import { WkErrorBoundary } from "@comp/ErrorBoundary";
 
@@ -81,8 +83,26 @@ function AppInner(): JSX.Element {
 
   // Show an update notification if the app version has changed
   useEffect(() => {
+    const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
+    // Don't show an update notification if the user hasn't logged in before (lastAppVersion wouldn't be set yet)
+    const lastVersion = lsGetString("lastAppVersion", loggedIn ? undefined : gitVersion);
 
-  }, []);
+    debug("git version: %s - last version: %s", gitVersion, lastVersion);
+
+    if (lastVersion !== gitVersion) {
+      globalNotification.success({
+        message: "Update complete",
+        description: <>
+          KanjiSchool updated to <span className="whitespace-nowrap font-semibold">{gitVersion}</span>!
+        </>,
+        btn: <ExtLink href="https://github.com/Lemmmy/KanjiSchool/releases">
+          <Button type="primary">What&apos;s new</Button>
+        </ExtLink>
+      });
+    }
+
+    lsSetString("lastAppVersion", gitVersion);
+  }, [loggedIn]);
 
   // Initialize the database
   useEffect(() => {
