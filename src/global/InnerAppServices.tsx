@@ -5,7 +5,6 @@
 import { SyncHandlers } from "./sync";
 import { LastResultsSave } from "./LastResultsSave";
 import { HotkeyServices } from "./hotkeys";
-import { StudyQueueModal } from "@comp/study-queue/StudyQueueModal";
 import { AdvanceTip } from "@pages/dashboard/tips/TipsCard";
 
 export function InnerAppServices(): JSX.Element {
@@ -13,7 +12,6 @@ export function InnerAppServices(): JSX.Element {
     <SyncHandlers />
     <LastResultsSave />
     <HotkeyServices />
-    <StudyQueueModal />
     <AdvanceTip />
   </>;
 }

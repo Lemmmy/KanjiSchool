@@ -5,11 +5,13 @@
 import React from "react";
 import { Layout } from "antd";
 
+import { Outlet } from "react-router-dom";
+
 import { AppHeader } from "./nav/AppHeader";
 import { TopMenuProvider } from "./nav/TopMenu";
 import { KeywordSearchProvider } from "@api/search/KeywordSearch";
 import { ScrollToAnchor } from "@utils/hooks/useScrollToAnchor";
-import { Outlet } from "react-router-dom";
+import { StudyQueueModal } from "@comp/study-queue/StudyQueueModal.tsx";
 
 export function AppLayout(): JSX.Element {
   return <Layout>
@@ -25,6 +27,8 @@ export function AppLayout(): JSX.Element {
           <Outlet />
           <ScrollToAnchor />
         </div>
+
+        <StudyQueueModal />
       </TopMenuProvider>
     </KeywordSearchProvider>
   </Layout>;

@@ -26,7 +26,7 @@ import { SubjectGridVirtualDynamic } from "./SubjectGridVirtualDynamic.tsx";
 import { SubjectGridVirtual } from "./SubjectGridVirtual.tsx";
 import { SubjectGridSpace } from "./SubjectGridSpace.tsx";
 
-import { SubjectGridTooltip } from "@comp/subjects/lists/grid/SubjectGridTooltip.tsx";
+import { SubjectGridTooltip } from "./SubjectGridTooltip.tsx";
 
 const COMPONENT_TYPES: Record<SubjectType, GridItemComponentType> = {
   "radical":         GridItemRadical,

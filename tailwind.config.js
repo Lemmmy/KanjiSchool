@@ -39,7 +39,8 @@ const generateConfig = () => ({
         "header"               : "64px",
         "toc"                  : "180px",
         "toc-right"            : "-204px", // -toc - lg
-        "study-modal"          : "182px", // 150px + md * 2
+        "study-modal"          : "150px",
+        "study-modal-outer"    : "206px",
         "text"                 : "0.3em",
         "preset-editor-height" : "400px",
         "preset-editor-sidebar": "260px",

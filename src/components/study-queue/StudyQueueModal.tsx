@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useCallback, useMemo, useState } from "react";
-import { Modal, Tooltip, Checkbox } from "antd";
+import { Tooltip, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { CloseOutlined, DownOutlined, QuestionCircleOutlined, UpOutlined } from "@ant-design/icons";
 import classNames from "classnames";
@@ -49,82 +49,64 @@ export function StudyQueueModal(): JSX.Element | null {
   if (!hasAssignments) return null;
 
   const classes = classNames(
-    "mt-auto mr-lg mb-lg ml-auto pb-0 absolute top-[unset] left-[unset] right-0 bottom-0 pointer-events-auto",
-
-    // Center the close buttons a little better
-    "[&_.ant-modal-close]:top-[20px]",
-
-    "[&_.ant-modal-body]:h-full [&_.ant-modal-body]:max-h-study-modal",
-    "[&_.ant-modal-body]:p-0 [&_.ant-modal-body]:overflow-y-hidden",
-    "[&_.ant-modal-body]:transition-[max-height,margin-bottom]",
-
-    "[&_.ant-modal-footer]:h-full [&_.ant-modal-footer]:max-h-study-modal [&_.ant-modal-footer]:overflow-y-hidden",
-    "[&_.ant-modal-footer]:transition-[max-height,margin-top]",
-    "[&_.ant-modal-footer]:items-center [&_.ant-modal-footer]:text-left",
-
-    {
-      // Collapsed state
-      "[&_.ant-modal-header]:!mb-0": collapsed,
-      "[&_.ant-modal-body]:!max-h-0": collapsed,
-      "[&_.ant-modal-footer]:!max-h-0 [&_.ant-modal-footer]:!mt-0": collapsed,
-    }
+    "mt-auto mr-lg mb-lg ml-auto absolute top-[unset] left-[unset] right-0 bottom-0 pointer-events-auto",
+    "w-[420px] bg-[#1f1f1f] light:bg-container px-lg py-[20px] rounded-xl shadow-xl"
   );
 
-  return <>
-    <Modal
-      className={classes}
-      wrapClassName="pointer-events-none"
-      width={420}
+  const collapseClasses = classNames("transition-[max-height] max-h-study-modal-outer overflow-hidden", {
+    "overflow-hidden !max-h-0": collapsed
+  });
 
-      // Header
-      title={<ModalHeader
+  if ((items?.length || 0) <= 0) return null;
+
+  // Wrapper
+  return <div className="fixed inset-0 pointer-events-none overflow-hidden z-30">
+    {/* Inner dialog */}
+    <div className={classes}>
+      {/* Header */}
+      <ModalHeader
         count={items?.length || 0}
         collapsed={collapsed}
         toggleCollapse={toggleCollapse}
-      />}
+      />
 
-      // Don't show the close icon, it's rendered in the title instead
-      closable={false}
-      closeIcon={null}
+      {/* Collapsible portion */}
+      <div className={collapseClasses}>
+        {/* Subjects */}
+        <div
+          className="h-full max-h-study-modal overflow-y-auto mt-sm"
+          // Ref here is for the SubjectGrid, so that it can handle scroll
+          // windowing correctly
+          ref={r => setInnerContainerRef(r)}
+        >
+          <SubjectGrid
+            size="tiny"
+            colorBy="type"
+            hasVocabulary
+            hideInQueue
+            alignLeft
+            maxHeight={150}
+            subjectIds={items ?? []}
+            containerRef={innerContainerRef}
+            simpleWindowing
+            // TODO: EpicVirtualList doesn't (yet) account for padding when
+            //       measuring the scroll container height, so additional overscan
+            //       is needed.
+            overscanCount={3}
+          />
+        </div>
 
-      open={(items?.length || 0) > 0}
-      mask={false}
-      maskClosable={false}
-
-      // Footer
-      footer={<ModalFooter items={items} />}
-    >
-      {/* Subjects */}
-      <div
-        className="h-full max-h-study-modal transition-study-modal overflow-y-auto mt-xss"
-        // Ref here is for the SubjectGrid, so that it can handle scroll
-        // windowing correctly
-        ref={r => setInnerContainerRef(r)}
-      >
-        <SubjectGrid
-          size="tiny"
-          colorBy="type"
-          hasVocabulary
-          hideInQueue
-          alignLeft
-          maxHeight={150}
-          subjectIds={items ?? []}
-          containerRef={innerContainerRef}
-          simpleWindowing
-          // TODO: EpicVirtualList doesn't (yet) account for padding when
-          //       measuring the scroll container height, so additional overscan
-          //       is needed.
-          overscanCount={3}
-        />
+        {/* Footer */}
+        <ModalFooter items={items} />
       </div>
-    </Modal>
+    </div>
 
     <GlobalHotKeys
       keyMap={KEY_MAP}
       handlers={{ TOGGLE_COLLAPSE: toggleCollapse }}
       allowChanges
     />
-  </>;
+  </div>;
 }
 
 interface ModalHeaderProps {
@@ -141,39 +123,44 @@ function ModalHeader({
     ? "Show self-study-queue"
     : "Hide self-study-queue";
 
-  return <>
-    <span className="study-title">
+  const buttonClasses = classNames(
+    "flex items-center justify-center w-[32px] h-[32px] rounded text-desc text-lg leading-none cursor-pointer",
+    "border-0 outline-none bg-transparent hover:bg-white/10 light:hover:bg-black/10 transition-colors"
+  );
+
+  return <div className="flex justify-between">
+    <span className="text-lg font-semibold">
       Self-study queue <span className="ml-text text-base font-normal">
         ({pluralN(count, "subject")})
       </span>
     </span>
 
-    {/* Collapse button */}
-    <Tooltip title={<>{collapseTitle} <b>(Shift+Q)</b></>}>
-      <button
-        type="button"
-        aria-label="Hide"
-        className="ant-modal-close !right-[56px]"
-        onClick={toggleCollapse}
-      >
-        <span className="ant-modal-close-x">
+    <div className="flex items-end gap-sm -mr-xs">
+      {/* Collapse button */}
+      <Tooltip title={<>{collapseTitle} <b>(Shift+Q)</b></>}>
+        <button
+          type="button"
+          aria-label="Hide"
+          className={buttonClasses}
+          onClick={toggleCollapse}
+        >
           {collapsed ? <UpOutlined /> : <DownOutlined />}
-        </span>
-      </button>
-    </Tooltip>
+        </button>
+      </Tooltip>
 
-    {/* Fake close button */}
-    <Tooltip title="Clear self-study queue">
-      <button
-        type="button"
-        aria-label="Close"
-        className="ant-modal-close study-modal-close"
-        onClick={promptClear}
-      >
-        <span className="ant-modal-close-x"><CloseOutlined /></span>
-      </button>
-    </Tooltip>
-  </>;
+      {/* Fake close button */}
+      <Tooltip title="Clear self-study queue">
+        <button
+          type="button"
+          aria-label="Close"
+          className={buttonClasses}
+          onClick={promptClear}
+        >
+          <CloseOutlined />
+        </button>
+      </Tooltip>
+    </div>
+  </div>;
 }
 
 interface FooterProps {
@@ -194,7 +181,7 @@ function ModalFooter({ items }: FooterProps): JSX.Element {
     gotoSession(navigate, startSession("self_study", items, withLessons, opts));
   }, [navigate, items, withLessons]);
 
-  return <div className="flex items-center">
+  return <div className="flex items-center mt-sm">
     {/* "With lessons" checkbox */}
     <Checkbox
       onChange={setWithLessons}
