@@ -53,6 +53,7 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: "prompt",
+      filename: "service-worker.js",
       workbox: {
         runtimeCaching: [
           // Cache the Google Fonts stylesheets
