@@ -131,6 +131,7 @@ export function useAnswersPanel(
             size="tiny"
             subjectIds={ids}
             hasVocabulary={hasVocabulary}
+            alignLeft
           />
         </Fragment>;
       })
