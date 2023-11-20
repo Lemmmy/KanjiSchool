@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { ReactNode } from "react";
-
 import { SubjectWithAssignment } from "@api";
 
 import {
@@ -32,7 +30,7 @@ export const GROUP_BY_FNS: Record<ItemsGroupBy, GroupByFn> = {
 export type GroupToNodeFn = (
   n: number,
   freqGroupSize: number
-) => ReactNode;
+) => string;
 
 export const GROUP_BY_TO_NODE_FNS: Record<ItemsGroupBy, GroupToNodeFn> = {
   "level": n => `Level ${n}`,

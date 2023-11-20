@@ -20,7 +20,13 @@ interface Props extends ButtonProps {
   useShortTitle?: boolean;
   noDanger?: boolean;
   noTooltip?: boolean;
+  titles?: [string, string];
+  longTitles?: [string, string];
+  shortTitle?: string;
 }
+
+const defaultTitles: [string, string] = ["Add to study queue", "Remove from study queue"];
+const defaultLongTitles: [string, string] = ["Add to self-study queue", "Remove from self-study queue"];
 
 export function StudyQueueButton({
   subjectId,
@@ -30,14 +36,17 @@ export function StudyQueueButton({
   noDanger,
   noTooltip,
   className,
+  titles = defaultTitles,
+  longTitles = defaultLongTitles,
+  shortTitle = "Queue",
   ...props
 }: Props): JSX.Element {
   const inQueue = useIsInStudyQueue(subjectId ?? -1);
   const [hover, unhover] = useStudyQueueHover();
 
   // Various titles depending on the circumstance
-  const longTitle = inQueue ? "Remove from self-study queue" : "Add to self-study queue";
-  const title = inQueue ? "Remove from study queue" : "Add to study queue";
+  const title = titles[+inQueue];
+  const longTitle = longTitles[+inQueue];
 
   const classes = classNames("study-queue-button", className);
 
@@ -74,7 +83,7 @@ export function StudyQueueButton({
     // Any user-defined button props
     {...props}
   >
-    {!iconOnly && (useShortTitle ? "Queue" : title)}
+    {!iconOnly && (useShortTitle ? shortTitle : title)}
   </Button>;
 
   return noTooltip

@@ -2,8 +2,6 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { ReactNode } from "react";
-
 import { store } from "@store";
 import { SubjectWithAssignment } from "@api";
 
@@ -21,14 +19,14 @@ export type LookupResults = ResultGroupSet | ResultSet;
 export interface ResultGroupSet {
   subgroups: true;
   group: number;
-  title: ReactNode;
+  title: string;
   items: ResultSet[];
 }
 
 export interface ResultSet {
   subgroups: false;
   group: number;
-  title: ReactNode;
+  title: string;
   items: SubjectWithAssignment[];
   itemIds: number[];
 }
@@ -43,10 +41,14 @@ export function lookupItems(
   type: ItemsBaseType,
   {
     frequencyGroupSize = 500,
-    sortBy = "slug", sortByOrder = "asc",
-    groupByPrimary, groupByPrimaryOrder = "asc",
-    groupBySecondary, groupBySecondaryOrder = "asc",
-    types, srsStages
+    sortBy = "slug",
+    sortByOrder = "asc",
+    groupByPrimary,
+    groupByPrimaryOrder = "asc",
+    groupBySecondary,
+    groupBySecondaryOrder = "asc",
+    types,
+    srsStages
   }: FormValues
 ): LookupResults[] {
   const { subjects } = store.getState().subjects;
