@@ -2,79 +2,69 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-// -----------------------------------------------------------------------------
-// This is ant-design's Result component, but without importing 54 kB of images
-// that we don't even use.
-//
-// This file is based off of the following source code from ant-design, which is
-// licensed under the MIT license:
-//
-// https://github.com/ant-design/ant-design/blob/077443696ba0fb708f2af81f5eb665b908d8be66/components/result/index.tsx
-//
-// For the full terms of the MIT license used by ant-design, see:
-// https://github.com/ant-design/ant-design/blob/master/LICENSE
-// -----------------------------------------------------------------------------
 import React from "react";
+import { CloseCircleFilled } from "@ant-design/icons";
 import classNames from "classnames";
 
-import CheckCircleFilled from "@ant-design/icons/CheckCircleFilled";
-import CloseCircleFilled from "@ant-design/icons/CloseCircleFilled";
-import ExclamationCircleFilled from "@ant-design/icons/ExclamationCircleFilled";
-import WarningFilled from "@ant-design/icons/WarningFilled";
-
-export const IconMap = {
-  success: CheckCircleFilled,
-  error: CloseCircleFilled,
-  info: ExclamationCircleFilled,
-  warning: WarningFilled,
-};
-export type ResultStatusType = keyof typeof IconMap;
-
-export interface ResultProps {
-  icon?: React.ReactNode;
-  status?: ResultStatusType;
-  title?: React.ReactNode;
-  subTitle?: React.ReactNode;
-  extra?: React.ReactNode;
+type Status = "error";
+interface StatusIcon {
+  render: () => React.ReactNode;
   className?: string;
-  style?: React.CSSProperties;
-  fullPage?: boolean;
-  children?: React.ReactNode;
 }
 
-/**
- * Render icon if ExceptionStatus includes ,render svg image else render iconNode
- */
-const renderIcon = ({ status, icon }: ResultProps) => {
-  const iconNode = React.createElement(IconMap[status as ResultStatusType],);
-  return <div className={"ant-result-icon"}>{icon || iconNode}</div>;
+export const statusIcons: Record<Status, StatusIcon> = {
+  error: {
+    render: () => <CloseCircleFilled className="text-red" />,
+    className: "text-red",
+  },
 };
 
-const renderExtra = ({ extra }: ResultProps) =>
-  extra && <div className="ant-result-extra">{extra}</div>;
+export interface ResultProps {
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  extra?: React.ReactNode;
+  status?: Status;
+  icon?: React.ReactNode;
+  fullPage?: boolean;
+  className?: string;
+}
 
-export const SmallResult: React.FC<ResultProps>  = ({
-  className: customizeClassName,
-  subTitle,
+const StatusIcon = React.memo(function StatusIcon({ status, icon }: ResultProps) {
+  const renderIcon = icon || (status ? statusIcons[status]?.render() : null);
+  const className = status ? statusIcons[status]?.className : null;
+  if (!renderIcon) return null;
+
+  return <span className={classNames("text-4xl", className)}>
+    {renderIcon}
+  </span>;
+});
+
+export function SmallResult({
   title,
-  style,
-  children,
-  status = "info",
-  icon,
+  subtitle,
   extra,
+  status = "error",
+  icon,
   fullPage,
-}) => {
-  const classes = classNames("ant-result", "ant-result-" + status, customizeClassName, {
-    "full-page-result": fullPage
+  className,
+}: ResultProps): JSX.Element {
+  const classes = classNames("flex flex-col justify-center items-center gap-md", className, {
+    "h-[calc(100vh-64px)]": fullPage
   });
 
   return (
-    <div className={classes} style={style}>
-      {renderIcon({ status, icon })}
-      <div className="ant-result-title">{title}</div>
-      {subTitle && <div className="ant-result-subtitle">{subTitle}</div>}
-      {renderExtra({ extra })}
-      {children && <div className="ant-result-content">{children}</div>}
+    <div className={classes}>
+      {/* Icon */}
+      {(icon || status) && <StatusIcon status={status} icon={icon} />}
+
+      {/* Title */}
+      <div className="text-2xl">{title}</div>
+
+      {/* Subtitle */}
+      {subtitle && <div className="text-desc">{subtitle}</div>}
+
+      {/* Extra */}
+      {extra && <div>{extra}</div>}
     </div>
   );
-};
+}

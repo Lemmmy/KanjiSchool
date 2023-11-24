@@ -20,7 +20,7 @@ export function NotFoundPage({ nyi }: Props): JSX.Element {
     icon={<FrownOutlined />}
     status="error"
     title={nyi ? "Not yet implemented" : "Page not found"}
-    subTitle={nyi ? "This feature will be coming soon!" : undefined}
+    subtitle={nyi ? "This feature will be coming soon!" : undefined}
     extra={(
       <Button type="primary" onClick={() => navigate(-1)}>
         Go back
