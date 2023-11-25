@@ -6,11 +6,11 @@ import { LegacyRef, SVGProps, useEffect, useMemo, useRef, useState } from "react
 import { Empty } from "antd";
 
 import { ReviewForecast } from "@api";
-import { usePalette } from "@utils";
+import { usePalette, useStringSetting } from "@utils";
 
 import { select } from "d3-selection";
 
-import { chartHeight, renderChart } from "./renderChart.ts";
+import { chartHeight, renderChart, ReviewChartCurve } from "./renderChart.ts";
 import { ChartDatum, generateChart } from "./data.ts";
 import { ChartTooltip } from "./UpcomingReviewsChartTooltip.tsx";
 
@@ -30,6 +30,7 @@ export function UpcomingReviewsChart({
   const [tooltipDatum, setTooltipDatum] = useState<ChartDatum | null>(null);
 
   const theme = usePalette();
+  const curveType = useStringSetting<ReviewChartCurve>("dashboardReviewChartCurve");
   const data = useMemo(() => generateChart(forecast, maxDate), [forecast, maxDate]);
 
   const empty = data.length === 0 || data[data.length - 1].cumulative === 0;
@@ -43,8 +44,8 @@ export function UpcomingReviewsChart({
   useEffect(() => {
     if (empty || !data || !d3Ref.current) return;
     const svg = select<SVGSVGElement, ChartDatum>(d3Ref.current);
-    renderChart(svg, tooltipRef, setTooltipDatum, data, maxDays, theme);
-  }, [empty, data, maxDays, theme]);
+    renderChart(svg, tooltipRef, setTooltipDatum, data, maxDays, theme, curveType);
+  }, [empty, data, maxDays, theme, curveType]);
 
   if (empty) {
     return <Empty

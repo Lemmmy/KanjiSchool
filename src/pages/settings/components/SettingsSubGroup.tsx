@@ -8,7 +8,7 @@ import { MenuProps } from "antd";
 import { SettingName } from "@utils/settings";
 import { SettingBoolean } from "./SettingBoolean.tsx";
 import { SettingInteger } from "./SettingInteger.tsx";
-import { SettingDropdown } from "./SettingDropdown.tsx";
+import { DropdownOptions, SettingDropdown } from "./SettingDropdown.tsx";
 import { menuItemClass } from "./settingsStyles.ts";
 
 export type MenuItem = Required<MenuProps>["items"][number];
@@ -53,7 +53,7 @@ export function dropdownSetting<T extends string>(
   setting: SettingName<T>,
   title?: string,
   description?: ReactNode,
-  options: { label: ReactNode; value: T }[] = [],
+  options: DropdownOptions<T> = [],
   onChanged?: (value: T) => void
 ): MenuItem {
   return {

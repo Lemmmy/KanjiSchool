@@ -9,11 +9,17 @@ import { SettingName, setStringSetting, useStringSetting } from "@utils/settings
 import { SettingDescription } from "./SettingDescription.tsx";
 import { menuItemSettingInner } from "./settingsStyles.ts";
 
+export interface DropdownOption<T extends string> {
+  label: ReactNode;
+  value: T;
+}
+export type DropdownOptions<T extends string> = DropdownOption<T>[];
+
 interface Props<T extends string> {
   setting: SettingName<T>;
   title?: string;
   description?: ReactNode;
-  options: { label: ReactNode; value: T }[];
+  options: DropdownOptions<T>;
   onChanged?: (value: T) => void;
 }
 

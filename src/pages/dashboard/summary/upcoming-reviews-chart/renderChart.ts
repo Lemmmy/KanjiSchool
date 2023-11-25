@@ -9,14 +9,20 @@ import { timeDay, timeHour, timeHours } from "d3-time";
 import { scaleBand, scaleLinear, scaleTime } from "d3-scale";
 import { axisBottom, axisLeft, axisTop } from "d3-axis";
 import { bisect, max } from "d3-array";
-import { curveMonotoneX, line, stack } from "d3-shape";
-import { format } from "d3-format";
+import { CurveFactory, curveLinear, curveMonotoneX, curveStepAfter, line, stack } from "d3-shape";
 import { timeFormat } from "d3-time-format";
 
 import { ChartDatum } from "./data";
 
 import { ColorPalette } from "@global/theme";
 import dayjs from "dayjs";
+
+export type ReviewChartCurve = "monotone" | "linear" | "step";
+const curveMapping: Record<ReviewChartCurve, CurveFactory> = {
+  monotone: curveMonotoneX,
+  linear  : curveLinear,
+  step    : curveStepAfter
+};
 
 export const chartHeight = 196;
 const margins = [16, 16, 16, 32];
@@ -42,7 +48,8 @@ export function renderChart(
   setTooltipDatum: (d: ChartDatum | null) => void,
   data: ChartDatum[],
   maxDays: number,
-  theme: ColorPalette
+  theme: ColorPalette,
+  curveType: ReviewChartCurve
 ): void {
   /* eslint-disable indent */
   const chartWidth = Math.floor(ctx.node()?.getBoundingClientRect().width || 0);
@@ -144,7 +151,7 @@ export function renderChart(
     .attr("stroke-linejoin", "round")
     .attr("stroke-linecap", "round")
     .attr("d", line<ChartDatum>()
-      .curve(curveMonotoneX)
+      .curve(curveMapping[curveType])
       .x(d => xLine(dayjs(d.date).add(30, "minutes").toDate()) || 0) // Horizontally center on bars
       .y(d => Math.max(y(d.cumulative), 2))); // Don't allow line to escape chart
 

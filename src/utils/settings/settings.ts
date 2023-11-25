@@ -4,6 +4,8 @@
 
 import { ThemeName, PaletteName } from "@global/theme";
 import { ReviewForecastGrouping } from "@pages/dashboard/review-forecast/ReviewForecastCard";
+import { AccentDiagramStyle } from "@pages/subject/readings/accentDiagramTypes.ts";
+import { ReviewChartCurve } from "@pages/dashboard/summary/upcoming-reviews-chart/renderChart.ts";
 import { QuestionHeaderTypeColor } from "@pages/session/SessionQuestionHeader";
 import { SkipType, UndoType } from "@session";
 import { LessonOrder } from "@session/order/LessonOrder";
@@ -12,7 +14,6 @@ import { SessionPriority } from "@session/order/SessionPriority";
 import { NearMatchAction } from "@utils";
 
 import { AnySettingName, IntegerSettingConfig } from ".";
-import { AccentDiagramStyle } from "@pages/subject/readings/accentDiagramTypes.ts";
 
 export interface SettingsStateBase {
   // ===========================================================================
@@ -26,101 +27,103 @@ export interface SettingsStateBase {
   // ===========================================================================
   // ACCESSIBILITY SETTINGS
   // ===========================================================================
-  /** Remove some animations. The browser setting may override this  */
+  /** Remove some animations. The browser setting may override this */
   preferReducedMotion: boolean;
 
   // ===========================================================================
   // DASHBOARD SETTINGS
   // ===========================================================================
-  /** Show the current streak on the dashboard. */
+  /** Show the current streak on the dashboard */
   dashboardCurrentStreak: boolean;
-  /** Include passed levels in the level progress bars. */
+  /** Include passed levels in the level progress bars */
   dashboardLevelProgressPassed: boolean;
-  /** Include reviews made available before now in the upcoming reviews chart and reviews forecast. */
+  /** Include reviews made available before now in the upcoming reviews chart and reviews forecast */
   dashboardReviewForecastNow: boolean;
-  /** Number of days to show in the reviews chart. */
+  /** Number of days to show in the reviews chart */
   dashboardReviewChartDays: number;
-  /** Show the review stats row (new unlocks, burned items, etc.). */
+  /** Curve type for the review chart's cumulative line */
+  dashboardReviewChartCurve: ReviewChartCurve;
+  /** Show the review stats row (new unlocks, burned items, etc.) */
   dashboardReviewStatsRow: boolean;
   /** Review percentage correct for an item to be considered in 'critical
-   * condition'. */
+   * condition' */
   dashboardCriticalThreshold: number;
-  /** Show review forecast dates in 12-hour format. */
+  /** Show review forecast dates in 12-hour format */
   dashboardReviewForecast12h: boolean;
   /** Review forecast bar grouping */
   dashboardReviewForecastGrouping: ReviewForecastGrouping;
-  /** Show the JLPT and Jōyō kanji row. */
+  /** Show the JLPT and Jōyō kanji row */
   dashboardJlptJoyoRow: boolean;
-  /** Show the level progress and accuracy row. */
+  /** Show the level progress and accuracy row */
   dashboardLevelProgressRow: boolean;
-  /** Show the level progress item types in Japanese. */
+  /** Show the level progress item types in Japanese */
   dashboardLevelProgressJa: boolean;
-  /** Show reading before meaning in the review accuracy card. */
+  /** Show reading before meaning in the review accuracy card */
   dashboardAccuracyReadingFirst: boolean;
-  /** Show the last session summary on the dashboard. */
+  /** Show the last session summary on the dashboard */
   dashboardLastSessionSummary: boolean;
-  /** Always expand correct/incorrect answers in the last session summary. */
+  /** Always expand correct/incorrect answers in the last session summary */
   dashboardLastSessionExpand: boolean;
-  /** Show review heatmap labels in Japanese. */
+  /** Show review heatmap labels in Japanese */
   reviewHeatmapJa: boolean;
-  /** Show month separators in the review heatmap. */
+  /** Show month separators in the review heatmap */
   reviewHeatmapMonthSep: boolean;
-  /** Show upcoming reviews in the review heatmap. */
+  /** Show upcoming reviews in the review heatmap */
   reviewHeatmapIncludeFuture: boolean;
 
   // ===========================================================================
   // FONT SETTINGS
   // ===========================================================================
-  /** Use a random font in reviews. */
+  /** Use a random font in reviews */
   randomFontEnabled: boolean;
-  /** Show the default font when hovering over a random font. */
+  /** Show the default font when hovering over a random font */
   randomFontHover: boolean;
-  /** Show a different random font for reading/meaning questions. */
+  /** Show a different random font for reading/meaning questions */
   randomFontSeparateReadingMeaning: boolean;
-  /** Show the random font name. */
+  /** Show the random font name */
   randomFontShowName: boolean;
 
   // ===========================================================================
   // SUBJECT INFO SETTINGS
   // ===========================================================================
-  /** Show on'yomi readings in katakana. */
+  /** Show on'yomi readings in katakana */
   subjectOnyomiReadingsKatakana: boolean;
-  /** Color hiragana and katakana separately in vocabulary words. */
+  /** Color hiragana and katakana separately in vocabulary words */
   subjectCharactersUseCharBlocks: boolean;
-  /** Show pitch accent diagrams on vocabulary pages. */
+  /** Show pitch accent diagrams on vocabulary pages */
   pitchAccentEnabled: boolean;
-  /** Style for pitch accent diagrams. */
+  /** Style for pitch accent diagrams */
   pitchAccentDiagramStyle: AccentDiagramStyle;
 
   // ===========================================================================
   // GENERAL SESSION SETTINGS
   // ===========================================================================
-  /** Colors of the 'Meaning/Reading' header on questions. */
+  /** Colors of the 'Meaning/Reading' header on questions */
   questionHeaderTypeColor: QuestionHeaderTypeColor;
-  /** Shake the subject characters on an incorrect answer. */
+  /** Shake the subject characters on an incorrect answer */
   shakeCharactersIncorrect: boolean;
   /** Hide all hints when getting an answer incorrect or clicking
-   * 'Don't know'. */
+   * 'Don't know' */
   hideHintsOnIncorrect: boolean;
-  /** Allow skipping questions. */
+  /** Allow skipping questions */
   skipEnabled: boolean;
   /** Question skip behavior */
   skipType: SkipType;
-  /** Allow skipping questions via the keyboard. */
+  /** Allow skipping questions via the keyboard */
   skipShortcut: boolean;
-  /** Show a notification when skipping via the keyboard. */
+  /** Show a notification when skipping via the keyboard */
   skipNotification: boolean;
-  /** Allow undoing incorrect answers. */
+  /** Allow undoing incorrect answers */
   undoEnabled: UndoType;
-  /** What to do when an answer is close but not quite correct. */
+  /** What to do when an answer is close but not quite correct */
   nearMatchAction: NearMatchAction;
-  /** Show the session progress bar. */
+  /** Show the session progress bar */
   sessionProgressBar: boolean;
-  /** Show in-progress questions in the session progress bar. */
+  /** Show in-progress questions in the session progress bar */
   sessionProgressStarted: boolean;
-  /** Show skipped questions in the session progress bar. */
+  /** Show skipped questions in the session progress bar */
   sessionProgressSkipped: boolean;
-  /** Debounce time for a double Enter keypress in milliseconds. */
+  /** Debounce time for a double Enter keypress in milliseconds */
   sessionEnterDebounce: number;
 
   // ===========================================================================
@@ -149,7 +152,7 @@ export interface SettingsStateBase {
   reviewShuffleAfterSelection: boolean;
   reviewMaxSize: number;
   reviewMaxStarted: number;
-  /** Threshold (percent) for when to consider an item overdue. */
+  /** Threshold (percent) for when to consider an item overdue */
   overdueThreshold: number;
 
   // ===========================================================================
@@ -165,35 +168,35 @@ export interface SettingsStateBase {
   selfStudyShuffleAfterSelection: boolean;
   selfStudyMaxSize: number;
   selfStudyMaxStarted: number;
-  /** Show subject lessons during a self-study session. */
+  /** Show subject lessons during a self-study session */
   selfStudyWithLessons: boolean;
 
   // ===========================================================================
   // AUDIO SETTINGS
   // ===========================================================================
-  /** Mute all audio. */
+  /** Mute all audio */
   audioMuted: boolean;
-  /** Autoplay audio in lessons. */
+  /** Autoplay audio in lessons */
   audioAutoplayLessons: boolean;
-  /** Autoplay audio in reviews. */
+  /** Autoplay audio in reviews */
   audioAutoplayReviews: boolean;
-  /** Max. # of audio fetch tasks at session start. */
+  /** Max. # of audio fetch tasks at session start */
   audioFetchMax: number;
 
   // ===========================================================================
   // SEARCH SETTINGS
   // ===========================================================================
-  /** Always open the handwriting input when searching. */
+  /** Always open the handwriting input when searching */
   searchAlwaysHandwriting: boolean;
-  /** Disable the search box when in a session. */
+  /** Disable the search box when in a session */
   sessionDisableSearch: boolean;
 
   // ===========================================================================
   // DEBUG SETTINGS
   // ===========================================================================
-  /** Show debug info during a session. */
+  /** Show debug info during a session */
   sessionInfoDebug: boolean;
-  /** Show debug settings in the subject info screen. */
+  /** Show debug settings in the subject info screen */
   subjectInfoDebug: boolean;
 }
 
@@ -209,6 +212,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   dashboardLevelProgressPassed: true,
   dashboardReviewForecastNow: false,
   dashboardReviewChartDays: 2,
+  dashboardReviewChartCurve: "monotone",
   dashboardCriticalThreshold: 75,
   dashboardReviewStatsRow: true,
   dashboardReviewForecast12h: false,
