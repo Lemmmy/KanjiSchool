@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { Button, Tooltip } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
@@ -21,6 +21,8 @@ export default function ReviewHeatmapCard(): JSX.Element {
   const [showAll, setShowAll] = useState(false);
   const [hoverDay, setHoverDay] = useState<HeatmapDay>();
 
+  const toggleShow = useCallback(() => setShowAll(v => !v), []);
+
   return <SimpleCard
     title={<CardTitle />}
     className={classNames(dashboardCardClass, "!h-auto")}
@@ -29,15 +31,11 @@ export default function ReviewHeatmapCard(): JSX.Element {
     flush
 
     // Show all button in top right of card
-    extra={!showAll && <Button
-      className="border-0 my-px mx-0 h-[54px]"
-      type="link"
-      onClick={() => setShowAll(true)}
-    >
-      Show all
-    </Button>}
+    extra={showAll
+      ? <ExtraButton onClick={toggleShow}>Hide all</ExtraButton>
+      : <ExtraButton onClick={toggleShow}>Show all</ExtraButton>}
   >
-    <div className="flex justify-stretch max-h-[200px] overflow-auto p-md">
+    <div className="flex justify-stretch max-h-[230px] overflow-auto p-md">
       <Heatmap currentYearOnly={!showAll} setHoverDay={setHoverDay} />
     </div>
 
@@ -76,3 +74,16 @@ function CardFooter({ hoverDay }: FooterProps): JSX.Element | null {
     <ReviewHeatmapLegend />
   </div>;
 }
+
+interface ExtraButtonProps {
+  onClick: () => void;
+  children: ReactNode;
+}
+
+const ExtraButton = ({ onClick, children }: ExtraButtonProps) => <Button
+  className="border-0 my-px mx-0 h-[54px]"
+  type="link"
+  onClick={onClick}
+>
+  {children}
+</Button>;

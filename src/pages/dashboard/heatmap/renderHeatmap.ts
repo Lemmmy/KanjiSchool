@@ -5,7 +5,7 @@
 import { HeatmapDatum, HeatmapDay } from "./data";
 
 import { Selection } from "d3-selection";
-import { timeDays, timeWeek, timeYear } from "d3-time";
+import { timeDays, timeMonth, timeMonths, timeWeek } from "d3-time";
 import { range, index } from "d3-array";
 
 import { ThemeName } from "@global/theme";
@@ -42,10 +42,16 @@ export const COLORS_LIGHT        = ["#a0cdf2", "#88c4f5", "#70bbf8", "#58b2fc", 
 export const COLORS_FUTURE       = ["#35482b", "#456a2f", "#548d34", "#64af38", "#73d13d"];
 export const COLORS_FUTURE_LIGHT = ["#c4ebae", "#b4e897", "#9ee079", "#84d455", "#73d13d"];
 
+interface MonthDatum {
+  d: Date;
+  yearStart: Date;
+}
+
 interface DayDatum {
   d: Date;
   day?: HeatmapDay;
   year?: HeatmapDatum;
+  yearStart: Date;
 }
 
 export function renderHeatmap(
@@ -62,6 +68,7 @@ export function renderHeatmap(
 
   ctx.selectAll("g").remove();
   const group = ctx.append("g");
+  let chartWidth = FULL_WIDTH;
 
   // Group for each year
   const year = group.selectAll("g")
@@ -70,26 +77,44 @@ export function renderHeatmap(
     .attr("transform", (_, i) => `translate(48, ${YEAR_FULL_HEIGHT * i + CELL_SIZE * 1.5})`);
 
   // Year label
+  const yearLabelClass = "fill-desc light:fill-black/75 [text-anchor:middle] text-sm font-bold " +
+    "[writing-mode:vertical-lr] font-ja";
   year.append("text")
-    .classed(
-      "fill-desc light:fill-black/75 [text-anchor:middle] text-sm font-bold [writing-mode:vertical-lr] font-ja",
-      true
-    )
+    .classed(yearLabelClass, true)
     .attr("transform", `translate(-32, ${(YEAR_HEIGHT - 6) / 2}) rotate(180)`)
     .text(d => d.year);
+
+  // Extra stuff if we're showing the current year only (now - 8 months -> now + 4 months) and it spans two years
+  if (data.length === 1) {
+    const yearStart = data[0].yearStart;
+    const yearEnd = data[0].yearEnd;
+
+    if (yearEnd.getFullYear() !== yearStart.getFullYear()) {
+      chartWidth += 32; // Add space for the extra year label
+
+      // Extra year label on the right
+      year.append("text")
+        .classed(yearLabelClass, true)
+        .attr("transform", `translate(${FULL_WIDTH - 36}, ${(YEAR_HEIGHT - 6) / 2}) rotate(180)`)
+        .text(d => d.year + 1);
+    }
+  }
 
   // Month label
   year.append("g")
     .classed("fill-desc light:fill-black/75", true)
     .selectAll("text")
-    .data(y => range(12).map(i => new Date(y.year, i, 1)))
+    .data<MonthDatum>(({ yearStart, yearEnd }) =>
+      timeMonths(timeMonth.floor(yearStart), timeMonth.ceil(yearEnd))
+        .filter(d => d >= yearStart && d <= yearEnd)
+        .map(d => ({ d, yearStart })))
     .join("text")
     .classed("[text-anchor:start] text-[9px] font-ja", true)
     // TODO: Round weeks up like github?
-    .attr("x", d => timeWeek.count(timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
+    .attr("x", ({ d, yearStart }) => timeWeek.count(yearStart, d) * (CELL_SIZE + CELL_SPACING))
     .attr("y", 0)
     .attr("dy", "-0.5em")
-    .text(d => formatMonth(d, jp));
+    .text(({ d }) => formatMonth(d, jp));
 
   // Day label
   year.append("g")
@@ -108,17 +133,17 @@ export function renderHeatmap(
     .classed("days", true)
     .selectAll("rect")
     // Use all days in the year as data, merge in the real data after
-    .data<DayDatum>(y => timeDays(y.yearStart, y.yearEnd).map(d => {
-      const year = yearsData.get(d.getFullYear());
+    .data<DayDatum>(({ year: y, yearStart, yearEnd }) => timeDays(yearStart, yearEnd).map(d => {
+      const year = yearsData.get(y);
       const day = year?.dayMap.get(d);
-      return { d, year, day };
+      return { d, year, day, yearStart };
     }))
     .join("rect")
     .classed("cursor-pointer hover:brightness-150 light:hover:brightness-90", true)
     .attr("width", CELL_SIZE).attr("height", CELL_SIZE)
     .attr("rx", CELL_ROUNDING).attr("ry", CELL_ROUNDING)
-    .attr("x", ({ d }) =>
-      timeWeek.count(timeYear(d), d) * (CELL_SIZE + CELL_SPACING))
+    .attr("x", ({ d, yearStart }) =>
+      timeWeek.count(yearStart, d) * (CELL_SIZE + CELL_SPACING))
     .attr("y", ({ d }) =>
       d.getDay() * (CELL_SIZE + CELL_SPACING))
     .attr("fill", ({ year, day }) => {
@@ -135,8 +160,12 @@ export function renderHeatmap(
     year.append("g")
       .classed("stroke-[#565656] light:stroke-[#8c8c8c] fill-none [translate:-1px_-1px]", true)
       .selectAll("path")
-      // Don't draw one for December
-      .data(y => range(11).map(i => new Date(y.year, i, 1)))
+      // Don't draw one for the last month
+      .data<MonthDatum>(({ yearStart, yearEnd }) =>
+        timeMonths(timeMonth.floor(yearStart), timeMonth.ceil(yearEnd))
+          .filter(d => d >= yearStart && d <= yearEnd)
+          .map(d => ({ d, yearStart }))
+          .slice(0, -1))
       .enter()
       .append("path")
       .attr("shape-rendering", "crispEdges")
@@ -145,9 +174,9 @@ export function renderHeatmap(
 
   // Enforce svg size
   ctx
-    .attr("width", FULL_WIDTH)
+    .attr("width", chartWidth)
     .attr("height", YEAR_FULL_HEIGHT * data.length)
-    .style("min-width", FULL_WIDTH + "px")
+    .style("min-width", chartWidth + "px")
     .style("min-height", (YEAR_FULL_HEIGHT * data.length) + "px");
 
   ctx.exit().remove();
@@ -161,18 +190,20 @@ export function renderHeatmap(
   }
 }
 
-function pathMonth(t0: Date) {
-  const t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
-    d1 = t1.getDay(), w1 = timeWeek.count(timeYear(t1), t1);
-  const s = CELL_SIZE + CELL_SPACING;
+function pathMonth({ d: t0, yearStart }: MonthDatum) {
+  const t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0); // Last day of month
+  const d1 = t1.getDay(); // Last day of month's day of week
+  const w1 = timeWeek.count(yearStart, t1); // Last day of month's week of year (according to chart's yearStart)
+  const s = CELL_SIZE + CELL_SPACING; // Size of each cell including spacing
 
   if (d1 === 6) {
-    return "M" + (w1 + 1) * s + "," + 7 * s
-      + "V" + 0;
+    // Last day of month is Saturday, so we can just draw a line down the right side
+    return "M" + (w1 + 1) * s + "," + 7 * s // Start at bottom right
+      + "V" + 0;                            // Draw a line up to the top
   } else {
-    return "M" + w1 * s + "," + 7 * s
-      + "V" + (d1 + 1) * s
-      + "H" + (w1 + 1) * s
-      + "V" + 0;
+    return "M" + w1 * s + "," + 7 * s // Start at bottom left
+      + "V" + (d1 + 1) * s            // Draw a line up to the last day of the month
+      + "H" + (w1 + 1) * s            // Draw a line across to the right side
+      + "V" + 0;                      // Draw a line up to the top
   }
 }

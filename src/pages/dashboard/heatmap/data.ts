@@ -5,10 +5,9 @@
 import { ApiReview, StoredAssignment } from "@api";
 import { db } from "@db";
 
-import { ScaleQuantize, InternMap } from "d3";
-import { timeYear, timeDay } from "d3-time";
-import { rollup, sort, union, map, group, index, extent } from "d3-array";
-import { scaleQuantize } from "d3-scale";
+import { timeYear, timeDay, timeMonth } from "d3-time";
+import { rollup, sort, union, map, group, index, extent, InternMap } from "d3-array";
+import { scaleQuantize, ScaleQuantize } from "d3-scale";
 
 import { COLORS, COLORS_FUTURE, COLORS_FUTURE_LIGHT, COLORS_LIGHT } from "./renderHeatmap";
 import { ThemeName } from "@global/theme";
@@ -45,16 +44,23 @@ export async function generateHeatmapData(
   theme: ThemeName = "dark"
 ): Promise<HeatmapDatum[]> {
   const now = new Date();
-  const today = +timeDay.floor(now);
-  const yearEnd = timeYear.ceil(now);
+  const todayDate = timeDay.floor(now);
+  const today = +todayDate;
+
+  // If we're only showing the current year, show the period of [8 months ago, 4 months from now]. Otherwise, show the
+  // full year from start to finish (so we only need reviews up until the end of this year).
+  const yearStart = currentYearOnly
+    ? timeMonth.offset(todayDate, -8)
+    : timeYear.floor(now);
+  const yearEnd = currentYearOnly
+    ? timeMonth.offset(todayDate, 4) // TODO: Get this data from SpacedRepetitionSystems instead of hardcoding it
+    : timeYear.ceil(now);
+  debug("year start: %o  year end: %o", yearStart, yearEnd);
 
   let lessons: StoredAssignment[];
   let reviews: ApiReview[];
   if (currentYearOnly) {
-    // Get all the data from the current year (in the user's timezone)
-    const yearStart = timeYear.floor(now);
-    debug("year start: %o", yearStart);
-
+    // Get all the data from the current year (in the user's timezone).
     // Dates are stored in ISO-8601 in the database and toISOString() will
     // always return a UTC string, so we can do a simple string comparison like
     // this
@@ -93,8 +99,10 @@ export async function generateHeatmapData(
 
   // Zip all the rollups together into HeatmapDay[]
   const dayKeys = sort(union(
-    rolledReviews.keys(), rolledLessons.keys(), rolledFutures.keys()
-  ));
+    rolledReviews.keys(),
+    rolledLessons.keys(),
+    rolledFutures.keys())
+  );
   const days = map<Date, HeatmapDay>(dayKeys, date => {
     const reviewsN = rolledReviews.get(date) ?? 0;
     const lessonsN = rolledLessons.get(date) ?? 0;
@@ -112,7 +120,10 @@ export async function generateHeatmapData(
   });
 
   // Group again into years
-  const years = group(days, d => d.date.getFullYear());
+  const years = currentYearOnly
+    ? new InternMap([[todayDate.getFullYear(), days]])
+    : group(days, d => d.date.getFullYear());
+
   const yearsArray = Array.from(years, ([year, days]) => {
     // Turn the HeatmapDay[] back into an InternMap
     const dayMap = index(days, d => d.date);
@@ -130,8 +141,8 @@ export async function generateHeatmapData(
 
     return {
       year,
-      yearStart: new Date(year, 0, 1),
-      yearEnd: new Date(year + 1, 0, 1),
+      yearStart: currentYearOnly ? yearStart : new Date(year, 0, 1),
+      yearEnd: currentYearOnly ? yearEnd : new Date(year + 1, 0, 1),
 
       min: min ?? 0,
       max: max ?? 1,
@@ -141,7 +152,7 @@ export async function generateHeatmapData(
       dayMap
     };
   });
-  yearsArray.reverse(); // Sort by year descending
 
+  yearsArray.reverse(); // Sort by year descending
   return yearsArray.filter(y => y.year !== 1970); // lol
 }
