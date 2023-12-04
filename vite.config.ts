@@ -42,9 +42,6 @@ export default defineConfig({
       ...parseTsAliases(),
     },
   },
-  server: {
-    https: true,
-  },
   plugins: [
     react(),
     mkcert(),

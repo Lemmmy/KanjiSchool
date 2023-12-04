@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
 
 import assignmentsReducer, { AssignmentsSliceState } from "@store/slices/assignmentsSlice.ts";
 import authReducer, { AuthSliceState } from "./slices/authSlice.ts";
@@ -18,7 +18,6 @@ import subjectsReducer, { SubjectsSliceState } from "./slices/subjectsSlice.ts";
 import syncReducer, { SyncSliceState } from "./slices/syncSlice.ts";
 
 import { devToolsOptions } from "./devTools.ts";
-import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 
 export interface RootState {
   assignments      : AssignmentsSliceState;
@@ -34,7 +33,7 @@ export interface RootState {
   sync             : SyncSliceState;
 }
 
-export let store: ToolkitStore<RootState>;
+export let store: EnhancedStore<RootState>;
 
 export function initStore(): void {
   if (store) return;

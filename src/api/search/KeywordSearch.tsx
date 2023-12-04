@@ -7,6 +7,7 @@ import { createContext, useState, useEffect, useMemo, useContext, ReactNode } fr
 import { ApiSubjectKanji, StoredSubject, StoredSubjectMap, useSubjects } from "@api";
 
 import type Fuse from "fuse.js";
+import { FuseResult, IFuseOptions } from "fuse.js";
 import { toKana } from "@comp/PseudoIme";
 
 import Debug from "debug";
@@ -20,7 +21,7 @@ export interface IndexedSubject {
   readings: string[];
 }
 
-export type KeywordSearchResult = Fuse.FuseResult<IndexedSubject>;
+export type KeywordSearchResult = FuseResult<IndexedSubject>;
 export type PerformSearchFn = (query: string, limit?: number) =>
   KeywordSearchResult[];
 const emptyPerformSearch: PerformSearchFn = () => [];
@@ -35,7 +36,7 @@ export const KeywordSearchContext = createContext<KeywordSearchCtxRes>({
   performSearch: emptyPerformSearch
 });
 
-const FUSE_OPTS: Fuse.IFuseOptions<IndexedSubject> = {
+const FUSE_OPTS: IFuseOptions<IndexedSubject> = {
   keys: ["id", "characters", "meanings", "readings"],
   findAllMatches: true,
   minMatchCharLength: 0
