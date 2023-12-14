@@ -6,6 +6,9 @@
   "private": true,
   "repository": "github:Lemmmy/KanjiSchool",
   "type": "module",
+  "resolutions": {
+    "**/@types/react": "^18.2.0"
+  },
   "dependencies": {
     "@anatoliygatt/use-prefers-reduced-motion": "^1.0.11",
     "@ant-design/colors": "^7.0.0",
