@@ -105,6 +105,7 @@ export function SessionQuestionHeader({
 
   const sessionUuid = useAppSelector(state => state.session?.sessionState?.uuid);
   const shouldShakeIncorrect = useBooleanSetting("shakeCharactersIncorrect");
+  const hideSrsStage = useBooleanSetting("hideSrsStage");
   const randomFontEnabled = useBooleanSetting("randomFontEnabled");
   const randomFontHover = useBooleanSetting("randomFontHover");
   const randomFontShowName = useBooleanSetting("randomFontShowName");
@@ -134,7 +135,7 @@ export function SessionQuestionHeader({
         )}
 
       {/* SRS stage */}
-      <QuestionSrsStage subject={subject} />
+      {!hideSrsStage && <QuestionSrsStage subject={subject} />}
 
       {/* Random font name */}
       {randomFontEnabled && randomFontShowName && randomFont && hasCharacter && (

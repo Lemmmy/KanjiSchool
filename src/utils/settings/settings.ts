@@ -102,9 +102,10 @@ export interface SettingsStateBase {
   questionHeaderTypeColor: QuestionHeaderTypeColor;
   /** Shake the subject characters on an incorrect answer */
   shakeCharactersIncorrect: boolean;
-  /** Hide all hints when getting an answer incorrect or clicking
-   * 'Don't know' */
+  /** Hide all hints when getting an answer incorrect or clicking 'Don't know' */
   hideHintsOnIncorrect: boolean;
+  /** Hide the current SRS stage on the question header */
+  hideSrsStage: boolean;
   /** Allow skipping questions */
   skipEnabled: boolean;
   /** Question skip behavior */
@@ -240,6 +241,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   questionHeaderTypeColor: "DEFAULT",
   shakeCharactersIncorrect: true,
   hideHintsOnIncorrect: false,
+  hideSrsStage: false,
   skipEnabled: true,
   skipType: "PUT_END",
   skipShortcut: true,

@@ -111,6 +111,7 @@ export const menuItems: NonNullable<MenuProps["items"]> = [
       ),
       booleanSetting("shakeCharactersIncorrect", "Shake the subject characters on an incorrect answer"),
       booleanSetting("hideHintsOnIncorrect", "Hide all hints when getting an answer incorrect or clicking 'Don't know'"),
+      booleanSetting("hideSrsStage", "Hide the current SRS stage on the question header"),
       booleanSetting("skipEnabled", "Allow skipping questions"),
       dropdownSetting(
         "skipType",
