@@ -47,6 +47,7 @@ export function StudyQueueButton({
   // Various titles depending on the circumstance
   const title = titles[+inQueue];
   const longTitle = longTitles[+inQueue];
+  const hasHotkey = subjectId !== undefined && !subjectIds; // Only single-subject buttons have hotkeys
 
   const classes = classNames("study-queue-button", className);
 
@@ -90,7 +91,11 @@ export function StudyQueueButton({
     ? button
     : (
       <Tooltip
-        title={() => <>{longTitle} <b>(Q)</b></>}
+        title={() => <>
+          {longTitle}
+          {/* Hotkey hint, if it should be present */}
+          {hasHotkey ? <b> (Q)</b> : null}
+        </>}
         destroyTooltipOnHide={true}
       >
         {button}
