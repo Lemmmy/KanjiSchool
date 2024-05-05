@@ -175,7 +175,11 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
       </SubjectMarkup>
 
       {/* Kanji meaning hint */}
-      {objectType === "kanji" && <SubjectInfoHint data={kanjiSubjectData} header="Meaning hint" />}
+      {objectType === "kanji" && <SubjectInfoHint header="Reading hint">
+        {kanjiSubjectData.meaning_hint && <SubjectMarkup>
+          {kanjiSubjectData.meaning_hint}
+        </SubjectMarkup>}
+      </SubjectInfoHint>}
 
       {/* Study material meaning notes */}
       <StudyMaterialNote
@@ -202,7 +206,11 @@ export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
       </SubjectMarkup>
 
       {/* Kanji reading hint */}
-      {objectType === "kanji" && <SubjectInfoHint data={kanjiSubjectData} header="Reading hint" />}
+      {objectType === "kanji" && <SubjectInfoHint header="Reading hint">
+        {kanjiSubjectData.reading_hint && <SubjectMarkup>
+          {kanjiSubjectData.reading_hint}
+        </SubjectMarkup>}
+      </SubjectInfoHint>}
 
       {/* Study material reading notes */}
       <StudyMaterialNote
