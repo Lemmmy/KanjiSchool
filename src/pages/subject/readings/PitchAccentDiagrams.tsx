@@ -25,7 +25,7 @@ export default function PitchAccentDiagrams({ subject }: Props): JSX.Element | n
   const data = useMemo(() => getPitchInfosForSubject(database, subject), [subject]);
   const style = useStringSetting<AccentDiagramStyle>("pitchAccentDiagramStyle");
 
-  if (!data) {
+  if (!data || !data.length) {
     // Fall back to the plain readings if we don't have pitch accent data for this subject
     return <PlainPrimaryReadings subject={subject} />;
   }
