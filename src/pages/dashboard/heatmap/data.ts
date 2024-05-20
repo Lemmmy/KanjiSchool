@@ -154,5 +154,5 @@ export async function generateHeatmapData(
   });
 
   yearsArray.reverse(); // Sort by year descending
-  return yearsArray.filter(y => y.year !== 1970); // lol
+  return yearsArray.filter(y => y.year > 1970); // lol
 }
