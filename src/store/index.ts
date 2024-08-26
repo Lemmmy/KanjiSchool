@@ -53,7 +53,7 @@ export function initStore(): void {
       sync             : syncReducer
     },
 
-    devTools: devToolsOptions,
+    devTools: process.env.NODE_ENV === "development" ? devToolsOptions : false,
 
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
