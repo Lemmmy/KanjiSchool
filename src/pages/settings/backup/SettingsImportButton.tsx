@@ -7,7 +7,7 @@ import { ImportOutlined } from "@ant-design/icons";
 
 import { SettingsExportFile } from "./SettingsBackupButtons.tsx";
 
-import { AnySettingName, DEFAULT_SETTINGS, getSettingKey } from "@utils";
+import { AnySettingName, DEFAULT_SETTINGS, getSettingKey, lsGetKey, OTHER_LOCAL_STORAGE_SETTING_NAMES } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 import { Button } from "antd";
@@ -85,6 +85,16 @@ export function importSettings(contents: string): void {
 
       if (stored !== undefined) {
         localStorage.setItem(getSettingKey(settingName), stored);
+        count++;
+      }
+    }
+
+    // Other settings (e.g. review presets, fonts)
+    for (const lsKey of OTHER_LOCAL_STORAGE_SETTING_NAMES) {
+      const stored = data[lsKey];
+
+      if (stored !== undefined) {
+        localStorage.setItem(lsGetKey(lsKey), stored);
         count++;
       }
     }

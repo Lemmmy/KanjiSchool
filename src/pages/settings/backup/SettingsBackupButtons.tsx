@@ -2,12 +2,12 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { AnySettingName } from "@utils";
+import { AnySettingName, OtherLocalStorageSettingName } from "@utils";
 
 import { SettingsExportButton } from "./SettingsExportButton.tsx";
 import { SettingsImportButton } from "./SettingsImportButton.tsx";
 
-export interface SettingsExportFile extends Partial<Record<AnySettingName, string>> {
+export interface SettingsExportFile extends Partial<Record<AnySettingName | OtherLocalStorageSettingName, string>> {
   _exportedAt: string;
   _version: string;
 }

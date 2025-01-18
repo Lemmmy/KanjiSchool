@@ -300,6 +300,15 @@ export const DEFAULT_SETTINGS: SettingsState = {
   subjectInfoDebug: false
 };
 
+/** Other local storage keys that will be included in backups. */
+export const OTHER_LOCAL_STORAGE_SETTING_NAMES = [
+  "lessonPresets",
+  "reviewPresets",
+  "customFonts",
+  "getReviewsWarning"
+] as const;
+export type OtherLocalStorageSettingName = typeof OTHER_LOCAL_STORAGE_SETTING_NAMES[number];
+
 export const SETTING_CONFIGS: Partial<Record<AnySettingName, IntegerSettingConfig | undefined>> = {
   dashboardReviewChartDays: { min: 1, max: 7 },
   dashboardCriticalThreshold: { min: 1, max: 100 },

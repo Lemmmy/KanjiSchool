@@ -10,7 +10,7 @@ import { SettingsExportFile } from "./SettingsBackupButtons.tsx";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";
 
-import { DEFAULT_SETTINGS, AnySettingName, getSettingKey } from "@utils";
+import { DEFAULT_SETTINGS, AnySettingName, getSettingKey, OTHER_LOCAL_STORAGE_SETTING_NAMES, lsGetKey } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
@@ -44,6 +44,16 @@ export function exportSettings(): void {
 
     if (stored !== null) {
       out[settingName] = stored;
+      count++;
+    }
+  }
+
+  // Other settings (e.g. review presets, fonts)
+  for (const lsKey of OTHER_LOCAL_STORAGE_SETTING_NAMES) {
+    const stored = localStorage.getItem(lsGetKey(lsKey));
+
+    if (stored !== null) {
+      out[lsKey] = stored;
       count++;
     }
   }
