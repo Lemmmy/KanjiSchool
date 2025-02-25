@@ -10,7 +10,7 @@ import classNames from "classnames";
 import { useAppSelector } from "@store";
 
 import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio, useUserLevel } from "@api";
-import { sample } from "@utils";
+import { getIntegerSetting, sample, useIntegerSetting } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 
@@ -30,7 +30,8 @@ type VocabAudioHookRes = [
 
 function playSound(
   buffer: AudioBuffer | undefined,
-  setPlaying: Dispatch<SetStateAction<boolean>>
+  setPlaying: Dispatch<SetStateAction<boolean>>,
+  volume: number
 ) {
   try {
     if (!buffer) {
@@ -42,8 +43,11 @@ function playSound(
       debug("playSound: audioContext was suspended! attempting to resume");
       audioContext.resume();
     }
+    const gainNode = audioContext.createGain();
+    gainNode.gain.value = volume / 100;
+    gainNode.connect(audioContext.destination)
 
-    debug("playSound: audioContext state: %s; playing sound (length: %o, duration: %o)", audioContext.state, buffer.length, buffer.duration);
+    debug("playSound: audioContext state: %s; playing sound (length: %o, duration: %o, volume: %o)", audioContext.state, buffer.length, buffer.duration, gainNode.gain.value);
 
     const source = audioContext.createBufferSource();
     source.buffer = buffer;
@@ -53,7 +57,7 @@ function playSound(
       setPlaying(false);
     };
 
-    source.connect(audioContext.destination);
+    source.connect(gainNode);
     source.start();
     setPlaying(true);
   } catch (e: any) {
@@ -86,10 +90,12 @@ export function useVocabAudio(
     debug("useVocabAudio.play called %o %s %o %o", subject, pronunciation, finalLoading, finalDisabled);
     if (!subject || finalLoading || finalDisabled) return;
 
+    const audioVolume = getIntegerSetting("audioVolume")
+
     // If we've already loaded the sounds, play a random one
     if (buffers && savedPronunciation === pronunciation) {
-      debug("useVocabAudio.play: playing saved pronunciation %s: %o", pronunciation, buffers);
-      playSound(sample(buffers), setPlaying);
+      debug("useVocabAudio.play: playing saved pronunciation %s: %o (volume: %o)", pronunciation, buffers, audioVolume);
+      playSound(sample(buffers), setPlaying, audioVolume);
       return;
     }
 
@@ -143,8 +149,8 @@ export function useVocabAudio(
       }
     }
 
-    debug("useVocabAudio.play: now playing fresh sound");
-    playSound(sample(newBuffers), setPlaying);
+    debug("useVocabAudio.play: now playing fresh sound (volume: %o)", audioVolume);
+    playSound(sample(newBuffers), setPlaying, audioVolume);
     setBuffers(newBuffers);
     setSavedPronunciation(pronunciation);
     setLoading(false);
