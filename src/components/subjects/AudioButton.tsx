@@ -9,8 +9,8 @@ import classNames from "classnames";
 
 import { useAppSelector } from "@store";
 
-import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio, useUserLevel } from "@api";
-import { getIntegerSetting, sample, useIntegerSetting } from "@utils";
+import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio } from "@api";
+import { getIntegerSetting, sample } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 
