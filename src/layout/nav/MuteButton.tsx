@@ -2,31 +2,51 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Tooltip } from "antd";
+import { Tooltip, Slider, Popover } from "antd";
 
 import { useAppSelector } from "@store";
 
-import { headerElementClass } from "@layout/nav/AppHeader.tsx";
-import { setBooleanSetting, useBooleanSetting } from "@utils";
+import { setBooleanSetting, setIntegerSetting, useBooleanSetting, useIntegerSetting } from "@utils";
 import { ConditionalLink } from "@comp/ConditionalLink.tsx";
 import { SoundOutlined } from "@ant-design/icons";
 
+import { headerElementClass } from "./AppHeader.tsx";
+
 export function MuteButton(): JSX.Element {
   const audioMuted = useBooleanSetting("audioMuted");
-  const hasAnyAutoplaying = useAppSelector(s => s.settings.audioAutoplayLessons || s.settings.audioAutoplayReviews);
-
+  const audioVolume = useIntegerSetting("audioVolume");
+  
   function toggleMute() {
     setBooleanSetting("audioMuted", !audioMuted, false);
   }
+  
+  function setVolume(value: number) {
+    if (value === 0 && !audioMuted) {
+      setBooleanSetting("audioMuted", true, false);
+    } else if (audioMuted && value > 0) {
+      setBooleanSetting("audioMuted", false, false);
+    }
+    setIntegerSetting("audioVolume", value, false)
+  }
+
+  const hasAnyAutoplaying = useAppSelector(s => s.settings.audioAutoplayLessons || s.settings.audioAutoplayReviews);
+
+  const menu: JSX.Element = 
+    <div className = "h-full items-center justify-items-center" >
+      <div className="flex flex-col items-center justify-center"><Slider vertical defaultValue={audioVolume} onChangeComplete={setVolume} className="h-24" /><p className="m-0">Volume</p></div>
+      <div className="flex flex-col items-center justify-center" onClick={toggleMute}> {audioMuted ? <MuteIcon /> : <SoundOutlined />} </div>
+    </div>;
 
   if (hasAnyAutoplaying) {
-    return <Tooltip title={audioMuted ? "Unmute auto-playing audio" : "Mute auto-playing audio"}>
-      <div className={headerElementClass} onClick={toggleMute}>
-        {audioMuted ? <MuteIcon /> : <SoundOutlined />}
-      </div>
-    </Tooltip>;
+      return <Popover
+        content={menu}
+      >
+        <div className={headerElementClass}> {/* ant-dropdown-link */}
+          {audioMuted ? <MuteIcon /> : <SoundOutlined />}
+        </div>
+      </Popover>;
   } else {
-    return <Tooltip title="Auto-playing audio is disabled.">
+    return <Tooltip title="Audio is disabled.">
       <ConditionalLink to="/settings" matchTo>
         <div className={headerElementClass}>
           <MuteIcon />

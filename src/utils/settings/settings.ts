@@ -177,6 +177,8 @@ export interface SettingsStateBase {
   // ===========================================================================
   /** Mute all audio */
   audioMuted: boolean;
+  /** Audio Volume */
+  audioVolume: number;
   /** Autoplay audio in lessons */
   audioAutoplayLessons: boolean;
   /** Autoplay audio in reviews */
@@ -287,6 +289,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   selfStudyWithLessons: false,
 
   audioMuted: false,
+  audioVolume: 100,
   audioAutoplayLessons: true,
   audioAutoplayReviews: true,
   audioFetchMax: 200,
