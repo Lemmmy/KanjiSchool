@@ -12,7 +12,7 @@ import { useAppSelector } from "@store";
 import { ApiSubjectVocabulary, ApiSubjectVocabularyLike, getStoredAudio } from "@api";
 import { getIntegerSetting, sample } from "@utils";
 
-import { globalNotification } from "@global/AntInterface.tsx";
+import { globalMessage, globalNotification } from "@global/AntInterface.tsx";
 
 import { GlobalHotKeys } from "react-hotkeys";
 
@@ -39,13 +39,18 @@ function playSound(
       return;
     }
 
+    if (volume === 0) {
+      globalMessage.warning("Your volume is too low to hear anything!");
+    }
+
     if (audioContext.state === "suspended") {
       debug("playSound: audioContext was suspended! attempting to resume");
       audioContext.resume();
     }
+
     const gainNode = audioContext.createGain();
     gainNode.gain.value = volume / 100;
-    gainNode.connect(audioContext.destination)
+    gainNode.connect(audioContext.destination);
 
     debug("playSound: audioContext state: %s; playing sound (length: %o, duration: %o, volume: %o)", audioContext.state, buffer.length, buffer.duration, gainNode.gain.value);
 
@@ -90,7 +95,7 @@ export function useVocabAudio(
     debug("useVocabAudio.play called %o %s %o %o", subject, pronunciation, finalLoading, finalDisabled);
     if (!subject || finalLoading || finalDisabled) return;
 
-    const audioVolume = getIntegerSetting("audioVolume")
+    const audioVolume = getIntegerSetting("audioVolume");
 
     // If we've already loaded the sounds, play a random one
     if (buffers && savedPronunciation === pronunciation) {
