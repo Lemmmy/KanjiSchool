@@ -175,7 +175,7 @@ export interface SettingsStateBase {
   // ===========================================================================
   // AUDIO SETTINGS
   // ===========================================================================
-  /** Mute all audio */
+  /** Mute all auto-playing audio */
   audioMuted: boolean;
   /** Audio Volume */
   audioVolume: number;

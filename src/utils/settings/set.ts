@@ -32,6 +32,18 @@ export function setBooleanSetting(
   if (notify) notifySettingChange();
 }
 
+export function toggleBooleanSetting(
+  settingName: SettingName<boolean>,
+  notify = true
+): void {
+  debug("toggling setting [boolean] %s value", settingName);
+
+  store.dispatch(settings.toggleBooleanSetting(settingName));
+  localStorage.setItem(getSettingKey(settingName), store.getState().settings[settingName] ? "true" : "false");
+
+  if (notify) notifySettingChange();
+}
+
 export function setIntegerSetting(
   settingName: SettingName<number>,
   value: number,

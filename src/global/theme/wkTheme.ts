@@ -3,6 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { theme as AntTheme, ThemeConfig } from "antd";
+import { blue } from "@ant-design/colors";
 import { CSSProperties, useMemo } from "react";
 import { convertKeyName } from "@global/theme/themeUtil.ts";
 
@@ -39,6 +40,12 @@ const BASE_THEME: Partial<ThemeConfig> = {
     Menu: {
       activeBarBorderWidth: 0,
       itemMarginBlock: 0
+    },
+    Slider: {
+      trackBg: blue[6],
+      trackHoverBg: blue[5],
+      handleColor: blue[6],
+      colorPrimaryBorderHover: blue[5] // handle hover color
     }
   }
 };
@@ -59,7 +66,6 @@ const THEME_LIGHT: WkTheme = {
         colorBgSpotlight: "#f0f0f0",
         colorTextLightSolid: globalToken.colorText
       },
-
       Divider: {
         colorSplit: "rgba(0, 0, 0, 0.15)"
       }

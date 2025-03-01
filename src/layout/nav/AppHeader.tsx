@@ -24,7 +24,7 @@ const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 export const headerElementClass = classNames(
   "flex-0 h-header py-0 px-[20px] flex items-center justify-center",
   "border-0 border-l border-solid border-l-white/10 light:border-l-split",
-  "bg-transparent transition-colors hover:bg-white/5 light:hover:bg-black/5 cursor-pointer"
+  "bg-transparent transition-colors hover:bg-white/5 light:hover:bg-black/5 cursor-pointer select-none"
 );
 
 export const dropdownOverlayClass = classNames(
