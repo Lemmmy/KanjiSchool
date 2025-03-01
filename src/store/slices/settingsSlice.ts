@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { defaultFonts, loadSettings, lsGetNumber, lsGetObject, SettingsState } from "@utils";
+import { defaultFonts, loadSettings, lsGetNumber, lsGetObject, SettingName, SettingsState } from "@utils";
 import { Preset, PresetType } from "@comp/preset-editor";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PickByValue } from "utility-types";
@@ -48,6 +48,10 @@ const settingsSlice = createSlice({
   reducers: {
     setBooleanSetting(s, { payload }: SetSettingPayloadAction<boolean>) {
       s[payload.settingName] = payload.value;
+    },
+
+    toggleBooleanSetting(s, { payload }: PayloadAction<SettingName<boolean>>) {
+      s[payload] = !s[payload];
     },
 
     setIntegerSetting(s, { payload }: SetSettingPayloadAction<number>) {
@@ -98,6 +102,7 @@ const settingsSlice = createSlice({
 
 export const {
   setBooleanSetting,
+  toggleBooleanSetting,
   setIntegerSetting,
   setStringSetting,
   setHotkeyHelpVisible,

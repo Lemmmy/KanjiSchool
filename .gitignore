@@ -63,3 +63,6 @@ yarn-error.log*
 .sentryclirc
 
 .swp
+
+*.code-workspace
+.env.d

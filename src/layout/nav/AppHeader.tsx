@@ -13,7 +13,7 @@ import { ConditionalLink } from "@comp/ConditionalLink";
 import { OnlineStatus } from "./OnlineStatus";
 import { SyncProgressBars } from "./progress";
 import { ItemsDropdown } from "./ItemsDropdown";
-import { MuteButton } from "./MuteButton.tsx";
+import { VolumePopover } from "./VolumePopover.tsx";
 import { Search } from "./search/Search";
 import { UserInfo } from "./UserInfo";
 import { TopMenu } from "./TopMenu";
@@ -24,7 +24,7 @@ const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 export const headerElementClass = classNames(
   "flex-0 h-header py-0 px-[20px] flex items-center justify-center",
   "border-0 border-l border-solid border-l-white/10 light:border-l-split",
-  "bg-transparent transition-colors hover:bg-white/5 light:hover:bg-black/5 cursor-pointer"
+  "bg-transparent transition-colors hover:bg-white/5 light:hover:bg-black/5 cursor-pointer select-none"
 );
 
 export const dropdownOverlayClass = classNames(
@@ -67,7 +67,7 @@ export function AppHeader(): JSX.Element | null {
     <div className="flex-1" />
 
     {/* Mute */}
-    <MuteButton />
+    <VolumePopover />
 
     {/* Non-mobile stuff */}
     {sm && <>
