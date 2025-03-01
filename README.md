@@ -88,6 +88,6 @@ Pitch accent data is obtained from the [Kanjium](https://github.com/mifunetoshir
 
 ## License
 
-**Copyright &copy; 2021-2023 Drew Edwards**
+**Copyright &copy; 2021-2025 Drew Edwards**
 
 This project is licensed under the AGPL v3 license. See [LICENSE](/LICENSE) for more information.
