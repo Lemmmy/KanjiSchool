@@ -24,7 +24,7 @@ const sliderTooltipProps: SliderTooltipProps = {
   formatter: value => value ? `${value.toFixed(0)}%` : "0%",
 };
 
-export function MuteButton(): JSX.Element {
+export function VolumePopover(): JSX.Element {
   const audioMuted = useBooleanSetting("audioMuted");
   const audioVolume = useIntegerSetting("audioVolume");
   const setVolume = useCallback((value: number) => setIntegerSetting("audioVolume", value, false), []);

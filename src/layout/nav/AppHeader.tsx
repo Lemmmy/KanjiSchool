@@ -13,7 +13,7 @@ import { ConditionalLink } from "@comp/ConditionalLink";
 import { OnlineStatus } from "./OnlineStatus";
 import { SyncProgressBars } from "./progress";
 import { ItemsDropdown } from "./ItemsDropdown";
-import { MuteButton } from "./MuteButton.tsx";
+import { VolumePopover } from "./VolumePopover.tsx";
 import { Search } from "./search/Search";
 import { UserInfo } from "./UserInfo";
 import { TopMenu } from "./TopMenu";
@@ -67,7 +67,7 @@ export function AppHeader(): JSX.Element | null {
     <div className="flex-1" />
 
     {/* Mute */}
-    <MuteButton />
+    <VolumePopover />
 
     {/* Non-mobile stuff */}
     {sm && <>
