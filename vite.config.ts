@@ -2,9 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import "dotenv/config";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import mkcert from "vite-plugin-mkcert";
 import { VitePWA } from "vite-plugin-pwa";
 import { viteExternalsPlugin } from "vite-plugin-externals";
 
@@ -35,6 +35,12 @@ function parseTsAliases() {
 const gitVersion = execSync("git describe --always --tags").toString().trim();
 process.env.VITE_GIT_VERSION = gitVersion;
 
+const HTTPS_KEY = process.env.HTTPS_KEY;
+const HTTPS_CERT = process.env.HTTPS_CERT;
+if (!HTTPS_KEY || !HTTPS_CERT) {
+  console.warn("HTTPS_KEY and HTTPS_CERT not set, but HTTPS is required for the PWA to work correctly");
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -42,9 +48,16 @@ export default defineConfig({
       ...parseTsAliases(),
     },
   },
+  server: {
+    ...(HTTPS_KEY && HTTPS_CERT ? {
+      https: {
+        key: fs.readFileSync(HTTPS_KEY),
+        cert: fs.readFileSync(HTTPS_CERT),
+      }
+    } : {}),
+  },
   plugins: [
     react(),
-    mkcert(),
     viteExternalsPlugin({
       "resize-observer-polyfill": "ResizeObserver", // Only needed for IE support, which we don't
     }),
