@@ -15,6 +15,7 @@ import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { VocabList } from "@comp/subjects/lists/vocab";
 
 import { nts } from "@utils";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 interface Props {
   groups: SearchResultGroup[];
@@ -32,6 +33,8 @@ export function SearchResultsList({ groups, isNested }: Props): JSX.Element {
   // Active keys for the panel (managed so we can reset them on new results)
   const [activeKeys, setActiveKeys] = useState<string | string[]>();
 
+  const { sm } = useBreakpoint();
+
   // Find all the keys, to auto-open all panels by default.
   const defaultKeys = useMemo(() => (groups.map(g => g.name)), [groups]);
   const hasSubgroups = !!groups?.[0].subGroups;
@@ -44,7 +47,7 @@ export function SearchResultsList({ groups, isNested }: Props): JSX.Element {
       key: group.name,
 
       label: <CollapseHeader group={group} />,
-      extra: <CollapseHeaderExtra group={group} />,
+      extra: <CollapseHeaderExtra group={group} useShortTitle={!sm} />,
 
       children: <>
         {/* If there are subgroups, render those with another list */}
@@ -62,7 +65,7 @@ export function SearchResultsList({ groups, isNested }: Props): JSX.Element {
           <VocabList {...elProps} subjectIds={group.itemSubjects} />}
       </>
     }));
-  }, [groups]);
+  }, [groups, sm]);
 
   const classes = classNames(
     "max-w-[920px] mx-auto my-lg",
@@ -95,13 +98,14 @@ function CollapseHeader({ group: { count, name } }: { group: SearchResultGroup }
   </div>;
 }
 
-function CollapseHeaderExtra({ group: { itemSubjects, srsCounts } }: { group: SearchResultGroup }) {
+function CollapseHeaderExtra({ group: { itemSubjects, srsCounts }, useShortTitle }: { group: SearchResultGroup; useShortTitle?: boolean }) {
   return <div className="flex flex-col items-end justify-center">
     {/* Counts per SRS stage */}
     <ResultStageCounts counts={srsCounts} />
 
     {/* Add to self-study queue button */}
     {itemSubjects?.length && <StudyQueueButton
+      useShortTitle={useShortTitle}
       type="primary"
       size="small"
       subjectIds={itemSubjects}
