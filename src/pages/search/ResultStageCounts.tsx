@@ -25,5 +25,5 @@ export function ResultStageCounts({ counts }: ResultStageCountsProps): JSX.Eleme
     .filter(s => s !== undefined)
     .join(", "), [counts]);
 
-  return <span className="inline-block mb-xss text-sm last:mb-0">{text}</span>;
+  return <span className="inline-block mb-xss text-sm last:mb-0 text-right">{text}</span>;
 }
