@@ -95,14 +95,17 @@ export function SubjectGrid({
   // Sort the subjects by the order they appear in sortByStr, and try to obtain
   // their assignments.
   const subjectIdsStr = subjectIds.map(s => s.toString()).join(",");
-  const items: [StoredSubject, StoredAssignment | undefined][] = useMemo(() => {
+  type Item = [StoredSubject, StoredAssignment | undefined];
+  const items: Item[] = useMemo(() => {
     if (!subjects || !assignments || !subjectAssignmentIds) return [];
 
     // Map the subject IDs to [Subject, Assignment][]
-    const items: [StoredSubject, StoredAssignment | undefined][] = subjectIds.map(id => [
-      subjects[id],
-      assignments[subjectAssignmentIds[id] || -1]
-    ]);
+    const items: Item[] = subjectIds
+      .map(id => [
+        subjects[id],
+        assignments[subjectAssignmentIds[id] || -1]
+      ] satisfies Item)
+      .filter(([subject]) => !!subject && !subject.data.hidden_at);
 
     // Sort by sortByStr if it is available
     if (sortByStr) {

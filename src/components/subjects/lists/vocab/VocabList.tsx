@@ -45,12 +45,15 @@ export function VocabList({
 
   // Map the subject IDs to subjects and assignments
   const subjectIdsStr = subjectIds.map(s => s.toString()).join(",");
-  const items: [ApiSubjectVocabulary, StoredAssignment | undefined][] = useMemo(() => {
+  type Item = [ApiSubjectVocabulary, StoredAssignment | undefined];
+  const items: Item[] = useMemo(() => {
     if (!subjects || !assignments || !subjectAssignmentIds) return [];
-    return subjectIds.map(id => [
-      subjects[id] as ApiSubjectVocabulary,
-      assignments[subjectAssignmentIds[id] || -1]
-    ]);
+    return subjectIds
+      .map(id => [
+        subjects[id] as ApiSubjectVocabulary,
+        assignments[subjectAssignmentIds[id] || -1]
+      ] satisfies Item)
+      .filter(([subject]) => !!subject && !subject.data.hidden_at);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjects, assignments, subjectAssignmentIds, subjectIdsStr]);
 
