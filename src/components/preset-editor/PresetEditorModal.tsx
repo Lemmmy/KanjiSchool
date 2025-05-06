@@ -25,7 +25,7 @@ export default function PresetEditorModal({
   type: presetType,
   visible,
   closeFn
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const [selectedUuid, setSelectedUuid] = useState<string>();
   const isDefault = !selectedUuid
     || selectedUuid.startsWith("default-")

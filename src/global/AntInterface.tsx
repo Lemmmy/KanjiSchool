@@ -24,7 +24,7 @@ export const messageConfig: ConfigOptions = {
   top: 4
 };
 
-export default function AntInterface(): JSX.Element | null {
+export default function AntInterface(): React.ReactElement | null {
   const staticFunction = App.useApp();
   globalMessage = staticFunction.message;
   globalModal = staticFunction.modal;

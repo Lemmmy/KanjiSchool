@@ -19,7 +19,7 @@ import { dashboardCardClass, dashboardEmptyableCardBodyClass } from "../sharedSt
 
 export type ReviewForecastGrouping = "total" | "level_up" | "type";
 
-export function ReviewForecastCard(): JSX.Element {
+export function ReviewForecastCard(): React.ReactElement {
   const [activeKeys, setActiveKeys] = useState<string[]>();
 
   const grouping = useStringSetting<ReviewForecastGrouping>("dashboardReviewForecastGrouping");

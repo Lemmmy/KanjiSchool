@@ -47,7 +47,7 @@ export function SmallResult({
   icon,
   fullPage,
   className,
-}: ResultProps): JSX.Element {
+}: ResultProps): React.ReactElement {
   const classes = classNames("flex flex-col justify-center items-center gap-md", className, {
     "h-[calc(100vh-64px)]": fullPage
   });

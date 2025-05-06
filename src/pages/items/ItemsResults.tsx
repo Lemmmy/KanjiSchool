@@ -43,7 +43,7 @@ export function ItemsResults({
   isSubgroup,
   parentTitle,
   ...r
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   // If there are subgroups, the item count is the sum of all the subgroups'
   // items. Otherwise, it's just the length of items. Can't destructure here
   // because TypeScript isn't clever enough

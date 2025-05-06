@@ -20,7 +20,7 @@ export function PresetDropdownSetting({
   name, label, disabled,
   items,
   ...props
-}: DropdownSettingProps): JSX.Element {
+}: DropdownSettingProps): React.ReactElement {
   return <div className="flex">
     <EnabledCheckbox name={name} disabled={disabled} {...props} />
 
@@ -43,7 +43,7 @@ type CheckboxSettingProps = PresetSettingProps;
 export function PresetCheckboxSetting({
   name, label, disabled,
   ...props
-}: CheckboxSettingProps): JSX.Element {
+}: CheckboxSettingProps): React.ReactElement {
   return <div className="flex">
     <EnabledCheckbox name={name} disabled={disabled} {...props} />
 
@@ -63,7 +63,7 @@ type NumberSettingProps = PresetSettingProps;
 export function PresetNumberSetting({
   name, label, disabled,
   ...props
-}: NumberSettingProps): JSX.Element {
+}: NumberSettingProps): React.ReactElement {
   return <div className="flex group">
     <EnabledCheckbox name={name} disabled={disabled} {...props} />
 
@@ -85,7 +85,7 @@ interface EnabledCheckboxProps {
 export function EnabledCheckbox({
   name, disabled,
   ...props
-}: EnabledCheckboxProps): JSX.Element {
+}: EnabledCheckboxProps): React.ReactElement {
   return <Form.Item
     className="mr-sm"
     name={["enabledOpts", name]}

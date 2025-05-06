@@ -22,7 +22,7 @@ export const diagramSettings = {
   lineStrokeWidth: 2
 };
 
-export function PitchDiagramOnkaiShiki({ reading, pitchInfos }: Props): JSX.Element {
+export function PitchDiagramOnkaiShiki({ reading, pitchInfos }: Props): React.ReactElement {
   return <div className="flex flex-col items-start">
     {/* Pitch accent diagrams */}
     {pitchInfos.map((pitchInfo, i) =>

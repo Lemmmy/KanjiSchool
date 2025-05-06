@@ -22,7 +22,7 @@ interface FormValues {
   apiKey: string;
 }
 
-export function LoginPage(): JSX.Element {
+export function LoginPage(): React.ReactElement {
   const [loggingIn, setLoggingIn] = useState(false);
   const [loginFailed, setLoginFailed] = useState(false);
 

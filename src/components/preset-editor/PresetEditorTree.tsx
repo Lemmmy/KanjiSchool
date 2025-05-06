@@ -60,7 +60,7 @@ export function PresetEditorTree({
   presetType,
   selectedUuid,
   setSelectedUuid
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const userPresets = usePresets(presetType);
   const treeData = useMemo(() => getTreeData(presetType, userPresets),
     [presetType, userPresets]);

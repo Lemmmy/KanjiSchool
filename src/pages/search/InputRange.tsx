@@ -21,7 +21,7 @@ export function InputRange({
   minPlaceholder = "Min", maxPlaceholder = "Max",
   min, max,
   ...props
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   return <Form.Item label={label} {...props}>
     <Space.Compact className="!flex">
       {/* Min */}

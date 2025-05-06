@@ -1,23 +1,24 @@
-# Build stage
-FROM node:20-alpine AS build
+FROM node:23-alpine AS pnpm
 
 RUN apk update && apk add git
 
-WORKDIR /build
+COPY ./package.json pnpm-lock.yaml /app/
+WORKDIR /app
+RUN corepack enable
+RUN corepack install
 
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
-RUN yarn install --immutable
+FROM pnpm AS development-dependencies-env
+COPY . /app/
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
-COPY . .
-ENV NODE_ENV=production
-RUN yarn run build
+FROM pnpm AS build-env
+COPY . /app/
+COPY --from=development-dependencies-env /app/node_modules /app/node_modules
+RUN pnpm run build
 
-# Copy the build files to the output folder (ideally volumed in) to be consumed by the webserver
 FROM busybox
 
-WORKDIR /build
-COPY --from=build /build/dist ./dist
-
-RUN mkdir out
-CMD cp -r dist/* out/
+# Copy the build files to the output folder (volumed in) to be consumed by the webserver
+COPY --from=build-env /app/dist /app/dist
+RUN mkdir -p /build/out
+CMD cp -r /app/dist/* /build/out/

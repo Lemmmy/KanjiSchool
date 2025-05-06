@@ -20,7 +20,7 @@ interface FormValues {
   customFonts: string[];
 }
 
-export function RandomFontForm(): JSX.Element {
+export function RandomFontForm(): React.ReactElement {
   const [form] = Form.useForm<FormValues>();
   const customFonts = useAppSelector(state => state.settings.customFonts);
   const [sampleText, setSampleText] = useState("あいうえお");

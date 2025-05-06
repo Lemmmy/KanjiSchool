@@ -76,7 +76,7 @@ export function SessionQuestionHeader({
   onUndo,
   onDontKnow,
   onSkip
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   // Make the buttons larger on mobile
   const md = useSingleBreakpoint("md", lastMd ?? true);
   lastMd = md; // Prevents the buttons from resizing on mobile

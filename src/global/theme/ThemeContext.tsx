@@ -19,7 +19,7 @@ interface ThemeProviderProps {
   children: (theme: ThemeName) => ReactNode;
 }
 
-export function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
+export function ThemeProvider({ children }: ThemeProviderProps): React.ReactElement {
   const [theme, setTheme] = useState<ThemeName>(() => lsGetString("siteTheme", "dark") as ThemeName);
 
   const res: ThemeContextRes = useMemo(() => ({

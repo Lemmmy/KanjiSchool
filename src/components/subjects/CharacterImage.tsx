@@ -25,7 +25,7 @@ export const CharacterImage = React.memo(({
 }: Props) => {
   const image = useAppSelector(s => s.images.images?.[subjectId]?.svg);
 
-  const memoImg: JSX.Element | undefined = useMemo(() => {
+  const memoImg: React.ReactElement | undefined = useMemo(() => {
     if (!image) return;
 
     const classes = classNames(

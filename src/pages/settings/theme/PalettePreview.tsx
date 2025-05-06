@@ -8,7 +8,7 @@ import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { lockedSquareTextClasses } from "@pages/dashboard/srs-stages/styles.ts";
 
-export function PalettePreview(): JSX.Element {
+export function PalettePreview(): React.ReactElement {
   const { md } = useBreakpoint();
 
   return <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-md my-lg pr-[36px]">
@@ -73,7 +73,7 @@ interface SubjectSquareProps {
   className?: string;
 }
 
-function SubjectSquare({ label, previewText, className }: SubjectSquareProps): JSX.Element {
+function SubjectSquare({ label, previewText, className }: SubjectSquareProps): React.ReactElement {
   return <div className="flex-1">
     <div className={classNames(
       "p-sm leading-none rounded-sm text-[32px] font-ja text-center",
@@ -94,7 +94,7 @@ interface SrsStageSquareProps {
   rootClassName?: string;
 }
 
-function SrsStageSquare({ label, className, rootClassName }: SrsStageSquareProps): JSX.Element {
+function SrsStageSquare({ label, className, rootClassName }: SrsStageSquareProps): React.ReactElement {
   return <div className={classNames("flex-1", rootClassName)}>
     <div className={classNames(
       "w-full p-sm rounded-sm text-md font-ja leading-[32px] text-center text-shared-stages-text",
@@ -106,7 +106,7 @@ function SrsStageSquare({ label, className, rootClassName }: SrsStageSquareProps
   </div>;
 }
 
-function Title({ children }: { children: ReactNode }): JSX.Element {
+function Title({ children }: { children: ReactNode }): React.ReactElement {
   return <div className="text-center mb-xs leading-none font-medium">
     {children}
   </div>;

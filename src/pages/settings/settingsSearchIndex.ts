@@ -88,5 +88,5 @@ export function getChildByPath(children: MenuItem[], remainingKey: string): Menu
 export function itemWithoutChildren(item: MenuItem): MenuItem {
   if (!item || !("children" in item)) return item;
   const { children, ...rest } = item;
-  return rest;
+  return rest as MenuItem;
 }

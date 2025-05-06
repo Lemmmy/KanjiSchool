@@ -6,7 +6,7 @@ import { Form, Radio, Row, Col } from "antd";
 
 import { ItemsConfigFormDivider } from "./base/ItemsConfigFormDivider.tsx";
 
-export function ColorByPicker(props: any): JSX.Element {
+export function ColorByPicker(props: any): React.ReactElement {
   return <>
     {/* Header */}
     <Row gutter={16}>

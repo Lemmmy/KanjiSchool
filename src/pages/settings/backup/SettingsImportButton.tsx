@@ -13,7 +13,7 @@ import { globalNotification } from "@global/AntInterface.tsx";
 import { Button } from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
-export function SettingsImportButton(): JSX.Element {
+export function SettingsImportButton(): React.ReactElement {
   const { md } = useBreakpoint();
 
   const fileInputRef = useRef<HTMLInputElement>(null);

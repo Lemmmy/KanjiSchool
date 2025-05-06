@@ -12,7 +12,7 @@ import { AudioSupportedIcon } from "./AudioSupportedIcon.tsx";
 
 const { Item } = Descriptions;
 
-export function AudioStorageUsage(): JSX.Element {
+export function AudioStorageUsage(): React.ReactElement {
   // Load the audio usage
   const [audioUsage, setAudioUsage] = useState<AudioUsage>();
   useEffect(() => { getAudioUsage().then(setAudioUsage); }, []);

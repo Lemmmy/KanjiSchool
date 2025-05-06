@@ -29,7 +29,7 @@ const elProps = {
   innerPadding: 16,
 } as const;
 
-export function SearchResultsList({ groups, isNested }: Props): JSX.Element {
+export function SearchResultsList({ groups, isNested }: Props): React.ReactElement {
   // Active keys for the panel (managed so we can reset them on new results)
   const [activeKeys, setActiveKeys] = useState<string | string[]>();
 

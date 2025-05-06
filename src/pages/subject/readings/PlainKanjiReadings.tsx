@@ -11,7 +11,7 @@ interface Props {
   subject: ApiSubject;
 }
 
-export function PlainKanjiReadings({ subject }: Props): JSX.Element | null {
+export function PlainKanjiReadings({ subject }: Props): React.ReactElement | null {
   const { readings } = subject.data as ApiSubjectKanjiInner;
 
   // For kanji subjects, separate the readings into on'yomi and kun'yomi.

@@ -1,6 +1,6 @@
 import { Carousel, Image } from "antd";
 
-export function DemoCarousel(): JSX.Element {
+export function DemoCarousel(): React.ReactElement {
   return <Carousel
     autoplay
     dots={false}

@@ -12,7 +12,7 @@ export interface SearchButtonProps {
 export function SearchParamsSearchButton({
   selfStudy,
   loading
-}: SearchButtonProps): JSX.Element {
+}: SearchButtonProps): React.ReactElement {
   return <Button
     type={selfStudy ? undefined : "primary"}
     htmlType="submit"

@@ -19,7 +19,7 @@ export function CommaList({
   type,
   alwaysBoldPrimary,
   className
-}: CommaListProps): JSX.Element | null {
+}: CommaListProps): React.ReactElement | null {
   const noBold = !alwaysBoldPrimary && values && values.length <= 1;
 
   return values && values.length

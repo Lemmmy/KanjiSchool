@@ -23,7 +23,7 @@ export function SessionProgress({
   heightClassName = "h-[12px]",
   barClassName = "inline-block",
   barHeightClassName = heightClassName,
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const doingLessons = useAppSelector(s => s.session.doingLessons);
   const lessonCounter = useAppSelector(s => s.session.lessonCounter);
   const sessionState = useAppSelector(s => s.session.sessionState, shallowEqual);

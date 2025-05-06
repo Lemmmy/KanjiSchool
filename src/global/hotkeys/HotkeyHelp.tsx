@@ -19,7 +19,7 @@ const KEY_MAP = {
   "SHOW": "shift+?"
 };
 
-export function HotkeyHelpListener(): JSX.Element {
+export function HotkeyHelpListener(): React.ReactElement {
   const dispatch = useDispatch();
   const visible = useAppSelector(s => s.settings.hotkeyHelpVisible);
   const setVisible = useCallback((v: boolean) => dispatch(setHotkeyHelpVisible(v)), [dispatch]);
@@ -43,7 +43,7 @@ interface ModalProps {
   setVisible: (visible: boolean) => void;
 }
 
-function HotkeyModal({ visible, setVisible }: ModalProps): JSX.Element {
+function HotkeyModal({ visible, setVisible }: ModalProps): React.ReactElement {
   return <Modal
     open={visible}
     title="Keyboard shortcuts"
@@ -125,7 +125,7 @@ interface HotkeyProps {
   name: ReactNode;
 }
 
-function Hotkey({ keys, desc, name }: HotkeyProps): JSX.Element {
+function Hotkey({ keys, desc, name }: HotkeyProps): React.ReactElement {
   return <Row>
     {/* Name */}
     <Col span={12} className="text-sm leading-[24px] align-middle">

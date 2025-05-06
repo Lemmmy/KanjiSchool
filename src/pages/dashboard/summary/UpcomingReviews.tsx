@@ -9,7 +9,7 @@ import { shallowEqual } from "react-redux";
 
 import { ShortDuration } from "@comp/ShortDuration";
 
-export function UpcomingReviews(): JSX.Element | null {
+export function UpcomingReviews(): React.ReactElement | null {
   const { nextReviewsAt, nextReviewsNow, nextReviewsCount, nextReviewsWeek } =
     useAppSelector(s => s.reviews.nextReviewsAvailable, shallowEqual);
 

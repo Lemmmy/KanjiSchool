@@ -13,7 +13,7 @@ interface Props {
   nyi?: boolean;
 }
 
-export function NotFoundPage({ nyi }: Props): JSX.Element {
+export function NotFoundPage({ nyi }: Props): React.ReactElement {
   const navigate = useNavigate();
 
   return <SmallResult

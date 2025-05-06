@@ -19,7 +19,7 @@ import { useOnlineStatus, pluralN } from "@utils";
 import Debug from "debug";
 const debug = Debug("kanjischool:header-online-status");
 
-export function OnlineStatus(): JSX.Element | null {
+export function OnlineStatus(): React.ReactElement | null {
   const isOnline = useOnlineStatus();
 
   // Show nothing if we're online
@@ -45,7 +45,7 @@ export function OnlineStatus(): JSX.Element | null {
   </Tooltip>;
 }
 
-function OnlineStatusQueueSize(): JSX.Element | null {
+function OnlineStatusQueueSize(): React.ReactElement | null {
   // The number of unsubmitted lessons/reviews
   const [queueSize, setQueueSize] = useState(0);
 

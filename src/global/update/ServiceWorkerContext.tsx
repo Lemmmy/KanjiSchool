@@ -18,7 +18,7 @@ export const ServiceWorkerContext = createContext<ServiceWorkerContextRes>({
   close      : () => {}
 });
 
-export function ServiceWorkerContextProvider({ children }: { children: ReactNode }): JSX.Element | null {
+export function ServiceWorkerContextProvider({ children }: { children: ReactNode }): React.ReactElement | null {
   const {
     offlineReady: [, setOfflineReady],
     needRefresh: [needRefresh, setNeedRefresh],

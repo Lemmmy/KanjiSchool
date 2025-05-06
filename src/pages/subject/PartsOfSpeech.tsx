@@ -38,7 +38,7 @@ const partClasses: Record<string, string> = {
   "prefix"           : "!bg-yellow-7",
 };
 
-export function PartsOfSpeech({ subject }: Props): JSX.Element {
+export function PartsOfSpeech({ subject }: Props): React.ReactElement {
   return <div className="subject-info-parts-of-speech">
     {subject.parts_of_speech.map(p => (
       <Tag

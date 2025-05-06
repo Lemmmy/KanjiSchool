@@ -24,7 +24,7 @@ interface Props {
 export function HwInputPopover({
   visible, setVisible,
   setValue
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   return <>
     {visible && <div
       className="w-full max-w-[400px] fixed top-header right-0 z-50 bg-container rounded-b !mr-0"
@@ -39,7 +39,7 @@ export function HwInputPopover({
   </>;
 }
 
-function PopoverInner({ setValue }: Pick<Props, "setValue">): JSX.Element {
+function PopoverInner({ setValue }: Pick<Props, "setValue">): React.ReactElement {
   const [predictions, setPredictions] = useState<string[]>([]);
   const [hwCanvas, undo, redo, clear] = useHwCanvas(setPredictions);
 
@@ -125,7 +125,7 @@ function PopoverInner({ setValue }: Pick<Props, "setValue">): JSX.Element {
   </div>;
 }
 
-function HwOfflineWarning(): JSX.Element {
+function HwOfflineWarning(): React.ReactElement {
   return <div className="relative flex items-center justify-center p-lg">
     <CloudDisconnectedOutlined className="!text-red/50 text-[4rem] mr-lg" />
 

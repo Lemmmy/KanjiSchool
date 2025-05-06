@@ -23,7 +23,7 @@ interface Props {
 
 export function LevelProgressCard({
   height
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   // Don't apply forced height on mobile
   const { sm } = useBreakpoint();
 
@@ -59,7 +59,7 @@ interface InnerProps {
   scrollToBottom: () => void;
 }
 
-function LevelProgressCardInner({ scrollToBottom }: InnerProps): JSX.Element {
+function LevelProgressCardInner({ scrollToBottom }: InnerProps): React.ReactElement {
   const userLevel = useUserLevel();
   const maxLevel = useUserMaxLevel();
   const assignments = useAssignments();

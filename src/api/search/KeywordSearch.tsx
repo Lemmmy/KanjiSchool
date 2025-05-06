@@ -42,7 +42,7 @@ const FUSE_OPTS: IFuseOptions<IndexedSubject> = {
   minMatchCharLength: 0
 };
 
-export const KeywordSearchProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+export const KeywordSearchProvider = ({ children }: { children: ReactNode }): React.ReactElement => {
   const [fuse, setFuse] = useState<Fuse<IndexedSubject>>();
   const fuseClass = useFuseClass();
   const subjects = useSubjects();

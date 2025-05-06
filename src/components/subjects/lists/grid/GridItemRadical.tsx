@@ -9,7 +9,7 @@ export function GridItemRadical({
   subject,
   hideMeaning,
   ...rest
-}: SubjectGridItemProps): JSX.Element | null {
+}: SubjectGridItemProps): React.ReactElement | null {
   if (subject.object !== "radical")
     throw new Error("Using GridItemRadical for subject type " + subject.object);
 

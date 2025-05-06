@@ -4,7 +4,7 @@
 
 import classNames from "classnames";
 
-export function KanjiProgressLegend(): JSX.Element {
+export function KanjiProgressLegend(): React.ReactElement {
   return <div className="hidden md:flex items-center text-sm text-desc">
     <LegendSquare className="bg-green" />
     <span className="mx-xs">Burned</span>
@@ -14,7 +14,7 @@ export function KanjiProgressLegend(): JSX.Element {
   </div>;
 }
 
-function LegendSquare({ className }: { className: string }): JSX.Element {
+function LegendSquare({ className }: { className: string }): React.ReactElement {
   return <span
     className={classNames(
       "inline-block w-[16px] h-[16px] whitespace-nowrap rounded-sm",

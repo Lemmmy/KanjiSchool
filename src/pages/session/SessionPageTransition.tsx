@@ -29,8 +29,8 @@ export function SessionPageTransition({ shouldWrap, transitionKey, current, chil
   shouldWrap: boolean;
   transitionKey: string;
   current: boolean;
-  children: JSX.Element;
-}): JSX.Element | null {
+  children: React.ReactElement;
+}): React.ReactElement | null {
   return shouldWrap
     ? (
       <CSSTransition

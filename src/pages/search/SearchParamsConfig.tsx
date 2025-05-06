@@ -40,7 +40,7 @@ export function SearchParamsConfig({
   showQueryInput,
   selfStudy,
   onSearch
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const [form] = Form.useForm<SearchParams>();
 
   // Used for `onSelfStudy`
@@ -130,7 +130,7 @@ interface HeaderProps {
   results?: number;
 }
 
-function CollapseHeader({ results }: HeaderProps): JSX.Element {
+function CollapseHeader({ results }: HeaderProps): React.ReactElement {
   return <>
     <h2 className="inline-block my-0 font-medium">Search</h2>
     {results !== undefined && <span className="ml-xs">

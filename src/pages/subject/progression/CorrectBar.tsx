@@ -22,7 +22,7 @@ export function CorrectBar({
   incorrect,
   maxStreak,
   currentStreak
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const total = correct + incorrect;
   if (!total) return null;
 

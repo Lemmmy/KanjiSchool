@@ -18,7 +18,7 @@ interface ModalProps {
 
 const PresetEditorModal = lazy(() => import("./PresetEditorModal.tsx"));
 
-export const PresetModalProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+export const PresetModalProvider = ({ children }: { children: ReactNode }): React.ReactElement => {
   const [modalProps, setModalProps] = useState<Omit<ModalProps, "closeFn">>({
     type: "lesson",
     visible: false,

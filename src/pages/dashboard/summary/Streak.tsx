@@ -10,7 +10,7 @@ import { shallowEqual } from "react-redux";
 import { LevelInfoRowPart } from "@pages/dashboard/summary/LevelInfoRowPart.tsx";
 import { nts, useBooleanSetting } from "@utils";
 
-export function Streak(): JSX.Element | null {
+export function Streak(): React.ReactElement | null {
   const showStreak = useBooleanSetting("dashboardCurrentStreak");
 
   const { currentStreak, maxStreak, todayInStreak } =

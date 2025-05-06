@@ -8,5 +8,5 @@ interface Props {
   children: ReactNode;
 }
 
-export const SubjectTooltipLabel = ({ children }: Props): JSX.Element => <span
+export const SubjectTooltipLabel = ({ children }: Props): React.ReactElement => <span
   className="text-desc text-sm mr-text">{children}</span>;

@@ -2,16 +2,17 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { LegacyRef, SVGProps, useEffect, useMemo, useRef, useState } from "react";
 import { Empty } from "antd";
+import { SVGProps, useEffect, useMemo, useRef, useState } from "react";
 
 import { ReviewForecast } from "@api";
 import { usePalette, useStringSetting } from "@utils";
 
 import { select } from "d3-selection";
 
-import { chartHeight, renderChart, ReviewChartCurve } from "./renderChart.ts";
+import { Ref } from "react";
 import { ChartDatum, generateChart } from "./data.ts";
+import { chartHeight, renderChart, ReviewChartCurve } from "./renderChart.ts";
 import { ChartTooltip } from "./UpcomingReviewsChartTooltip.tsx";
 
 interface Props {
@@ -24,7 +25,7 @@ export function UpcomingReviewsChart({
   forecast,
   maxDate,
   maxDays
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const d3Ref = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [tooltipDatum, setTooltipDatum] = useState<ChartDatum | null>(null);
@@ -62,10 +63,10 @@ export function UpcomingReviewsChart({
 }
 
 interface InnerProps extends SVGProps<SVGSVGElement> {
-  d3Ref: LegacyRef<SVGSVGElement>;
+  d3Ref: Ref<SVGSVGElement>;
 }
 
-function UpcomingReviewsChartInner({ d3Ref, ...props }: InnerProps): JSX.Element | null {
+function UpcomingReviewsChartInner({ d3Ref, ...props }: InnerProps): React.ReactElement | null {
   return <svg
     {...props}
     ref={d3Ref}

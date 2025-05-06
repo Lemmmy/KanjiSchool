@@ -12,6 +12,6 @@ interface Props {
   date: Date | string | number;
 }
 
-export function ShortDuration({ date }: Props): JSX.Element {
+export function ShortDuration({ date }: Props): React.ReactElement {
   return <TimeAgo date={date} formatter={formatter} />;
 }

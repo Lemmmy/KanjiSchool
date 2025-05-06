@@ -24,7 +24,7 @@ export function SrsStageCurrentTooltip({
   barStageName,
   availableNow,
   nextReview
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const { sm } = useBreakpoint();
 
   return <div

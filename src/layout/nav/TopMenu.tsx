@@ -37,7 +37,7 @@ interface TopMenuCtxRes {
 
 export const TopMenuContext = createContext<TopMenuCtxRes>({});
 
-export function TopMenu(): JSX.Element {
+export function TopMenu(): React.ReactElement {
   const dispatch = useDispatch();
   const openHotkeyHelp = useCallback(() =>
     dispatch(setHotkeyHelpVisible(true)), [dispatch]);
@@ -156,7 +156,7 @@ export function TopMenu(): JSX.Element {
   </Dropdown>;
 }
 
-export const TopMenuProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+export const TopMenuProvider = ({ children }: { children: ReactNode }): React.ReactElement => {
   const [menuOptions, setMenuOptions] = useState<MenuProps["items"]>();
 
   const res: TopMenuCtxRes = useMemo(() => ({

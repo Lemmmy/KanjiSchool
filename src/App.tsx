@@ -33,7 +33,7 @@ import { UpdateCheckNotification } from "@global/update/UpdateCheckNotification.
 import Debug from "debug";
 const debug = Debug("kanjischool:app");
 
-export default function App(): JSX.Element {
+export default function App(): React.ReactElement {
   debug("upper App rendering");
   initStore();
 
@@ -72,7 +72,7 @@ export default function App(): JSX.Element {
  * in an inner component removes the responsibility for re-renders on the entire
  * app (including initStore and the update checker.)
  */
-function AppInner(): JSX.Element {
+function AppInner(): React.ReactElement {
   // Whether the database has been initialized and loaded
   const [dbInit, setDbInit] = useState(false);
   const loggedIn = useIsLoggedIn();

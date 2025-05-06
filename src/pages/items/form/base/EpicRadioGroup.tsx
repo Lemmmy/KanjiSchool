@@ -27,7 +27,7 @@ export function EpicRadioGroup({
   linkedRadio,
   orderField,
   ...props
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   return <Form.Item<FormValues>
     noStyle
     shouldUpdate={(o, n) => o[name] !== n[name]
@@ -75,7 +75,7 @@ function EpicRadioGroupInner({
   order: Order;
   /// Used to change sort order on radio button click
   setFieldsValue: (values: Partial<FormValues>) => void;
-}): JSX.Element {
+}): React.ReactElement {
   const iconClass = "text-lg ml-[6px]";
 
   // Tooltip describing group/sort behavior on click

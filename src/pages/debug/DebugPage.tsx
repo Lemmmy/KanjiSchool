@@ -10,7 +10,7 @@ import { useCustomSessionCard } from "./DebugCustomSessionCard";
 import { DebugSubjectsCard } from "./DebugSubjectsCard";
 import { DebugMiscCard } from "./DebugMiscCard";
 
-export function Component(): JSX.Element {
+export function Component(): React.ReactElement {
   const [customSessionCard, onAddSubject] = useCustomSessionCard();
 
   return <PageLayout siteTitle="Debug" title="Debug" className="debug-page">

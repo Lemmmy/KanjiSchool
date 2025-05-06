@@ -10,7 +10,7 @@ interface Props {
   subject: StoredSubject;
 }
 
-export function CorrectBars({ subject }: Props): JSX.Element | null {
+export function CorrectBars({ subject }: Props): React.ReactElement | null {
   const type = subject.object;
   const hasReading = type !== "radical";
 

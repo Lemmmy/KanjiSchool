@@ -21,7 +21,7 @@ const debug = Debug("kanjischool:last-session-summary");
 const DEFAULT_EXPAND = ["correct", "incorrect"];
 const DEFAULT_COLLAPSE: string[] = [];
 
-export function LastSessionSummary(): JSX.Element | null {
+export function LastSessionSummary(): React.ReactElement | null {
   const dispatch = useDispatch();
 
   const [showing, setShowing] = useState(false);

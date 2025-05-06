@@ -11,12 +11,12 @@ import { AccentDiagramStyle } from "@pages/subject/readings/accentDiagramTypes.t
 
 const debugTheme = localStorage.getItem("debugTheme") === "true";
 
-export function DebugToggleTheme(): JSX.Element | null {
+export function DebugToggleTheme(): React.ReactElement | null {
   if (!debugTheme) return null;
   return <DebugToggleThemeInner />;
 }
 
-function DebugToggleThemeInner(): JSX.Element {
+function DebugToggleThemeInner(): React.ReactElement {
   const { theme } = useThemeContext();
   const sitePalette = useStringSetting<PaletteName>("sitePalette");
 

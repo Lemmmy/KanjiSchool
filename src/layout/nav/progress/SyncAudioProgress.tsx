@@ -7,7 +7,7 @@ import { shallowEqual } from "react-redux";
 
 import { HeaderProgress } from "./HeaderProgress";
 
-export function SyncAudioProgress(): JSX.Element | null {
+export function SyncAudioProgress(): React.ReactElement | null {
   const syncing  = useAppSelector(s => s.sync.syncingAudio);
   const progress = useAppSelector(s => s.sync.audioProgress, shallowEqual);
   if (!syncing || !progress || progress.count <= 0) return null;

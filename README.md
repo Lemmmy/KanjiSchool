@@ -60,13 +60,13 @@ For more information, check out [WaniKani](https://www.wanikani.com) and their
 
 ## Contributing
 
-Node.js v20 is required. Newer versions will not currently work.
+Node.js v23 is required.
 
 ```bash
 git clone https://github.com/Lemmmy/KanjiSchool.git
 cd KanjiSchool
-yarn install # Install the dependencies
-yarn dev # Run the development server
+pnpm install # Install the dependencies
+pnpm dev # Run the development server
 ```
 
 This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as a standard for commit 

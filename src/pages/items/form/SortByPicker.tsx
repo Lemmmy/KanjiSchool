@@ -35,7 +35,7 @@ interface Props {
   type: ItemsBaseType;
 }
 
-export function SortByPicker({ type }: Props): JSX.Element {
+export function SortByPicker({ type }: Props): React.ReactElement {
   const options = useMemo(() => ALLOWED_SORT_BY[type]
     .map(value => ({ value, label: SORT_BY_LABELS[value] })), [type]);
 

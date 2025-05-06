@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { SVGProps, LegacyRef, useEffect, useMemo, useRef, useState } from "react";
+import { SVGProps, useEffect, useMemo, useRef, useState } from "react";
 
 import { select } from "d3-selection";
 import { generateHeatmapData, HeatmapDatum, HeatmapDay } from "./data";
@@ -10,9 +10,10 @@ import { renderHeatmap, YEAR_FULL_HEIGHT } from "./renderHeatmap";
 
 import { useAssignments, useLastReview } from "@api";
 
-import { useBooleanSetting } from "@utils";
 import { useThemeContext } from "@global/theme/ThemeContext.tsx";
+import { useBooleanSetting } from "@utils";
 import { Empty } from "antd";
+import { Ref } from "react";
 
 interface Props extends SVGProps<SVGSVGElement> {
   currentYearOnly?: boolean;
@@ -23,7 +24,7 @@ export function Heatmap({
   currentYearOnly = true,
   setHoverDay,
   ...props
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const d3Ref = useRef<SVGSVGElement>(null);
 
   // Used to auto-refresh the heatmap
@@ -72,10 +73,10 @@ export function Heatmap({
 }
 
 interface InnerProps extends SVGProps<SVGSVGElement> {
-  d3Ref: LegacyRef<SVGSVGElement>;
+  d3Ref: Ref<SVGSVGElement>;
 }
 
-const HeatmapInner = ({ d3Ref, ...props }: InnerProps): JSX.Element | null => <svg
+const HeatmapInner = ({ d3Ref, ...props }: InnerProps): React.ReactElement | null => <svg
   {...props}
   ref={d3Ref}
   className="min-w-min mx-auto"

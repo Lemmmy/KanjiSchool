@@ -9,7 +9,7 @@ import { HeaderProgress } from "./HeaderProgress.tsx";
 
 import dayjs from "dayjs";
 
-export function RateLimitHit(): JSX.Element | null {
+export function RateLimitHit(): React.ReactElement | null {
   const apiRateLimitResetTime = useAppSelector(s => s.sync.apiRateLimitResetTime);
   const date = useMemo(() => apiRateLimitResetTime
     ? new Date(apiRateLimitResetTime)
@@ -24,7 +24,7 @@ export function RateLimitHit(): JSX.Element | null {
   />;
 }
 
-function Countdown({ date }: { date: Date }): JSX.Element {
+function Countdown({ date }: { date: Date }): React.ReactElement {
   const [timeLeft, setTimeLeft] = useState(dayjs(date).diff(dayjs(), "second"));
 
   const update = useCallback(() => {

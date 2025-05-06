@@ -66,7 +66,7 @@ export function PseudoIme({
   setValue,
   inputRef,
   ...rest
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const onChangeInternal = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     const newValue = toKana(inputValue);

@@ -8,7 +8,7 @@ import { LogoutOutlined } from "@ant-design/icons";
 import { logOut } from "@api";
 import { globalModal } from "@global/AntInterface.tsx";
 
-export function LogOutButton(): JSX.Element {
+export function LogOutButton(): React.ReactElement {
   return <Button
     type="link"
     danger

@@ -30,7 +30,7 @@ interface Props {
   onSkip: OnSkipFn;
 }
 
-export function SessionQuestionContents(props: Props): JSX.Element {
+export function SessionQuestionContents(props: Props): React.ReactElement {
   const { type, itemId, current } = props;
 
   const incorrectAnswer = useAppSelector(s => s.session.incorrectAnswer);
@@ -53,7 +53,7 @@ export function SessionQuestionContents(props: Props): JSX.Element {
 function IncorrectAnswerPart({
   type, subject, incorrectAnswer,
   onIncorrectNext, onIncorrectUndo, onSkip
-}: Props & { incorrectAnswer: string }): JSX.Element {
+}: Props & { incorrectAnswer: string }): React.ReactElement {
   const digraphMatch = useAppSelector(s => s.session.incorrectAnswerDigraphMatch, shallowEqual);
 
   const { finishedItems, totalItems, wrappingUp } = countSessionItems();
@@ -94,7 +94,7 @@ function IncorrectAnswerPart({
 function SessionQuestionPart({
   type, subject, current,
   onDontKnow, onAnswered, onSkip
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const { finishedItems, totalItems, wrappingUp } = countSessionItems();
 
   return <SessionQuestionView

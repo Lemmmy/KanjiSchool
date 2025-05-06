@@ -14,7 +14,7 @@ interface Props {
 export function SubjectInfoDivider({
   label,
   className
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   if (!label) return null;
 
   return <Divider

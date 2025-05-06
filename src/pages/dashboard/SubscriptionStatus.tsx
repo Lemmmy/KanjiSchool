@@ -8,7 +8,7 @@ import { useUser } from "@api";
 
 import { ExtLink } from "@comp/ExtLink";
 
-export function SubscriptionStatus(): JSX.Element | null {
+export function SubscriptionStatus(): React.ReactElement | null {
   const user = useUser();
   if (!user
     || (user.data.subscription.type !== "free" &&

@@ -10,7 +10,7 @@ import { SubjectType } from "@api";
 import { normalizeVocabType, usePalette } from "@utils";
 import { getReadableTextColor } from "@global/theme";
 
-export function SubjectTypePicker({ ...props }: any): JSX.Element {
+export function SubjectTypePicker({ ...props }: any): React.ReactElement {
   const palette = usePalette();
 
   function tagRender({ label, value, closable, onClose }: CustomTagProps) {

@@ -29,7 +29,7 @@ interface Props {
   state: SessionState;
 }
 
-function SessionWrapUpModalContents({ state }: Props): JSX.Element {
+function SessionWrapUpModalContents({ state }: Props): React.ReactElement {
   const { type, items } = state;
 
   const { assignments } = store.getState().assignments;

@@ -5,7 +5,7 @@
 import { HotkeyHelpListener } from "./HotkeyHelp";
 import { SessionHotkeys } from "./SessionHotkeys";
 
-export function HotkeyServices(): JSX.Element {
+export function HotkeyServices(): React.ReactElement {
   return <>
     <HotkeyHelpListener />
     <SessionHotkeys />

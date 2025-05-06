@@ -27,7 +27,7 @@ export function SubjectTooltipInner({
   showJoyo,
   showFreq,
   hideStudyQueueButton
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   return <div className="p-xs text-basec">
     {/* Subject data - characters, level, meaning and readings */}
     <SubjectTooltipSubjectData subject={subject}/>

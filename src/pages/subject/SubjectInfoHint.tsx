@@ -15,7 +15,7 @@ export function SubjectInfoHint({
   header,
   children,
   className
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   if (!children) return null;
 
   return <div className={classNames("mt-lg p-md bg-container rounded", className)}>

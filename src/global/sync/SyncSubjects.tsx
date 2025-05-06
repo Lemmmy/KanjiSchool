@@ -15,7 +15,7 @@ const debug = Debug("kanjischool:sync-subjects-global");
 /**
  * SyncSubjects is responsible for ensuring the subjects are up-to-date on startup.
  */
-export function SyncSubjects(): JSX.Element | null {
+export function SyncSubjects(): React.ReactElement | null {
   const isOnline = useOnlineStatus();
   const subjectsSyncedThisSession =
     useAppSelector(s => s.sync.subjectsSyncedThisSession);

@@ -58,7 +58,7 @@ export interface SubjectInfoProps {
 const ContextSentences = lazy(() => import("./ContextSentences"));
 const SubjectInfoDebug = lazy(() => import("./debug/SubjectInfoDebug"));
 
-export function SubjectInfo(props: SubjectInfoProps): JSX.Element {
+export function SubjectInfo(props: SubjectInfoProps): React.ReactElement {
   const {
     subject, charactersMax,
     lessonCounter, lessonsTotal, onPrevLesson, onNextLesson,

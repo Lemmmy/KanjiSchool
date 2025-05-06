@@ -50,7 +50,7 @@ export const SubjectCharacters = React.memo(({
   imageSizeClassName,
   withColorClasses = true,
   style
-}: Props): JSX.Element | null => {
+}: Props): React.ReactElement | null => {
   const objectType = subject.object;
   const normObjectType = normalizeVocabType(objectType);
   const { characters } = subject.data;

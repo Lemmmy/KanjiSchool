@@ -44,7 +44,7 @@ const formatTick = (date: string) => {
 
 export function renderChart(
   ctx: Selection<SVGSVGElement, ChartDatum, null, undefined>,
-  tooltipRef: RefObject<HTMLDivElement>,
+  tooltipRef: RefObject<HTMLDivElement | null>,
   setTooltipDatum: (d: ChartDatum | null) => void,
   data: ChartDatum[],
   maxDays: number,

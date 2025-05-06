@@ -19,7 +19,7 @@ const debug = Debug("kanjischool:assignment-sync-service");
  * at the start of every hour. It also syncs the user, review statistics and
  * reviews at the same time.
  */
-export function SyncAssignments(): JSX.Element | null {
+export function SyncAssignments(): React.ReactElement | null {
   const isOnline = useOnlineStatus();
   const user = api.useUser();
 

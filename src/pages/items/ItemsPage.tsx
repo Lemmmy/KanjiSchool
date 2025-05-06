@@ -38,7 +38,7 @@ const lookupDebounced = debounce((
   setResults(results);
 }, DEBOUNCE_LOOKUP_MS);
 
-export function ItemsPage({ type }: Props): JSX.Element {
+export function ItemsPage({ type }: Props): React.ReactElement {
   // Used to prevent rendering unless we have all the data. The SubjectGrids
   // themselves will handle re-rendering if the underlying data changes, though
   // it won't handle changing the sorting, but that's too expensive for this

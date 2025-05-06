@@ -7,7 +7,7 @@ import { shallowEqual } from "react-redux";
 
 import { HeaderProgress } from "./HeaderProgress";
 
-export function AssignmentQueueProgress(): JSX.Element | null {
+export function AssignmentQueueProgress(): React.ReactElement | null {
   const processing      = useAppSelector(s => s.sync.processingQueue);
   const connectionError = useAppSelector(s => s.sync.queueConnectionError);
   const progress        = useAppSelector(s => s.sync.queueProgress, shallowEqual);

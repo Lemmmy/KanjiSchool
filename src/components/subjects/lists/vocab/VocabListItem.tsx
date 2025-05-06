@@ -35,7 +35,7 @@ export const VocabListItem = React.memo(function VocabListItem({
   divRef,
   style,
   renderTooltip
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const url = getSubjectUrl(subject);
 
   // Whether this subject is in the self-study queue

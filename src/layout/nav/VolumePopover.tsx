@@ -24,12 +24,12 @@ const sliderTooltipProps: SliderTooltipProps = {
   formatter: value => value ? `${value.toFixed(0)}%` : "0%",
 };
 
-export function VolumePopover(): JSX.Element {
+export function VolumePopover(): React.ReactElement {
   const audioMuted = useBooleanSetting("audioMuted");
   const audioVolume = useIntegerSetting("audioVolume");
   const setVolume = useCallback((value: number) => setIntegerSetting("audioVolume", value, false), []);
 
-  function MenuIcon(): JSX.Element {
+  function MenuIcon(): React.ReactElement {
     if (audioVolume === 0) {
       return <MuteIcon />;
     } else if (audioMuted) {
@@ -62,7 +62,7 @@ export function VolumePopover(): JSX.Element {
   </Popover>;
 }
 
-function AutoPlayControl(): JSX.Element {
+function AutoPlayControl(): React.ReactElement {
   const iconClass = "cursor-pointer mb-1 select-none";
 
   const audioMuted = useBooleanSetting("audioMuted");
@@ -95,14 +95,14 @@ function AutoPlayControl(): JSX.Element {
   }
 }
 
-function MuteIcon(): JSX.Element {
+function MuteIcon(): React.ReactElement {
   return <div className="relative flex items-center justify-center">
     <SoundOutlined className="text-red/50" />
     <div className="absolute w-[20px] h-[2px] bg-red -rotate-45 rounded-[3px]" />
   </div>;
 }
 
-function NoAutoPlayIcon({ className }: { className?: string }): JSX.Element {
+function NoAutoPlayIcon({ className }: { className?: string }): React.ReactElement {
   return <div className={classNames("relative flex items-center justify-center", className)}>
     <PlayCircleOutlined className="text-red/50" />
     <div className="absolute w-[20px] h-[2px] bg-red -rotate-45 rounded-[3px]" />

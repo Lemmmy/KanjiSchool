@@ -17,7 +17,7 @@ export function PageHeader({
   title,
   onBack,
   className
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const classes = classNames("min-h-page-header px-lg pt-md pb-0 box-border flex items-center", className);
 
   return <div className={classes}>

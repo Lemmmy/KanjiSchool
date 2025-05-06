@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export function PlainReadingsList({ readings, className }: Props): JSX.Element {
+export function PlainReadingsList({ readings, className }: Props): React.ReactElement {
   return <CommaList
     type="reading"
     values={readings

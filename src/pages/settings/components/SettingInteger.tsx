@@ -21,7 +21,7 @@ export function SettingInteger({
   title,
   description,
   onChanged
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const settingValue = useIntegerSetting(setting);
   const [value, setValue] = useState<string | number>(settingValue);
 

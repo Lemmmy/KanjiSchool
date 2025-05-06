@@ -7,7 +7,7 @@ import { Button, notification } from "antd";
 
 import { ServiceWorkerContext } from "./ServiceWorkerContext.tsx";
 
-export function UpdateCheckNotification(): JSX.Element | null {
+export function UpdateCheckNotification(): React.ReactElement | null {
   const { needRefresh } = useContext(ServiceWorkerContext);
   const [api, contextHolder] = notification.useNotification();
   const [opened, setOpened] = useState(false);

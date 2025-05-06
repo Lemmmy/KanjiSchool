@@ -11,7 +11,7 @@ import { shallowEqual } from "react-redux";
 
 import { slugifyPartOfSpeech } from "@utils";
 
-export function PartsOfSpeechPicker({ ...props }: any): JSX.Element {
+export function PartsOfSpeechPicker({ ...props }: any): React.ReactElement {
   const partsOfSpeech = useAppSelector(s => s.subjects.partsOfSpeechCache, shallowEqual);
   const options = useMemo(() => {
     const values = Object.keys(partsOfSpeech || {});

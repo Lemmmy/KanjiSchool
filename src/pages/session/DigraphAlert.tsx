@@ -15,7 +15,7 @@ interface Props {
   digraphMatch: DigraphMatch;
 }
 
-export function DigraphAlert({ digraphMatch }: Props): JSX.Element {
+export function DigraphAlert({ digraphMatch }: Props): React.ReactElement {
   const [regular, small] = digraphMatch;
 
   return <Alert
@@ -41,7 +41,7 @@ export function showDigraphHelp(): void {
   });
 }
 
-function DigraphHelp(): JSX.Element {
+function DigraphHelp(): React.ReactElement {
   return <>
     <p>
       While most kana (hiragana or katakana) stand on their own, it&rsquo;s
@@ -96,12 +96,12 @@ function DigraphHelp(): JSX.Element {
   </>;
 }
 
-const Ack = (): JSX.Element =>
+const Ack = (): React.ReactElement =>
   <CheckCircleOutlined className="text-green" />;
-const Nack = (): JSX.Element =>
+const Nack = (): React.ReactElement =>
   <CloseCircleOutlined className="text-red" />;
 
-function DigraphExamplesTable(): JSX.Element {
+function DigraphExamplesTable(): React.ReactElement {
   return <table className="w-full max-w-[300px] mb-md">
     <thead>
       <tr>
@@ -127,6 +127,6 @@ function DigraphExamplesTable(): JSX.Element {
   </table>;
 }
 
-function Link({ text, url }: { text: string; url: string }): JSX.Element {
+function Link({ text, url }: { text: string; url: string }): React.ReactElement {
   return <a target="_blank" rel="noopener noreferrer" href={url}>{text}</a>;
 }

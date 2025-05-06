@@ -15,7 +15,7 @@ const { useToken } = theme;
 
 const usedAntPalettes: PalettesProps = { red, orange, yellow, lime, green, blue };
 
-export function ApplyAntThemeVariables(): JSX.Element | null {
+export function ApplyAntThemeVariables(): React.ReactElement | null {
   const { token } = useToken();
   const themeName = useThemeContext().theme;
 

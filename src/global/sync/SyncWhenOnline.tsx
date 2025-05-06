@@ -17,7 +17,7 @@ const debug = Debug("kanjischool:sync-when-online-global");
  * SyncWhenOnline is responsible for syncing all data when network connection is
  * restored.
  */
-export function SyncWhenOnline(): JSX.Element | null {
+export function SyncWhenOnline(): React.ReactElement | null {
   const [lastOnline, setLastOnline] = useState<boolean>();
   const isOnline = useOnlineStatus();
 

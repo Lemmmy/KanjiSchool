@@ -16,7 +16,7 @@ const COUNT_ORDERS: (keyof SearchResultSrsCounts)[] =
 const COUNT_NAMES: string[] =
   ["locked", "not started", "in progress", "passed", "burned"];
 
-export function ResultStageCounts({ counts }: ResultStageCountsProps): JSX.Element {
+export function ResultStageCounts({ counts }: ResultStageCountsProps): React.ReactElement {
   // Join the types of counts, in order, with commas
   const text = useMemo(() => COUNT_ORDERS
     .map((k, i) => counts[k] > 0

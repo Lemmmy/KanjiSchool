@@ -39,9 +39,9 @@ const INITIAL_VALUES: FormValues = {
 
 export function DebugSubjectsCard({
   onAddSubject
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const [form] = Form.useForm<FormValues>();
-  const [subjectList, setSubjectList] = useState<JSX.Element>();
+  const [subjectList, setSubjectList] = useState<React.ReactElement>();
 
   const subjects = useSubjects();
   const hasAssignments = !!useAssignments();
@@ -151,7 +151,7 @@ function renderSubjectList(
   userLevel: number,
   renderTooltip: SubjectRenderTooltipFn,
   { size, filter, types, colorBy, limit }: FormValues
-): JSX.Element | null {
+): React.ReactElement | null {
   if (!subjects) return null;
 
   const filterFn = filter === "lte"

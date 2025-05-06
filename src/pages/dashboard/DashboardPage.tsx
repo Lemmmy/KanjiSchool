@@ -39,7 +39,7 @@ const ReviewHeatmapCard = lazy(() => import("./heatmap/ReviewHeatmapCard.tsx"));
 const CriticalConditionCard = lazy(() => import("./CriticalConditionCard.tsx"));
 const NewUnlocksCard = lazy(() => import("./NewUnlocksCard.tsx"));
 
-function DashboardPage(): JSX.Element {
+function DashboardPage(): React.ReactElement {
   const ongoingSession = useAppSelector(s => s.session.ongoing);
 
   const showLastSessionSummary = useBooleanSetting("dashboardLastSessionSummary");
@@ -138,7 +138,7 @@ function DashboardPage(): JSX.Element {
 
 export const Component = DashboardPage;
 
-function DashboardTopRow(): JSX.Element {
+function DashboardTopRow(): React.ReactElement {
   // Couldn't find a nice CSS-only way to get the level progress overflow to
   // properly match the height of the summary card. So, measure the height of
   // the summary card, and force the level progress card to have that same

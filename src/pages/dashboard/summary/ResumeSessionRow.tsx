@@ -27,7 +27,7 @@ const SESSION_RESUME_TOOLTIPS: Record<SessionType, ReactNode> = {
   self_study: <>Resume self-study <b>(R)</b></>
 };
 
-export function ResumeSessionRow(): JSX.Element | null {
+export function ResumeSessionRow(): React.ReactElement | null {
   const navigate = useNavigate();
 
   // Get session state to resume session if possible

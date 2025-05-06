@@ -22,7 +22,7 @@ export function DhmDuration({
   showMinutes = true,
   tooLow = "A moment",
   seconds
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const date = useMemo(() => {
     if (!seconds) return undefined;
 

@@ -21,7 +21,7 @@ export function GenericSyncingProgress({
   name,
   syncingKey,
   syncProgressKey
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const syncing  = useAppSelector(s => s.sync[syncingKey]);
   const progress = useAppSelector(s => s.sync[syncProgressKey], shallowEqual);
   if (!syncing || !progress || progress.total <= 0) return null;

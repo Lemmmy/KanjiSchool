@@ -16,7 +16,7 @@ const KEY_MAP = {
   NEXT_STAGE: "h"
 };
 
-const STAGE_TEXTS: Record<SubjectHintStage, [JSX.Element | null, JSX.Element | null]> = {
+const STAGE_TEXTS: Record<SubjectHintStage, [React.ReactElement | null, React.ReactElement | null]> = {
   "-1": [<>Show hints</>, <>Show answer hints <b>(H)</b></>],
   "0":  [<>Show more</> , <>Show more answer hints <b>(H)</b></>],
   "1":  [<>Show all</>  , <>Show full answer hints <b>(H)</b></>],
@@ -26,7 +26,7 @@ const STAGE_TEXTS: Record<SubjectHintStage, [JSX.Element | null, JSX.Element | n
 export function HintStageButtons({
   hintStage,
   onNextHintStage = () => { /* noop */},
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   if (hintStage !== undefined && hintStage < 2) {
     return <>
       {/* Tooltip with hotkey info */}

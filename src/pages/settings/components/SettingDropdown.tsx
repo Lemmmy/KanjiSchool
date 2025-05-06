@@ -29,7 +29,7 @@ export function SettingDropdown<T extends string>({
   description,
   options,
   onChanged
-}: Props<T>): JSX.Element {
+}: Props<T>): React.ReactElement {
   const settingValue = useStringSetting<T>(setting);
 
   const onChange = useCallback((value: T) => {

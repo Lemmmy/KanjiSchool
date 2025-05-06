@@ -34,7 +34,7 @@ const KEY_MAP: KeyMap = {
   "ABANDON": { sequence: "shift+Escape", action: "keydown" }
 };
 
-function SessionPage(): JSX.Element {
+function SessionPage(): React.ReactElement {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

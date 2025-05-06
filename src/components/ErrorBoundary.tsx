@@ -14,7 +14,7 @@ interface WkErrorBoundaryProps {
   children?: ReactNode;
 }
 
-export function WkErrorBoundary({ name, children }: WkErrorBoundaryProps): JSX.Element {
+export function WkErrorBoundary({ name, children }: WkErrorBoundaryProps): React.ReactElement {
   const onError = useCallback((error: Error, info: ErrorInfo) => {
     console.error(`Error in ${name ?? "unnamed"} error boundary:`, error, info);
   }, [name]);
@@ -36,7 +36,7 @@ export const ErroredRoute: FC = () => {
 
 type ErrorFallbackProps = Pick<FallbackProps, "error">;
 
-function ErrorFallback({ error }: ErrorFallbackProps): JSX.Element {
+function ErrorFallback({ error }: ErrorFallbackProps): React.ReactElement {
   return <Alert
     type="error"
     className="m-lg"

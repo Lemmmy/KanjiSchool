@@ -11,7 +11,7 @@ interface Props {
   paletteName: PaletteName;
 }
 
-export function PaletteLegend({ label, paletteName }: Props): JSX.Element {
+export function PaletteLegend({ label, paletteName }: Props): React.ReactElement {
   const { theme } = useThemeContext();
   const palette = PALETTES[paletteName][theme] || PALETTES[paletteName]["dark"];
 
@@ -35,6 +35,6 @@ export function PaletteLegend({ label, paletteName }: Props): JSX.Element {
   </div>;
 }
 
-function Square({ color }: { color: string }): JSX.Element {
+function Square({ color }: { color: string }): React.ReactElement {
   return <div className="w-[12px] h-[12px] rounded-sm" style={{ backgroundColor: color }}></div>;
 }

@@ -15,7 +15,7 @@ interface Props {
 export function MenuHotkey({
   shortcut,
   ifGroup
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const keyMap = getApplicationKeyMap();
   const shouldHide = useMemo(() => {
     if (!ifGroup) return false;

@@ -5,8 +5,6 @@
 import { store } from "@store";
 import { updateAssignment } from "@store/slices/assignmentsSlice.ts";
 import { updateReviewStatistic } from "@store/slices/reviewStatisticsSlice.ts";
-import { batch } from "react-redux";
-import { Action } from "redux";
 
 import * as api from "@api";
 import { ApiCreateReviewResponse } from "@api";
@@ -15,6 +13,7 @@ import { db } from "@db";
 import { isRecentTime } from "@utils/isRecentTime";
 
 import Debug from "debug";
+import { Action } from "@reduxjs/toolkit";
 const debug = Debug("kanjischool:api-reviews");
 
 export async function createReview(
@@ -55,7 +54,7 @@ export async function createReview(
   }
 
   // Perform all the dispatches simultaneously
-  batch(() => dispatches.forEach(store.dispatch));
+  dispatches.forEach(store.dispatch);
 
   return res;
 }

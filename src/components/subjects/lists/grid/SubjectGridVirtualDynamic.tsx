@@ -73,7 +73,7 @@ export const SubjectGridVirtualDynamic = forwardRef<HTMLDivElement, SubjectGridV
   updateTooltip,
   mainRef,
   tooltipInnerRef
-}, forwardRef): JSX.Element {
+}, forwardRef): React.ReactElement {
   const rowHeight = sizeStyles["tiny"].rowHeight;
 
   const [width, setWidth] = useState(0);

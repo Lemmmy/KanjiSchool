@@ -10,7 +10,7 @@ import { calculateStreak } from "@pages/dashboard/summary/calculateStreak";
 import Debug from "debug";
 const debug = Debug("kanjischool:update-streak");
 
-export function UpdateStreak(): JSX.Element | null {
+export function UpdateStreak(): React.ReactElement | null {
   // When these update, auto-refresh the streak (debounced internally)
   const assignments = useAssignments();
   const lastReview = useLastReview();

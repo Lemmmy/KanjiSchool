@@ -34,7 +34,7 @@ export const ConditionalLink: FC<Props> = ({
   children,
   className,
   ...props
-}): JSX.Element => {
+}): React.ReactElement => {
   // Disable the link if we're already on that route
   const wantsCondition = condition !== undefined;
   const wantsMatch = matchTo || !!matchPath;

@@ -15,7 +15,7 @@ interface Props {
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-export function HwInputButton({ visible, setVisible, ...props }: Props): JSX.Element {
+export function HwInputButton({ visible, setVisible, ...props }: Props): React.ReactElement {
   const open = useCallback(() => {
     debug("opening handwriting input");
     setVisible(true);

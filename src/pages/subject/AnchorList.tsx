@@ -26,7 +26,7 @@ export function AnchorList({
   assignment,
   show,
   showDebug
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const type = normalizeVocabType(subject.object);
 
   const anchorItems: AnchorProps["items"] = useMemo(() => {

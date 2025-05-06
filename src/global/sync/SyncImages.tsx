@@ -16,7 +16,7 @@ const debug = Debug("kanjischool:sync-images-global");
  * SyncImages is responsible for downloading the subject radical images when the
  * application starts.
  */
-export function SyncImages(): JSX.Element | null {
+export function SyncImages(): React.ReactElement | null {
   const [hasSynced, setHasSynced] = useState(false);
   const isOnline = useOnlineStatus();
   const subjects = !!api.useSubjects();

@@ -19,7 +19,7 @@ interface KnownSubjectsProps {
 
 const KNOWN_STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export function KnownSubjects({ type, count }: KnownSubjectsProps): JSX.Element {
+export function KnownSubjects({ type, count }: KnownSubjectsProps): React.ReactElement {
   const navigate = useNavigate();
 
   const name = uppercaseFirst(type);

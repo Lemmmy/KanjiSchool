@@ -30,11 +30,11 @@ export interface EpicVirtualListProps {
   rowClassName?: string;
 
   updateTooltip?: UpdateTooltipFn;
-  mainRef: RefObject<HTMLDivElement>;
-  tooltipInnerRef: RefObject<HTMLDivElement>;
+  mainRef: RefObject<HTMLDivElement | null>;
+  tooltipInnerRef: RefObject<HTMLDivElement | null>;
 
   // Render item function
-  children: (props: EpicVirtualListItemProps) => JSX.Element | JSX.Element[] | null;
+  children: (props: EpicVirtualListItemProps) => React.ReactElement | React.ReactElement[] | null;
 }
 
 interface ScrollState {

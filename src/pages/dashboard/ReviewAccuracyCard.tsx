@@ -41,12 +41,12 @@ const typeClasses: Record<NormalizedSubjectType, string> = {
   vocabulary: "!text-vocabulary"
 };
 
-function num(n: number | undefined): JSX.Element | null {
+function num(n: number | undefined): React.ReactElement | null {
   if (n === undefined || isNaN(n)) return null;
   return <>{nts(n)}</>;
 }
 
-function perc(n: number, total: number): JSX.Element | null {
+function perc(n: number, total: number): React.ReactElement | null {
   if (total === 0) return null;
   return <>{((n / total) * 100).toFixed(2)}%</>;
 }
@@ -133,7 +133,7 @@ function getData(
   };
 }
 
-export function ReviewAccuracyCard(): JSX.Element {
+export function ReviewAccuracyCard(): React.ReactElement {
   const [data, setData] = useState<Data>();
 
   const subjects = useSubjects();
@@ -152,7 +152,7 @@ export function ReviewAccuracyCard(): JSX.Element {
     key: keyof Column,
     label: string,
     className?: string
-  ): JSX.Element => {
+  ): React.ReactElement => {
     const cellClass = classNames(typeClasses[key as NormalizedSubjectType], className);
 
     return <CardTableRow className={className}>

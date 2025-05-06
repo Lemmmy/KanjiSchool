@@ -11,7 +11,7 @@ interface Props extends Omit<HTMLProps<HTMLDivElement>, "title"> {
   className?: string;
 }
 
-export function AppLoading({ title, extra, className }: Props): JSX.Element {
+export function AppLoading({ title, extra, className }: Props): React.ReactElement {
   return <div className={classNames("wk-preloader", className)}>
     {/* Spinner */}
     <div className="wk-preloader-spinner" />

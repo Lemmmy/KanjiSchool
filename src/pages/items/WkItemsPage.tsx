@@ -4,4 +4,4 @@
 
 import { ItemsPage } from "@pages/items/ItemsPage.tsx";
 
-export const Component = (): JSX.Element => <ItemsPage type="wk" />;
+export const Component = (): React.ReactElement => <ItemsPage type="wk" />;

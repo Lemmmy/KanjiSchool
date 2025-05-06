@@ -41,7 +41,7 @@ export function SearchParamsForm({
   loading,
   results,
   showQueryInput
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const selfStudyButtonProps: SelfStudyButtonProps = useMemo(() => ({
     selfStudy,
     onSelfStudy,

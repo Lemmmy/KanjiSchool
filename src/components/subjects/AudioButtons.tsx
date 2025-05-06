@@ -23,7 +23,7 @@ interface Props {
 export function AudioButtons({
   subject,
   autoPlay
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const pronunciations = useMemo(() => {
     if (subject.object !== "vocabulary" || !subject.data.pronunciation_audios.length)
       return [];

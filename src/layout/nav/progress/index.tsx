@@ -8,7 +8,7 @@ import { SyncImagesProgress } from "./SyncImagesProgress";
 import { SyncAudioProgress } from "./SyncAudioProgress";
 import { AssignmentQueueProgress } from "./AssignmentQueueProgress";
 
-export function SyncProgressBars(): JSX.Element {
+export function SyncProgressBars(): React.ReactElement {
   return <div className="flex max-w-[calc(100vw-720px)] overflow-hidden mr-sm relative">
     <RateLimitHit />
 

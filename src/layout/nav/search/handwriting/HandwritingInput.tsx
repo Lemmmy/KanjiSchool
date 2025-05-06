@@ -7,7 +7,7 @@ import { useState, useMemo, Dispatch, SetStateAction } from "react";
 import { HwInputPopover } from "./HwInputPopover";
 
 export type HwInputHookRes = [
-  JSX.Element, // Input button
+  React.ReactElement, // Input button
   boolean, // Visibility state
   Dispatch<SetStateAction<boolean>>, // Set visibility state
 ];

@@ -18,7 +18,7 @@ interface SrsStageProps {
   max?: number;
 }
 
-export function SrsStage({ stageData, min, max }: SrsStageProps): JSX.Element {
+export function SrsStage({ stageData, min, max }: SrsStageProps): React.ReactElement {
   const navigate = useNavigate();
 
   if (max === undefined)

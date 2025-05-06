@@ -13,7 +13,7 @@ interface Props {
 export function WithLessonsCheckbox({
   withLessons,
   setWithLessons
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   return <Checkbox
     className="flex items-center"
     onChange={setWithLessons}

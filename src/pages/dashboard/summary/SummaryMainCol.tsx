@@ -44,7 +44,7 @@ interface Props {
   available?: AvailableAssignments;
 }
 
-export function SummaryMainCol({ type, available }: Props): JSX.Element {
+export function SummaryMainCol({ type, available }: Props): React.ReactElement {
   const { title, pendingKey } = DATA[type];
 
   const pendingCount = useAppSelector(s => s.reviews[pendingKey]?.length);

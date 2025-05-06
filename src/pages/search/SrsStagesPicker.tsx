@@ -8,7 +8,7 @@ import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 import { usePalette, stringifySrsStage } from "@utils";
 import { getReadableTextColor, SRS_STAGE_TO_PALETTE } from "@global/theme";
 
-export function SrsStagesPicker({ ...props }: any): JSX.Element {
+export function SrsStagesPicker({ ...props }: any): React.ReactElement {
   const palette = usePalette();
 
   function tagRender({ label, value, closable, onClose }: CustomTagProps) {

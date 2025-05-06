@@ -11,7 +11,7 @@ interface Props {
   subject: ApiSubject;
 }
 
-export function PlainPrimaryReadings({ subject }: Props): JSX.Element | null {
+export function PlainPrimaryReadings({ subject }: Props): React.ReactElement | null {
   const kanjiSubjectData = subject.data as ApiSubjectKanjiInner;
   const readings = hasReadings(subject) ? kanjiSubjectData.readings : undefined;
 

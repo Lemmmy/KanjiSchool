@@ -4,7 +4,7 @@
 
 import { Spin } from "antd";
 
-export function FullscreenSpin(): JSX.Element {
+export function FullscreenSpin(): React.ReactElement {
   return <div className="animate-fade-in bg-black/25 fixed inset-0 z-50 flex items-center justify-center">
     <Spin size="large" />
   </div>;

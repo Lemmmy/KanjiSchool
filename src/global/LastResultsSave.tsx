@@ -12,7 +12,7 @@ import Debug from "debug";
 const debug = Debug("kanjischool:last-results-save");
 
 // This is jank, but w/e
-export function LastResultsSave(): JSX.Element | null {
+export function LastResultsSave(): React.ReactElement | null {
   const lastResults = useAppSelector(s => s.session.lastResults);
   const lastResultsViewed = useAppSelector(s => s.session.lastResultsViewed);
 

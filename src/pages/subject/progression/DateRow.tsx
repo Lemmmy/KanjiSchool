@@ -16,7 +16,7 @@ interface Props {
   assignment: StoredAssignment;
 }
 
-export function DateRow({ subject, assignment }: Props): JSX.Element {
+export function DateRow({ subject, assignment }: Props): React.ReactElement {
   const { data } = assignment;
 
   return <div className="py-md">
@@ -38,7 +38,7 @@ interface ColProps {
   short?: boolean;
 }
 
-function DateCol({ name, date, short = false }: ColProps): JSX.Element | null {
+function DateCol({ name, date, short = false }: ColProps): React.ReactElement | null {
   if (!date) return null;
 
   // Highlight the date in green for next review if it's available now

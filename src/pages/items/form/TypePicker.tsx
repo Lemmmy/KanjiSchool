@@ -13,7 +13,7 @@ const ITEMS: ToggleButtonGroupItem<NormalizedSubjectType>[] = [
   { value: "vocabulary", label: "Vocabulary", className: "border-b-vocabulary" },
 ];
 
-export function TypePicker(props: any): JSX.Element {
+export function TypePicker(props: any): React.ReactElement {
   return <Row gutter={16}>
     <Col span={24}>
       <Form.Item name="types" label="Item type" className="mb-sm" {...props}>

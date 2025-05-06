@@ -19,13 +19,13 @@ export interface SubjectGridVirtualProps {
   size: Size;
   hideSrs?: boolean;
   innerPadding: number;
-  renderItem: (i: number, width?: number) => JSX.Element;
+  renderItem: (i: number, width?: number) => React.ReactElement;
   containerRef: HTMLDivElement | null;
   simpleWindowing?: boolean;
   overscanCount?: number;
   updateTooltip: UpdateTooltipFn;
-  mainRef: RefObject<HTMLDivElement>;
-  tooltipInnerRef: RefObject<HTMLDivElement>;
+  mainRef: RefObject<HTMLDivElement | null>;
+  tooltipInnerRef: RefObject<HTMLDivElement | null>;
 }
 
 export const SubjectGridVirtual = forwardRef<HTMLDivElement, SubjectGridVirtualProps>(function SubjectGridVirtual({
@@ -42,7 +42,7 @@ export const SubjectGridVirtual = forwardRef<HTMLDivElement, SubjectGridVirtualP
   updateTooltip,
   mainRef,
   tooltipInnerRef
-}, forwardRef): JSX.Element {
+}, forwardRef): React.ReactElement {
   const style = sizeStyles[size];
   const itemSpacing = style.spacing;
   const itemWidth = style.width;
@@ -61,7 +61,7 @@ export const SubjectGridVirtual = forwardRef<HTMLDivElement, SubjectGridVirtualP
 
   const Row = ({ index }: EpicVirtualListItemProps) => {
     // Calculate the starting and ending index of the items in this row
-    const els: JSX.Element[] = [];
+    const els: React.ReactElement[] = [];
     const fromIndex = index * itemsPerRow;
     const toIndex = Math.min(fromIndex + itemsPerRow, items.length);
 

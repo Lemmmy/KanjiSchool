@@ -179,7 +179,7 @@ export function AudioButton({
   subject,
   pronunciation,
   autoPlay, hasShortcut
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const [play, loading, disabled, playing] = useVocabAudio(subject);
   const triggerPlay = useCallback(() => play(pronunciation), [play, pronunciation]);
 

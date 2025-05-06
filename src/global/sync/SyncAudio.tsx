@@ -17,7 +17,7 @@ const throttledSync = throttle(api.syncAudio, SYNC_AUDIO_THROTTLE_MS);
  * startup, and whenever the user's level changes. The subjects and assignments
  * must be loaded first.
  */
-export function SyncAudio(): JSX.Element | null {
+export function SyncAudio(): React.ReactElement | null {
   const isOnline = useOnlineStatus();
   const userLevel = api.useUserLevel();
   const subjects = api.useSubjects();

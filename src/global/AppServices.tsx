@@ -6,7 +6,7 @@ import { ReducedMotionClass } from "@global/ReducedMotionClass.tsx";
 import { ApplyWkTheme } from "@global/theme";
 import { ApplyAntThemeVariables } from "@global/theme/ApplyAntThemeVariables.tsx";
 
-export function AppServices(): JSX.Element {
+export function AppServices(): React.ReactElement {
   return <>
     <ReducedMotionClass />
     <ApplyWkTheme />

@@ -81,7 +81,7 @@ export function SubjectGrid({
   overscanCount,
   className,
   ...rest
-}: SubjectGridProps): JSX.Element | null {
+}: SubjectGridProps): React.ReactElement | null {
   const subjects = useSubjects();
   const assignments = useAssignments();
   const subjectAssignmentIds = useSubjectAssignmentIds();
@@ -124,7 +124,7 @@ export function SubjectGrid({
   // the regular list.
   const isVirtual = forceVirtual || items.length > 20;
 
-  const renderItem = useCallback((i: number, width?: number): JSX.Element => {
+  const renderItem = useCallback((i: number, width?: number): React.ReactElement => {
     const [subject, assignment] = items[i];
     const component = itemComponent ?? COMPONENT_TYPES[subject.object];
     return React.createElement(component, {

@@ -19,7 +19,7 @@ const NAMES: Record<Type, string> =
 export function JlptJoyoPicker({
   type,
   ...props
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const keys = type === "jlpt" ? JLPT_KEYS : JOYO_KEYS;
 
   return <Form.Item label={LABELS[type]} name={NAMES[type]} {...props}>

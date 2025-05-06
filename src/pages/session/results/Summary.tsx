@@ -23,12 +23,12 @@ const typeBackgroundClasses: Record<NormalizedSubjectType, string> = {
 
 const colClasses = "flex flex-col justify-center items-center text-center rounded mx-xss p-md first:ml-0 last:mr-0";
 
-function num(n: number | undefined): JSX.Element | null {
+function num(n: number | undefined): React.ReactElement | null {
   if (n === undefined || isNaN(n)) return null;
   return <>{nts(n)}</>;
 }
 
-function perc(n: number, total: number): JSX.Element | null {
+function perc(n: number, total: number): React.ReactElement | null {
   if (total === 0) return <>100</>;
   return <>{((n / total) * 100).toFixed(0)}</>;
 }
@@ -67,7 +67,7 @@ function analyzeData(
   return data;
 }
 
-export const Summary = React.memo(({ results }: Props): JSX.Element | null => {
+export const Summary = React.memo(({ results }: Props): React.ReactElement | null => {
   const subjects = useSubjects();
 
   const { correctSubjectIds: correct, incorrectSubjectIds: incorrect } = results;
@@ -111,7 +111,7 @@ function CorrectEl({
 }: {
   type: NormalizedSubjectType;
   data: Data;
-}): JSX.Element | null {
+}): React.ReactElement | null {
   const correct = data.correct[type];
   const total = data.total[type];
 

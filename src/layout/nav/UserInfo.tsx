@@ -4,7 +4,7 @@
 
 import { useUser } from "@api";
 
-export function UserInfo(): JSX.Element | null {
+export function UserInfo(): React.ReactElement | null {
   const user = useUser();
   if (!user) return null;
 
@@ -21,7 +21,7 @@ export function UserInfo(): JSX.Element | null {
   </div>;
 }
 
-export function MenuUserInfo(): JSX.Element | null {
+export function MenuUserInfo(): React.ReactElement | null {
   const user = useUser();
   if (!user) return null;
 

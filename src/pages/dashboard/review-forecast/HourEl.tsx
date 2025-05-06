@@ -27,7 +27,7 @@ export function HourEl({
   cum,
   hours12h,
   hourMaxReviews: max
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const classes = classNames(
     "flex items-center",
     {

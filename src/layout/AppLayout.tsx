@@ -13,7 +13,7 @@ import { KeywordSearchProvider } from "@api/search/KeywordSearch";
 import { ScrollToAnchor } from "@utils/hooks/useScrollToAnchor";
 import { StudyQueueModal } from "@comp/study-queue/StudyQueueModal.tsx";
 
-export function AppLayout(): JSX.Element {
+export function AppLayout(): React.ReactElement {
   return <Layout>
     <KeywordSearchProvider>
       <TopMenuProvider>

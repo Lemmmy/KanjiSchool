@@ -14,7 +14,7 @@ interface Props {
   subject: StoredSubject;
 }
 
-export function DictionaryInfoRow({ subject }: Props): JSX.Element | null {
+export function DictionaryInfoRow({ subject }: Props): React.ReactElement | null {
   // No data, return null
   const { jisho } = subject.data;
   if (!jisho) return null;
@@ -55,8 +55,8 @@ export function DictionaryInfoRow({ subject }: Props): JSX.Element | null {
   </Row>;
 }
 
-const Header = ({ children }: { children: ReactNode }): JSX.Element =>
+const Header = ({ children }: { children: ReactNode }): React.ReactElement =>
   <div className="text-sm text-desc">{children}</div>;
 
-const Value = ({ children }: { children: ReactNode }): JSX.Element =>
+const Value = ({ children }: { children: ReactNode }): React.ReactElement =>
   <div className="text-lg">{children}</div>;

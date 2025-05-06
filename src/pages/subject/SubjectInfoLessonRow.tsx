@@ -18,7 +18,7 @@ export function SubjectInfoLessonRow({
   lessonsTotal,
   onPrevLesson,
   onNextLesson
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   return <Row className="mb-lg">
     {/* Previous lesson button */}
     <Col>

@@ -4,4 +4,4 @@
 
 import { ItemsPage } from "@pages/items/ItemsPage.tsx";
 
-export const Component = (): JSX.Element => <ItemsPage type="joyo" />;
+export const Component = (): React.ReactElement => <ItemsPage type="joyo" />;

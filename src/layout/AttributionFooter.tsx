@@ -18,7 +18,7 @@ interface Props {
 export function AttributionFooter({
   withThemeToggle = false,
   className
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const colClass = "text-justify [text-align-last:center]";
 
   return <div className={classNames(
@@ -77,7 +77,7 @@ const JishoAttribution = () => <>
   the <Link href="https://www.edrdg.org/">EDRDG</Link>.
 </>;
 
-export const KanjiumAttribution = (): JSX.Element => <>
+export const KanjiumAttribution = (): React.ReactElement => <>
   Pitch accent data is obtained from the <Link href="https://github.com/mifunetoshiro/kanjium">Kanjium</Link> project,
   licensed under the <Link href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</Link> license, provided
   by Uros O. through his free database.

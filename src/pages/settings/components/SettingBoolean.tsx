@@ -21,7 +21,7 @@ export function SettingBoolean({
   title,
   description,
   onChanged
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const settingValue = useBooleanSetting(setting);
 
   const onChange = useCallback((value: boolean) => {

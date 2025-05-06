@@ -15,7 +15,7 @@ interface Props {
 
 const dateFormat = timeFormat("%a %-d %b, %-I:%M %p");
 
-export const ChartTooltip = forwardRef<HTMLDivElement, Props>(function ChartTooltip({ datum }, ref): JSX.Element {
+export const ChartTooltip = forwardRef<HTMLDivElement, Props>(function ChartTooltip({ datum }, ref): React.ReactElement {
   return <div
     ref={ref}
     className="absolute pointer-events-none bg-spotlight text-solidc light:text-basec px-md py-sm rounded shadow-lg
@@ -25,7 +25,7 @@ export const ChartTooltip = forwardRef<HTMLDivElement, Props>(function ChartTool
   </div>;
 });
 
-function TooltipInner({ datum: d }: DeepNonNullable<Props>): JSX.Element | null {
+function TooltipInner({ datum: d }: DeepNonNullable<Props>): React.ReactElement | null {
   const date = useMemo(() => new Date(d.date), [d.date]);
   const total = d.apprentice + d.guru + d.master + d.enlightened;
 
@@ -57,7 +57,7 @@ interface TooltipRowProps {
   className?: string;
 }
 
-function TooltipRow({ label, value, className }: TooltipRowProps): JSX.Element {
+function TooltipRow({ label, value, className }: TooltipRowProps): React.ReactElement {
   const labelClass = classNames({ "text-desc": value <= 0, "font-bold": value > 0 });
   return <div className="flex items-center leading-none">
     <div className={classNames(className, "w-4 h-4 inline-block mr-sm rounded-sm")} />

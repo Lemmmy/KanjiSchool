@@ -27,7 +27,7 @@ export function LevelProgressBars({
   vocabulary,
   includePassed,
   // endRef
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const showKanjiLine = userLevel === level;
 
   return <>
@@ -62,7 +62,7 @@ function LevelProgressBar({
   type,
   data,
   showKanjiLine
-}: BarProps): JSX.Element {
+}: BarProps): React.ReactElement {
   const [locked, init, appr1, appr2, appr3, appr4, passed, total] = data;
 
   const navigate = useNavigate();
@@ -154,7 +154,7 @@ const BarPart = React.memo(function BarPart({
   navigate,
   perc, percParen,
   level, type, stage, n
-}: BarPartProps): JSX.Element {
+}: BarPartProps): React.ReactElement {
   // Title for the individual bar segment's tooltip
   const [rawTitle, srsStages] = barSegTitleAndStages(stage);
   const title = rawTitle + " - " + percParen(n);

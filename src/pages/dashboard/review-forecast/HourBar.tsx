@@ -27,7 +27,7 @@ export function HourBar({
   max,
   type,
   bgClassName = "bg-primary"
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   if (!n || !max) return null;
 
   const tooltipTitle = type ? TOOLTIP_TITLES[type] : undefined;

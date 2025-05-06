@@ -7,7 +7,7 @@ import { LastResultsSave } from "./LastResultsSave";
 import { HotkeyServices } from "./hotkeys";
 import { AdvanceTip } from "@pages/dashboard/tips/TipsCard";
 
-export function InnerAppServices(): JSX.Element {
+export function InnerAppServices(): React.ReactElement {
   return <>
     <SyncHandlers />
     <LastResultsSave />

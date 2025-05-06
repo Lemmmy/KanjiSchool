@@ -12,7 +12,7 @@ import { useOnlineStatus } from "@utils";
  * the server on startup, and whenever the user's level changes. The subjects
  * must be loaded first.
  */
-export function SyncLevelProgressions(): JSX.Element | null {
+export function SyncLevelProgressions(): React.ReactElement | null {
   const isOnline = useOnlineStatus();
   const userLevel = api.useUserLevel();
   const subjects = !!api.useSubjects();

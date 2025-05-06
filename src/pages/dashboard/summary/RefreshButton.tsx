@@ -20,7 +20,7 @@ interface Props {
   className?: string;
 }
 
-export function RefreshButton({ className }: Props): JSX.Element {
+export function RefreshButton({ className }: Props): React.ReactElement {
   const isOnline = useOnlineStatus();
 
   const user = useUser();

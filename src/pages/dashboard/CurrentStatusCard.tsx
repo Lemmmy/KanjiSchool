@@ -101,7 +101,7 @@ const TYPE_LABELS: Record<NormalizedSubjectType, [string, string]> = {
 
  */
 
-export function CurrentStatusCard(): JSX.Element {
+export function CurrentStatusCard(): React.ReactElement {
   const [data, setData] = useState<Data>();
 
   const user = useUser();

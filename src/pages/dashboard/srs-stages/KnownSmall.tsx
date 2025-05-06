@@ -25,7 +25,7 @@ const KNOWN_SMALL_STAGES: Record<KnownSmallType, number[]> = {
 
 export function KnownSmall({
   type, name, count
-}: KnownSmallProps): JSX.Element {
+}: KnownSmallProps): React.ReactElement {
   const navigate = useNavigate();
 
   function onClick() {

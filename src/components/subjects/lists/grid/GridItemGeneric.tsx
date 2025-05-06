@@ -8,7 +8,7 @@ import { SubjectGridItem, SubjectGridItemProps } from "./SubjectGridItem";
 export function GridItemGeneric({
   subject,
   ...rest
-}: SubjectGridItemProps): JSX.Element {
+}: SubjectGridItemProps): React.ReactElement {
   return <SubjectGridItem
     subject={subject}
     {...rest}

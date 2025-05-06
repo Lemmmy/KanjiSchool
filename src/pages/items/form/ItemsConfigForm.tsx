@@ -32,7 +32,7 @@ export function ItemsConfigForm({
   type,
   performLookup,
   hideForm,
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const [form] = Form.useForm<FormValues>();
 
   const defaultCollapseKey = hideForm ? undefined : "1";

@@ -37,7 +37,7 @@ export function VerticalSubjectList({
   height,
   renderTooltip,
   className
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const assignments = useAssignments();
   const subjectAssignmentIds = useSubjectAssignmentIds();
 

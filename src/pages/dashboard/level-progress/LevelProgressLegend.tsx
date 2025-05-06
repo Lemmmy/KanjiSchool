@@ -5,7 +5,7 @@
 import { Tooltip } from "antd";
 import classNames from "classnames";
 
-export function LevelProgressLegend(): JSX.Element {
+export function LevelProgressLegend(): React.ReactElement {
   return <div className="hidden md:flex items-center text-sm text-desc">
     <LegendSquare className="bg-srs-passed rounded-sm" />
     <LegendLabel>Passed</LegendLabel>
@@ -28,10 +28,10 @@ export function LevelProgressLegend(): JSX.Element {
   </div>;
 }
 
-function LegendSquare({ className }: { className: string }): JSX.Element {
+function LegendSquare({ className }: { className: string }): React.ReactElement {
   return <span className={classNames("inline-block w-[16px] h-[16px] whitespace-nowrap", className)} />;
 }
 
-function LegendLabel({ children }: { children: React.ReactNode }): JSX.Element {
+function LegendLabel({ children }: { children: React.ReactNode }): React.ReactElement {
   return <span className="inline-block ml-xs mr-sm last:mr-0">{children}</span>;
 }

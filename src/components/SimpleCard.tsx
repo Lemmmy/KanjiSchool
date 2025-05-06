@@ -30,7 +30,7 @@ export const SimpleCard = forwardRef<HTMLDivElement, Props>(function SimpleCard(
   headClassName,
   children,
   ...rest
-}, ref): JSX.Element {
+}, ref): React.ReactElement {
   return <div
     className={classNames(
       "wk-card rounded-lg leading-ant bg-[#141414] light:bg-white",

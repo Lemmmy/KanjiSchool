@@ -8,7 +8,7 @@ interface Props {
   description?: ReactNode;
 }
 
-export function SettingDescription({ description }: Props): JSX.Element | null {
+export function SettingDescription({ description }: Props): React.ReactElement | null {
   if (!description) return null;
 
   return (

@@ -12,8 +12,8 @@ export type UpdateTooltipFn = (
 
 export function useGridTooltipEvents(
   updateFn: UpdateTooltipFn | undefined,
-  mainRef: RefObject<HTMLDivElement>,
-  tooltipInnerRef: RefObject<HTMLDivElement>,
+  mainRef: RefObject<HTMLDivElement | null>,
+  tooltipInnerRef: RefObject<HTMLDivElement | null>,
 ): void {
   const timeoutRef = useRef<number | null>(null);
 

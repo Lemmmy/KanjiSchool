@@ -10,8 +10,8 @@ import { SubjectRenderTooltipFn } from "@comp/subjects/lists/tooltip/SubjectTool
 
 interface HookRes {
   showTooltip: boolean;
-  tooltipRef: RefObject<HTMLDivElement>;
-  tooltipInnerRef: RefObject<HTMLDivElement>;
+  tooltipRef: RefObject<HTMLDivElement | null>;
+  tooltipInnerRef: RefObject<HTMLDivElement | null>;
   tooltipContents: ReactNode | null;
   updateTooltip: UpdateTooltipFn;
 }

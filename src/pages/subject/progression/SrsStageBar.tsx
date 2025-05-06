@@ -20,7 +20,7 @@ const STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export function SrsStageBar({
   subject,
   assignment
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const nextReview = assignment.data.available_at;
   const stage = assignment.data.srs_stage;
 

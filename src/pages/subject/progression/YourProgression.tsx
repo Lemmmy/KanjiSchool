@@ -17,7 +17,7 @@ interface Props {
 export function YourProgression({
   subject,
   assignment
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   // Don't show this section at all if the assignment does not exist/is not yet
   // unlocked
   if (!assignment || !assignment.data.unlocked_at) return null;

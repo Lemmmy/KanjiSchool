@@ -35,7 +35,7 @@ export function SessionQuestionView({
   onAnswered,
   onDontKnow,
   onSkip
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const nearMatchAction = useStringSetting<NearMatchAction>("nearMatchAction");
 
   // To get the meaning synonyms, if available

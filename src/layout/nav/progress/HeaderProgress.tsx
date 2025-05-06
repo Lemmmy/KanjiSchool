@@ -22,7 +22,7 @@ export function HeaderProgress({
   indeterminate,
   count = 0,
   total = 0,
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const showSpinner = indeterminate || count < 0 || total <= 0;
   const percent = showSpinner ? 0 : Math.floor((count / total) * 100);
 

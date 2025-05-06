@@ -35,7 +35,7 @@ export const dropdownOverlayClass = classNames(
   // See also the styles in index.css
 );
 
-export function AppHeader(): JSX.Element | null {
+export function AppHeader(): React.ReactElement | null {
   // Hide certain features on mobile
   const { sm } = useBreakpoint();
 

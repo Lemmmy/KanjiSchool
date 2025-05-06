@@ -9,7 +9,7 @@ import { SettingsUserInfo } from "./SettingsUserInfo.tsx";
 import { SettingsMenu } from "@pages/settings/SettingsMenu.tsx";
 import { AttributionFooter } from "@layout/AttributionFooter.tsx";
 
-function SettingsPage(): JSX.Element {
+function SettingsPage(): React.ReactElement {
   return <PageLayout
     contentsClassName="max-w-[960px] mx-auto md:pt-md"
     headerClassName="max-w-[960px] mx-auto"

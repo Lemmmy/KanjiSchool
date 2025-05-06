@@ -31,7 +31,7 @@ export function StudyMaterialNote({
   type,
   className,
   fallbackClassName
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
 

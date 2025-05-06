@@ -2,8 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Action } from "redux";
-import { DevToolsEnhancerOptions } from "@reduxjs/toolkit";
+import { Action, DevToolsEnhancerOptions } from "@reduxjs/toolkit";
 
 export const actionSanitizers: Record<string, (action: Action, id: number) => Action> = {
   "INIT_SUBJECTS": action => ({

@@ -10,7 +10,7 @@ interface Props extends ButtonProps {
 export function UndoButton({
   onUndo,
   ...buttonProps
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   // Whether to show the undo button
   const undoEnabled = useStringSetting<UndoType>("undoEnabled");
   if (undoEnabled === "HIDDEN") return null;

@@ -26,7 +26,7 @@ export const StudyQueueHotkeyHandlerContext = createContext<CtxRes>({
   setCurrentSubject: () => { /* noop */ }
 });
 
-export const StudyQueueHotkeyHandlerProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+export const StudyQueueHotkeyHandlerProvider = ({ children }: { children: ReactNode }): React.ReactElement => {
   const [currentSubjectId, setCurrentSubject] = useState<number>();
 
   const onHotkeyPressed = useCallback(() => {

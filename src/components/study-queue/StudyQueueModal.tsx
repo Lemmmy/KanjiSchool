@@ -28,7 +28,7 @@ const KEY_MAP = {
   TOGGLE_COLLAPSE: ["shift+q"]
 };
 
-export function StudyQueueModal(): JSX.Element | null {
+export function StudyQueueModal(): React.ReactElement | null {
   const [innerContainerRef, setInnerContainerRef] =
     useState<HTMLDivElement | null>(null);
 
@@ -119,7 +119,7 @@ interface ModalHeaderProps {
 function ModalHeader({
   count,
   collapsed, toggleCollapse
-}: ModalHeaderProps): JSX.Element {
+}: ModalHeaderProps): React.ReactElement {
   const collapseTitle = collapsed
     ? "Show self-study-queue"
     : "Hide self-study-queue";
@@ -169,7 +169,7 @@ interface FooterProps {
   items?: number[];
 }
 
-function ModalFooter({ items }: FooterProps): JSX.Element {
+function ModalFooter({ items }: FooterProps): React.ReactElement {
   const navigate = useNavigate();
 
   const withLessons = useBooleanSetting("selfStudyWithLessons");

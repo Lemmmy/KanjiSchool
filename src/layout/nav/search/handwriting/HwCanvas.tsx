@@ -37,7 +37,7 @@ interface CanvasState {
 }
 
 type HookRes = [
-  JSX.Element, // Canvas container
+  React.ReactElement, // Canvas container
   () => void, // Undo
   () => void, // Redo
   () => void // Clear

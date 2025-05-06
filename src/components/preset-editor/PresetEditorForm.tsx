@@ -49,7 +49,7 @@ function getEnabledOpts(preset: Preset): EnabledOpts {
 export function usePresetEditorForm(
   presetType: PresetType,
   selectedUuid?: string
-): [JSX.Element | null, () => void] {
+): [React.ReactElement | null, () => void] {
   const [form] = Form.useForm<FormValues>();
 
   const preset = usePreset(presetType, selectedUuid);

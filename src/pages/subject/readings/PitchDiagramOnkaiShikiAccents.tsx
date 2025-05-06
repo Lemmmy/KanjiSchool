@@ -16,7 +16,7 @@ interface Props {
   pitchInfo: PitchInfo;
 }
 
-export function PitchDiagramOnkaiShikiAccents({ reading: { reading }, pitchInfo }: Props): JSX.Element {
+export function PitchDiagramOnkaiShikiAccents({ reading: { reading }, pitchInfo }: Props): React.ReactElement {
   const accents = useMemo(() => getMoraAccents(pitchInfo), [pitchInfo]);
   const { kanaSize, circleSize, circleStrokeWidth, lineStrokeWidth } = diagramSettings;
 

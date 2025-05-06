@@ -16,7 +16,7 @@ import { dashboardCardBodyClass, dashboardCardClass } from "../../sharedStyles.t
 import { useIntegerSetting } from "@utils";
 import dayjs from "dayjs";
 
-export default function UpcomingReviewsCard(): JSX.Element {
+export default function UpcomingReviewsCard(): React.ReactElement {
   const maxDays = useIntegerSetting("dashboardReviewChartDays");
 
   const nowMax = dayjs().startOf("hour").add(maxDays, "day");
@@ -44,7 +44,7 @@ export default function UpcomingReviewsCard(): JSX.Element {
   </SimpleCard>;
 }
 
-function UpcomingReviewsExtra(): JSX.Element | null {
+function UpcomingReviewsExtra(): React.ReactElement | null {
   const nextReviewsWeek = useAppSelector(s =>
     s.reviews.nextReviewsAvailable.nextReviewsWeek);
 
@@ -55,7 +55,7 @@ function UpcomingReviewsExtra(): JSX.Element | null {
   </span>;
 }
 
-function CardFooter(): JSX.Element | null {
+function CardFooter(): React.ReactElement | null {
   const { sm } = useBreakpoint();
   if (!sm) return null; // Hide footer entirely on mobile
 
@@ -81,7 +81,7 @@ interface LegendSquareProps {
   className: string;
 }
 
-function LegendSquare({ className, label }: LegendSquareProps): JSX.Element {
+function LegendSquare({ className, label }: LegendSquareProps): React.ReactElement {
   return <span className="text-sm text-desc whitespace-nowrap mr-sm last:mr-0">
     <span className={classNames(className, "inline-block w-[10px] h-[10px] rounded-sm mr-xs")} />
     {label}

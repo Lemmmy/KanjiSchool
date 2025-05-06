@@ -35,7 +35,7 @@ interface Props {
   type: ItemsBaseType;
 }
 
-export function GroupByPicker({ type }: Props): JSX.Element {
+export function GroupByPicker({ type }: Props): React.ReactElement {
   const options = useMemo(() => ALLOWED_GROUP_BY[type]
     .map(value => ({ value, label: GROUP_BY_LABELS[value] })), [type]);
 

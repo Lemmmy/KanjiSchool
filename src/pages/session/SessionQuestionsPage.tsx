@@ -47,7 +47,7 @@ export type OnSkipFn = (
   viaShortcut?: boolean
 ) => void;
 
-export function SessionQuestionsPage(): JSX.Element {
+export function SessionQuestionsPage(): React.ReactElement {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -201,7 +201,7 @@ export function SessionQuestionsPage(): JSX.Element {
     type: QuestionType,
     item: SessionItem,
     itemId: number
-  ): JSX.Element | null => {
+  ): React.ReactElement | null => {
     const iSubject = getItemSubject(item);
     if (!iSubject) return null;
 

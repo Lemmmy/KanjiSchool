@@ -48,7 +48,7 @@ function getData(
   };
 }
 
-export function LevelInfoRow(): JSX.Element {
+export function LevelInfoRow(): React.ReactElement {
   const user = useUser();
   const maxLevel = user?.data.subscription.max_level_granted || 3;
   const subjects = useSubjects();

@@ -7,7 +7,7 @@ import { CheckOutlined, CloseOutlined, QuestionOutlined } from "@ant-design/icon
 
 import { AudioSupport } from "@api";
 
-export function AudioSupportedIcon({ supported }: { supported: AudioSupport }): JSX.Element {
+export function AudioSupportedIcon({ supported }: { supported: AudioSupport }): React.ReactElement {
   switch (supported) {
   case "NO":
     return <Tooltip title="Your browser cannot play this type of audio.">

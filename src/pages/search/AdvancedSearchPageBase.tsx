@@ -31,7 +31,7 @@ interface Props {
   title?: string;
 }
 
-export function AdvancedSearchPageBase({ selfStudy, title }: Props): JSX.Element {
+export function AdvancedSearchPageBase({ selfStudy, title }: Props): React.ReactElement {
   const navigate = useNavigate();
   const state = useLocation()?.state as SearchLocationState | null;
   const [keywordSearch] = useKeywordSearch();

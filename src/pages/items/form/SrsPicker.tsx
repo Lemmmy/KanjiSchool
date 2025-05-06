@@ -40,7 +40,7 @@ interface Props {
   showNotOnWk?: boolean;
 }
 
-export function SrsPicker({ showNotOnWk, ...props }: Props): JSX.Element {
+export function SrsPicker({ showNotOnWk, ...props }: Props): React.ReactElement {
   return <Row gutter={16} className="mb-md">
     <Col span={24}>
       <Form.Item name="srsStages" label="SRS stage" className="mb-sm" {...props}>

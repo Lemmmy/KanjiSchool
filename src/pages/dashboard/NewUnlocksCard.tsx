@@ -50,7 +50,7 @@ interface Props {
   dateField: "unlocked_at" | "burned_at";
 }
 
-export default function NewUnlocksCard({ dateField }: Props): JSX.Element {
+export default function NewUnlocksCard({ dateField }: Props): React.ReactElement {
   const [innerContainerRef, setInnerContainerRef] =
     useState<HTMLDivElement | null>(null);
   const innerContainerRealRef = useRef<HTMLDivElement>(null);

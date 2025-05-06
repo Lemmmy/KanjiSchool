@@ -16,7 +16,7 @@ import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 import { JLPT_KEYS, JOYO_KEYS } from "@utils";
 
-export function KanjiProgressCard(): JSX.Element {
+export function KanjiProgressCard(): React.ReactElement {
   const subjects = api.useSubjects();
   const assignments = api.useAssignments();
 

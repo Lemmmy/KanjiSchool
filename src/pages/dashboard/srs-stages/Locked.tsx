@@ -16,7 +16,7 @@ interface LockedProps {
   count: number;
 }
 
-export function LockedSubjects({ level, count }: LockedProps): JSX.Element {
+export function LockedSubjects({ level, count }: LockedProps): React.ReactElement {
   // Hide the level on mobile for space
   const { sm } = useBreakpoint();
 

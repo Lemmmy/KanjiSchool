@@ -21,7 +21,7 @@ export function SubjectTooltipExtraData({
   showJlpt,
   showJoyo,
   showFreq
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const jisho = subject.data.jisho;
   if (!jisho) return null;
 

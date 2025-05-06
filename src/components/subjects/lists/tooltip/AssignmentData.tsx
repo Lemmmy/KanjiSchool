@@ -15,7 +15,7 @@ interface Props {
 /** The tooltip assignment info - SRS stage and next review */
 export function SubjectTooltipAssignmentData({
   assignment
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const srsStage = assignment?.data.srs_stage ?? 10;
   const nextReview = assignment?.data.available_at;
   const availableNow = nextReview ? dayjs(nextReview).isBefore(dayjs()) : false;

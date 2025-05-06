@@ -29,7 +29,7 @@ export function FontFormItem({
   sampleText,
   showUnsupported = true,
   ...props
-}: FontFormItemProps): JSX.Element {
+}: FontFormItemProps): React.ReactElement {
   const supported = useAppSelector(state => font
     ? state.settings.supportedFonts[font]
     : false);

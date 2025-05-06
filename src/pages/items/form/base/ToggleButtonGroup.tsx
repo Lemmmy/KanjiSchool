@@ -41,7 +41,7 @@ export function ToggleButtonGroup<T extends string>({
   value,
   onChange,
   className
-}: Props<T>): JSX.Element {
+}: Props<T>): React.ReactElement {
   const selectItem     = (item: T) => onChange?.(Array.from(new Set(value ?? []).add(item)));
   const deselectItem   = (item: T) => onChange?.((value ?? []).filter(v => v !== item));
   const deselectAllBut = (item: T) => onChange?.([item]);
@@ -76,7 +76,7 @@ function ToggleButtonGroupButton<T extends string>({
   selected, oneSelected,
   selectItem, deselectItem, deselectAllBut, selectAll,
   className
-}: ToggleButtonGroupItemButtonProps<T>): JSX.Element {
+}: ToggleButtonGroupItemButtonProps<T>): React.ReactElement {
   function onClick(e: React.MouseEvent<HTMLInputElement>) {
     if (e.shiftKey) {
       // If we shift-clicked just this item again, re-select all

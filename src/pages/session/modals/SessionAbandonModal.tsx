@@ -29,7 +29,7 @@ interface Props {
   state: SessionState;
 }
 
-function SessionAbandonModalContents({ state }: Props): JSX.Element {
+function SessionAbandonModalContents({ state }: Props): React.ReactElement {
   const { type, items } = state;
 
   const { assignments } = store.getState().assignments;

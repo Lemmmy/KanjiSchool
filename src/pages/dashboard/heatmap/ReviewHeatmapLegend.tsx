@@ -12,7 +12,7 @@ const LEGEND_COLORS_LIGHT        = [...COLORS_LIGHT];        LEGEND_COLORS_LIGHT
 const LEGEND_COLORS_FUTURE       = [...COLORS_FUTURE];       LEGEND_COLORS_FUTURE.reverse();
 const LEGEND_COLORS_FUTURE_LIGHT = [...COLORS_FUTURE_LIGHT]; LEGEND_COLORS_FUTURE_LIGHT.reverse();
 
-export function ReviewHeatmapLegend(): JSX.Element {
+export function ReviewHeatmapLegend(): React.ReactElement {
   const includeFuture = useBooleanSetting("reviewHeatmapIncludeFuture");
 
   const { theme } = useThemeContext();
@@ -30,7 +30,7 @@ export function ReviewHeatmapLegend(): JSX.Element {
   </div>;
 }
 
-function LegendSquare({ color }: { color: string }): JSX.Element {
+function LegendSquare({ color }: { color: string }): React.ReactElement {
   return <span
     className="inline-block w-[10px] h-[10px] whitespace-nowrap
       first:rounded-l-sm last:rounded-r-sm"

@@ -4,7 +4,7 @@
 
 import classNames from "classnames";
 
-export function SimpleSkeleton(): JSX.Element {
+export function SimpleSkeleton(): React.ReactElement {
   return <div className="space-y-md">
     <SkeletonRow className="w-full" />
     <SkeletonRow className="w-full" />
@@ -17,6 +17,6 @@ interface RowProps {
   className?: string;
 }
 
-const SkeletonRow = ({ className }: RowProps): JSX.Element => <div
+const SkeletonRow = ({ className }: RowProps): React.ReactElement => <div
   className={classNames("h-md bg-white/15 light:bg-black/15 rounded-[4px] animate-pulse", className)}
 />;

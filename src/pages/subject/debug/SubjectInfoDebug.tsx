@@ -30,7 +30,7 @@ export default function SubjectInfoDebug({
   questionType, setQuestionType,
   hintStage, setHintStage,
   show
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const objectType = subject.object;
 
   const assignments = api.useAssignments();
@@ -105,7 +105,7 @@ interface DebugTabsProps {
   assignment?: StoredAssignment;
 }
 
-function DebugTabs({ subject, assignment }: DebugTabsProps): JSX.Element {
+function DebugTabs({ subject, assignment }: DebugTabsProps): React.ReactElement {
   const [tab, setTab] = useState<DebugTab>("hidden");
 
   return <>

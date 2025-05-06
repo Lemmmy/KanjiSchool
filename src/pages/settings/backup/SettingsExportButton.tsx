@@ -17,7 +17,7 @@ import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 
-export function SettingsExportButton(): JSX.Element {
+export function SettingsExportButton(): React.ReactElement {
   const { md } = useBreakpoint();
 
   return <Button

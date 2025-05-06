@@ -20,7 +20,7 @@ export function SrsStageShort({
   assignment,
   className,
   fontClassName = "text-sm"
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const { srs_stage, available_at } = assignment.data;
   const availableNow = available_at ? dayjs(available_at).isBefore(dayjs()) : false;
 

@@ -17,7 +17,7 @@ interface FilteredGroup {
   children: (MenuItem & { index: number })[];
 }
 
-export function SettingsMenu(): JSX.Element {
+export function SettingsMenu(): React.ReactElement {
   const fuseClass = useFuseClass();
   const indexer = useMemo(() => indexSettings(fuseClass), [fuseClass]);
 

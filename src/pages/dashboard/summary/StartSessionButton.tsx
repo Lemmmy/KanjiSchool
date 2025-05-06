@@ -18,7 +18,7 @@ interface Props {
   type: Type;
 }
 
-export function StartSessionButton({ type }: Props): JSX.Element {
+export function StartSessionButton({ type }: Props): React.ReactElement {
   const { button, hotkey } = DATA[type];
 
   // Change the button size depending on the screen size

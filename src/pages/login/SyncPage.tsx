@@ -14,7 +14,7 @@ import { SimpleCard } from "@comp/SimpleCard.tsx";
 import { CloudDisconnectedOutlined } from "@comp/icons/CloudDisconnectedOutlined";
 import { useOnlineStatus } from "@utils";
 
-export function SyncPage(): JSX.Element {
+export function SyncPage(): React.ReactElement {
   const isOnline = useOnlineStatus();
 
   const progress = useAppSelector(s => s.sync.subjectsProgress);

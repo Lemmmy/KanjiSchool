@@ -28,7 +28,7 @@ interface Props {
   pitchInfo: PitchInfo;
 }
 
-export function PitchDiagramPatternName({ pitchInfo: { partOfSpeech, accentPos, pattern }}: Props): JSX.Element {
+export function PitchDiagramPatternName({ pitchInfo: { partOfSpeech, accentPos, pattern }}: Props): React.ReactElement {
   const partsOfSpeech = useMemo(() => partOfSpeech
     ?.split(";")
     .map(pos => ({ ja: pos, en: partsOfSpeechMap[pos] ?? pos })),
@@ -65,7 +65,7 @@ interface PitchDiagramPatternTooltipProps {
   children: ReactNode;
 }
 
-export function PitchDiagramPatternTooltip({ pitchInfo, children }: PitchDiagramPatternTooltipProps): JSX.Element {
+export function PitchDiagramPatternTooltip({ pitchInfo, children }: PitchDiagramPatternTooltipProps): React.ReactElement {
   return <Tooltip
     title={patternNames[pitchInfo.pattern][1]}
     placement="right"

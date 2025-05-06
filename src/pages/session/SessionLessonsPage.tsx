@@ -20,7 +20,7 @@ const KEY_MAP = {
   NEXT: ["space", "right"]
 };
 
-export function SessionLessonsPage(): JSX.Element {
+export function SessionLessonsPage(): React.ReactElement {
   const subjects = useSubjects();
   const lessonCounter = useAppSelector(s => s.session.lessonCounter);
   const items = useAppSelector(s => s.session.sessionState?.items, shallowEqual);
@@ -67,7 +67,7 @@ function SessionLessonContents({
   lessonsTotal?: number;
   onPrevLesson?: () => void;
   onNextLesson?: () => void;
-}): JSX.Element {
+}): React.ReactElement {
   const reducedMotion = useReducedMotion();
   const audioMuted = useBooleanSetting("audioMuted");
   const autoPlayAudio = useBooleanSetting("audioAutoplayLessons");

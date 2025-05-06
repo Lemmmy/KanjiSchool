@@ -32,7 +32,7 @@ const menu: MenuProps = {
   }]
 };
 
-export function ItemsDropdown(): JSX.Element {
+export function ItemsDropdown(): React.ReactElement {
   return <Dropdown
     trigger={["click"]}
     overlayClassName={dropdownOverlayClass}

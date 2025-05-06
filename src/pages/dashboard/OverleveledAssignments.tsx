@@ -13,7 +13,7 @@ import { lsSetNumber, plural, pluralN } from "@utils";
 import { gotoSearch, useUserLevel } from "@api";
 import { useNavigate } from "react-router-dom";
 
-export function OverleveledAssignments(): JSX.Element | null {
+export function OverleveledAssignments(): React.ReactElement | null {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

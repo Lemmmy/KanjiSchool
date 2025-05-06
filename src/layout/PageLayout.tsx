@@ -54,7 +54,7 @@ export function PageLayout({
   backLink,
   children,
   ...rest
-}: PageLayoutProps): JSX.Element {
+}: PageLayoutProps): React.ReactElement {
   const navigate = useNavigate();
 
   useEffect(() => {

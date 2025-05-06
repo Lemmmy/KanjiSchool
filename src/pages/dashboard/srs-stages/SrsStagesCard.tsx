@@ -102,7 +102,7 @@ function countLocked(
   return locked;
 }
 
-export function SrsStagesCard(): JSX.Element | null {
+export function SrsStagesCard(): React.ReactElement | null {
   const userLevel = useUserLevel();
   const assignments = useAssignments();
   const subjects = useSubjects();

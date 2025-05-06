@@ -10,7 +10,7 @@ export function GridItemKanji({
   hideMeaning,
   hideReading,
   ...rest
-}: SubjectGridItemProps): JSX.Element | null {
+}: SubjectGridItemProps): React.ReactElement | null {
   if (subject.object !== "kanji")
     throw new Error("Using GridItemKanji for subject type " + subject.object);
 

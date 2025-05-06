@@ -17,7 +17,7 @@ interface Props {
 }
 
 /** The tooltip subject data - characters, level, meaning and readings. */
-export function SubjectTooltipSubjectData({ subject }: Props): JSX.Element {
+export function SubjectTooltipSubjectData({ subject }: Props): React.ReactElement {
   const objectType = subject.object;
   const { level, meanings } = subject.data;
 

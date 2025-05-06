@@ -11,7 +11,7 @@ interface Props {
   day: HeatmapDay;
 }
 
-export function ReviewHeatmapTooltip({ day }: Props): JSX.Element {
+export function ReviewHeatmapTooltip({ day }: Props): React.ReactElement {
   return <div className="flex flex-wrap gap-sm text-basec">
     <span className="whitespace-nowrap">
       {dayjs(day.date).isToday()
@@ -29,7 +29,7 @@ interface NumProps {
   n: number;
 }
 
-function Num({ name, n }: NumProps): JSX.Element | null {
+function Num({ name, n }: NumProps): React.ReactElement | null {
   if (n <= 0) return null;
   return <span className="whitespace-nowrap">
     {name}: <b>{nts(n)}</b>

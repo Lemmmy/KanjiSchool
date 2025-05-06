@@ -25,7 +25,7 @@ const KEY_MAP: KeyMap = {
   ABANDON_SESSION: { group: "dashboard", sequence: "a", action: "keyup" },
 };
 
-export function SessionHotkeys(): JSX.Element | null {
+export function SessionHotkeys(): React.ReactElement | null {
   const navigate = useNavigate();
 
   // Disable the hotkeys on the session pages, so typing will still autofocus the inputs.

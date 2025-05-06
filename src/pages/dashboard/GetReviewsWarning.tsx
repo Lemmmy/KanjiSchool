@@ -10,7 +10,7 @@ import { lsSetBoolean } from "@utils";
 import { useAppSelector } from "@store";
 import { setGetReviewsWarning } from "@store/slices/settingsSlice.ts";
 
-export function GetReviewsWarning(): JSX.Element | null {
+export function GetReviewsWarning(): React.ReactElement | null {
   const dispatch = useDispatch();
 
   const acknowledged = useAppSelector(state => state.settings.getReviewsWarning);

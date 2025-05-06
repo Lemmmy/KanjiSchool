@@ -10,7 +10,7 @@ interface Props {
   subject: ApiSubjectVocabularyInner | ApiSubjectKanaVocabularyInner;
 }
 
-export default function ContextSentences({ subject }: Props): JSX.Element {
+export default function ContextSentences({ subject }: Props): React.ReactElement {
   return <div className="flex flex-col gap-md">
     {subject.context_sentences.map(s => (
       <div key={s.ja}>

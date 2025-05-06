@@ -36,7 +36,7 @@ export function VocabList({
   innerPadding,
   renderTooltip,
   ...rest
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const subjects = useSubjects();
   const assignments = useAssignments();
   const subjectAssignmentIds = useSubjectAssignmentIds();
@@ -57,7 +57,7 @@ export function VocabList({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjects, assignments, subjectAssignmentIds, subjectIdsStr]);
 
-  const renderItem = useCallback((i: number, itemProps?: any): JSX.Element => {
+  const renderItem = useCallback((i: number, itemProps?: any): React.ReactElement => {
     const [subject, assignment] = items[i];
     return <VocabListItem
       key={subject.id}
@@ -103,7 +103,7 @@ interface VocabListVirtualProps {
   classes: string;
   items: [ApiSubjectVocabulary, StoredAssignment | undefined][];
   size: Size;
-  renderItem: (i: number, itemProps?: any) => JSX.Element;
+  renderItem: (i: number, itemProps?: any) => React.ReactElement;
 }
 
 function VocabListVirtual({
@@ -111,7 +111,7 @@ function VocabListVirtual({
   items,
   size,
   renderItem
-}: VocabListVirtualProps): JSX.Element {
+}: VocabListVirtualProps): React.ReactElement {
   const Row = React.memo(({ index, style }: ListChildComponentProps) =>
     renderItem(index, { style }));
 

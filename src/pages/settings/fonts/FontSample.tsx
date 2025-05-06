@@ -7,7 +7,7 @@ interface FontSampleProps {
   sampleText: string;
 }
 
-export function FontSample({ font, sampleText }: FontSampleProps): JSX.Element {
+export function FontSample({ font, sampleText }: FontSampleProps): React.ReactElement {
   return <div className="text-[24px] leading-none" style={{ fontFamily: font }}>
     {sampleText}
   </div>;

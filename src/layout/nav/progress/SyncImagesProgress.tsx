@@ -7,7 +7,7 @@ import { shallowEqual } from "react-redux";
 
 import { HeaderProgress } from "./HeaderProgress";
 
-export function SyncImagesProgress(): JSX.Element | null {
+export function SyncImagesProgress(): React.ReactElement | null {
   const syncing  = useAppSelector(s => s.sync.syncingImages);
   const progress = useAppSelector(s => s.sync.imagesProgress, shallowEqual);
   if (!syncing || !progress || progress.count <= 0) return null;

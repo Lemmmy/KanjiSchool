@@ -9,7 +9,7 @@ interface Props {
   subject: StoredSubject;
 }
 
-export function QuestionSrsStage({ subject }: Props): JSX.Element | null {
+export function QuestionSrsStage({ subject }: Props): React.ReactElement | null {
   const assignment = useAssignmentBySubjectId(subject.id);
   const srsStage = assignment?.data.srs_stage;
 

@@ -20,7 +20,7 @@ export function getOrdinalSuffix(value: number): string {
 export function OrdinalNumber({
   value,
   className
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const suffix = getOrdinalSuffix(value);
   return <span className={className}>
     <span>{nts(value)}</span>

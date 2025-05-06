@@ -15,7 +15,7 @@ function getColorClass(percentage: number): string {
   else return "bg-red-6";
 }
 
-export function CorrectBarTooltip({ percentage }: Props): JSX.Element {
+export function CorrectBarTooltip({ percentage }: Props): React.ReactElement {
   const colorClass = getColorClass(percentage);
 
   return <div

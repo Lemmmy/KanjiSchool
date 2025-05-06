@@ -55,7 +55,7 @@ const charBlockClasses: Record<string, string> = {
   "other"   : "text-vocabulary",
 };
 
-export function renderCharBlocks(blocks: CharacterBlock[]): JSX.Element[] {
+export function renderCharBlocks(blocks: CharacterBlock[]): React.ReactElement[] {
   return blocks.map(b => (
     <span
       key={`${b.type}-${b.characters}`}

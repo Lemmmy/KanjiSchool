@@ -45,7 +45,7 @@ function SessionQuestionInput({
   onAnimationEnd,
   onSubmit,
   onSkip
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const skipShortcut = useBooleanSetting("skipShortcut");
 
   const onChangeInternal = useCallback((e: React.ChangeEvent<HTMLInputElement>) =>

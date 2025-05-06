@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export default function ListShowAllButton({ onClick, className }: Props): JSX.Element {
+export default function ListShowAllButton({ onClick, className }: Props): React.ReactElement {
   return <div className="flex justify-center mt-md">
     <Button type="link" className="w-full text-sm group" onClick={onClick}>
       <span className={classNames(

@@ -55,7 +55,7 @@ function performAutocomplete(
   }
 }
 
-export function Search(): JSX.Element {
+export function Search(): React.ReactElement {
   const subjects = useSubjects();
   const [keywordSearch, fuseLoading] = useKeywordSearch();
 

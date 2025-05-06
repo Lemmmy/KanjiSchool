@@ -9,7 +9,7 @@ import { useStringSetting } from "@utils";
 import { ThemeName, useThemeStyles, validThemeNames } from "@global/theme/wkTheme.ts";
 import { useThemeContext } from "@global/theme/ThemeContext.tsx";
 
-export function ApplyWkTheme(): JSX.Element | null {
+export function ApplyWkTheme(): React.ReactElement | null {
   const theme = useStringSetting("siteTheme") as ThemeName;
   const themeStyles = useThemeStyles();
   const palette = usePaletteName();

@@ -26,7 +26,7 @@ export function SrsStageBarSegment({
   isCurrentStage,
   nextReview,
   systemId
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const availableNow = nextReview ? dayjs(nextReview).isBefore(dayjs()) : false;
   const progress = isCurrentStage
     ? getSrsProgress(systemId, stage, availableNow, nextReview)
@@ -71,7 +71,7 @@ export function SrsStageBarSegment({
 
 function BarSegmentTooltip(
   { systemId, stage }: Pick<Props, "systemId" | "stage">
-): JSX.Element {
+): React.ReactElement {
   const stageDuration = stage !== 9
     ? ` (${stringifySrsStageDuration(systemId, stage)})` : "";
 

@@ -25,7 +25,7 @@ const SearchResult = React.memo(({
   subject,
   query,
   queryKana
-}: Props): JSX.Element => {
+}: Props): React.ReactElement => {
   const { meanings, level } = subject.data;
   const reading = getPrimaryReading(subject);
 

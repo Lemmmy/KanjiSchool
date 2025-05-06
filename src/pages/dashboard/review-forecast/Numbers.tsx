@@ -19,7 +19,7 @@ export function Numbers({
   isNow,
   className,
   sepHeightClass = "h-[24px]"
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   return <div className={classNames("flex items-center -mr-xs", className)}>
     {/* Review count (+n) */}
     <span className="inline-block w-[3em] text-right">

@@ -21,7 +21,7 @@ interface Props {
 
 const database = vocabAccentData as unknown as RawVocabAccentData;
 
-export default function PitchAccentDiagrams({ subject }: Props): JSX.Element | null {
+export default function PitchAccentDiagrams({ subject }: Props): React.ReactElement | null {
   const data = useMemo(() => getPitchInfosForSubject(database, subject), [subject]);
   const style = useStringSetting<AccentDiagramStyle>("pitchAccentDiagramStyle");
 

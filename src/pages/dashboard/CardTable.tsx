@@ -17,7 +17,7 @@ const cellClass = "py-xss px-sm text-sm border-solid border border-split first:w
 export function CardTable({
   headers,
   children
-}: CardTableProps): JSX.Element {
+}: CardTableProps): React.ReactElement {
   return <table className="w-[calc(100%+2px)] m-[-1px] mt-0 overflow-auto border-collapse border-spacing-0">
     <thead className="bg-white/8 light:bg-black/5">
       <tr className="text-sm text-desc light:text-basec">
@@ -50,7 +50,7 @@ export function CardTableRow({
   highlight,
   burned,
   children
-}: CardTableRowProps): JSX.Element {
+}: CardTableRowProps): React.ReactElement {
   return <tr
     onClick={onClick}
     className={classNames("transition-colors [&_td:first-child]:transition-colors", className, {
@@ -89,7 +89,7 @@ export function CardTableCell({
       ? "!text-green/50 light:!text-green-6"
       : "!text-desc",
   children
-}: CardTableCellProps): JSX.Element {
+}: CardTableCellProps): React.ReactElement {
   return <td
     className={classNames(
       cellClass,

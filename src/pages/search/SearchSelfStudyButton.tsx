@@ -24,7 +24,7 @@ export function SearchSelfStudyButton({
   onSelfStudy,
   withLessons,
   setWithLessons
-}: SelfStudyButtonProps): JSX.Element | null {
+}: SelfStudyButtonProps): React.ReactElement | null {
   if (results === 0) return null;
 
   // For self-study type, put the "With lessons" checkbox on the left.

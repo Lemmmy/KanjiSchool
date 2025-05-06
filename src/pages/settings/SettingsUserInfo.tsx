@@ -15,7 +15,7 @@ import { uppercaseFirst } from "@utils";
 import TimeAgo from "react-timeago";
 import dayjs from "dayjs";
 
-export function SettingsUserInfo(): JSX.Element | null {
+export function SettingsUserInfo(): React.ReactElement | null {
   const user = useUser();
   if (!user) return null;
 

@@ -57,7 +57,7 @@ interface Props {
   diagram: ReactNode;
 }
 
-function PitchDiagramStyleLegend({ label, diagram }: Props): JSX.Element {
+function PitchDiagramStyleLegend({ label, diagram }: Props): React.ReactElement {
   return <div className="flex items-center gap-xs whitespace-nowrap">
     <span className="whitespace-nowrap flex-1">
       {label}
@@ -69,12 +69,12 @@ function PitchDiagramStyleLegend({ label, diagram }: Props): JSX.Element {
   </div>;
 }
 
-export const PitchDiagramOnkaiShikiLegend = (): JSX.Element => <PitchDiagramStyleLegend
+export const PitchDiagramOnkaiShikiLegend = (): React.ReactElement => <PitchDiagramStyleLegend
   label="音階式 (scale style, default)"
   diagram={<PitchDiagramOnkaiShikiAccents reading={dummySubjectReading} pitchInfo={dummyPitchInfo} />}
 />;
 
-export const PitchDiagramSenShikiLegend = (): JSX.Element => <PitchDiagramStyleLegend
+export const PitchDiagramSenShikiLegend = (): React.ReactElement => <PitchDiagramStyleLegend
   label="線式 (line style)"
   diagram={<PitchDiagramSenShikiAccents reading={dummySubjectReading} pitchInfo={dummyPitchInfo} />}
 />;

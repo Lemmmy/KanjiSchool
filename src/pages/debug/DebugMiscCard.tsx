@@ -7,7 +7,7 @@ import { globalNotification } from "@global/AntInterface.tsx";
 import { showNearMatchNotification, showSrsNotification } from "@session";
 import { SimpleCard } from "@comp/SimpleCard.tsx";
 
-export function DebugMiscCard(): JSX.Element {
+export function DebugMiscCard(): React.ReactElement {
   return <SimpleCard title="Misc" extra="foo">
     <Space size="large">
       <Button onClick={() => globalNotification.success({ message: "Test!" })}>

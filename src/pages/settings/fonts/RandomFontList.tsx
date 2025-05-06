@@ -10,7 +10,7 @@ import { Check } from "./Check.tsx";
 
 import { useBooleanSetting } from "@utils";
 
-export function RandomFontList(): JSX.Element {
+export function RandomFontList(): React.ReactElement {
   const baseClass = "leading-normal py-md whitespace-normal";
 
   const enabled = useBooleanSetting("randomFontEnabled");

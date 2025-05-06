@@ -31,7 +31,7 @@ export function KanjiProgressTable<T extends number>({
   keys,
   data,
   totals
-}: Props<T>): JSX.Element | null {
+}: Props<T>): React.ReactElement | null {
   const navigate = useNavigate();
 
   const headers = useMemo(() =>

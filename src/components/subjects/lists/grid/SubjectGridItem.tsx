@@ -161,7 +161,7 @@ export const SubjectGridItem: FC<Props> = React.memo(function SubjectGridItem({
   isVirtual,
   width,
   children
-}): JSX.Element | null {
+}): React.ReactElement | null {
   const url = getSubjectUrl(subject);
 
   // Whether this subject is in the self-study queue

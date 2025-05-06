@@ -17,7 +17,7 @@ import { dashboardCardBodyClass, dashboardCardClass } from "../sharedStyles.ts";
 
 import { SimpleCard } from "@comp/SimpleCard.tsx";
 
-export default function ReviewHeatmapCard(): JSX.Element {
+export default function ReviewHeatmapCard(): React.ReactElement {
   const [showAll, setShowAll] = useState(false);
   const [hoverDay, setHoverDay] = useState<HeatmapDay>();
 
@@ -43,7 +43,7 @@ export default function ReviewHeatmapCard(): JSX.Element {
   </SimpleCard>;
 }
 
-function CardTitle(): JSX.Element {
+function CardTitle(): React.ReactElement {
   return <div className="flex items-center gap-sm">
     <span>Review heatmap</span>
 
@@ -60,7 +60,7 @@ interface FooterProps {
   hoverDay?: HeatmapDay;
 }
 
-function CardFooter({ hoverDay }: FooterProps): JSX.Element | null {
+function CardFooter({ hoverDay }: FooterProps): React.ReactElement | null {
   const { sm } = useBreakpoint();
   if (!sm) return null; // Hide footer entirely on mobile
 

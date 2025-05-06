@@ -9,7 +9,7 @@ import { shallowEqual } from "react-redux";
 
 import { countSessionItems } from "@session";
 
-export function SessionDebugInfo(): JSX.Element {
+export function SessionDebugInfo(): React.ReactElement {
   const currentQuestion = useAppSelector(s => s.session.currentQuestion);
   const sessionState = useAppSelector(s => s.session.sessionState, shallowEqual);
   const { startedItems, finishedItems, skippedItems, totalItems, wrappingUp } =

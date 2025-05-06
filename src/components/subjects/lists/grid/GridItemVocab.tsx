@@ -10,7 +10,7 @@ import { isVocabularyLike } from "@utils";
 export function GridItemVocab({
   subject,
   ...rest
-}: SubjectGridItemProps): JSX.Element {
+}: SubjectGridItemProps): React.ReactElement {
   if (!isVocabularyLike(subject)) {
     throw new Error("Using GridItemVocab for subject type " + subject.object);
   }

@@ -25,7 +25,7 @@ const mod = (n: number, m: number): number => ((n % m) + m) % m;
 const TIP_COUNT = TIPS.length;
 
 /** Advance the tip on app start. */
-export function AdvanceTip(): JSX.Element | null {
+export function AdvanceTip(): React.ReactElement | null {
   const dispatch = useDispatch();
   const currentTip = useAppSelector(s => s.settings.tip);
 
@@ -42,7 +42,7 @@ export function AdvanceTip(): JSX.Element | null {
   return null;
 }
 
-export function TipsCard(): JSX.Element {
+export function TipsCard(): React.ReactElement {
   const dispatch = useDispatch();
   const rawTip = useAppSelector(s => s.settings.tip);
   const currentTip = mod(rawTip, TIP_COUNT);

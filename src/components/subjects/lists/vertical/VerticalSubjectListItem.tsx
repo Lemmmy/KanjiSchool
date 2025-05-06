@@ -28,7 +28,7 @@ export const VerticalSubjectListItem = React.memo(function VerticalSubjectListIt
   extra,
   style,
   renderTooltip
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   const url = getSubjectUrl(subject);
 
   // Whether this subject is in the self-study queue

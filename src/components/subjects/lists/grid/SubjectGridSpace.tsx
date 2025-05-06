@@ -15,10 +15,10 @@ interface SubjectGridSpaceProps {
   className: string;
   padding: number;
   items: [StoredSubject, StoredAssignment | undefined][];
-  renderItem: (i: number, width?: number) => JSX.Element;
+  renderItem: (i: number, width?: number) => React.ReactElement;
   updateTooltip?: UpdateTooltipFn;
-  mainRef: RefObject<HTMLDivElement>;
-  tooltipInnerRef: RefObject<HTMLDivElement>;
+  mainRef: RefObject<HTMLDivElement | null>;
+  tooltipInnerRef: RefObject<HTMLDivElement | null>;
 }
 
 export const SubjectGridSpace = forwardRef<HTMLDivElement, SubjectGridSpaceProps>(function SubjectGridSpace({

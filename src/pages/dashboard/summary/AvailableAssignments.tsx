@@ -113,7 +113,7 @@ const vocabularyClass = classNames(cellClass, "text-vocabulary light:bg-vocabula
 export function AvailableAssignmentsTable({
   type,
   data
-}: Props): JSX.Element | null {
+}: Props): React.ReactElement | null {
   // Used to shorten the table text based on the screen size.
   const bps = useBreakpoint();
 
@@ -157,7 +157,7 @@ function AssRow({
   title,
   rkv,
   last
-}: AssRowProps): JSX.Element | null {
+}: AssRowProps): React.ReactElement | null {
   if (!rkv) return null;
   const [r, k, v] = rkv;
 

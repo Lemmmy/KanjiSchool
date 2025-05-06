@@ -41,7 +41,7 @@ interface Props {
   subjectCharactersImageClass?: string;
 }
 
-export function SubjectInfoTopRow(props: Props): JSX.Element {
+export function SubjectInfoTopRow(props: Props): React.ReactElement {
   const {
     subject, hasSingleCharacter, charactersMax,
     showQueueButton, hintStage, onNextHintStage,

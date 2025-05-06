@@ -40,7 +40,7 @@ export function StudyQueueButton({
   longTitles = defaultLongTitles,
   shortTitle = "Queue",
   ...props
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
   const inQueue = useIsInStudyQueue(subjectId ?? -1);
   const [hover, unhover] = useStudyQueueHover();
 

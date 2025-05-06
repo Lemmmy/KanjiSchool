@@ -18,7 +18,7 @@ interface FormValues {
 }
 
 export type HookRes = [
-  JSX.Element, // Card
+  React.ReactElement, // Card
   (subject: StoredSubject) => void // onAddSubject
 ];
 

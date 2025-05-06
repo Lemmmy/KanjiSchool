@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 
 interface Props {
   showTooltip?: boolean;
-  tooltipInnerRef?: RefObject<HTMLDivElement>;
+  tooltipInnerRef?: RefObject<HTMLDivElement | null>;
   tooltipContents?: ReactNode;
 }
 
@@ -20,7 +20,7 @@ export const SubjectGridTooltip = forwardRef<HTMLDivElement, Props>(function Too
   showTooltip,
   tooltipInnerRef,
   tooltipContents
-}, ref): JSX.Element | null {
+}, ref): React.ReactElement | null {
   return !showTooltip ? null : createPortal(<div
     ref={ref}
     className="absolute z-50 text-basec pointer-events-none w-0 h-0"
