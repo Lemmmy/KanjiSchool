@@ -2,14 +2,12 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Alert, Typography } from "antd";
+import { Alert } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 import { DigraphMatch } from "@utils";
 
 import { globalModal } from "@global/AntInterface.tsx";
-
-const { Text } = Typography;
 
 interface Props {
   digraphMatch: DigraphMatch;
@@ -92,7 +90,7 @@ function DigraphHelp(): React.ReactElement {
       </ul>
     </p>
 
-    <p><Text type="secondary">Source: FD</Text></p>
+    <p><span className="text-desc">Source: FD</span></p>
   </>;
 }
 

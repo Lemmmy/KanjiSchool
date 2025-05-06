@@ -2,18 +2,17 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useCallback, ReactNode, FC, Fragment } from "react";
-import { Modal, Typography, Row, Col } from "antd";
+import { Col, Modal, Row } from "antd";
+import { FC, Fragment, ReactNode, useCallback } from "react";
 
 import { useAppSelector } from "@store";
-import { useDispatch } from "react-redux";
 import { setHotkeyHelpVisible } from "@store/slices/settingsSlice.ts";
+import { useDispatch } from "react-redux";
 
 import { GlobalHotKeys } from "react-hotkeys";
 
+import { Keyboard } from "@comp/Keyboard";
 import { ctrl } from "@utils";
-
-const { Text } = Typography;
 
 const KEY_MAP = {
   "SHOW": "shift+?"
@@ -85,7 +84,7 @@ function HotkeyModal({ visible, setVisible }: ModalProps): React.ReactElement {
           <Hotkey name="Submit" keys={["Enter"]} />
           <Hotkey name="Skip" keys={["Ctrl+Enter"]} />
           <Hotkey name="Re-focus textbox"
-            desc={<Text type="secondary">Any key</Text>} />
+            desc={<span className="text-desc">Any key</span>} />
           <Hotkey name="Wrap up session" keys={["Esc"]} />
           <Hotkey name="Abandon session" keys={["Shift+Esc"]} />
         </HotkeyGroup>
@@ -135,9 +134,7 @@ function Hotkey({ keys, desc, name }: HotkeyProps): React.ReactElement {
     {/* Key(s) */}
     <Col span={12} className="text-sm leading-[24px]">
       {desc || (keys || []).map((k, i, a) => <Fragment key={k}>
-        <Text keyboard className="text-[95%] whitespace-nowrap">
-          {k.replace("Ctrl", ctrl)}
-        </Text>
+        <Keyboard>{k.replace("Ctrl", ctrl)}</Keyboard>
         {i < a.length - 1 && <span className="mx-[0.2em]">or</span>}
       </Fragment>)}
     </Col>

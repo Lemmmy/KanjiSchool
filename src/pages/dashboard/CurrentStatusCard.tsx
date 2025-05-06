@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect } from "react";
-import { Tooltip, Typography } from "antd";
+import { Tooltip } from "antd";
 
 import {
   useSubjects, useLevelProgressions, useAssignments, useUser,
@@ -16,8 +16,6 @@ import { SimpleCard } from "@comp/SimpleCard.tsx";
 
 import dayjs from "dayjs";
 import { normalizeVocabType, nts, useBooleanSetting } from "@utils";
-
-const { Text } = Typography;
 
 interface Data {
   startDate: Date;
@@ -138,7 +136,7 @@ export function CurrentStatusCard(): React.ReactElement {
           <td>
             {data.timeOnLevel !== undefined
               ? <DhmDuration seconds={data.timeOnLevel} />
-              : <Text type="secondary">Not started yet</Text>}
+              : <span className="text-desc">Not started yet</span>}
           </td>
         </tr>}
 

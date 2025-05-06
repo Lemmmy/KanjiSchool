@@ -2,21 +2,21 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useState, useEffect, useMemo } from "react";
 import { Collapse, CollapseProps } from "antd";
 import classNames from "classnames";
+import { useEffect, useMemo, useState } from "react";
 
 import { SearchResultGroup } from "@api";
 
-import { ResultStageCounts } from "./ResultStageCounts";
 import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton";
+import { ResultStageCounts } from "./ResultStageCounts";
 
 import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { VocabList } from "@comp/subjects/lists/vocab";
 
+import { Tag } from "@comp/Tag";
 import { nts } from "@utils";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
-import { Tag } from "@comp/Tag";
 
 interface Props {
   groups: SearchResultGroup[];

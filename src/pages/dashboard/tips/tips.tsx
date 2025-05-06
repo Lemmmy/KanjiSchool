@@ -2,18 +2,16 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { ReactNode } from "react";
-import { Typography } from "antd";
 import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
+import { ReactNode } from "react";
 
+import { Keyboard } from "@comp/Keyboard";
 import { ctrl } from "@utils";
-
-const { Text } = Typography;
 
 export const TIPS: ReactNode[] = [
   <>
     KanjiSchool supports a wide range of keyboard shortcuts. You can view a list
-    in the <MoreOutlined /> Menu, or by pressing <Text keyboard>?</Text>.
+    in the <MoreOutlined /> Menu, or by pressing <Keyboard>?</Keyboard>.
   </>,
   <>
     You can adjust the order of your lesson and review sessions in the Settings,
@@ -21,11 +19,11 @@ export const TIPS: ReactNode[] = [
     the &ldquo;Start lessons&rdquo; and &ldquo;Start reviews&rdquo; buttons!
   </>,
   <>
-    You can quickly start a review session by pressing <Text keyboard>R</Text>.
+    You can quickly start a review session by pressing <Keyboard>R</Keyboard>.
   </>,
   <>
     If you don&apos;t want to continue a session, wrap it up by pressing
-    <Text keyboard>Esc</Text>. This will remove all unstarted questions and
+    <Keyboard>Esc</Keyboard>. This will remove all unstarted questions and
     leave you to finish only a few partially-answered ones.
   </>,
   <>
@@ -33,7 +31,7 @@ export const TIPS: ReactNode[] = [
     affecting your SRS progress.
   </>,
   <>
-    Quickly add items to a self-study queue by pressing <Text keyboard>Q</Text>
+    Quickly add items to a self-study queue by pressing <Keyboard>Q</Keyboard>
     while hovering over them!
   </>,
   <>
@@ -44,7 +42,7 @@ export const TIPS: ReactNode[] = [
     it again.
   </>,
   <>
-    Quickly start a search with <Text keyboard>{ctrl}+K</Text>.
+    Quickly start a search with <Keyboard>{ctrl}+K</Keyboard>.
   </>,
   <>
     If you have trouble spoiling yourself with answer hints, you can fully hide
