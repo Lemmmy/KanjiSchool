@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState, useEffect, useMemo } from "react";
-import { Tag, Collapse, CollapseProps } from "antd";
+import { Collapse, CollapseProps } from "antd";
 import classNames from "classnames";
 
 import { SearchResultGroup } from "@api";
@@ -16,6 +16,7 @@ import { VocabList } from "@comp/subjects/lists/vocab";
 
 import { nts } from "@utils";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+import { Tag } from "@comp/Tag";
 
 interface Props {
   groups: SearchResultGroup[];
@@ -92,7 +93,7 @@ function CollapseHeader({ group: { count, name } }: { group: SearchResultGroup }
     <h2 className="font-medium my-0">{name}</h2>
 
     {/* Total count */}
-    <Tag className="mt-px ml-xs text-sm font-normal">
+    <Tag className="mt-px ml-xs py-px text-sm font-normal">
       {nts(count)}
     </Tag>
   </div>;

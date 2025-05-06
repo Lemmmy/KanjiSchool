@@ -2,13 +2,14 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Form, Select, Tag } from "antd";
+import { Form, Select } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 import { SubjectType } from "@api";
 
-import { normalizeVocabType, usePalette } from "@utils";
+import { Tag } from "@comp/Tag";
 import { getReadableTextColor } from "@global/theme";
+import { normalizeVocabType, usePalette } from "@utils";
 
 export function SubjectTypePicker({ ...props }: any): React.ReactElement {
   const palette = usePalette();
@@ -19,9 +20,10 @@ export function SubjectTypePicker({ ...props }: any): React.ReactElement {
     const textColor = getReadableTextColor(palette, colorKey);
 
     return <Tag
-      color={color}
-      closable={closable} onClose={onClose}
-      style={{ marginRight: 3, color: textColor }}
+      closable={closable}
+      onClose={onClose}
+      className="mr-1"
+      style={{ backgroundColor: color, color: textColor }}
     >
       {label}
     </Tag>;

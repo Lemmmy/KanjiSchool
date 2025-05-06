@@ -2,20 +2,24 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Fragment, useMemo } from "react";
-import { CollapseProps, Divider, Tag } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { CollapseProps, Divider } from "antd";
 import classNames from "classnames";
+import { Fragment, useMemo } from "react";
 
 import {
+  StoredAssignmentMap,
+  StoredSubjectMap,
+  SubjectAssignmentIdMap,
   useAssignments, useSubjectAssignmentIds,
-  StoredAssignmentMap, SubjectAssignmentIdMap, StoredSubjectMap, useSubjects
+  useSubjects
 } from "@api";
 
-import { SubjectGrid } from "@comp/subjects/lists/grid";
 import { StudyQueueButton } from "@comp/study-queue/StudyQueueButton";
+import { SubjectGrid } from "@comp/subjects/lists/grid";
 
-import { getSrsStageBaseName, SrsStageBaseName, nts, isVocabularyLike } from "@utils";
+import { Tag } from "@comp/Tag";
+import { getSrsStageBaseName, isVocabularyLike, nts, SrsStageBaseName } from "@utils";
 
 type GroupedData = Record<SrsStageBaseName, [number[], boolean]>;
 const GROUPS: SrsStageBaseName[] = ["Lesson", "Apprentice", "Guru", "Master",
@@ -120,7 +124,7 @@ export function useAnswersPanel(
         return <Fragment key={g}>
           <Divider orientation="left" className="mt-sm mb-xss before:!w-[32px] before:shrink-0 after:w-full first:mt-0">
             {/* Count */}
-            <Tag className="relative -top-[2px] mr-sm text-sm font-normal">
+            <Tag className="relative -top-[1px] mr-sm text-sm font-normal">
               {nts(ids.length)}
             </Tag>
             {g}

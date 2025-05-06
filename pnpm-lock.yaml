@@ -18,7 +18,7 @@ importers:
         specifier: ^5.2.6
         version: 5.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ctrl/tinycolor':
-        specifier: ^4.0.2
+        specifier: ^4.1.0
         version: 4.1.0
       '@eslint/js':
         specifier: ^9.26.0
@@ -35,6 +35,9 @@ importers:
       classnames:
         specifier: ^2.3.2
         version: 2.5.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -146,6 +149,9 @@ importers:
       svg-inline-react:
         specifier: ^3.2.1
         version: 3.2.1(react@18.3.1)
+      tailwind-merge:
+        specifier: ^3.2.0
+        version: 3.2.0
       tiny-lru:
         specifier: ^11.2.5
         version: 11.2.11
@@ -1843,6 +1849,10 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -3756,6 +3766,9 @@ packages:
 
   tailwind-clip-path@1.0.0:
     resolution: {integrity: sha512-pac3BiCZCEKtX+3In4508PFcX2eZL7JwliZMtfYE0RoqFMjfbCVLmu+uuEFqn1y/f2vrOB5rY4XNcmaOSG1csw==}
+
+  tailwind-merge@3.2.0:
+    resolution: {integrity: sha512-FQT/OVqCD+7edmmJpsgCsY820RTD5AkBryuG5IUqR5YQZSdj5xlH5nLgH7YPths7WsLPSpSBNneJdM8aS8aeFA==}
 
   tailwindcss-logical@3.0.1:
     resolution: {integrity: sha512-mv585RJfzS/Cu9Rpl2M5H+JSOdU3qjLHzKMtg63oD5lXfehRJpldbEqll20Obvlexq0Cmyg86l7cmb/I5hEutg==}
@@ -5913,6 +5926,8 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
+  clsx@2.1.1: {}
+
   color-convert@2.0.1:
     dependencies:
       color-name: 1.1.4
@@ -8067,6 +8082,8 @@ snapshots:
       react: 18.3.1
 
   tailwind-clip-path@1.0.0: {}
+
+  tailwind-merge@3.2.0: {}
 
   tailwindcss-logical@3.0.1(postcss@8.5.3):
     dependencies:

@@ -2,11 +2,12 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Form, Select, Tag } from "antd";
+import { Form, Select } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
-import { usePalette, stringifySrsStage } from "@utils";
+import { Tag } from "@comp/Tag";
 import { getReadableTextColor, SRS_STAGE_TO_PALETTE } from "@global/theme";
+import { stringifySrsStage, usePalette } from "@utils";
 
 export function SrsStagesPicker({ ...props }: any): React.ReactElement {
   const palette = usePalette();
@@ -17,9 +18,10 @@ export function SrsStagesPicker({ ...props }: any): React.ReactElement {
     const textColor = getReadableTextColor(palette, colorKey);
 
     return <Tag
-      color={color}
-      closable={closable} onClose={onClose}
-      style={{ marginRight: 3, color: textColor }}
+      closable={closable}
+      onClose={onClose}
+      className="mr-1"
+      style={{ backgroundColor: color, color: textColor }}
     >
       {label}
     </Tag>;

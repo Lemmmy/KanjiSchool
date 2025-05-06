@@ -2,7 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Tag, Tooltip } from "antd";
+import { Tag } from "@comp/Tag";
+import { Tooltip } from "antd";
 
 import { CorrectBarTooltip } from "./CorrectBarTooltip";
 
@@ -40,7 +41,7 @@ export function CorrectBar({
     </span>
 
     {/* Streak row */}
-    {showStreakRow && <div className="mb-[3px] text-sm">
+    {showStreakRow && <div className="mb-[3px] text-sm flex gap-4">
       {/* Current streak */}
       {showCurrentStreak && <span>
         Current streak
@@ -48,7 +49,7 @@ export function CorrectBar({
       </span>}
 
       {/* Max streak */}
-      {showMaxStreak && <span className="ml-sm">
+      {showMaxStreak && <span>
         Longest streak
         <Tag className={tagClass}>{nts(maxStreak!)}</Tag>
       </span>}

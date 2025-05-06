@@ -21,7 +21,7 @@ import { SubjectInfoLessonRow } from "./SubjectInfoLessonRow";
 import { SubjectInfoTopRow } from "./SubjectInfoTopRow";
 import { StudyMaterialNote } from "./StudyMaterialNote";
 import { StudyMaterialSynonyms } from "./StudyMaterialSynonyms";
-import { PartsOfSpeech } from "./PartsOfSpeech";
+import { PartsOfSpeechList } from "./PartsOfSpeech";
 import { DictionaryInfoRow } from "./DictionaryInfoRow.tsx";
 import { YourProgression } from "./progression/YourProgression";
 
@@ -265,7 +265,7 @@ export function SubjectInfo(props: SubjectInfoProps): React.ReactElement {
           ? "Parts of speech"
           : "Part of speech"}
       />
-      <PartsOfSpeech subject={vocabSubjectData} />
+      <PartsOfSpeechList partsOfSpeech={vocabSubjectData.parts_of_speech} />
     </>}
 
     {/* Vocabulary context sentences */}

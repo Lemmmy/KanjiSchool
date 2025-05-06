@@ -9,6 +9,7 @@ import { PageLayout } from "@layout/PageLayout";
 import { useCustomSessionCard } from "./DebugCustomSessionCard";
 import { DebugSubjectsCard } from "./DebugSubjectsCard";
 import { DebugMiscCard } from "./DebugMiscCard";
+import { DebugPartsOfSpeechCard } from "./DebugPartsOfSpeechCard";
 
 export function Component(): React.ReactElement {
   const [customSessionCard, onAddSubject] = useCustomSessionCard();
@@ -17,6 +18,7 @@ export function Component(): React.ReactElement {
     <Space direction="vertical" size="large">
       {customSessionCard}
       <DebugSubjectsCard onAddSubject={onAddSubject} />
+      <DebugPartsOfSpeechCard />
       <DebugMiscCard />
     </Space>
   </PageLayout>;

@@ -2,14 +2,13 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Tag } from "antd";
-import classNames from "classnames";
-
-import { ApiSubjectKanaVocabularyInner, ApiSubjectVocabularyInner } from "@api";
-import { slugifyPartOfSpeech } from "@utils";
+import { ApiSubjectVocabularyInner } from "@api";
+import { Tag, TagProps } from "@comp/Tag";
+import { cn, slugifyPartOfSpeech } from "@utils";
+import { forwardRef } from "react";
 
 interface Props {
-  subject: ApiSubjectVocabularyInner | ApiSubjectKanaVocabularyInner;
+  partsOfSpeech: ApiSubjectVocabularyInner["parts_of_speech"];
 }
 
 const partClasses: Record<string, string> = {
@@ -38,18 +37,31 @@ const partClasses: Record<string, string> = {
   "prefix"           : "!bg-yellow-7",
 };
 
-export function PartsOfSpeech({ subject }: Props): React.ReactElement {
-  return <div className="subject-info-parts-of-speech">
-    {subject.parts_of_speech.map(p => (
-      <Tag
-        key={p}
-        className={classNames(
-          "text-white border-0 bg-white/20 light:bg-black/50",
-          partClasses[slugifyPartOfSpeech(p)]
-        )}
-      >
-        {p}
-      </Tag>
-    ))}
+interface PartOfSpeechProps extends Omit<TagProps, "children"> {
+  partOfSpeech: string;
+}
+
+export const PartOfSpeech = forwardRef<HTMLSpanElement, PartOfSpeechProps>(
+  ({ partOfSpeech, className, closable, onClose, ...props }, ref) => {
+    return <Tag
+      ref={ref}
+      className={cn(
+        partClasses[slugifyPartOfSpeech(partOfSpeech)],
+        className
+      )}
+      closable={closable}
+      onClose={onClose}
+      {...props}
+    >
+      {partOfSpeech}
+    </Tag>;
+  }
+);
+
+PartOfSpeech.displayName = "PartOfSpeech";
+
+export function PartsOfSpeechList({ partsOfSpeech }: Props): React.ReactElement {
+  return <div className="subject-info-parts-of-speech flex flex-wrap gap-1">
+    {partsOfSpeech.map(p => <PartOfSpeech key={p} partOfSpeech={p} />)}
   </div>;
 }
