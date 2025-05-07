@@ -4,7 +4,7 @@
 
 import { useEffect } from "react";
 import { theme } from "antd";
-import { red, orange, yellow, lime, green, blue, PalettesProps } from "@ant-design/colors";
+import { red, orange, yellow, lime, green, blue, grey, PalettesProps } from "@ant-design/colors";
 
 import { TinyColor } from "@ctrl/tinycolor";
 
@@ -13,7 +13,7 @@ import { useThemeContext } from "./ThemeContext.tsx";
 
 const { useToken } = theme;
 
-const usedAntPalettes: PalettesProps = { red, orange, yellow, lime, green, blue };
+const usedAntPalettes: PalettesProps = { red, orange, yellow, lime, green, blue, grey };
 
 export function ApplyAntThemeVariables(): React.ReactElement | null {
   const { token } = useToken();

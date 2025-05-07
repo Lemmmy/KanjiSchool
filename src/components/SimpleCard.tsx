@@ -5,9 +5,9 @@
 // Replacement for ant-design's Card component that doesn't pull in large subcomponents such as Tabs.
 
 import { forwardRef, HTMLProps, ReactNode } from "react";
-import classNames from "classnames";
 
 import { SimpleSkeleton } from "@comp/SimpleSkeleton.tsx";
+import { cn } from "@utils";
 
 interface Props extends Omit<HTMLProps<HTMLDivElement>, "title"> {
   title?: ReactNode;
@@ -17,6 +17,7 @@ interface Props extends Omit<HTMLProps<HTMLDivElement>, "title"> {
   className?: string;
   bodyClassName?: string;
   headClassName?: string;
+  extraClassName?: string;
   children?: ReactNode;
 }
 
@@ -28,11 +29,12 @@ export const SimpleCard = forwardRef<HTMLDivElement, Props>(function SimpleCard(
   className,
   bodyClassName,
   headClassName,
+  extraClassName,
   children,
   ...rest
 }, ref): React.ReactElement {
   return <div
-    className={classNames(
+    className={cn(
       "wk-card rounded-lg leading-ant bg-[#141414] light:bg-white",
       "border border-solid border-[#303030] light:border-[#e0e0e0]",
       className
@@ -42,7 +44,7 @@ export const SimpleCard = forwardRef<HTMLDivElement, Props>(function SimpleCard(
   >
     {/* Header */}
     {(title || extra) && <div
-      className={classNames(
+      className={cn(
         "wk-card-head flex items-center justify-between px-lg min-h-[58px]",
         "border-bottom border-solid border-0 border-b border-[#303030] light:border-[#e0e0e0]",
         headClassName
@@ -52,11 +54,11 @@ export const SimpleCard = forwardRef<HTMLDivElement, Props>(function SimpleCard(
       <div className="text-lg font-semibold">{title}</div>
 
       {/* Extra */}
-      {extra && <div className="text-right">{extra}</div>}
+      {extra && <div className={cn("text-right", extraClassName)}>{extra}</div>}
     </div>}
 
     {/* Body */}
-    <div className={classNames(
+    <div className={cn(
       "wk-card-body",
       bodyClassName,
       {

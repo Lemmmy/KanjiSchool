@@ -3,8 +3,9 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode } from "react";
-import { Tooltip, Button } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
+import { Button } from "@comp/Button";
+import { Trash } from "lucide-react";
 
 import { useAppSelector } from "@store";
 import { shallowEqual } from "react-redux";
@@ -47,16 +48,22 @@ export function ResumeSessionRow(): React.ReactElement | null {
     <div className="flex items-center justify-center gap-sm flex-wrap p-sm bg-white/4">
       {/* Abandon session */}
       <Tooltip title={<>Abandon {SESSION_TYPE_NAMES[sessionState.type]} <b>(A)</b></>}>
-        <Button danger size="large" icon={<DeleteOutlined />}
-          onClick={() => showSessionAbandonModal()}>
-          Abandon {SESSION_TYPE_NAMES[sessionState.type]}
+        <Button
+          danger
+          size="large"
+          onClick={() => showSessionAbandonModal()}
+        >
+          <Trash />Abandon {SESSION_TYPE_NAMES[sessionState.type]}
         </Button>
       </Tooltip>
 
       {/* Resume session */}
       <Tooltip title={SESSION_RESUME_TOOLTIPS[sessionState.type]}>
-        <Button type="primary" size="large"
-          onClick={() => gotoSession(navigate, sessionState)}>
+        <Button
+          variant="primary"
+          size="large"
+          onClick={() => gotoSession(navigate, sessionState)}
+        >
           Resume {SESSION_TYPE_NAMES[sessionState.type]}
         </Button>
       </Tooltip>

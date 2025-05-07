@@ -110,7 +110,7 @@ export function useAnswersPanel(
 
       // Add to self-study queue button
       extra: <StudyQueueButton
-        type="primary"
+        variant="primary"
         size="small"
         subjectIds={subjectIds}
       />,

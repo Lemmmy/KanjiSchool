@@ -2,17 +2,16 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { useCallback, useMemo } from "react";
 import { Popover, PopoverProps, Slider, Tooltip } from "antd";
 import { SliderTooltipProps } from "antd/es/slider";
-import { PlayCircleOutlined, SoundOutlined } from "@ant-design/icons";
-import classNames from "classnames";
+import { CirclePlay, Volume2 } from "lucide-react";
+import { useCallback, useMemo } from "react";
 
 import { useAppSelector } from "@store";
-import { setIntegerSetting, toggleBooleanSetting, useBooleanSetting, useIntegerSetting } from "@utils";
+import { cn, setIntegerSetting, toggleBooleanSetting, useBooleanSetting, useIntegerSetting } from "@utils";
 
-import { debounce } from "lodash-es";
 import { ConditionalLink } from "@comp/ConditionalLink.tsx";
+import { debounce } from "lodash-es";
 
 import { headerElementClass } from "./AppHeader.tsx";
 
@@ -35,7 +34,7 @@ export function VolumePopover(): React.ReactElement {
     } else if (audioMuted) {
       return <NoAutoPlayIcon />;
     } else {
-      return <SoundOutlined />;
+      return <Volume2 className="size-5" />;
     }
   }
 
@@ -63,7 +62,7 @@ export function VolumePopover(): React.ReactElement {
 }
 
 function AutoPlayControl(): React.ReactElement {
-  const iconClass = "cursor-pointer mb-1 select-none";
+  const iconClass = "cursor-pointer mb-1 select-none size-5";
 
   const audioMuted = useBooleanSetting("audioMuted");
 
@@ -83,7 +82,7 @@ function AutoPlayControl(): React.ReactElement {
       >
         {audioMuted
           ? <NoAutoPlayIcon className={iconClass} />
-          : <PlayCircleOutlined className={iconClass} />}
+          : <CirclePlay className={iconClass} />}
       </div>
     </Tooltip>;
   } else {
@@ -97,14 +96,14 @@ function AutoPlayControl(): React.ReactElement {
 
 function MuteIcon(): React.ReactElement {
   return <div className="relative flex items-center justify-center">
-    <SoundOutlined className="text-red/50" />
+    <Volume2 className="text-red/50 size-5" />
     <div className="absolute w-[20px] h-[2px] bg-red -rotate-45 rounded-[3px]" />
   </div>;
 }
 
 function NoAutoPlayIcon({ className }: { className?: string }): React.ReactElement {
-  return <div className={classNames("relative flex items-center justify-center", className)}>
-    <PlayCircleOutlined className="text-red/50" />
+  return <div className={cn("relative flex items-center justify-center", className)}>
+    <CirclePlay className="text-red/50 size-5" />
     <div className="absolute w-[20px] h-[2px] bg-red -rotate-45 rounded-[3px]" />
   </div>;
 }

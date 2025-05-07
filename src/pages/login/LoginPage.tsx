@@ -3,7 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState } from "react";
-import { Form, Input, Button, Row, Col, Divider } from "antd";
+import { Form, Input, Row, Col, Divider } from "antd";
+import { Button } from "@comp/Button";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
 import { AppLoading } from "@global/AppLoading";
@@ -149,7 +150,7 @@ export function LoginPage(): React.ReactElement {
 
         {/* Submit button */}
         <Button
-          type="primary"
+          variant="primary"
           onClick={onSubmit}
           className="basis-full mt-sm md:basis-auto md:mt-0"
         >

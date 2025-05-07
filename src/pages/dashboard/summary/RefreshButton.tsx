@@ -2,18 +2,19 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import { Button } from "@comp/Button";
 import { useCallback } from "react";
-import { Button } from "antd";
 
 import { useAppSelector } from "@store";
 
-import { useUser, syncRefresh } from "@api";
+import { syncRefresh, useUser } from "@api";
 
 import { useOnlineStatus } from "@utils";
 
 import { globalNotification } from "@global/AntInterface.tsx";
 
 import Debug from "debug";
+import { LoaderCircle } from "lucide-react";
 const debug = Debug("kanjischool:summary-refresh");
 
 interface Props {
@@ -42,12 +43,12 @@ export function RefreshButton({ className }: Props): React.ReactElement {
   }, [user?.data.id, canRefresh]);
 
   return <Button
-    type="link"
-    loading={syncing}
+    variant="link"
     onClick={refresh}
-    disabled={!isOnline}
+    disabled={syncing || !isOnline}
     className={className}
   >
+    {syncing && <LoaderCircle className="animate-spin" />}
     Refresh
   </Button>;
 }

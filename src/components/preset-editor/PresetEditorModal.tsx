@@ -3,8 +3,8 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useState } from "react";
-import { Button, Modal, Popconfirm } from "antd";
-import classNames from "classnames";
+import { Modal, Popconfirm } from "antd";
+import { Button } from "@comp/Button";
 
 import { deletePreset, newPreset, PresetType, savePreset } from ".";
 import { PresetEditorTree } from "./PresetEditorTree";
@@ -84,7 +84,7 @@ export default function PresetEditorModal({
         <Button onClick={closeFn}>Close</Button>
 
         {/* Save */}
-        <Button type="primary" disabled={isDefault} onClick={onSubmit}>
+        <Button variant="primary" disabled={isDefault} onClick={onSubmit}>
           Save
         </Button>
       </div>

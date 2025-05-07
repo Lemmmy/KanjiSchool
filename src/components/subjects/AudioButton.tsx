@@ -2,10 +2,11 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
-import { Button, Tooltip } from "antd";
-import { SoundOutlined } from "@ant-design/icons";
+import { Button } from "@comp/Button";
+import { Tooltip } from "antd";
 import classNames from "classnames";
+import { Loader, LoaderCircle, Volume2 } from "lucide-react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 
 import { useAppSelector } from "@store";
 
@@ -200,12 +201,11 @@ export function AudioButton({
       * discoverability. */}
     <Tooltip title={hasShortcut ? <>Play audio <b>(P)</b></> : undefined}>
       <Button
-        loading={loading}
-        disabled={disabled}
+        disabled={loading || disabled}
         onClick={triggerPlay}
         className={classes}
       >
-        <SoundOutlined />
+        {loading ? <LoaderCircle className="animate-spin" /> : <Volume2 />}
         {pronunciation}
       </Button>
     </Tooltip>

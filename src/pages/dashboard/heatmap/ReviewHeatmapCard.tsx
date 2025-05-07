@@ -3,8 +3,9 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode, useCallback, useState } from "react";
-import { Button, Tooltip } from "antd";
-import { WarningOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
+import { Button } from "@comp/Button";
+import { TriangleAlert } from "lucide-react";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import classNames from "classnames";
 
@@ -28,6 +29,7 @@ export default function ReviewHeatmapCard(): React.ReactElement {
     className={classNames(dashboardCardClass, "!h-auto")}
     headClassName="pr-sm"
     bodyClassName={dashboardCardBodyClass}
+    extraClassName="flex items-center h-full"
     flush
 
     // Show all button in top right of card
@@ -48,8 +50,8 @@ function CardTitle(): React.ReactElement {
     <span>Review heatmap</span>
 
     <Tooltip title="Review history may be incomplete or inaccurate. Click for more info.">
-      <WarningOutlined
-        className="text-yellow light:text-orange opacity-50 cursor-pointer"
+      <TriangleAlert
+        className="size-4 text-yellow light:text-orange opacity-50 cursor-pointer"
         onClick={() => openGetReviewsModal()}
       />
     </Tooltip>
@@ -81,8 +83,8 @@ interface ExtraButtonProps {
 }
 
 const ExtraButton = ({ onClick, children }: ExtraButtonProps) => <Button
-  className="border-0 my-px mx-0 h-[54px]"
-  type="link"
+  className="border-0 my-px mx-0 h-full"
+  variant="link"
   onClick={onClick}
 >
   {children}

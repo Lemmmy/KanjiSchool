@@ -14,10 +14,11 @@ import { PresetModalProvider } from "@comp/preset-editor/PresetModalContext";
 
 import { initDbAndLoadAll, useHasSubjects, useIsLoggedIn } from "@api";
 
-import { App as AntApp, Button, ConfigProvider } from "antd";
+import { App as AntApp, ConfigProvider } from "antd";
 import { AppLoading } from "@global/AppLoading";
 import { LoginPage } from "@pages/login/LoginPage";
 import { SyncPage } from "@pages/login/SyncPage";
+import { Button } from "@comp/Button";
 import { ExtLink } from "@comp/ExtLink.tsx";
 import { lsGetString, lsSetString } from "@utils";
 
@@ -96,7 +97,7 @@ function AppInner(): React.ReactElement {
           KanjiSchool updated to <span className="whitespace-nowrap font-semibold">{gitVersion}</span>!
         </>,
         btn: <ExtLink href="https://github.com/Lemmmy/KanjiSchool/releases">
-          <Button type="primary">What&apos;s new</Button>
+          <Button variant="primary">What&apos;s new</Button>
         </ExtLink>
       });
     }

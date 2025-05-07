@@ -104,7 +104,7 @@ export default function CriticalConditionCard(): React.ReactElement {
 
     // Add to self-study queue button
     extra={data && data[1].length > 0 && <StudyQueueButton
-      type="primary"
+      variant="primary"
       size="small"
       subjectIds={data[1]}
       useShortTitle

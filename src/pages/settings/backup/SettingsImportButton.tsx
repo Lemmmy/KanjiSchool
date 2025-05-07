@@ -2,16 +2,16 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import React, { useRef, useCallback } from "react";
-import { ImportOutlined } from "@ant-design/icons";
+import React, { useCallback, useRef } from "react";
 
 import { SettingsExportFile } from "./SettingsBackupButtons.tsx";
 
 import { AnySettingName, DEFAULT_SETTINGS, getSettingKey, lsGetKey, OTHER_LOCAL_STORAGE_SETTING_NAMES } from "@utils";
 
+import { Button } from "@comp/Button";
 import { globalNotification } from "@global/AntInterface.tsx";
-import { Button } from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+import { CircleArrowOutDownLeft } from "lucide-react";
 
 export function SettingsImportButton(): React.ReactElement {
   const { md } = useBreakpoint();
@@ -60,11 +60,8 @@ export function SettingsImportButton(): React.ReactElement {
         className="hidden"
       />
 
-      <Button
-        icon={<ImportOutlined />}
-        onClick={onButtonClick}
-      >
-        {md ? "Import settings" : "Import"}
+      <Button onClick={onButtonClick}>
+        <CircleArrowOutDownLeft />{md ? "Import settings" : "Import"}
       </Button>
     </span>
   </div>;

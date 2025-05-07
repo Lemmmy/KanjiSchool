@@ -47,7 +47,7 @@ export function SubjectTooltipInner({
     {/* Self-study queue button */}
     {!hideStudyQueueButton && <div className="flex justify-center mt-sm">
       <StudyQueueButton
-        type="primary"
+        variant="primary"
         subjectId={subject.id}
         useShortTitle
         noTooltip

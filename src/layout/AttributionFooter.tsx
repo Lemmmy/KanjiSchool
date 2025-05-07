@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode } from "react";
-import { Button } from "antd";
+import { Button } from "@comp/Button";
 import classNames from "classnames";
 
 import { ExtLink } from "@comp/ExtLink";
@@ -39,10 +39,10 @@ function TopRow({ withThemeToggle }: Props) {
   const { theme } = useThemeContext();
 
   function toggleTheme() {
-    setStringSetting("siteTheme", theme === "light" ? "dark" : "light");
+    setStringSetting("siteTheme", theme === "light" ? "dark" : "light", false);
   }
 
-  return <div className="flex flex-wrap items-center justify-center gap-sm text-desc">
+  return <div className="flex flex-wrap items-baseline justify-center gap-sm text-desc">
     {/* Attribution */}
     <span>
       KanjiSchool is a project by <Link href="https://lemmmy.me">Lemmmy</Link>
@@ -57,7 +57,7 @@ function TopRow({ withThemeToggle }: Props) {
     {withThemeToggle && <>
       <Separator />
 
-      <Button type="link" onClick={toggleTheme} className="px-0 text-desc-c/75">
+      <Button variant="link" onClick={toggleTheme} className="px-0 py-0 text-desc-c/75">
         {theme === "light" ? "Dark" : "Light"} theme
       </Button>
     </>}

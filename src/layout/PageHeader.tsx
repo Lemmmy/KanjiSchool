@@ -3,9 +3,9 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { ReactNode } from "react";
-import { Button } from "antd";
+import { Button } from "@comp/Button";
 import classNames from "classnames";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { ArrowLeft } from "lucide-react";
 
 interface Props {
   title?: ReactNode;
@@ -23,13 +23,14 @@ export function PageHeader({
   return <div className={classes}>
     {/* Back button */}
     {onBack && <Button
-      type="link"
+      variant="link"
+      size="icon"
       aria-label="Back"
       tabIndex={0}
       onClick={onBack}
-      className="mr-md px-0 text-white light:text-black flex-shrink-0"
+      className="mr-2 px-0 text-white light:text-black flex-shrink-0"
     >
-      <ArrowLeftOutlined />
+      <ArrowLeft />
     </Button>}
 
     {/* Title */}

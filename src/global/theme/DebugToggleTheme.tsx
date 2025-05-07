@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button } from "antd";
+import { Button } from "@comp/Button";
 import { useThemeContext } from "@global/theme/ThemeContext.tsx";
 import { setBooleanSetting, setStringSetting, useBooleanSetting, useStringSetting } from "@utils";
 import { BulbOutlined } from "@ant-design/icons";
@@ -42,8 +42,9 @@ function DebugToggleThemeInner(): React.ReactElement {
 
   return <div className="flex flex-col h-header justify-center">
     <div className="flex items-center">
-      <Button size="small" onClick={onThemeClick} icon={<BulbOutlined />}
-        className="mr-xs" />
+      <Button size="small" onClick={onThemeClick} className="mr-xs">
+        <BulbOutlined />
+      </Button>
 
       <Button size="small" disabled={sitePalette === "kanjiSchool"}
         onClick={() => setPalette("kanjiSchool")}>ks</Button>

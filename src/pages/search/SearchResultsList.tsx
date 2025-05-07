@@ -107,7 +107,7 @@ function CollapseHeaderExtra({ group: { itemSubjects, srsCounts }, useShortTitle
     {/* Add to self-study queue button */}
     {itemSubjects?.length && <StudyQueueButton
       useShortTitle={useShortTitle}
-      type="primary"
+      variant="primary"
       size="small"
       subjectIds={itemSubjects}
     />}

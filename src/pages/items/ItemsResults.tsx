@@ -94,7 +94,7 @@ export function ItemsResults({
 
       {/* Add to study queue button */}
       {allSubItems.length > 0 && <StudyQueueButton
-        type="link"
+        variant="link"
         size="small"
         className={classNames(
           "text-desc hover:!text-white/75 light:hover:!text-black/75",

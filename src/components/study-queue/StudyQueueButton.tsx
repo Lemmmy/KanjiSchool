@@ -3,8 +3,9 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { useEffect } from "react";
-import { Button, ButtonProps, Tooltip } from "antd";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
+import { Button, ButtonProps } from "@comp/Button";
+import { Plus, Minus } from "lucide-react";
 import classNames from "classnames";
 
 import { addToStudyQueue, removeFromStudyQueue, useIsInStudyQueue } from "@session";
@@ -60,8 +61,6 @@ export function StudyQueueButton({
 
   const button = <Button
     className={classes}
-
-    icon={inQueue ? <MinusOutlined /> : <PlusOutlined />}
     danger={!noDanger && inQueue}
 
     onClick={e => {
@@ -84,6 +83,7 @@ export function StudyQueueButton({
     // Any user-defined button props
     {...props}
   >
+    {inQueue ? <Minus /> : <Plus />}
     {!iconOnly && (useShortTitle ? shortTitle : title)}
   </Button>;
 

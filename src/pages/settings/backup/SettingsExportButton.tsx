@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button } from "antd";
-import { ExportOutlined } from "@ant-design/icons";
+import { Button } from "@comp/Button";
+import { CircleArrowOutUpRight } from "lucide-react";
 
 import { SettingsExportFile } from "./SettingsBackupButtons.tsx";
 
@@ -20,12 +20,8 @@ const gitVersion: string = import.meta.env.VITE_GIT_VERSION;
 export function SettingsExportButton(): React.ReactElement {
   const { md } = useBreakpoint();
 
-  return <Button
-    type="primary"
-    icon={<ExportOutlined />}
-    onClick={exportSettings}
-  >
-    {md ? "Export settings" : "Export"}
+  return <Button variant="primary" onClick={exportSettings}>
+    <CircleArrowOutUpRight />{md ? "Export settings" : "Export"}
   </Button>;
 }
 

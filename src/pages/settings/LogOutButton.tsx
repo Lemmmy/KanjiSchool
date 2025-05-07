@@ -2,7 +2,7 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button } from "antd";
+import { Button } from "@comp/Button";
 import { LogoutOutlined } from "@ant-design/icons";
 
 import { logOut } from "@api";
@@ -10,7 +10,7 @@ import { globalModal } from "@global/AntInterface.tsx";
 
 export function LogOutButton(): React.ReactElement {
   return <Button
-    type="link"
+    variant="link"
     danger
     onClick={logOutModal}
     className="float-right -my-[3px] -mx-[15px] !leading-none !h-auto"

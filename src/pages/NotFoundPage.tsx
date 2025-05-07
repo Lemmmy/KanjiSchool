@@ -2,8 +2,8 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button } from "antd";
-import { FrownOutlined } from "@ant-design/icons";
+import { Button } from "@comp/Button";
+import { Frown } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -17,12 +17,12 @@ export function NotFoundPage({ nyi }: Props): React.ReactElement {
   const navigate = useNavigate();
 
   return <SmallResult
-    icon={<FrownOutlined />}
+    icon={<Frown />}
     status="error"
     title={nyi ? "Not yet implemented" : "Page not found"}
     subtitle={nyi ? "This feature will be coming soon!" : undefined}
     extra={(
-      <Button type="primary" onClick={() => navigate(-1)}>
+      <Button variant="primary" onClick={() => navigate(-1)}>
         Go back
       </Button>
     )}

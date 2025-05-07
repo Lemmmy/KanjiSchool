@@ -3,7 +3,7 @@
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
 import { globalModal } from "@global/AntInterface.tsx";
-import { Button } from "antd";
+import { Button } from "@comp/Button";
 
 export function openGetReviewsModal(): void {
   globalModal.info({
@@ -17,16 +17,20 @@ export function openGetReviewsModal(): void {
     maskClosable: true,
     width: 500,
 
-
     footer: (_, { OkBtn }) => [
       // Learn more link
+      // TODO[epic=anthill]: fix the height of this button
       <Button
+        asChild
         key="learn-more"
-        href="https://community.wanikani.com/t/api-changes-get-all-reviews/61617"
-        target="_blank"
-        rel="noopener noreferrer"
       >
-        Learn more
+        <a
+          href="https://community.wanikani.com/t/api-changes-get-all-reviews/61617"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn more
+        </a>
       </Button>,
 
       // Got it button

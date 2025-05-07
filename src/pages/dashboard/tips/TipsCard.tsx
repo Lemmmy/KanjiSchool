@@ -2,20 +2,19 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
+import { Button } from "@comp/Button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
-import { Button } from "antd";
-import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
-import classNames from "classnames";
 
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "@store";
 import { setTip } from "@store/slices/settingsSlice.ts";
+import { useDispatch } from "react-redux";
 
-import { lsSetNumber } from "@utils";
+import { cn, lsSetNumber } from "@utils";
 
-import { TIPS } from "./tips";
 import { SimpleCard } from "@comp/SimpleCard.tsx";
 import { dashboardCardBodyClass, dashboardCardClass } from "@pages/dashboard/sharedStyles.ts";
+import { TIPS } from "./tips";
 
 import Debug from "debug";
 const debug = Debug("kanjischool:tips-card");
@@ -56,18 +55,19 @@ export function TipsCard(): React.ReactElement {
 
   return <SimpleCard
     title="Tip of the day"
-    className={classNames(dashboardCardClass, "flex-auto mt-md")}
+    className={cn(dashboardCardClass, "flex-auto mt-md")}
     headClassName="pr-sm"
     bodyClassName={dashboardCardBodyClass}
+    extraClassName="flex items-center h-full"
 
     // Prev/Next tip buttons
     extra={<>
-      <Button type="link" onClick={previousTip} className="border-0 my-px mx-0 h-[54px]">
-        <CaretLeftOutlined />Prev
+      <Button variant="link" onClick={previousTip} className="border-0 mx-0 h-full">
+        <ChevronLeft />Prev
       </Button>
 
-      <Button type="link" onClick={nextTip} className="border-0 my-px mx-0 h-[54px]">
-        Next<CaretRightOutlined />
+      <Button variant="link" onClick={nextTip} className="border-0 mx-0 h-full">
+        Next<ChevronRight />
       </Button>
     </>}
   >

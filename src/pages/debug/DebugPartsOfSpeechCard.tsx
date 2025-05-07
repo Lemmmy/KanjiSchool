@@ -2,12 +2,9 @@
 // This file is part of KanjiSchool under AGPL-3.0.
 // Full details: https://github.com/Lemmmy/KanjiSchool/blob/master/LICENSE
 
-import { Button, Space } from "antd";
-import { globalNotification } from "@global/AntInterface.tsx";
-import { showNearMatchNotification, showSrsNotification } from "@session";
 import { SimpleCard } from "@comp/SimpleCard.tsx";
-import { useAppSelector } from "@store";
 import { PartsOfSpeechList } from "@pages/subject/PartsOfSpeech";
+import { useAppSelector } from "@store";
 import { shallowEqual } from "react-redux";
 
 export function DebugPartsOfSpeechCard(): React.ReactElement {
